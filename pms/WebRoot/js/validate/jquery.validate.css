@@ -1,0 +1,20 @@
+input.error { 
+	border: 1px solid #FF3300;
+	color : #FF3300;
+}
+
+select.error { 
+	border: 1px solid #FF3300;
+	color : #FF3300;
+}
+
+label.error {
+	color: #EA5200;
+	font-weight: bold;
+	background: transparent url(images/unchecked.gif) no-repeat scroll 0 0;
+	padding-left: 18px;
+}
+
+label.checked {
+	background: transparent url(images/checked.gif) no-repeat scroll 0 0;
+}

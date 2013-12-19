@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+	<mvc:view-controller path="/" view-name="redirect:/user" />
+	<mvc:view-controller path="/uncaughtException"/>
+    <mvc:view-controller path="/resourceNotFound"/>
+    <mvc:view-controller path="/dataAccessFailure"/>
+    
+    <mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/admin/**"/>
+			<mvc:mapping path="/province/**"/>
+			<mvc:mapping path="/region/**"/>
+			<mvc:mapping path="/user/**"/>
+			<mvc:mapping path="/consumercoll/**"/>
+			<mvc:mapping path="/entrepotcoll/**"/>
+			<mvc:mapping path="/farmerscoll/**"/>
+			<mvc:mapping path="/report/**"/>
+			<mvc:mapping path="/feedPriceIndex/**"/>
+			<mvc:mapping path="/productPriceIndex/**"/>
+			<mvc:mapping path="/expertIndex/**"/>
+			<mvc:mapping path="/industryIndex/**"/>
+			<mvc:mapping path="/rabFeedPricIndex/**"/>
+			<mvc:exclude-mapping path="/admin"/>
+			<mvc:exclude-mapping path="/admin/login"/>
+			<mvc:exclude-mapping path="/admin/exit"/>
+			<bean class="com.cgw.app.util.SecurityInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+</beans>
