@@ -31,7 +31,7 @@
         <td width="74%" height="38" class="admin_txt">
         	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        	欢迎：<b>${sessionScope.user.realName}</b>  &nbsp;&nbsp;您好,感谢登陆使用！
+        	欢迎：<b>${sessionScope.user.name}</b>  &nbsp;&nbsp;您好,感谢登陆使用！
         </td>
         <td width="22%"><a href="#" target="_self" onClick="logout();"><img src="${ctx}/images/admin/images/out.gif" alt="安全退出" width="46" height="20" border="0"></a></td>
         <td width="4%">&nbsp;</td>

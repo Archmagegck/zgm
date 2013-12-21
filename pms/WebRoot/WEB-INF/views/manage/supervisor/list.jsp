@@ -43,7 +43,7 @@
 				alert("请选择一个您要删除的！");
 			} else{
 				if (confirm("确定要删除吗？")){
-					$("#myForm").attr("action","${ctx}/user/delete");
+					$("#myForm").attr("action","${ctx}/manage/supervisor/delete");
 					$("#myForm").submit();
 				}
 			}
@@ -61,11 +61,11 @@
 	</head>
 
 	<body>
-		<form action="${ctx }/user/list" method="post" id="myForm" name="myForm">
+		<form action="${ctx }/manage/supervisor/list" method="post" id="myForm" name="myForm">
 			<div align="center" id="content"">
 				<div id="box">
 					<h3 align="left">
-						用户管理
+						监管员管理
 					</h3>
 					<div>
 						&nbsp;
@@ -86,14 +86,15 @@
 						&nbsp;&nbsp;&nbsp;根据
 						&nbsp;&nbsp;
 						<select name="queryName" id="queryName">
-							<option value="loginName" selected="selected">登陆名</option>
-							<option value="realName">用户名</option>
+							<option value="name" selected="selected">姓名</option>
+							<option value="code">编号</option>
+							<option value="username">用户名</option>
 						</select>
 						&nbsp;&nbsp; 查询:
 						<span id="values"><input type="text" name="queryValue" id="queryValue" value="${queryValue}" /> </span>
 						&nbsp;&nbsp;&nbsp;
 						<input type="button" value="查询" class="button" onclick="gotoPage(1)" />
-						<input type="button" value="添加" class="button" onclick="location.href='${ctx}/user/add'" />
+						<input type="button" value="添加" class="button" onclick="location.href='${ctx}/manage/supervisor/add'" />
 						<input type="button" value="删除" class="button" onclick="del()" />
 						<input type="hidden" name="page.page" id="pageNo" value="${page.number+1}"/>
 					</div>
@@ -103,57 +104,92 @@
 							<tr>
 								<th>
 									全选
-									<input name="selAll" id="all" type="checkbox"
-										onClick="selectAll(this)" />
+									<input name="selAll" id="all" type="checkbox" onClick="selectAll(this)" />
 								</th>
 								<th>
-									用户名
+									监管员编号
 								</th>
 								<th>
-									登录名
+									姓名
 								</th>
 								<th>
-									手机号码
+									住址
+								</th>
+								<th>
+									联系电话
 								</th>
 								<th>
 									邮箱
 								</th>
 								<th>
-									地址
+									用户名
+								</th>
+								<th>
+									登陆密码
+								</th>
+								<th>
+									身份证号码
+								</th>
+								<th>
+									所属辖区
+								</th>
+								<th>
+									备注
+								</th>
+								<th>
+									出货重量权限（kg）
 								</th>
 								<th>
 									操作
 								</th>
 							</tr>
 						</thead>
-						<c:forEach items="${page.content}" var="user">
+						<c:forEach items="${page.content}" var="supervisor">
 							<tr>
 								<td>
-									<input type="checkbox" name="idGroup" value="${user.id }" />
+									<input type="checkbox" name="idGroup" value="${supervisor.id }" />
 								</td>
 								<td>
-									${user.realName }&nbsp;
+									${supervisor.code }&nbsp;
 								</td>
 								<td>
-									${user.loginName }&nbsp;
+									${supervisor.name }&nbsp;
 								</td>
 								<td>
-									${user.phone }&nbsp;
+									${supervisor.address }&nbsp;
 								</td>
 								<td>
-									${user.email }&nbsp;
+									${supervisor.phone }&nbsp;
 								</td>
 								<td>
-									${user.address }&nbsp;
+									${supervisor.email }&nbsp;
 								</td>
 								<td>
-									<a href="${ctx }/user/edit/${user.id }">编辑</a>
+									${supervisor.username }&nbsp;
+								</td>
+								<td>
+									${supervisor.password }&nbsp;
+								</td>
+								<td>
+									${supervisor.idcard }&nbsp;
+								</td>
+								<td>
+									${supervisor.area }&nbsp;
+								</td>
+								<td>
+									${supervisor.desc }&nbsp;
+								</td>
+								<td>
+									${supervisor.shippingWeight }&nbsp;
+								</td>
+								<td>
+									<a href="${ctx }/manage/supervisor/edit/${supervisor.id }">编辑</a>
 								</td>
 							</tr>
 						</c:forEach>
 					</table>
 					<div align="left" id="pager">
-						<jsp:include page="../common/page.jsp"></jsp:include>
+						<jsp:include page="../../common/page.jsp"></jsp:include>
 					</div>
 				</div>
 			</div>

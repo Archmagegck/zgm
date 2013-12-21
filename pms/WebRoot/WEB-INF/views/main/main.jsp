@@ -5,7 +5,7 @@
 <html>
 	<head>
 
-		<title>国家兔产业信息采集管理系统</title>
+		<title>质押监管仓库系统</title>
 
 		<meta http-equiv="pragma" content="no-cache">
 		<meta http-equiv="cache-control" content="no-cache">

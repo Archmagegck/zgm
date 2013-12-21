@@ -14,7 +14,7 @@
 		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd"
 	default-lazy-init="true">
 
-	<context:component-scan base-package="com.cgw.app">
+	<context:component-scan base-package="com.pms.app">
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
 
@@ -38,7 +38,7 @@
 
 	<bean id="hibernateJpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
 
-	<jpa:repositories base-package="com.cgw.app" transaction-manager-ref="transactionManager" entity-manager-factory-ref="entityManagerFactory" />
+	<jpa:repositories base-package="com.pms.app" transaction-manager-ref="transactionManager" entity-manager-factory-ref="entityManagerFactory" />
 
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />

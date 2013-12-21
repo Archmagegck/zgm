@@ -18,19 +18,10 @@
 			<mvc:mapping path="/province/**"/>
 			<mvc:mapping path="/region/**"/>
 			<mvc:mapping path="/user/**"/>
-			<mvc:mapping path="/consumercoll/**"/>
-			<mvc:mapping path="/entrepotcoll/**"/>
-			<mvc:mapping path="/farmerscoll/**"/>
-			<mvc:mapping path="/report/**"/>
-			<mvc:mapping path="/feedPriceIndex/**"/>
-			<mvc:mapping path="/productPriceIndex/**"/>
-			<mvc:mapping path="/expertIndex/**"/>
-			<mvc:mapping path="/industryIndex/**"/>
-			<mvc:mapping path="/rabFeedPricIndex/**"/>
 			<mvc:exclude-mapping path="/admin"/>
 			<mvc:exclude-mapping path="/admin/login"/>
 			<mvc:exclude-mapping path="/admin/exit"/>
-			<bean class="com.cgw.app.util.SecurityInterceptor" />
+			<bean class="com.pms.app.util.SecurityInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
 

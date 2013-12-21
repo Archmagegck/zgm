@@ -159,53 +159,138 @@
   <tr>
     <td width="182" valign="top">
     
-      <h1 class="type"><a href="javascript:void(0)">信息采集管理</a></h1>
-      <div class="content">
-        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-          <tr>
-            <td><img src="${ctx}/images/admin/images/menu_topline.gif" width="182" height="5" /></td>
-          </tr>
-        </table>
-        <ul class="MM">
-        	<li><a href="${ctx}/entrepotcoll/list" target="right">集散地信息管理</a></li>
-          	<li><a href="${ctx}/farmerscoll/list" target="right">养殖户信息管理</a></li>
-          	<li><a href="${ctx}/consumercoll/list" target="right">消费者信息管理</a></li>
-          	<li><a href="${ctx}/inOutFence/list" target="right">存栏出栏管理</a></li>
-          	<li><a href="${ctx}/report/list" target="right">价格汇总统计</a></li>
-        </ul>
-      </div>
-      
-      <h1 class="type"><a href="javascript:void(0)">指数统计</a></h1>
-      <div class="content">
-        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-          <tr>
-            <td><img src="${ctx}/images/admin/images/menu_topline.gif" width="182" height="5" /></td>
-          </tr>
-        </table>
-        <ul class="MM">
-        	<li><a href="${ctx}/feedPriceIndex/list" target="right">兔饲料价格指数</a></li>
-        	<li><a href="${ctx}/productPriceIndex/list" target="right">兔产品价格指数</a></li>
-        	<li><a href="${ctx}/expertIndex/list" target="right">兔业专家指数</a></li>
-        	<li><a href="${ctx}/industryIndex/list" target="right">兔产业指数</a></li>
-        	<li><a href="${ctx}/rabFeedPricIndex/list" target="right">兔料比价</a></li>
-        	<li><a href="${ctx}/generateIndex" target="right">统计数据生成</a></li>
-        </ul>
-      </div>
-      
-      <h1 class="type"><a href="javascript:void(0)">系统管理</a></h1>
-      <div class="content">
-        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-          <tr>
-            <td><img src="${ctx}/images/admin/images/menu_topline.gif" width="182" height="5" /></td>
-          </tr>
-        </table>
-        <ul class="MM">
-        	<li><a href="${ctx}/province/list" target="right">省份管理</a></li>
-	        <li><a href="${ctx}/region/list" target="right">地区管理</a></li>
-        	<li><a href="${ctx}/user/list" target="right">用户管理</a></li>
-        	<li><a href="${ctx}/config/show" target="right">参数设置</a></li>
-        </ul>
-      </div>
+		<c:if test="${(sessionScope.user != null) && (sessionScope.type == 1)}">
+			<h1 class="type"><a href="javascript:void(0)">用户管理</a></h1>
+	      <div class="content">
+	        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+	          <tr>
+	            <td><img src="${ctx}/images/admin/images/menu_topline.gif" width="182" height="5" /></td>
+	          </tr>
+	        </table>
+	        <ul class="MM">
+	        	<li><a href="${ctx}/manage/supervisor" target="right">监管员管理</a></li>
+	          	<li><a href="${ctx}/manage/supervisionCustomer" target="right">监管客户管理</a></li>
+	          	<li><a href="${ctx}/manage/delegator" target="right">委托员管理</a></li>
+	        </ul>
+	      </div>
+	      
+	      <h1 class="type"><a href="javascript:void(0)">质押物设置</a></h1>
+	      <div class="content">
+	        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+	          <tr>
+	            <td><img src="${ctx}/images/admin/images/menu_topline.gif" width="182" height="5" /></td>
+	          </tr>
+	        </table>
+	        <ul class="MM">
+	        	<li><a href="${ctx}/manage/pledgePurity" target="right">质押物成色设置</a></li>
+	        	<li><a href="${ctx}/manage/pledgePrice" target="right">质押物每日价格设置</a></li>
+	        	<li><a href="${ctx}/manage/pledgeConfig" target="right">质押物要求及警戒线设置</a></li>
+	        </ul>
+	      </div>
+	      
+	      <h1 class="type"><a href="javascript:void(0)">仓库管理</a></h1>
+	      <div class="content">
+	        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+	          <tr>
+	            <td><img src="${ctx}/images/admin/images/menu_topline.gif" width="182" height="5" /></td>
+	          </tr>
+	        </table>
+	        <ul class="MM">
+	        	<li><a href="${ctx}/manage/supervisor" target="right">总库存</a></li>
+		        <li><a href="${ctx}/manage/supervisor" target="right">日常出货统计</a></li>
+	        	<li><a href="${ctx}/manage/supervisor" target="right">当日进出库查询</a></li>
+	        	<li><a href="${ctx}/manage/supervisor" target="right">当日库存查询</a></li>
+	        	<li><a href="${ctx}/manage/supervisor" target="right">待审核出库单</a></li>
+	        	<li><a href="${ctx}/manage/supervisor" target="right">质物清单记录</a></li>
+	        	<li><a href="${ctx}/manage/supervisor" target="right">盘存记录</a></li>
+	        </ul>
+	      </div>
+		</c:if>
+		
+		<c:if test="${(sessionScope.user != null) && (sessionScope.type == 2)}">
+		  <h1 class="type"><a href="javascript:void(0)">入库管理</a></h1>
+	      <div class="content">
+	        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+	          <tr>
+	            <td><img src="${ctx}/images/admin/images/menu_topline.gif" width="182" height="5" /></td>
+	          </tr>
+	        </table>
+	        <ul class="MM">
+	        	<li><a href="${ctx}/entrepotcoll/list" target="right">入库单列表</a></li>
+	          	<li><a href="${ctx}/farmerscoll/list" target="right">登记货物明细</a></li>
+	          	<li><a href="${ctx}/consumercoll/list" target="right">检测拒绝记录</a></li>
+	        </ul>
+	      </div>
+	      
+	      <h1 class="type"><a href="javascript:void(0)">出库管理</a></h1>
+	      <div class="content">
+	        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+	          <tr>
+	            <td><img src="${ctx}/images/admin/images/menu_topline.gif" width="182" height="5" /></td>
+	          </tr>
+	        </table>
+	        <ul class="MM">
+	        	<li><a href="${ctx}/feedPriceIndex/list" target="right">出库单列表</a></li>
+	        	<li><a href="${ctx}/productPriceIndex/list" target="right">登记出库货物明细</a></li>
+	        </ul>
+	      </div>
+	      
+	      <h1 class="type"><a href="javascript:void(0)">每日营业后操作</a></h1>
+	      <div class="content">
+	        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+	          <tr>
+	            <td><img src="${ctx}/images/admin/images/menu_topline.gif" width="182" height="5" /></td>
+	          </tr>
+	        </table>
+	        <ul class="MM">
+	        	<li><a href="${ctx}/province/list" target="right">库存盘点及成色检测</a></li>
+		        <li><a href="${ctx}/region/list" target="right">库存盘点检测记录</a></li>
+	        	<li><a href="${ctx}/user/list" target="right">最低价值核对</a></li>
+	        	<li><a href="${ctx}/config/show" target="right">生成质物清单</a></li>
+	        </ul>
+	      </div>
+	      
+	      <h1 class="type"><a href="javascript:void(0)">在途管理</a></h1>
+	      <div class="content">
+	        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+	          <tr>
+	            <td><img src="${ctx}/images/admin/images/menu_topline.gif" width="182" height="5" /></td>
+	          </tr>
+	        </table>
+	        <ul class="MM">
+	        	<li><a href="${ctx}/province/list" target="right">在途质物登记</a></li>
+		        <li><a href="${ctx}/region/list" target="right">在途质物记录</a></li>
+	        </ul>
+	      </div>
+	      
+	      <h1 class="type"><a href="javascript:void(0)">质物管理</a></h1>
+	      <div class="content">
+	        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+	          <tr>
+	            <td><img src="${ctx}/images/admin/images/menu_topline.gif" width="182" height="5" /></td>
+	          </tr>
+	        </table>
+	        <ul class="MM">
+	        	<li><a href="${ctx}/province/list" target="right">实时库存信息</a></li>
+		        <li><a href="${ctx}/region/list" target="right">每日质物清单</a></li>
+	        </ul>
+	      </div>
+		</c:if>
+		
+		<c:if test="${(sessionScope.user != null) && (sessionScope.type == 3)}">
+			<h1 class="type"><a href="javascript:void(0)">系统管理</a></h1>
+		      <div class="content">
+		        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+		          <tr>
+		            <td><img src="${ctx}/images/admin/images/menu_topline.gif" width="182" height="5" /></td>
+		          </tr>
+		        </table>
+		        <ul class="MM">
+		        	<li><a href="${ctx}/entrepotcoll/list" target="right">监管客户管理</a></li>
+		          	<li><a href="${ctx}/farmerscoll/list" target="right">修改密码</a></li>
+		        </ul>
+		      </div>
+		</c:if>
       
         <script type="text/javascript">
 		var contents = document.getElementsByClassName('content');

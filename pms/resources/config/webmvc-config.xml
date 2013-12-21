@@ -10,7 +10,7 @@
 	<mvc:resources location="/static/" mapping="/static/**"/>
 	<mvc:resources location="/common/" mapping="/common/**"/>
 
-	<context:component-scan base-package="com.cgw.app" use-default-filters="false">
+	<context:component-scan base-package="com.pms.app" use-default-filters="false">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
 	

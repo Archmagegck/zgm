@@ -6,7 +6,7 @@
 <html>
   <head>
     
-    <title>网站管理员登录</title>
+    <title>质押监管仓库系统登录</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -111,6 +111,16 @@ body {
                             <td width="13%" height="35" class="top_hui_text"><span class="login_txt"> 密 码： &nbsp;&nbsp; </span></td>
                             <td height="35" colspan="2" class="top_hui_text"><input class="required" type="password" size="20" name="password">
                             	<img src="${ctx}/images/admin/images/luck.gif" width="19" height="18">
+                            </td>
+                          </tr>
+                          <tr>
+                            <td width="13%" height="38" class="top_hui_text"><span class="login_txt">用户类别：&nbsp;&nbsp; </span></td>
+                            <td height="38" colspan="2" class="top_hui_text">
+                            	<select name="type" id="type">
+									<option value="1">监管经理</option>
+									<option value="2">监管员</option>
+									<option value="3">委托方</option>
+								</select>
                             </td>
                           </tr>
                           <tr>

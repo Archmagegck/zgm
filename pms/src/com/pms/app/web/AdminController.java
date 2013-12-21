@@ -12,52 +12,89 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.pms.app.entity.User;
-import com.pms.app.service.UserService;
+import com.pms.app.entity.Admin;
+import com.pms.app.entity.Delegator;
+import com.pms.app.entity.Supervisor;
+import com.pms.app.service.AdminService;
+import com.pms.app.service.DelegatorService;
+import com.pms.app.service.SupervisorService;
 
 @Controller
 @RequestMapping(value = "/admin")
 public class AdminController {
-	
-	@Autowired
-	private UserService userService;
-	
-	@RequestMapping(value = {""})
-	public String admin(){
+
+	@Autowired private AdminService adminService;
+	@Autowired private SupervisorService supervisorService;
+	@Autowired private DelegatorService delegatorService;
+
+	@RequestMapping(value = { "" })
+	public String admin() {
 		return "login/login";
 	}
-	
+
 	@RequestMapping(value = "/top")
-	public String top(){
+	public String top() {
 		return "main/top";
 	}
-	
+
 	@RequestMapping(value = "/left")
-	public String left(){
+	public String left() {
 		return "main/left";
 	}
-	
+
 	@RequestMapping(value = "/right")
-	public String right(Model model, Pageable pageable, String queryName, String queryValue){
+	public String right(Model model, Pageable pageable, String queryName, String queryValue) {
 		return "main/right";
 	}
-	
+
 	@RequestMapping(value = "/login")
-	public String login(RedirectAttributes ra, String username, String password, HttpSession session){
-		List<User> list = userService.findByLoginNameAndPassword(username, password);
-		if(!list.isEmpty()){
-			if(list.size() == 1){
-				User user = list.get(0);
-				session.setAttribute("user", user);
-				return "main/main";
+	public String login(RedirectAttributes ra, String username, String password, Integer type, HttpSession session) {
+		if(type == null)
+			return "redirect:/admin";
+		switch (type) {
+		case 1: // 监管经理
+			List<Admin> adminList = adminService.findByUsernameAndPassword(username, password);
+			if (!adminList.isEmpty()) {
+				if (adminList.size() == 1) {
+					Admin admin = adminList.get(0);
+					session.setAttribute("type", type);
+					session.setAttribute("user", admin);
+					return "main/main";
+				}
 			}
+			break;
+		case 2: // 监管员
+			List<Supervisor> supervisorList = supervisorService.findByUsernameAndPassword(username, password);
+			if (!supervisorList.isEmpty()) {
+				if (supervisorList.size() == 1) {
+					Supervisor supervisor = supervisorList.get(0);
+					session.setAttribute("type", type);
+					session.setAttribute("user", supervisor);
+					return "main/main";
+				}
+			}
+			break;
+		case 3: // 委托方
+			List<Delegator> delegatorList = delegatorService.findByUsernameAndPassword(username, password);
+			if (!delegatorList.isEmpty()) {
+				if (delegatorList.size() == 1) {
+					Delegator delegator = delegatorList.get(0);
+					session.setAttribute("type", type);
+					session.setAttribute("user", delegator);
+					return "main/main";
+				}
+			}
+			break;
+		default:
+			break;
 		}
+		
 		ra.addFlashAttribute("message", "账号或密码错误！");
 		return "redirect:/admin";
 	}
-	
+
 	@RequestMapping(value = "/exit")
-	public String exit(HttpServletRequest request){
+	public String exit(HttpServletRequest request) {
 		request.getSession().invalidate();
 		return "login/login";
 	}

@@ -1,5 +1,7 @@
-package com.pms.app.web;
+package com.pms.app.web.manage;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -8,61 +10,64 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.pms.app.entity.User;
-import com.pms.app.service.UserService;
-
+import com.pms.app.entity.PledgeConfig;
+import com.pms.app.service.PledgeConfigService;
 
 @Controller
-@RequestMapping(value = "/user")
-public class UserController {
+@RequestMapping(value = "/manage/pledgeConfig")
+public class PledgeConfigController {
 	
-	@Autowired private UserService userService;
+	private Logger logger = LoggerFactory.getLogger(PledgeConfigController.class);
+	
+	@Autowired private PledgeConfigService pledgeConfigService;
 	
 	@RequestMapping(value = { "/list", "" })
 	public String list(Model model, Pageable pageable, String queryName, String queryValue) {
 		model.addAttribute("queryName", queryName);
 		model.addAttribute("queryValue", queryValue);
-//		model.addAttribute("page", userService.findPageByQuery(pageable, userType, queryName, queryValue));
-		return "user/list";
+		model.addAttribute("page", pledgeConfigService.findAllLike(pageable, queryName, queryValue));
+		return "manage/pledgeConfig/list";
 	}
 	
 	
 	@RequestMapping(value = "/add")
 	public String add(Model model){
-		return "user/add";
+		return "manage/pledgeConfig/add";
 	}
 	
 	
 	@RequestMapping(value = "/save")
-	public String save(User user, RedirectAttributes ra){
+	public String save(PledgeConfig pledgeConfig, RedirectAttributes ra){
 		try {
-			userService.save(user);
+			pledgeConfigService.save(pledgeConfig);
 			ra.addFlashAttribute("messageOK", "保存成功！");
 		} catch (Exception e) {
 			ra.addFlashAttribute("messageErr", "保存失败！");
-			e.printStackTrace();
+			logger.error("监管员保存异常", e);
 		}
-		return "redirect:/user/list";
+		return "redirect:/manage/pledgeConfig/list";
 	}
 	
 	
 	@RequestMapping(value = "/edit/{id}")
 	public String edit(@PathVariable("id")String id, Model model){
-		User user = userService.findById(id);
-		model.addAttribute("user", user);
-		return "user/edit";
+		model.addAttribute("pledgeConfig", pledgeConfigService.findById(id));
+		return "manage/pledgeConfig/edit";
 	}
 	
 
 	@RequestMapping(value = "/delete")
 	public String delete(String[] idGroup, RedirectAttributes ra){
 		try {
-			userService.delete(idGroup);
+			pledgeConfigService.delete(idGroup);
 			ra.addFlashAttribute("messageOK", "删除成功！");
 		} catch (Exception e) {
 			ra.addFlashAttribute("messageErr", "删除失败！");
-			e.printStackTrace();
+			logger.error("监管员保存异常", e);
 		}
-		return "redirect:/user/list";
+		return "redirect:/manage/pledgeConfig/list";
 	}
+	
+	
+	
 }

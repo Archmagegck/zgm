@@ -22,26 +22,20 @@
 	<script type="text/javascript" src="${ctx }/js/jquery-1.6.1.js"></script>
 	<script type="text/javascript" src="${ctx }/js/validate/jquery.metadata.js"></script>
 	<script type="text/javascript" src="${ctx }/js/validate/jquery.validate.js"></script>
-	<script type="text/javascript" src="${ctx }/js/caiot.js"></script>
 	
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$("#myForm").validate();
 		});
-
-		function changeRegionByPro(id){
-			var url = "${ctx}/response/province/" + id + "/regions";
-			iniSelect(url, "regionList");
-		}
 	</script>
 	
   </head>
   
   <body>
-    <form id="myForm" name="myForm" action="${ctx}/user/save" method="post">
+    <form id="myForm" name="myForm" action="${ctx}/manage/delegator/save" method="post">
     	<div id="content">
     		<div style="margin-bottom: 10px;padding: 5px 10px;" id="box">
-    		<h3 id="adduser">添加用户</h3>
+    		<h3 id="adduser">添加委托方</h3>
     		<br/>
     		<fieldset style="padding: 5px 10px;" id="personal">
     			<legend><h3>请输入相关信息</h3></legend>
@@ -49,18 +43,26 @@
     				<table  cellpadding="0" cellspacing="0" width="100%"  class="list1">
 					<tr>
 						<td width="20%">
-							用户姓名:
+							委托方编号:
 						</td>
 						<td width="80%">
-							<input id="realName" name="realName" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
+							<input id="code" name="code" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
 						</td>
 					</tr>
 					<tr>
 						<td width="20%">
-							登录名:
+							委托方名称:
 						</td>
 						<td width="80%">
-							<input id="loginName" name="loginName" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
+							<input id="name" name="name" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
+						</td>
+					</tr>
+					<tr>
+						<td width="20%">
+							用户名:
+						</td>
+						<td width="80%">
+							<input id="username" name="username" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
 						</td>
 					</tr>
 					<tr>
@@ -68,26 +70,28 @@
 							密码:
 						</td>
 						<td width="80%">
-							<input id="loginPwd" name="loginPwd" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
+							<input id="password" name="password" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
 						</td>
 					</tr>
 					<tr>
 						<td width="20%">
-							用户类别:
+							地址:
 						</td>
 						<td width="80%">
-							<select id="userType" name="userType">
-			            		<option value="Farmers">养殖户</option>
-			            		<option value="Entrepot">集散地</option>
-			            		<option value="Consumer">消费者</option>
-			            		<option value="ProAduit">省级审核用户</option>
-			            		<option value="Scientist">科学家</option>
-			            	</select>
+							<input id="address" name="address" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
 						</td>
 					</tr>
 					<tr>
 						<td width="20%">
-							手机号码:
+							联系人:
+						</td>
+						<td width="80%">
+							<input id="contact" name="contact" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
+						</td>
+					</tr>
+					<tr>
+						<td width="20%">
+							联系电话:
 						</td>
 						<td width="80%">
 							<input id="phone" name="phone" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
@@ -103,35 +107,18 @@
 					</tr>
 					<tr>
 						<td width="20%">
-							地址:
+							开票信息:
 						</td>
 						<td width="80%">
-							<input id="address" name="address" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
+							<input id="invoices" name="invoices" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
 						</td>
 					</tr>
 					<tr>
 						<td width="20%">
-							所在省份:
+							备注:
 						</td>
 						<td width="80%">
-							<select name="province.id" class="required" onchange="changeRegionByPro(this.value)">
-								<option value="" selected="selected">--请选择--</option>
-								<c:forEach items="${provinceList}" var = "province">
-									<option value = "${province.id }">${province.name }</option>
-								</c:forEach>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td width="20%">
-							所在地区:
-						</td>
-						<td width="80%">
-							<select name = "region.id" id="regionList" class="required">
-								<c:forEach items="${regionList}" var = "region">
-									<option value = "${region.id }">${region.name }</option>
-								</c:forEach>
-							</select>
+							<input id="desc" name="desc" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
 						</td>
 					</tr>
 					</table>
