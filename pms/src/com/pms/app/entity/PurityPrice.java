@@ -17,13 +17,13 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
- * 质押物价格
+ * 质押物成色每日价格
  * @author wangzz
  */
 @Entity
 @Table(name = "t_pledgePrice")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class PledgePrice {
+public class PurityPrice {
 
 	@Id
 	@GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
