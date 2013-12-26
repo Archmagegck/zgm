@@ -1,5 +1,9 @@
 package com.pms.app.entity;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cache;
@@ -40,7 +45,7 @@ public class InsRecord {
 	 * 总重量
 	 */
 	@Column(name = "in_sumWeight")
-	private String sumWeight;
+	private Double sumWeight;
 	
 	
 	/**
@@ -77,8 +82,8 @@ public class InsRecord {
 	 * 0:否<br>
 	 * 1:是
 	 */
-	@Column(name = "in_storage")
-	private int closedTran;
+	@Column(name = "in_closedTran")
+	private Integer closedTran;
 	
 	
 	/**
@@ -89,17 +94,18 @@ public class InsRecord {
 	
 	
 	/**
-	 * 操作监管员员姓名
+	 * 操作监管员
 	 */
-	@Column(name = "in_desc")
-	private String supName;
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "s_id")
+	private Supervisor supervisor;
 	
 	
 	/**
 	 * 入库时间
 	 */
 	@Column(name = "in_date")
-	private String inDate;
+	private Date inDate = new Date();
 	
 	
 	/**
@@ -108,7 +114,7 @@ public class InsRecord {
 	 * 1:已上传
 	 */
 	@Column(name = "in_attachState")
-	private int attachState = 0;
+	private Integer attachState = 0;
 	
 	
 	/**
@@ -130,6 +136,13 @@ public class InsRecord {
 	 */
 	@Column(name = "in_pledgeUrl")
 	private String pledgeUrl;
+	
+	
+	/**
+	 * 明细
+	 */
+	@OneToMany(mappedBy = "insRecord")
+	private List<InsRecordDetail> insRecordDetails = new ArrayList<InsRecordDetail>();
 
 
 	public String getId() {
@@ -152,12 +165,12 @@ public class InsRecord {
 	}
 
 
-	public String getSumWeight() {
+	public Double getSumWeight() {
 		return sumWeight;
 	}
 
 
-	public void setSumWeight(String sumWeight) {
+	public void setSumWeight(Double sumWeight) {
 		this.sumWeight = sumWeight;
 	}
 
@@ -202,12 +215,12 @@ public class InsRecord {
 	}
 
 
-	public int getClosedTran() {
+	public Integer getClosedTran() {
 		return closedTran;
 	}
 
 
-	public void setClosedTran(int closedTran) {
+	public void setClosedTran(Integer closedTran) {
 		this.closedTran = closedTran;
 	}
 
@@ -222,32 +235,22 @@ public class InsRecord {
 	}
 
 
-	public String getSupName() {
-		return supName;
-	}
-
-
-	public void setSupName(String supName) {
-		this.supName = supName;
-	}
-
-
-	public String getInDate() {
+	public Date getInDate() {
 		return inDate;
 	}
 
 
-	public void setInDate(String inDate) {
+	public void setInDate(Date inDate) {
 		this.inDate = inDate;
 	}
 
 
-	public int getAttachState() {
+	public Integer getAttachState() {
 		return attachState;
 	}
 
 
-	public void setAttachState(int attachState) {
+	public void setAttachState(Integer attachState) {
 		this.attachState = attachState;
 	}
 
@@ -279,6 +282,26 @@ public class InsRecord {
 
 	public void setPledgeUrl(String pledgeUrl) {
 		this.pledgeUrl = pledgeUrl;
+	}
+
+
+	public List<InsRecordDetail> getInsRecordDetails() {
+		return insRecordDetails;
+	}
+
+
+	public void setInsRecordDetails(List<InsRecordDetail> insRecordDetails) {
+		this.insRecordDetails = insRecordDetails;
+	}
+
+
+	public Supervisor getSupervisor() {
+		return supervisor;
+	}
+
+
+	public void setSupervisor(Supervisor supervisor) {
+		this.supervisor = supervisor;
 	}
 	
 }

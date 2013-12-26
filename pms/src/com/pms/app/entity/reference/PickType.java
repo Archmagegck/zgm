@@ -1,29 +1,29 @@
 package com.pms.app.entity.reference;
 
 /**
- * 检测方法
+ * 提货类型
  * @author wangzz
  */
-public enum CheckMethod {
+public enum PickType {
 	
 	/**
-	 * 光谱法
+	 * 部分解除
 	 */
-	Spectrum {
+	Part {
 		@Override
 		public String getTitle() {
-			return "光谱法";
+			return "部分解除";
 		}
 	},
 	
 	
 	/**
-	 * 溶金法
+	 * 全部解除
 	 */
-	Dissolve {
+	All {
 		@Override
 		public String getTitle() {
-			return "溶金法";
+			return "全部解除";
 		}
 	};
 	
@@ -37,6 +37,4 @@ public enum CheckMethod {
     public int getValue(){   
         return this.ordinal();   
     }
-	
-	
 }

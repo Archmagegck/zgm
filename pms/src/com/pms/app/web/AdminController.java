@@ -70,6 +70,7 @@ public class AdminController {
 					Supervisor supervisor = supervisorList.get(0);
 					session.setAttribute("type", type);
 					session.setAttribute("user", supervisor);
+					session.setAttribute("warehouseId", supervisorService.findWarehouseBySupervisorId(supervisor.getId()));
 					return "main/main";
 				}
 			}

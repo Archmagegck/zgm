@@ -1,29 +1,29 @@
 package com.pms.app.entity.reference;
 
 /**
- * 检测方法
+ * 审核状态
  * @author wangzz
  */
-public enum CheckMethod {
+public enum AuditState {
 	
 	/**
-	 * 光谱法
+	 * 通过
 	 */
-	Spectrum {
+	Pass {
 		@Override
 		public String getTitle() {
-			return "光谱法";
+			return "通过";
 		}
 	},
 	
 	
 	/**
-	 * 溶金法
+	 * 拒绝
 	 */
-	Dissolve {
+	Refuse {
 		@Override
 		public String getTitle() {
-			return "溶金法";
+			return "拒绝";
 		}
 	};
 	

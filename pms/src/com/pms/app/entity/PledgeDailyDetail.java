@@ -14,256 +14,202 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
-import com.pms.app.entity.reference.CheckMethod;
-
 /**
- * 入库单明细
+ * 每日质物清单明细
  * @author wangzz
  */
 @Entity
-@Table(name = "t_insRecordDetail")
+@Table(name = "t_pledgeDailyDetail")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class InsRecordDetail {
+public class PledgeDailyDetail {
 	
 	@Id
 	@GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
 	@GeneratedValue(generator = "uuid")
-	@Column(name = "ind_id")
+	@Column(name = "pdd_id")
 	private String id;
 	
-	
 	/**
-	 * 所属入库单
+	 * 所属质物清单
 	 */
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "in_id")
-	private InsRecord insRecord;
-	
+	@JoinColumn(name = "pd_id")
+	private PledgeDaily pledgeDaily;
 	
 	/**
 	 * 款式大类
 	 */
-	@Column(name = "ind_style")
+	@Column(name = "pdd_style")
 	private String style;
-	
 	
 	/**
 	 * 成色
 	 */
-	@Column(name = "ind_pledgePurity")
+	@Column(name = "pdd_pledgePurity")
 	private String pledgePurity;
-	
 	
 	/**
 	 * 规格重量（kg/件）
 	 */
-	@Column(name = "ind_specWeight")
+	@Column(name = "pdd_specWeight")
 	private Double specWeight;
 	
+	/**
+	 * 实际数量（件）
+	 */
+	@Column(name = "pdd_amount")
+	private Double realAmount;
 	
 	/**
-	 * 数量（件）
+	 * 总重量（kg）
 	 */
-	@Column(name = "ind_amount")
-	private Double amount;
-	
-	
-	/**
-	 * 总重量
-	 */
-	@Column(name = "ind_sumWeight")
+	@Column(name = "pdd_sumWeight")
 	private Double sumWeight;
-	
 	
 	/**
 	 * 生产厂家
 	 */
-	@Column(name = "ind_company")
+	@Column(name = "pdd_company")
 	private String company;
 	
+	/**
+	 * 存储地点
+	 */
+	@Column(name = "pdd_storage")
+	private String storage;
 	
 	/**
-	 * 检测成色
+	 * 是否封闭运输<br>
+	 * 0:否<br>
+	 * 1:是
 	 */
-	@Column(name = "ind_checkPurity")
-	private String checkPurity;
-	
+	@Column(name = "pdd_closedTran")
+	private int closedTran;
 	
 	/**
-	 * 检测规格重量（kg/件）
+	 * 光谱法抽检重量占比
 	 */
-	@Column(name = "ind_checkSpecWeight")
-	private Double checkSpecWeight;
-	
+	@Column(name = "pdd_spectrumRate")
+	private Double spectrumRate;
 	
 	/**
-	 * 检测数量（件）
+	 * 溶金法抽检重量占比
 	 */
-	@Column(name = "ind_checkAmount")
-	private Double checkAmount;
-	
+	@Column(name = "pdd_dissolveRate")
+	private Double dissolveRate;
 	
 	/**
-	 * 检测重量（kg）
+	 * 标记
 	 */
-	@Column(name = "ind_checkWeight")
-	private Double checkWeight;
-	
-	
-	/**
-	 * 检测方法
-	 */
-	@Column(name = "ind_checkMethod")
-	private CheckMethod checkMethod;
-	
-	
-	/**
-	 * 备注
-	 */
-	@Column(name = "ind_desc")
+	@Column(name = "pdd_desc")
 	private String desc;
-
 
 	public String getId() {
 		return id;
 	}
 
-
 	public void setId(String id) {
 		this.id = id;
 	}
 
-
-	public InsRecord getInsRecord() {
-		return insRecord;
+	public PledgeDaily getPledgeDaily() {
+		return pledgeDaily;
 	}
 
-
-	public void setInsRecord(InsRecord insRecord) {
-		this.insRecord = insRecord;
+	public void setPledgeDaily(PledgeDaily pledgeDaily) {
+		this.pledgeDaily = pledgeDaily;
 	}
-
 
 	public String getStyle() {
 		return style;
 	}
 
-
 	public void setStyle(String style) {
 		this.style = style;
 	}
-
 
 	public String getPledgePurity() {
 		return pledgePurity;
 	}
 
-
 	public void setPledgePurity(String pledgePurity) {
 		this.pledgePurity = pledgePurity;
 	}
-
 
 	public Double getSpecWeight() {
 		return specWeight;
 	}
 
-
 	public void setSpecWeight(Double specWeight) {
 		this.specWeight = specWeight;
 	}
 
-
-	public Double getAmount() {
-		return amount;
+	public Double getRealAmount() {
+		return realAmount;
 	}
 
-
-	public void setAmount(Double amount) {
-		this.amount = amount;
+	public void setRealAmount(Double realAmount) {
+		this.realAmount = realAmount;
 	}
-
 
 	public Double getSumWeight() {
 		return sumWeight;
 	}
 
-
 	public void setSumWeight(Double sumWeight) {
 		this.sumWeight = sumWeight;
 	}
-
 
 	public String getCompany() {
 		return company;
 	}
 
-
 	public void setCompany(String company) {
 		this.company = company;
 	}
 
-
-	public String getCheckPurity() {
-		return checkPurity;
+	public String getStorage() {
+		return storage;
 	}
 
-
-	public void setCheckPurity(String checkPurity) {
-		this.checkPurity = checkPurity;
+	public void setStorage(String storage) {
+		this.storage = storage;
 	}
 
-
-	public Double getCheckSpecWeight() {
-		return checkSpecWeight;
+	public int getClosedTran() {
+		return closedTran;
 	}
 
-
-	public void setCheckSpecWeight(Double checkSpecWeight) {
-		this.checkSpecWeight = checkSpecWeight;
+	public void setClosedTran(int closedTran) {
+		this.closedTran = closedTran;
 	}
 
-
-	public Double getCheckAmount() {
-		return checkAmount;
+	public Double getSpectrumRate() {
+		return spectrumRate;
 	}
 
-
-	public void setCheckAmount(Double checkAmount) {
-		this.checkAmount = checkAmount;
+	public void setSpectrumRate(Double spectrumRate) {
+		this.spectrumRate = spectrumRate;
 	}
 
-
-	public Double getCheckWeight() {
-		return checkWeight;
+	public Double getDissolveRate() {
+		return dissolveRate;
 	}
 
-
-	public void setCheckWeight(Double checkWeight) {
-		this.checkWeight = checkWeight;
+	public void setDissolveRate(Double dissolveRate) {
+		this.dissolveRate = dissolveRate;
 	}
-
-
-	public CheckMethod getCheckMethod() {
-		return checkMethod;
-	}
-
-
-	public void setCheckMethod(CheckMethod checkMethod) {
-		this.checkMethod = checkMethod;
-	}
-
 
 	public String getDesc() {
 		return desc;
 	}
 
-
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
-
-
+	
+	
+	
 	
 	
 }

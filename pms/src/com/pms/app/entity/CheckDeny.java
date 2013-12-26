@@ -142,14 +142,14 @@ public class CheckDeny {
 	 * 0:否<br>
 	 * 1:是
 	 */
-	@Column(name = "cd_storage")
-	private int closedTran;
+	@Column(name = "cd_closedTran")
+	private Integer closedTran;
 	
 	
 	/**
 	 * 操作监管员员姓名
 	 */
-	@Column(name = "cd_desc")
+	@Column(name = "cd_supName")
 	private String supName;
 	
 	
@@ -320,12 +320,12 @@ public class CheckDeny {
 	}
 
 
-	public int getClosedTran() {
+	public Integer getClosedTran() {
 		return closedTran;
 	}
 
 
-	public void setClosedTran(int closedTran) {
+	public void setClosedTran(Integer closedTran) {
 		this.closedTran = closedTran;
 	}
 
