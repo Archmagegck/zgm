@@ -218,7 +218,7 @@
 	        <ul class="MM">
 	        	<li><a href="${ctx}/supervisor/insRecord" target="right">入库单列表</a></li>
 	          	<li><a href="${ctx}/supervisor/insRecord/showDetailList" target="right">登记货物明细</a></li>
-	          	<li><a href="${ctx}/consumercoll/list" target="right">检测拒绝记录</a></li>
+	          	<li><a href="${ctx}/supervisor/checkDeny/list" target="right">检测拒绝记录</a></li>
 	        </ul>
 	      </div>
 	      
