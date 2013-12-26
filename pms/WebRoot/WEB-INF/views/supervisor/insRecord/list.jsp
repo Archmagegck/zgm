@@ -46,7 +46,7 @@
 	</head>
 
 	<body>
-		<form action="${ctx }/supervisor/insRecord/list" method="post" id="myForm" name="myForm">
+		<form action="${ctx }/supervisor/insRecord/list" method="get" id="myForm" name="myForm">
 			<div align="center" id="content"">
 				<div id="box">
 					<h3 align="left">
@@ -86,7 +86,7 @@
 					<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
 						<thead>
 							<tr>
-								<th width="20%">序号</th>
+								<th width="8%">序号</th>
 								<th>入库单号</th>
 								<th>总重量（kg）</th>
 								<th>送货人姓名</th>
@@ -118,12 +118,12 @@
 									${insRecord.storage }&nbsp;
 								</td>
 								<td>
-									${insRecord.inDate }&nbsp;
+									${insRecord.date }&nbsp;
 								</td>
 								<td>
 									<c:if test="${insRecord.attachState == 1}">已上传</c:if>
 									<c:if test="${insRecord.attachState == 0}">
-									<a href="${ctx }/supervisor/insRecord/${insRecord.id }/uploadAttach">未上传</a>
+									<a href="${ctx }/supervisor/insRecord/${insRecord.id }/toUpload">未上传</a>
 									</c:if>
 									&nbsp;
 								</td>

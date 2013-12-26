@@ -1,6 +1,8 @@
 package com.pms.base.service;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -15,6 +17,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import com.pms.app.util.DateUtils;
 import com.pms.base.dao.BaseDao;
 
 /**
@@ -254,6 +257,34 @@ public abstract class BaseService<T, PK extends Serializable> {
 				return cb.conjunction();
 			}
 		});
-
+	}
+	
+	public Page<T> findPageByQuery(Pageable pageable, final String warehouseId, final Date beginDate, final Date endDate) {
+		Specification<T> specification = new Specification<T>() {
+			@SuppressWarnings({ "rawtypes", "unchecked" })
+			@Override
+			public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+				List<Predicate> predicates = new ArrayList<Predicate>();
+				if(StringUtils.hasText(warehouseId)) {
+					Path expression = root.get("warehouse");
+					expression = expression.get("id");
+					predicates.add(cb.equal(expression, warehouseId));
+				}
+				if(!StringUtils.isEmpty(beginDate)) {
+					Path expression = root.get("date");
+					predicates.add(cb.greaterThanOrEqualTo(expression, DateUtils.dateToDayBegin(beginDate)));
+				}
+				if(!StringUtils.isEmpty(endDate)) {
+					Path expression = root.get("date");
+					predicates.add(cb.lessThanOrEqualTo(expression, DateUtils.dateToDayEnd(endDate)));
+				}
+				query.orderBy(cb.desc(root.get("date")));
+				if (predicates.size() > 0) {
+					return cb.and(predicates.toArray(new Predicate[predicates.size()]));
+				}
+				return cb.conjunction();
+			}
+		};
+		return getEntityDao().findAll(specification, pageable);
 	}
 }

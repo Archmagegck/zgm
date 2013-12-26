@@ -28,8 +28,8 @@ public class PledgePurity {
 	/**
 	 * 成色
 	 */
-	@Column(name = "pp_purity")
-	private String purity;
+	@Column(name = "pp_name")
+	private String name;
 
 	public String getId() {
 		return id;
@@ -39,12 +39,12 @@ public class PledgePurity {
 		this.id = id;
 	}
 
-	public String getPurity() {
-		return purity;
+	public String getName() {
+		return name;
 	}
 
-	public void setPurity(String purity) {
-		this.purity = purity;
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	

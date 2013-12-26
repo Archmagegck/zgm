@@ -105,7 +105,7 @@ public class InsRecord {
 	 * 入库时间
 	 */
 	@Column(name = "in_date")
-	private Date inDate = new Date();
+	private Date date = new Date();
 	
 	
 	/**
@@ -235,16 +235,6 @@ public class InsRecord {
 	}
 
 
-	public Date getInDate() {
-		return inDate;
-	}
-
-
-	public void setInDate(Date inDate) {
-		this.inDate = inDate;
-	}
-
-
 	public Integer getAttachState() {
 		return attachState;
 	}
@@ -302,6 +292,16 @@ public class InsRecord {
 
 	public void setSupervisor(Supervisor supervisor) {
 		this.supervisor = supervisor;
+	}
+
+
+	public Date getDate() {
+		return date;
+	}
+
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 	
 }

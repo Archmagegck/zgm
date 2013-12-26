@@ -115,8 +115,8 @@
 							监管员:
 						</td>
 						<td width="80%">
-							<select name = "supervisor.id" class="required">
-								<c:forEach items="${supervisorList}" var = "supervisor">
+							<select name="supervisor.id" class="required">
+								<c:forEach items="${supervisorList}" var="supervisor">
 									<option value = "${supervisor.id }">${supervisor.name }</option>
 								</c:forEach>
 							</select>

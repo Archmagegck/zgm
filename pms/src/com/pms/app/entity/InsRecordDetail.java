@@ -9,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -55,20 +54,6 @@ public class InsRecordDetail {
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "pp_id")
 	private PledgePurity pledgePurity;
-	
-	
-	/**
-	 * 款式名称
-	 */
-	@Transient
-	private String styleName;
-	
-	
-	/**
-	 * 成色名称
-	 */
-	@Transient
-	private String pledgePurityName;
 	
 	
 	/**
@@ -140,6 +125,21 @@ public class InsRecordDetail {
 	@Column(name = "ind_desc")
 	private String desc;
 
+	
+	public void copy(InsRecordDetail insRecordDetail) {
+		this.amount = insRecordDetail.getAmount();
+		this.checkAmount = insRecordDetail.getCheckAmount();
+		this.checkMethod = insRecordDetail.getCheckMethod();
+		this.checkPurity = insRecordDetail.getCheckPurity();
+		this.checkSpecWeight = insRecordDetail.getCheckSpecWeight();
+		this.checkWeight = insRecordDetail.getCheckWeight();
+		this.company = insRecordDetail.getCompany();
+		this.desc = insRecordDetail.getDesc();
+		this.pledgePurity = insRecordDetail.getPledgePurity();
+		this.specWeight = insRecordDetail.getSpecWeight();
+		this.style = insRecordDetail.getStyle();
+		this.sumWeight = insRecordDetail.getAmount() * insRecordDetail.getSpecWeight();
+	}
 
 	public String getId() {
 		return id;
@@ -280,27 +280,5 @@ public class InsRecordDetail {
 		this.desc = desc;
 	}
 
-
-	public String getStyleName() {
-		return styleName;
-	}
-
-
-	public void setStyleName(String styleName) {
-		this.styleName = styleName;
-	}
-
-
-	public String getPledgePurityName() {
-		return pledgePurityName;
-	}
-
-
-	public void setPledgePurityName(String pledgePurityName) {
-		this.pledgePurityName = pledgePurityName;
-	}
-
-
-	
 	
 }

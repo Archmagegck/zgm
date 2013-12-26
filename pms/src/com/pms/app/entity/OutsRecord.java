@@ -112,7 +112,7 @@ public class OutsRecord {
 	 * 出库时间
 	 */
 	@Column(name = "out_date")
-	private Date outDate = new Date();
+	private Date date = new Date();
 	
 	
 	/**
@@ -269,16 +269,6 @@ public class OutsRecord {
 	}
 
 
-	public Date getOutDate() {
-		return outDate;
-	}
-
-
-	public void setOutDate(Date outDate) {
-		this.outDate = outDate;
-	}
-
-
 	public AuditState getAuditState() {
 		return auditState;
 	}
@@ -336,5 +326,15 @@ public class OutsRecord {
 
 	public void setOutsRecordDetails(List<OutsRecordDetail> outsRecordDetails) {
 		this.outsRecordDetails = outsRecordDetails;
+	}
+
+
+	public Date getDate() {
+		return date;
+	}
+
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 }

@@ -86,7 +86,7 @@
 						&nbsp;&nbsp;&nbsp;根据
 						&nbsp;&nbsp;
 						<select name="queryName" id="queryName">
-							<option value="purity" selected="selected">成色</option>
+							<option value="name" selected="selected">成色</option>
 						</select>
 						&nbsp;&nbsp; 查询:
 						<span id="values"><input type="text" name="queryValue" id="queryValue" value="${queryValue}" /> </span>
@@ -124,7 +124,7 @@
 									${status.count}&nbsp;
 								</td>
 								<td>
-									${pledgePurity.purity }&nbsp;
+									${pledgePurity.name }&nbsp;
 								</td>
 								<td>
 									<a href="${ctx }/manage/pledgePurity/edit/${pledgePurity.id }">编辑</a>

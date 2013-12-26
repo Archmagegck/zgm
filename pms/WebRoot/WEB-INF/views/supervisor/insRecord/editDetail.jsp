@@ -7,7 +7,7 @@
 <html>
   <head>
     
-    <title>添加入库货物</title>
+    <title>编辑入库货物</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -26,26 +26,17 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$("#myForm").validate();
+			$("#checkMethod").val("${insRecordDetail.checkMethod}");
 		});
-		
-		function changeStyle(ob) {
-			alert(ob.text);
-			alert($("#style").text());
-		}
-		
-		function changePurity(ob) {
-			alert(ob.text);
-		}
-		
 	</script>
 	
   </head>
   
   <body>
-    <form id="myForm" name="myForm" action="${ctx}/supervisor/insRecord/showDetailList" method="post">
+    <form id="myForm" name="myForm" action="${ctx}/supervisor/insRecord/updateDetail/${index}" method="post">
     	<div id="content">
     		<div style="margin-bottom: 10px;padding: 5px 10px;" id="box">
-    		<h3 id="adduser">添加入库货物</h3>
+    		<h3 id="adduser">编辑入库货物</h3>
     		<br/>
     		<fieldset style="padding: 5px 10px;" id="personal">
     			<legend><h3>请输入相关信息</h3></legend>
@@ -56,12 +47,19 @@
 							款式大类:
 						</td>
 						<td width="70%">
-							<select id="style" name="style.id" class="required" onchange="changeStyle(this)">
+							<select name="style.id" class="required">
 								<c:forEach items="${styleList}" var="style">
-									<option value = "${style.id }">${style.name }</option>
+									<c:choose>
+										<c:when test="${style.id == insRecordDetail.style.id }">
+											<option selected="selected" value = "${style.id }">${style.name }</option>
+										</c:when>
+										<c:otherwise>
+											<option value = "${style.id }">${style.name }</option>
+										</c:otherwise>
+									</c:choose>
 								</c:forEach>
 							</select>
-							<input type="hidden" name="style.name" value="${styleList[0].name}">
+							<input type="hidden" name="style.name" value="${insRecordDetail.style.name}">
 						</td>
 					</tr>
 					<tr>
@@ -69,12 +67,19 @@
 							标明成色:
 						</td>
 						<td width="70%">
-							<select name="pledgePurity.id" class="required" onchange="changePurity(this.value)">
+							<select name="pledgePurity.id" class="required">
 								<c:forEach items="${pledgePurityList}" var="pledgePurity">
-									<option value = "${pledgePurity.id }">${pledgePurity.name }</option>
+									<c:choose>
+										<c:when test="${pledgePurity.id == insRecordDetail.pledgePurity.id }">
+											<option selected="selected" value = "${pledgePurity.id }">${pledgePurity.name }</option>
+										</c:when>
+										<c:otherwise>
+											<option value = "${pledgePurity.id }">${pledgePurity.name }</option>
+										</c:otherwise>
+									</c:choose>
 								</c:forEach>
 							</select>
-							<input type="hidden" name="pledgePurity.name" value="${pledgePurityList[0].name}">
+							<input type="hidden" name="pledgePurity.name" value="${insRecordDetail.pledgePurity.name}">
 						</td>
 					</tr>
 					<tr>
@@ -82,7 +87,7 @@
 							标明规格重量（kg）:
 						</td>
 						<td width="70%">
-							<input id="specWeight" name="specWeight" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
+							<input id="specWeight" name="specWeight" value="${insRecordDetail.specWeight}" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
 						</td>
 					</tr>
 					<tr>
@@ -90,7 +95,7 @@
 							数量（件）:
 						</td>
 						<td width="70%">
-							<input id="amount" name="amount" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
+							<input id="amount" name="amount" value="${insRecordDetail.amount}" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
 						</td>
 					</tr>
 					<tr>
@@ -98,7 +103,7 @@
 							生产厂家:
 						</td>
 						<td width="70%">
-							<input id="company" name="company" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
+							<input id="company" name="company" value="${insRecordDetail.company}" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
 						</td>
 					</tr>
 					<tr>
@@ -106,7 +111,7 @@
 							实际检测成色:
 						</td>
 						<td width="70%">
-							<input id="checkPurity" name="checkPurity" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
+							<input id="checkPurity" name="checkPurity" value="${insRecordDetail.checkPurity}" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
 						</td>
 					</tr>
 					<tr>
@@ -114,7 +119,7 @@
 							实际检测重量规格（kg/件）：
 						</td>
 						<td width="70%">
-							<input id="checkSpecWeight" name="checkSpecWeight" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
+							<input id="checkSpecWeight" name="checkSpecWeight" value="${insRecordDetail.checkSpecWeight}" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
 						</td>
 					</tr>
 					<tr>
@@ -122,7 +127,7 @@
 							检测数量:
 						</td>
 						<td width="70%">
-							<input id="checkAmount" name="checkAmount" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
+							<input id="checkAmount" name="checkAmount" value="${insRecordDetail.checkAmount}" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
 						</td>
 					</tr>
 					<tr>
@@ -130,7 +135,7 @@
 							检测重量（kg）:
 						</td>
 						<td width="70%">
-							<input id="checkWeight" name="checkWeight" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
+							<input id="checkWeight" name="checkWeight" value="${insRecordDetail.checkWeight}" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
 						</td>
 					</tr>
 					<tr>
@@ -149,7 +154,7 @@
 							备注:
 						</td>
 						<td width="70%">
-							<input id="desc" name="desc" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
+							<input id="desc" name="desc" value="${insRecordDetail.desc}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
 						</td>
 					</tr>
 					</table>

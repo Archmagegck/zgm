@@ -46,7 +46,7 @@
 							成色:
 						</td>
 						<td width="80%">
-							<input id="purity" name="purity" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
+							<input id="name" name="name" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
 						</td>
 					</tr>
 					</table>

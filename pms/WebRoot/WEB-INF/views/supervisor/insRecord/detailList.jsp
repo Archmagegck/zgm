@@ -6,7 +6,7 @@
 <html>
 	<head>
 
-		<title>入库货物信息表</title>
+		<title>入库单信息</title>
 
 		<meta http-equiv="pragma" content="no-cache">
 		<meta http-equiv="cache-control" content="no-cache">
@@ -21,13 +21,7 @@
 		<script type="text/javascript" src="${ctx }/js/date/WdatePicker.js"></script>
 		
 		<script type="text/javascript">
-    		function addDetail(){
-				window.location.href = "${ctx}/supervisor/insRecord/addDetail";
-			}
-			
-			function addRecordInfo(){
-				window.location.href = "${ctx}/supervisor/insRecord/addRecordInfo";
-			}
+    		
     	</script>
 	
 	<style type="text/css">
@@ -40,16 +34,37 @@
 	</head>
 
 	<body>
-		<form action="${ctx }/supervisor/insRecord/add" method="post" id="myForm" name="myForm">
+		<form action="${ctx }/supervisor/insRecord" method="post" id="myForm" name="myForm">
 			<div align="center" id="content"">
 				<div id="box">
-					<h3 align="left">
-						入库货物信息表
+					<h3 align="center">
+						入库单信息
 					</h3>
 					<div>
 						&nbsp;
 					</div>
-					<br/>
+					<div align="left">
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						单号：${insRecord.code}
+					</div>
+					<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
+						<thead>
+							<tr>
+								<th>监管员姓名</th>
+								<th>入库时间</th>
+								<th>送货人姓名</th>
+								<th>送货人身份证</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>${insRecord.supervisor.name}</td>
+								<td>${insRecord.date}</td>
+								<td>${insRecord.sender}</td>
+								<td>${insRecord.senderIdCard}</td>
+							</tr>
+						</tbody>
+					</table>
 					<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
 						<thead>
 							<tr>
@@ -66,7 +81,6 @@
 								<th>检测重量（kg）</th>
 								<th>检测方法</th>
 								<th>标记/备注</th>
-								<th>&nbsp;</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -85,17 +99,16 @@
 								<td>${insRecordDetail.checkWeight}&nbsp;</td>
 								<td>${insRecordDetail.checkMethod.title}&nbsp;</td>
 								<td>${insRecordDetail.desc}&nbsp;</td>
-								<th>
-									<a href="${ctx }/supervisor/insRecord/editDetail/${status.count}">编辑</a>
-								</th>
 							</tr>
 						</c:forEach>
 						</tbody>
 					</table>
 					<div align="center" id="pager">
-						<input type="button" value="添加货物" class="button" onclick="addDetail()" />
+						<input type="button" value="查看并打印出库单" class="button" onclick="#" />
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="button" value="下一步" class="button" onclick="addRecordInfo()" />
+						<input type="button" value="查看并打印检测结果评价单" class="button" onclick="#" />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="button" value="查看并打印质物清单" class="button" onclick="#" />
 					</div>
 				</div>
 			</div>
