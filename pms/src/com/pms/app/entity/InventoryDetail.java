@@ -46,8 +46,9 @@ public class InventoryDetail {
 	/**
 	 * 成色
 	 */
-	@Column(name = "id_pledgePurity")
-	private String pledgePurity;
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "pp_id")
+	private PledgePurity pledgePurity;
 	
 	/**
 	 * 规格重量（kg/件）
@@ -99,11 +100,11 @@ public class InventoryDetail {
 		this.style = style;
 	}
 
-	public String getPledgePurity() {
+	public PledgePurity getPledgePurity() {
 		return pledgePurity;
 	}
 
-	public void setPledgePurity(String pledgePurity) {
+	public void setPledgePurity(PledgePurity pledgePurity) {
 		this.pledgePurity = pledgePurity;
 	}
 

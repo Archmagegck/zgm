@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -51,8 +52,23 @@ public class InsRecordDetail {
 	/**
 	 * 成色
 	 */
-	@Column(name = "ind_pledgePurity")
-	private String pledgePurity;
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "pp_id")
+	private PledgePurity pledgePurity;
+	
+	
+	/**
+	 * 款式名称
+	 */
+	@Transient
+	private String styleName;
+	
+	
+	/**
+	 * 成色名称
+	 */
+	@Transient
+	private String pledgePurityName;
 	
 	
 	/**
@@ -155,12 +171,12 @@ public class InsRecordDetail {
 	}
 
 
-	public String getPledgePurity() {
+	public PledgePurity getPledgePurity() {
 		return pledgePurity;
 	}
 
 
-	public void setPledgePurity(String pledgePurity) {
+	public void setPledgePurity(PledgePurity pledgePurity) {
 		this.pledgePurity = pledgePurity;
 	}
 
@@ -262,6 +278,26 @@ public class InsRecordDetail {
 
 	public void setDesc(String desc) {
 		this.desc = desc;
+	}
+
+
+	public String getStyleName() {
+		return styleName;
+	}
+
+
+	public void setStyleName(String styleName) {
+		this.styleName = styleName;
+	}
+
+
+	public String getPledgePurityName() {
+		return pledgePurityName;
+	}
+
+
+	public void setPledgePurityName(String pledgePurityName) {
+		this.pledgePurityName = pledgePurityName;
 	}
 
 

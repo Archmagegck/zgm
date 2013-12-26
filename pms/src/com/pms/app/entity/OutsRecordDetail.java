@@ -49,8 +49,9 @@ public class OutsRecordDetail {
 	/**
 	 * 成色
 	 */
-	@Column(name = "out_pledgePurity")
-	private String pledgePurity;
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "pp_id")
+	private PledgePurity pledgePurity;
 	
 	
 	/**
@@ -119,13 +120,13 @@ public class OutsRecordDetail {
 
 
 
-	public String getPledgePurity() {
+	public PledgePurity getPledgePurity() {
 		return pledgePurity;
 	}
 
 
 
-	public void setPledgePurity(String pledgePurity) {
+	public void setPledgePurity(PledgePurity pledgePurity) {
 		this.pledgePurity = pledgePurity;
 	}
 
