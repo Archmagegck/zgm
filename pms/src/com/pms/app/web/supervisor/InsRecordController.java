@@ -18,6 +18,7 @@ import com.pms.app.entity.InsRecord;
 import com.pms.app.entity.InsRecordDetail;
 import com.pms.app.service.InsRecordService;
 import com.pms.app.service.PledgePurityService;
+import com.pms.app.service.StyleService;
 
 @Controller
 @RequestMapping(value = "/supervisor/insRecord")
@@ -28,6 +29,7 @@ public class InsRecordController {
 	
 	@Autowired private InsRecordService insRecordService;
 	@Autowired private PledgePurityService pledgePurityService;
+	@Autowired private StyleService styleService;
 	
 	@RequestMapping(value = { "/list", "" })
 	public String list(Model model, Pageable pageable, String queryName, String queryValue) {
@@ -56,6 +58,7 @@ public class InsRecordController {
 	
 	@RequestMapping(value = "/addDetail")
 	public String addDetail(Model model){
+		model.addAttribute("styleList", styleService.findAll());
 		model.addAttribute("pledgePurityList", pledgePurityService.findAll());
 		return "supervisor/insRecord/addDetail";
 	}

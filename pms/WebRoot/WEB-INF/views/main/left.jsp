@@ -174,7 +174,7 @@
 	        </ul>
 	      </div>
 	      
-	      <h1 class="type"><a href="javascript:void(0)">质押物设置</a></h1>
+	      <h1 class="type"><a href="javascript:void(0)">系统设置</a></h1>
 	      <div class="content">
 	        <table width="100%" border="0" cellspacing="0" cellpadding="0">
 	          <tr>
@@ -182,7 +182,8 @@
 	          </tr>
 	        </table>
 	        <ul class="MM">
-	        	<li><a href="${ctx}/manage/pledgePurity" target="right">质押物成色设置</a></li>
+	        	<li><a href="${ctx}/manage/style" target="right">款式管理</a></li>
+	        	<li><a href="${ctx}/manage/pledgePurity" target="right">质押物成色管理</a></li>
 	        	<li><a href="${ctx}/manage/pledgePrice" target="right">质押物每日价格设置</a></li>
 	        	<li><a href="${ctx}/manage/pledgeConfig" target="right">质押物要求及警戒线设置</a></li>
 	        </ul>

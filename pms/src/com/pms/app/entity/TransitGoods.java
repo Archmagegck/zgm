@@ -40,8 +40,9 @@ public class TransitGoods {
 	/**
 	 * 款式大类
 	 */
-	@Column(name = "tg_style")
-	private String style;
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "sty_id")
+	private Style style;
 	
 	
 	/**
@@ -93,12 +94,12 @@ public class TransitGoods {
 	}
 
 
-	public String getStyle() {
+	public Style getStyle() {
 		return style;
 	}
 
 
-	public void setStyle(String style) {
+	public void setStyle(Style style) {
 		this.style = style;
 	}
 
