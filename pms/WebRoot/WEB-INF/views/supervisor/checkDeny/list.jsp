@@ -6,7 +6,7 @@
 <html>
 	<head>
 
-		<title>质押物成色类别管理</title>
+		<title>检测拒绝记录列表</title>
 
 		<meta http-equiv="pragma" content="no-cache">
 		<meta http-equiv="cache-control" content="no-cache">
@@ -37,17 +37,17 @@
 			$("#myForm").submit();
 		}
 			
-		//删除
+/* 		//删除
 		function del(){
 			if($("[name='idGroup']:checked").length <= 0){
 				alert("请选择一个您要删除的！");
 			} else{
 				if (confirm("确定要删除吗？")){
-					$("#myForm").attr("action","${ctx}/manage/pledgePurity/delete");
+					$("#myForm").attr("action","${ctx}/supervisor/checkDeny/delete");
 					$("#myForm").submit();
 				}
 			}
-		}
+		} */
 
     </script>
 	
@@ -61,11 +61,11 @@
 	</head>
 
 	<body>
-		<form action="${ctx }/manage/pledgePurity/list" method="post" id="myForm" name="myForm">
+		<form action="${ctx }/supervisor/checkDeny/list" method="post" id="myForm" name="myForm">
 			<div align="center" id="content"">
 				<div id="box">
 					<h3 align="left">
-						质押物成色类别管理
+						检测拒绝记录列表
 					</h3>
 					<div>
 						&nbsp;
@@ -86,14 +86,14 @@
 						&nbsp;&nbsp;&nbsp;根据
 						&nbsp;&nbsp;
 						<select name="queryName" id="queryName">
-							<option value="purity" selected="selected">成色</option>
+							<option value="date" selected="selected">日期</option>
 						</select>
 						&nbsp;&nbsp; 查询:
 						<span id="values"><input type="text" name="queryValue" id="queryValue" value="${queryValue}" /> </span>
 						&nbsp;&nbsp;&nbsp;
 						<input type="button" value="查询" class="button" onclick="gotoPage(1)" />
-						<input type="button" value="添加" class="button" onclick="location.href='${ctx}/manage/pledgePurity/add'" />
-						<input type="button" value="删除" class="button" onclick="del()" />
+						<input type="button" value="添加" class="button" onclick="location.href='${ctx}/supervisor/checkDeny/add'" />
+					<!-- 	<input type="button" value="删除" class="button" onclick="del()" />  -->
 						<input type="hidden" name="page.page" id="pageNo" value="${page.number+1}"/>
 					</div>
 					<br/>
@@ -108,14 +108,59 @@
 									序号
 								</th>
 								<th>
+									款式大类
+								</th>
+								<th>
 									标明成色
+								</th>
+								<th>
+									标明规格重量（kg/件）
+								</th>
+								<th>
+									数量（件）
+								</th>
+								<th>
+									总重量（kg）
+								</th>
+								<th>
+									生产厂家
+								</th>
+								<th>
+									检测成色
+								</th>
+								<th>
+									检测规格重量（kg/件）
+								</th>
+								<th>
+									检测数量（件）
+								</th>
+								<th>
+									检测重量（kg）
+								</th>
+								<th>
+									检测方法
+								</th>
+								<th>
+									送货人姓名
+								</th>
+								<th>
+									送货人身份证号
+								</th>
+								<th>
+									监管员姓名
+								</th>
+								<th>
+									记录时间
+								</th>
+								<th>
+									标记/备注
 								</th>
 								<th>
 									操作
 								</th>
 							</tr>
 						</thead>
-						<c:forEach items="${page.content}" var="pledgePurity" varStatus="status">
+						<c:forEach items="${page.content}" var="checkDeny" varStatus="status">
 							<tr>
 								<td>
 									<input type="checkbox" name="idGroup" value="${pledgePurity.id }" />
@@ -124,10 +169,55 @@
 									${status.count}&nbsp;
 								</td>
 								<td>
-									${pledgePurity.purity }&nbsp;
+									${checkDeny.style }&nbsp;
 								</td>
 								<td>
-									<a href="${ctx }/manage/pledgePurity/edit/${pledgePurity.id }">编辑</a>
+									${checkDeny.pledgePurity.purity }&nbsp;
+								</td>
+								<td>
+									${checkDeny.specWeight }&nbsp;
+								</td>
+								<td>
+									${checkDeny.amount }&nbsp;
+								</td>
+								<td>
+									${checkDeny.sumWeight }&nbsp;
+								</td>
+								<td>
+									${checkDeny.company }&nbsp;
+								</td>
+								<td>
+									${checkDeny.checkPurity }&nbsp;
+								</td>
+								<td>
+									${checkDeny.checkSpecWeight }&nbsp;
+								</td>
+								<td>
+									${checkDeny.checkAmount }&nbsp;
+								</td>
+								<td>
+									${checkDeny.checkWeight }&nbsp;
+								</td>
+								<td>
+									${checkDeny.checkMethod }&nbsp;
+								</td>
+								<td>
+									${checkDeny.sender }&nbsp;
+								</td>
+								<td>
+									${checkDeny.senderIdCard }&nbsp;
+								</td>
+								<td>
+									${checkDeny.supName }&nbsp;
+								</td>
+								<td>
+									${checkDeny.date }&nbsp;
+								</td>
+								<td>
+									${checkDeny.desc }&nbsp;
+								</td>							
+								<td>
+									<a href="${ctx }/supervisor/checkDeny/edit/${checkDeny.id }">编辑</a>
 								</td>
 							</tr>
 						</c:forEach>

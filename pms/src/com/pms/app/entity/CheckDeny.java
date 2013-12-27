@@ -1,5 +1,7 @@
 package com.pms.app.entity;
 
+import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -158,6 +160,23 @@ public class CheckDeny {
 	 */
 	@Column(name = "cd_desc")
 	private String desc;
+	
+	
+	/**
+	 * 日期
+	 */
+	@Column(name = "cd_date")
+	private Date date;
+	
+
+	public Date getDate() {
+		return date;
+	}
+
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
 
 
 	public String getId() {
