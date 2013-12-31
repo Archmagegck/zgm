@@ -101,7 +101,7 @@
 					<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
 						<thead>
 							<tr>
-								<th width="15%">
+								<th width="10%">
 									全选
 									<input name="selAll" id="all" type="checkbox" onClick="selectAll(this)" />
 								</th>
@@ -110,6 +110,9 @@
 								</th>
 								<th>
 									存储地址
+								</th>
+								<th>
+									备注
 								</th>
 								<th>
 									操作
@@ -126,6 +129,9 @@
 								</td>
 								<td>
 									${warehouse.address }&nbsp;
+								</td>
+								<td>
+									${warehouse.desc }&nbsp;
 								</td>
 								<td>
 									<a href="${ctx }/manage/warehouse/edit/${warehouse.id }">编辑</a>

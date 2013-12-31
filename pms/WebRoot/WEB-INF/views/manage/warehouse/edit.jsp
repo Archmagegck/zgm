@@ -59,6 +59,14 @@
 							<input id="address" name="address" value="${warehouse.address }" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
 						</td>
 					</tr>
+					<tr>
+						<td width="20%">
+							备注:
+						</td>
+						<td width="80%">
+							<input id="desc" name="desc" value="${warehouse.desc }" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
+						</td>
+					</tr>
 				</table>
     			<br/>
     		</fieldset>

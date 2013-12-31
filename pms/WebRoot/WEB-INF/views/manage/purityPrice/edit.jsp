@@ -7,7 +7,7 @@
 <html>
   <head>
     
-    <title>添加仓库</title>
+    <title>修改质押物成色</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -15,57 +15,43 @@
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
 
-	<link rel="stylesheet" type="text/css" href="${ctx }/js/validate/jquery.validate.css">
 	<link rel="stylesheet" type="text/css" href="${ctx }/css/admin/style.css">
 	<link rel="stylesheet" type="text/css" href="${ctx }/css/admin/theme1.css">
-
-	<script type="text/javascript" src="${ctx }/js/jquery-1.6.1.js"></script>
+	
+	<script type="text/javascript" src="${ctx }/js/jquery.js"></script>
 	<script type="text/javascript" src="${ctx }/js/validate/jquery.metadata.js"></script>
+	<link rel="stylesheet" type="text/css" href="${ctx }/js/validate/jquery.validate.css">
 	<script type="text/javascript" src="${ctx }/js/validate/jquery.validate.js"></script>
 	
 	<script type="text/javascript">
+
 		$(document).ready(function(){
 			$("#myForm").validate();
 		});
 	</script>
-	
+
   </head>
   
   <body>
-    <form id="myForm" name="myForm" action="${ctx}/manage/warehouse/save" method="post">
+    <form id="myForm" name="myForm" action="${ctx}/manage/pledgePurity/save" method="post">
     	<div id="content">
     		<div style="margin-bottom: 10px;padding: 5px 10px;" id="box">
-    		<h3 id="adduser">添加仓库</h3>
+    		<h3 id="addpledgePurity">修改质押物成色</h3>
     		<br/>
     		<fieldset style="padding: 5px 10px;" id="personal">
     			<legend><h3>请输入相关信息</h3></legend>
     			<br/>
+    				<input type="hidden" name="id" value = "${pledgePurity.id }" >
     				<table  cellpadding="0" cellspacing="0" width="100%"  class="list1">
 					<tr>
 						<td width="20%">
-							仓库名称:
+							成色:
 						</td>
 						<td width="80%">
-							<input id="name" name="name" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
+							<input id="name" name="name" value="${pledgePurity.name }" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
 						</td>
 					</tr>
-					<tr>
-						<td width="20%">
-							存储地址:
-						</td>
-						<td width="80%">
-							<input id="address" name="address" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
-						</td>
-					</tr>
-					<tr>
-						<td width="20%">
-							备注:
-						</td>
-						<td width="80%">
-							<input id="desc" name="desc" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
-						</td>
-					</tr>
-					</table>
+				</table>
     			<br/>
     		</fieldset>
     		<br/>

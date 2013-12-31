@@ -26,14 +26,14 @@
 
 		//转向
 		function gotoPage(pageNo){
-			$("#pageNo").val(pageNo);
+			//$("#pageNo").val(pageNo);
 			$("#myForm").submit();
 		}
 			
 		//删除
 		function del(index){
 			if (confirm("确定要删除吗？")){
-				$("#myForm").attr("action","${ctx }/manage/pledgePrice/" + index + "delete");
+				$("#myForm").attr("action","${ctx }/manage/purityPrice/" + index + "delete");
 				$("#myForm").submit();
 			}
 		}
@@ -50,7 +50,7 @@
 	</head>
 
 	<body>
-		<form action="${ctx }/manage/pledgePrice/list" method="post" id="myForm" name="myForm">
+		<form action="${ctx }/manage/purityPrice/list" method="post" id="myForm" name="myForm">
 			<div align="center" id="content"">
 				<div id="box">
 					<h3 align="left">
@@ -77,57 +77,44 @@
 						<input name="date" value="${date}" onFocus="WdatePicker({isShowClear:false,isShowWeek:true,readOnly:true,skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"/>
 						&nbsp;&nbsp;&nbsp;
 						<input type="button" value="查询" class="button" onclick="gotoPage(1)" />
-						<input type="button" value="添加" class="button" onclick="location.href='${ctx}/manage/pledgePrice/add'" />
-						<input type="hidden" name="page.page" id="pageNo" value="${page.number+1}"/>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="button" value="添加今日价格" class="button" onclick="location.href='${ctx}/manage/purityPrice/add'" />
 					</div>
 					<br/>
 					<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
 						<thead>
 							<tr>
-								<th width="20%">
+								<th width="10%">
 									序号
 								</th>
-								<th>
+								<th width="30%">
 									日期
 								</th>
-								<th>
+								<th width="30%">
 									标明成色
 								</th>
-								<th>
+								<th width="30%">
 									价格
-								</th>
-								<th>
-									操作
 								</th>
 							</tr>
 						</thead>
-						<c:forEach items="${page.content}" var="pledgePrice" varStatus="status">
+						<c:forEach items="${purityPriceList}" var="purityPrice" varStatus="status">
 							<tr>
-								<td>
-									<input type="checkbox" name="idGroup" value="${pledgePrice.id }" />
-								</td>
 								<td>
 									${status.count}&nbsp;
 								</td>
 								<td>
-									${pledgePrice.date }&nbsp;
+									${purityPrice.date }&nbsp;
 								</td>
 								<td>
-									${pledgePrice.pledgePurity.name }&nbsp;
+									${purityPrice.pledgePurity.name }&nbsp;
 								</td>
 								<td>
-									${pledgePrice.price }&nbsp;
-								</td>
-								<td>
-									<a href="${ctx }/manage/pledgePrice/edit/${pledgePrice.id }">编辑</a>
-									<a href="#" onclick="del(${pledgePrice.id });">删除</a>
+									${purityPrice.price }&nbsp;
 								</td>
 							</tr>
 						</c:forEach>
 					</table>
-					<div align="left" id="pager">
-						<jsp:include page="../../common/page.jsp"></jsp:include>
-					</div>
 				</div>
 			</div>
 		</form>
