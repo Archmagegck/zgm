@@ -28,13 +28,14 @@
 			$("#myForm").validate();
 		});
 		
-		function changeStyle(ob) {
-			alert(ob.text);
-			alert($("#style").text());
+		function changeStyle() {
+			var selStyle = $("#style").find("option:selected").text();
+			$("#styleName").val(selStyle);
 		}
 		
 		function changePurity(ob) {
-			alert(ob.text);
+			var selPurity = $("#purity").find("option:selected").text();
+			$("#pledgePurityName").val(selPurity);
 		}
 		
 	</script>
@@ -56,12 +57,12 @@
 							款式大类:
 						</td>
 						<td width="70%">
-							<select id="style" name="style.id" class="required" onchange="changeStyle(this)">
+							<select id="style" name="style.id" class="required" onchange="changeStyle()">
 								<c:forEach items="${styleList}" var="style">
 									<option value = "${style.id }">${style.name }</option>
 								</c:forEach>
 							</select>
-							<input type="hidden" name="style.name" value="${styleList[0].name}">
+							<input type="hidden" id="styleName" name="style.name" value="${styleList[0].name}">
 						</td>
 					</tr>
 					<tr>
@@ -69,12 +70,12 @@
 							标明成色:
 						</td>
 						<td width="70%">
-							<select name="pledgePurity.id" class="required" onchange="changePurity(this.value)">
+							<select id="purity" name="pledgePurity.id" class="required" onchange="changePurity()">
 								<c:forEach items="${pledgePurityList}" var="pledgePurity">
 									<option value = "${pledgePurity.id }">${pledgePurity.name }</option>
 								</c:forEach>
 							</select>
-							<input type="hidden" name="pledgePurity.name" value="${pledgePurityList[0].name}">
+							<input type="hidden" id="pledgePurityName" name="pledgePurity.name" value="${pledgePurityList[0].name}">
 						</td>
 					</tr>
 					<tr>

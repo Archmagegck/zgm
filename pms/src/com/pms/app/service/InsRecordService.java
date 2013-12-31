@@ -22,6 +22,7 @@ import com.pms.app.dao.InsRecordDetailDao;
 import com.pms.app.dao.WarehouseDao;
 import com.pms.app.entity.InsRecord;
 import com.pms.app.entity.InsRecordDetail;
+import com.pms.app.entity.Warehouse;
 import com.pms.app.util.CodeUtils;
 import com.pms.base.dao.BaseDao;
 import com.pms.base.service.BaseService;
@@ -42,6 +43,8 @@ public class InsRecordService extends BaseService<InsRecord, String> {
 	
 	// TODO 
 	public void save(InsRecord insRecord, String warehouseId) {
+		Warehouse Warehouse = warehouseDao.findOne(warehouseId);
+		
 		insRecord.setCode(CodeUtils.getInsRecordCode());
 		double sumWeight = 0;
 		List<InsRecordDetail> insRecordDetailList = insRecord.getInsRecordDetails();

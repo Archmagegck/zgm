@@ -28,6 +28,15 @@
 			function addRecordInfo(){
 				window.location.href = "${ctx}/supervisor/insRecord/addRecordInfo";
 			}
+			
+			//删除
+			function del(index){
+				if (confirm("确定要删除吗？")){
+					$("#myForm").attr("action","${ctx }/supervisor/insRecord/delDetail/" + index);
+					$("#myForm").submit();
+				}
+			}
+			
     	</script>
 	
 	<style type="text/css">
@@ -53,7 +62,7 @@
 					<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
 						<thead>
 							<tr>
-								<th width="8%">序号</th>
+								<th width="5%">序号</th>
 								<th>款式大类</th>
 								<th>标明成色</th>
 								<th>标明规格重量（kg/件）</th>
@@ -87,6 +96,7 @@
 								<td>${insRecordDetail.desc}&nbsp;</td>
 								<th>
 									<a href="${ctx }/supervisor/insRecord/editDetail/${status.count}">编辑</a>
+									<a href="#" onclick="del(${status.count});">删除</a>
 								</th>
 							</tr>
 						</c:forEach>
@@ -95,7 +105,9 @@
 					<div align="center" id="pager">
 						<input type="button" value="添加货物" class="button" onclick="addDetail()" />
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="button" value="下一步" class="button" onclick="addRecordInfo()" />
+						<c:if test="${detailListCount > 0}">
+							<input type="button" value="下一步" class="button" onclick="addRecordInfo()" />
+						</c:if>
 					</div>
 				</div>
 			</div>

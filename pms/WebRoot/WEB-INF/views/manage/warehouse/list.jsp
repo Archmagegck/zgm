@@ -6,7 +6,7 @@
 <html>
 	<head>
 
-		<title>用户管理</title>
+		<title>仓库管理</title>
 
 		<meta http-equiv="pragma" content="no-cache">
 		<meta http-equiv="cache-control" content="no-cache">
@@ -43,7 +43,7 @@
 				alert("请选择一个您要删除的！");
 			} else{
 				if (confirm("确定要删除吗？")){
-					$("#myForm").attr("action","${ctx}/manage/supervisor/delete");
+					$("#myForm").attr("action","${ctx}/manage/warehouse/delete");
 					$("#myForm").submit();
 				}
 			}
@@ -61,11 +61,11 @@
 	</head>
 
 	<body>
-		<form action="${ctx }/manage/supervisor/list" method="post" id="myForm" name="myForm">
+		<form action="${ctx }/manage/warehouse/list" method="post" id="myForm" name="myForm">
 			<div align="center" id="content"">
 				<div id="box">
 					<h3 align="left">
-						监管员管理
+						仓库管理
 					</h3>
 					<div>
 						&nbsp;
@@ -86,15 +86,14 @@
 						&nbsp;&nbsp;&nbsp;根据
 						&nbsp;&nbsp;
 						<select name="queryName" id="queryName">
-							<option value="name" selected="selected">姓名</option>
-							<option value="code">编号</option>
-							<option value="username">用户名</option>
+							<option value="name" selected="selected">仓库名称</option>
+							<option value="address">存储地址</option>
 						</select>
 						&nbsp;&nbsp; 查询:
 						<span id="values"><input type="text" name="queryValue" id="queryValue" value="${queryValue}" /> </span>
 						&nbsp;&nbsp;&nbsp;
 						<input type="button" value="查询" class="button" onclick="gotoPage(1)" />
-						<input type="button" value="添加" class="button" onclick="location.href='${ctx}/manage/supervisor/add'" />
+						<input type="button" value="添加" class="button" onclick="location.href='${ctx}/manage/warehouse/add'" />
 						<input type="button" value="删除" class="button" onclick="del()" />
 						<input type="hidden" name="page.page" id="pageNo" value="${page.number+1}"/>
 					</div>
@@ -102,82 +101,34 @@
 					<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
 						<thead>
 							<tr>
-								<th>
+								<th width="15%">
 									全选
 									<input name="selAll" id="all" type="checkbox" onClick="selectAll(this)" />
 								</th>
 								<th>
-									监管员编号
+									仓库名称
 								</th>
 								<th>
-									姓名
-								</th>
-								<th>
-									住址
-								</th>
-								<th>
-									联系电话
-								</th>
-								<th>
-									邮箱
-								</th>
-								<th>
-									用户名
-								</th>
-								<th>
-									登陆密码
-								</th>
-								<th>
-									身份证号码
-								</th>
-								<th>
-									所属辖区
-								</th>
-								<th>
-									备注
+									存储地址
 								</th>
 								<th>
 									操作
 								</th>
 							</tr>
 						</thead>
-						<c:forEach items="${page.content}" var="supervisor">
+						<c:forEach items="${page.content}" var="warehouse" varStatus="status">
 							<tr>
 								<td>
-									<input type="checkbox" name="idGroup" value="${supervisor.id }" />
+									<input type="checkbox" name="idGroup" value="${warehouse.id }" />
 								</td>
 								<td>
-									${supervisor.code }&nbsp;
+									${warehouse.name }&nbsp;
 								</td>
 								<td>
-									${supervisor.name }&nbsp;
+									${warehouse.address }&nbsp;
 								</td>
 								<td>
-									${supervisor.address }&nbsp;
-								</td>
-								<td>
-									${supervisor.phone }&nbsp;
-								</td>
-								<td>
-									${supervisor.email }&nbsp;
-								</td>
-								<td>
-									${supervisor.username }&nbsp;
-								</td>
-								<td>
-									${supervisor.password }&nbsp;
-								</td>
-								<td>
-									${supervisor.idcard }&nbsp;
-								</td>
-								<td>
-									${supervisor.area }&nbsp;
-								</td>
-								<td>
-									${supervisor.desc }&nbsp;
-								</td>
-								<td>
-									<a href="${ctx }/manage/supervisor/edit/${supervisor.id }">编辑</a>
+									<a href="${ctx }/manage/warehouse/edit/${warehouse.id }">编辑</a>
 								</td>
 							</tr>
 						</c:forEach>

@@ -6,7 +6,7 @@
 <html>
 	<head>
 
-		<title>用户管理</title>
+		<title>每日价格记录</title>
 
 		<meta http-equiv="pragma" content="no-cache">
 		<meta http-equiv="cache-control" content="no-cache">
@@ -18,19 +18,12 @@
 		<link rel="stylesheet" type="text/css" href="${ctx }/css/admin/theme1.css">
 		
 		<script language="javascript" type="text/javascript" src="${ctx }/js/jquery.js"></script>
+		<script type="text/javascript" src="${ctx }/js/date/WdatePicker.js"></script>
+		
 		<script type="text/javascript">
     	$(document).ready(function(){
-			var query = "${queryName}";
-			if(query!=null && query.length > 0){
-				$("#queryName").val(query);
-			}
 		});
 
-		//全选
-		function selectAll(c){
-			$("[name='idGroup']").attr("checked", $(c).is(':checked'));
-		}
-		
 		//转向
 		function gotoPage(pageNo){
 			$("#pageNo").val(pageNo);
@@ -38,14 +31,10 @@
 		}
 			
 		//删除
-		function del(){
-			if($("[name='idGroup']:checked").length <= 0){
-				alert("请选择一个您要删除的！");
-			} else{
-				if (confirm("确定要删除吗？")){
-					$("#myForm").attr("action","${ctx}/manage/supervisor/delete");
-					$("#myForm").submit();
-				}
+		function del(index){
+			if (confirm("确定要删除吗？")){
+				$("#myForm").attr("action","${ctx }/manage/pledgePrice/" + index + "delete");
+				$("#myForm").submit();
 			}
 		}
 
@@ -61,11 +50,11 @@
 	</head>
 
 	<body>
-		<form action="${ctx }/manage/supervisor/list" method="post" id="myForm" name="myForm">
+		<form action="${ctx }/manage/pledgePrice/list" method="post" id="myForm" name="myForm">
 			<div align="center" id="content"">
 				<div id="box">
 					<h3 align="left">
-						监管员管理
+						每日价格记录
 					</h3>
 					<div>
 						&nbsp;
@@ -83,101 +72,55 @@
 						</c:if>
 					</div>
 					<div align="left" style="vertical-align: middle;">
-						&nbsp;&nbsp;&nbsp;根据
+						&nbsp;&nbsp;&nbsp;选择日期
 						&nbsp;&nbsp;
-						<select name="queryName" id="queryName">
-							<option value="name" selected="selected">姓名</option>
-							<option value="code">编号</option>
-							<option value="username">用户名</option>
-						</select>
-						&nbsp;&nbsp; 查询:
-						<span id="values"><input type="text" name="queryValue" id="queryValue" value="${queryValue}" /> </span>
+						<input name="date" value="${date}" onFocus="WdatePicker({isShowClear:false,isShowWeek:true,readOnly:true,skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"/>
 						&nbsp;&nbsp;&nbsp;
 						<input type="button" value="查询" class="button" onclick="gotoPage(1)" />
-						<input type="button" value="添加" class="button" onclick="location.href='${ctx}/manage/supervisor/add'" />
-						<input type="button" value="删除" class="button" onclick="del()" />
+						<input type="button" value="添加" class="button" onclick="location.href='${ctx}/manage/pledgePrice/add'" />
 						<input type="hidden" name="page.page" id="pageNo" value="${page.number+1}"/>
 					</div>
 					<br/>
 					<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
 						<thead>
 							<tr>
-								<th>
-									全选
-									<input name="selAll" id="all" type="checkbox" onClick="selectAll(this)" />
+								<th width="20%">
+									序号
 								</th>
 								<th>
-									监管员编号
+									日期
 								</th>
 								<th>
-									姓名
+									标明成色
 								</th>
 								<th>
-									住址
-								</th>
-								<th>
-									联系电话
-								</th>
-								<th>
-									邮箱
-								</th>
-								<th>
-									用户名
-								</th>
-								<th>
-									登陆密码
-								</th>
-								<th>
-									身份证号码
-								</th>
-								<th>
-									所属辖区
-								</th>
-								<th>
-									备注
+									价格
 								</th>
 								<th>
 									操作
 								</th>
 							</tr>
 						</thead>
-						<c:forEach items="${page.content}" var="supervisor">
+						<c:forEach items="${page.content}" var="pledgePrice" varStatus="status">
 							<tr>
 								<td>
-									<input type="checkbox" name="idGroup" value="${supervisor.id }" />
+									<input type="checkbox" name="idGroup" value="${pledgePrice.id }" />
 								</td>
 								<td>
-									${supervisor.code }&nbsp;
+									${status.count}&nbsp;
 								</td>
 								<td>
-									${supervisor.name }&nbsp;
+									${pledgePrice.date }&nbsp;
 								</td>
 								<td>
-									${supervisor.address }&nbsp;
+									${pledgePrice.pledgePurity.name }&nbsp;
 								</td>
 								<td>
-									${supervisor.phone }&nbsp;
+									${pledgePrice.price }&nbsp;
 								</td>
 								<td>
-									${supervisor.email }&nbsp;
-								</td>
-								<td>
-									${supervisor.username }&nbsp;
-								</td>
-								<td>
-									${supervisor.password }&nbsp;
-								</td>
-								<td>
-									${supervisor.idcard }&nbsp;
-								</td>
-								<td>
-									${supervisor.area }&nbsp;
-								</td>
-								<td>
-									${supervisor.desc }&nbsp;
-								</td>
-								<td>
-									<a href="${ctx }/manage/supervisor/edit/${supervisor.id }">编辑</a>
+									<a href="${ctx }/manage/pledgePrice/edit/${pledgePrice.id }">编辑</a>
+									<a href="#" onclick="del(${pledgePrice.id });">删除</a>
 								</td>
 							</tr>
 						</c:forEach>

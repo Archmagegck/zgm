@@ -182,6 +182,7 @@
 	          </tr>
 	        </table>
 	        <ul class="MM">
+	        	<li><a href="${ctx}/manage/warehouse" target="right">仓库管理</a></li>
 	        	<li><a href="${ctx}/manage/style" target="right">款式管理</a></li>
 	        	<li><a href="${ctx}/manage/pledgePurity" target="right">质押物成色管理</a></li>
 	        	<li><a href="${ctx}/manage/pledgePrice" target="right">质押物每日价格设置</a></li>
@@ -189,7 +190,7 @@
 	        </ul>
 	      </div>
 	      
-	      <h1 class="type"><a href="javascript:void(0)">仓库管理</a></h1>
+	      <h1 class="type"><a href="javascript:void(0)">库存管理</a></h1>
 	      <div class="content">
 	        <table width="100%" border="0" cellspacing="0" cellpadding="0">
 	          <tr>

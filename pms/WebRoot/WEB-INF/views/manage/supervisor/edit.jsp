@@ -135,14 +135,6 @@
 							<input id="desc" name="desc" value="${supervisor.desc }" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
 						</td>
 					</tr>
-					<tr>
-						<td width="20%">
-							出货重量权限（kg）:
-						</td>
-						<td width="80%">
-							<input id="shippingWeight" name="shippingWeight" value="${supervisor.shippingWeight }" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
-						</td>
-					</tr>
 				</table>
     			<br/>
     		</fieldset>

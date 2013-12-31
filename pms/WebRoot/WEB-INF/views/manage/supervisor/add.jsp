@@ -132,14 +132,6 @@
 							<input id="desc" name="desc" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
 						</td>
 					</tr>
-					<tr>
-						<td width="20%">
-							出货重量权限（kg）:
-						</td>
-						<td width="80%">
-							<input id="shippingWeight" name="shippingWeight" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
-						</td>
-					</tr>
 					</table>
     			<br/>
     		</fieldset>

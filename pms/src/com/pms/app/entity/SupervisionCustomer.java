@@ -50,6 +50,14 @@ public class SupervisionCustomer {
 	@JoinColumn(name = "s_id")
 	private Supervisor supervisor;
 	
+	
+	/**
+	 * 仓库
+	 */
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "w_id")
+	private Warehouse warehouse;
+	
 	/**
 	 * 委托方
 	 */
@@ -207,6 +215,14 @@ public class SupervisionCustomer {
 
 	public void setLoans(Loans loans) {
 		this.loans = loans;
+	}
+
+	public Warehouse getWarehouse() {
+		return warehouse;
+	}
+
+	public void setWarehouse(Warehouse warehouse) {
+		this.warehouse = warehouse;
 	}
 	
 	

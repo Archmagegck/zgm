@@ -82,6 +82,7 @@ public class InsRecordController {
 			session.setAttribute("insRecordDetailList", insRecordDetailsList);
 		}
 		model.addAttribute("detailList", insRecordDetailsList);
+		model.addAttribute("detailListCount", insRecordDetailsList.size());
 		return "supervisor/insRecord/showDetailList";
 	}
 	
@@ -104,6 +105,15 @@ public class InsRecordController {
 		return "supervisor/insRecord/editDetail";
 	}
 	
+	
+	@RequestMapping(value = "/delDetail/{index}")
+	public String delDetail(@PathVariable("index")Integer index, HttpSession session){
+		List<InsRecordDetail> insRecordDetailsList = (List<InsRecordDetail>) session.getAttribute("insRecordDetailList");
+		insRecordDetailsList.remove(index - 1);
+		return "redirect:/supervisor/insRecord/showDetailList";
+	}
+	
+	
 	@RequestMapping(value = "/updateDetail/{index}")
 	public String updateDetail(@PathVariable("index")Integer index, InsRecordDetail insRecordDetail, HttpSession session){
 		List<InsRecordDetail> insRecordDetailsList = (List<InsRecordDetail>) session.getAttribute("insRecordDetailList");
@@ -123,7 +133,7 @@ public class InsRecordController {
 	public String save(InsRecord insRecord, HttpSession session, RedirectAttributes ra){
 		try {
 			insRecord.setInsRecordDetails((List<InsRecordDetail>) session.getAttribute("insRecordDetailList"));
-			insRecordService.save(insRecord, "");
+			insRecordService.save(insRecord, (String)session.getAttribute("warehouseId"));
 			// TODO 
 			session.removeAttribute("insRecordDetailList");
 			ra.addFlashAttribute("messageOK", "保存成功！");
@@ -139,6 +149,7 @@ public class InsRecordController {
 	public String toUpload(){
 		return "supervisor/insRecord/toUpload";
 	}
+	
 	
 	@RequestMapping(value = "/uploadAttach")
 	public String upload(){

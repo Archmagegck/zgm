@@ -1,13 +1,9 @@
 package com.pms.app.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cache;
@@ -30,65 +26,26 @@ public class Warehouse {
 	private String id;
 	
 	/**
-	 * 所属监管员
+	 * 仓库名称
 	 */
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "s_id")
-	private Supervisor supervisor;
-	
-	/**
-	 * 款式大类
-	 */
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "sty_id")
-	private Style style;
+	@Column(name = "w_name")
+	private String name;
 	
 	
 	/**
-	 * 成色
+	 * 存储地址
 	 */
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "pp_id")
-	private PledgePurity pledgePurity;
+	@Column(name = "w_address")
+	private String address;
 	
 	
 	/**
-	 * 规格重量（kg/件）
+	 * 备注
 	 */
-	@Column(name = "w_specWeight")
-	private Double specWeight;
+	@Column(name = "w_desc")
+	private String desc;
 	
 	
-	/**
-	 * 款式数量（件）
-	 */
-	@Column(name = "w_amount")
-	private Double amount;
-	
-	
-	/**
-	 * 总重量
-	 */
-	@Column(name = "w_sumWeight")
-	private String sumWeight;
-	
-	
-	/**
-	 * 总价值
-	 */
-	@Column(name = "w_sumValue")
-	private String sumValue;
-	
-	
-	public Warehouse() { }
-	
-	
-	
-	public Warehouse(Supervisor supervisor) {
-		this.supervisor = supervisor;
-	}
-
-
 	public String getId() {
 		return id;
 	}
@@ -99,73 +56,34 @@ public class Warehouse {
 	}
 
 
-	public Style getStyle() {
-		return style;
+	public String getName() {
+		return name;
 	}
 
 
-	public void setStyle(Style style) {
-		this.style = style;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 
-	public PledgePurity getPledgePurity() {
-		return pledgePurity;
+	public String getAddress() {
+		return address;
 	}
 
 
-	public void setPledgePurity(PledgePurity pledgePurity) {
-		this.pledgePurity = pledgePurity;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 
-	public Double getSpecWeight() {
-		return specWeight;
+	public String getDesc() {
+		return desc;
 	}
 
 
-	public void setSpecWeight(Double specWeight) {
-		this.specWeight = specWeight;
+	public void setDesc(String desc) {
+		this.desc = desc;
 	}
 
-
-	public Double getAmount() {
-		return amount;
-	}
-
-
-	public void setAmount(Double amount) {
-		this.amount = amount;
-	}
-
-
-	public String getSumWeight() {
-		return sumWeight;
-	}
-
-
-	public void setSumWeight(String sumWeight) {
-		this.sumWeight = sumWeight;
-	}
-
-
-	public String getSumValue() {
-		return sumValue;
-	}
-
-
-	public void setSumValue(String sumValue) {
-		this.sumValue = sumValue;
-	}
-
-
-	public Supervisor getSupervisor() {
-		return supervisor;
-	}
-
-
-	public void setSupervisor(Supervisor supervisor) {
-		this.supervisor = supervisor;
-	}
 	
 }

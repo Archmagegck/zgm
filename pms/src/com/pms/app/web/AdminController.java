@@ -15,9 +15,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.pms.app.entity.Admin;
 import com.pms.app.entity.Delegator;
 import com.pms.app.entity.Supervisor;
+import com.pms.app.entity.Warehouse;
 import com.pms.app.service.AdminService;
 import com.pms.app.service.DelegatorService;
 import com.pms.app.service.SupervisorService;
+import com.pms.app.service.WarehouseService;
 
 @Controller
 @RequestMapping(value = "/admin")
@@ -26,6 +28,7 @@ public class AdminController {
 	@Autowired private AdminService adminService;
 	@Autowired private SupervisorService supervisorService;
 	@Autowired private DelegatorService delegatorService;
+	@Autowired private WarehouseService warehouseService;
 
 	@RequestMapping(value = { "" })
 	public String admin() {
@@ -70,8 +73,14 @@ public class AdminController {
 					Supervisor supervisor = supervisorList.get(0);
 					session.setAttribute("type", type);
 					session.setAttribute("user", supervisor);
-					session.setAttribute("warehouseId", supervisorService.findWarehouseBySupervisorId(supervisor.getId()).getId());
-					return "main/main";
+					Warehouse warehouse = warehouseService.findWarehouseBySupervisorId(supervisor.getId());
+					if(warehouse == null) {
+						ra.addFlashAttribute("message", "此监管员未分配仓库！");
+						return "redirect:/admin";
+					} else {
+						session.setAttribute("warehouseId", warehouse.getId());
+						return "main/main";
+					}
 				}
 			}
 			break;

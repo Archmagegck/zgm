@@ -28,6 +28,17 @@
 			$("#myForm").validate();
 			$("#checkMethod").val("${insRecordDetail.checkMethod}");
 		});
+		
+		function changeStyle() {
+			var selStyle = $("#style").find("option:selected").text();
+			$("#styleName").val(selStyle);
+		}
+		
+		function changePurity(ob) {
+			var selPurity = $("#purity").find("option:selected").text();
+			$("#pledgePurityName").val(selPurity);
+		}
+		
 	</script>
 	
   </head>
@@ -47,7 +58,7 @@
 							款式大类:
 						</td>
 						<td width="70%">
-							<select name="style.id" class="required">
+							<select id="style" name="style.id" class="required" onchange="changeStyle()">
 								<c:forEach items="${styleList}" var="style">
 									<c:choose>
 										<c:when test="${style.id == insRecordDetail.style.id }">
@@ -59,7 +70,7 @@
 									</c:choose>
 								</c:forEach>
 							</select>
-							<input type="hidden" name="style.name" value="${insRecordDetail.style.name}">
+							<input type="hidden" id="styleName" name="style.name" value="${insRecordDetail.style.name}">
 						</td>
 					</tr>
 					<tr>
@@ -67,7 +78,7 @@
 							标明成色:
 						</td>
 						<td width="70%">
-							<select name="pledgePurity.id" class="required">
+							<select id="purity" name="pledgePurity.id" class="required" onchange="changePurity()">
 								<c:forEach items="${pledgePurityList}" var="pledgePurity">
 									<c:choose>
 										<c:when test="${pledgePurity.id == insRecordDetail.pledgePurity.id }">
@@ -79,7 +90,7 @@
 									</c:choose>
 								</c:forEach>
 							</select>
-							<input type="hidden" name="pledgePurity.name" value="${insRecordDetail.pledgePurity.name}">
+							<input type="hidden" id="pledgePurityName" name="pledgePurity.name" value="${insRecordDetail.pledgePurity.name}">
 						</td>
 					</tr>
 					<tr>
