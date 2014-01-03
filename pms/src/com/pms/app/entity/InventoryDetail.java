@@ -73,7 +73,7 @@ public class InventoryDetail {
 	 * 1:一致
 	 * 0:不一致
 	 */
-	@Column(name = "i_equation")
+	@Column(name = "id_equation")
 	private Integer equation = 1;
 
 	public String getId() {

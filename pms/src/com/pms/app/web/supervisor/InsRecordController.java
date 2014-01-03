@@ -133,8 +133,7 @@ public class InsRecordController {
 	public String save(InsRecord insRecord, HttpSession session, RedirectAttributes ra){
 		try {
 			insRecord.setInsRecordDetails((List<InsRecordDetail>) session.getAttribute("insRecordDetailList"));
-			insRecordService.save(insRecord, (String)session.getAttribute("warehouseId"));
-			// TODO 
+			insRecordService.save(insRecord);
 			session.removeAttribute("insRecordDetailList");
 			ra.addFlashAttribute("messageOK", "保存成功！");
 		} catch (Exception e) {

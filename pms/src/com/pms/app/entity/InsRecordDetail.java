@@ -74,7 +74,7 @@ public class InsRecordDetail {
 	 * 总重量
 	 */
 	@Column(name = "ind_sumWeight")
-	private Double sumWeight;
+	private Double sumWeight = 0.0;
 	
 	
 	/**
@@ -139,6 +139,18 @@ public class InsRecordDetail {
 		this.specWeight = insRecordDetail.getSpecWeight();
 		this.style = insRecordDetail.getStyle();
 		this.sumWeight = insRecordDetail.getAmount() * insRecordDetail.getSpecWeight();
+	}
+	
+	public String getKey() {
+		StringBuffer sb = new StringBuffer("{");
+		sb.append("\"style\":\"").append(style.getId()).append("\",");
+		sb.append("\"pledgePurity\":\"").append(pledgePurity.getId()).append("\",");
+		sb.append("\"specWeight\":\"").append(specWeight).append("\",");
+		sb.append("\"company\":\"").append(company).append("\",");
+		sb.append("\"closedTran\":\"").append(insRecord.getClosedTran()).append("\",");
+		sb.append("\"desc\":\"").append(desc).append("\"");
+		sb.append("}");
+		return sb.toString();
 	}
 
 	public String getId() {

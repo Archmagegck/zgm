@@ -78,7 +78,8 @@ public class AdminController {
 						ra.addFlashAttribute("message", "此监管员未分配仓库！");
 						return "redirect:/admin";
 					} else {
-						session.setAttribute("warehouseId", warehouse.getId());
+						warehouse.getAddress();
+						session.setAttribute("warehouse", warehouse);
 						return "main/main";
 					}
 				}

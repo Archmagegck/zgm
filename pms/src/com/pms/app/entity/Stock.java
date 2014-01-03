@@ -1,5 +1,7 @@
 package com.pms.app.entity;
 
+import java.math.BigDecimal;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -72,19 +74,66 @@ public class Stock {
 	 * 生产厂家
 	 */
 	@Column(name = "s_company")
-	private String company;
+	private String company = "";
 	
 	/**
-	 * 总价值
+	 * 是否封闭运输<br>
+	 * 0:否<br>
+	 * 1:是
 	 */
-	@Column(name = "s_sumValue")
-	private String sumValue;
+	@Column(name = "s_closedTran")
+	private Integer closedTran;
 	
 	/**
 	 * 备注/标记
 	 */
 	@Column(name = "s_desc")
-	private String desc;
+	private String desc = "";
+	
+	public Stock() {}
+	
+	public Stock(Warehouse warehouse, Integer closedTran, InsRecordDetail insRecordDetail) {
+		this.warehouse = warehouse;
+		this.style = insRecordDetail.getStyle();
+		this.pledgePurity = insRecordDetail.getPledgePurity();
+		this.specWeight = insRecordDetail.getSpecWeight();
+		this.amount = insRecordDetail.getAmount();
+		this.sumWeight = insRecordDetail.getSumWeight();
+		this.company = insRecordDetail.getCompany();
+		this.closedTran = closedTran;
+		this.desc = insRecordDetail.getDesc();
+	}
+	
+	/**
+	 * 入库
+	 * @param insRecordDetail 入库明细
+	 */
+	public void add(InsRecordDetail insRecordDetail) {
+		this.amount += insRecordDetail.getAmount();
+		this.sumWeight += insRecordDetail.getSumWeight();
+	}
+	
+	//TODO
+	public int remove(OutsRecordDetail outsRecordDetail) {
+		double remainAmount = this.amount - outsRecordDetail.getAmount();
+		if(remainAmount == 0) //todo
+		this.amount -= outsRecordDetail.getAmount();
+		this.sumWeight -= new BigDecimal(outsRecordDetail.getAmount() * this.specWeight).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+		
+		return 0;
+	}
+	
+	public String getKey() {
+		StringBuffer sb = new StringBuffer("{");
+		sb.append("\"style\":\"").append(style.getId()).append("\",");
+		sb.append("\"pledgePurity\":\"").append(pledgePurity.getId()).append("\",");
+		sb.append("\"specWeight\":\"").append(specWeight).append("\",");
+		sb.append("\"company\":\"").append(company).append("\",");
+		sb.append("\"closedTran\":\"").append(closedTran).append("\",");
+		sb.append("\"desc\":\"").append(desc).append("\"");
+		sb.append("}");
+		return sb.toString();
+	}
 
 	public String getId() {
 		return id;
@@ -150,20 +199,20 @@ public class Stock {
 		this.company = company;
 	}
 
-	public String getSumValue() {
-		return sumValue;
-	}
-
-	public void setSumValue(String sumValue) {
-		this.sumValue = sumValue;
-	}
-
 	public String getDesc() {
 		return desc;
 	}
 
 	public void setDesc(String desc) {
 		this.desc = desc;
+	}
+
+	public Integer getClosedTran() {
+		return closedTran;
+	}
+
+	public void setClosedTran(Integer closedTran) {
+		this.closedTran = closedTran;
 	}
 	
 }	

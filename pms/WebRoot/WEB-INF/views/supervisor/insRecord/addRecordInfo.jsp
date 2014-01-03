@@ -62,7 +62,9 @@
 							存储地点:
 						</td>
 						<td width="70%">
-							<input id="storage" name="storage" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
+							${sessionScope.warehouse.address}
+							<input type="hidden" name="warehouse.id" value="${sessionScope.warehouse.id}"/>
+							<input type="hidden" name="storage" value="${sessionScope.warehouse.address}"/>
 						</td>
 					</tr>
 					<tr>

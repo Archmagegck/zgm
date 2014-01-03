@@ -1,5 +1,9 @@
 package com.pms.app.service;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +20,20 @@ public class StockService extends BaseService<Stock, String> {
 	@Override
 	protected BaseDao<Stock, String> getEntityDao() {
 		return stockDao;
+	}
+	
+	public Map<String, Stock> findStockMapByWarehouseId(String warehouseId) {
+		Map<String, Stock> stockMap = new HashMap<String, Stock>();
+		List<Stock> stockList = stockDao.findByWarehouseId(warehouseId);
+		for (Stock stock : stockList) {
+			System.out.println(stock.getKey());
+			stockMap.put(stock.getKey(), stock);
+		}
+		return stockMap;
+	}
+	
+	public void save(Map<String, Stock> stockMap) {
+		stockDao.save(stockMap.values());
 	}
 
 }
