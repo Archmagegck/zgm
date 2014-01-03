@@ -14,6 +14,7 @@ import com.pms.app.entity.SupervisionCustomer;
 import com.pms.app.service.DelegatorService;
 import com.pms.app.service.SupervisionCustomerService;
 import com.pms.app.service.SupervisorService;
+import com.pms.app.service.WarehouseService;
 
 @Controller
 @RequestMapping(value = "/manage/supervisionCustomer")
@@ -24,6 +25,7 @@ public class SupervisionCustomerController {
 	@Autowired private SupervisionCustomerService supervisionCustomerService;
 	@Autowired private SupervisorService supervisorService;
 	@Autowired private DelegatorService delegatorService;
+	@Autowired private WarehouseService warehouseService;
 	
 	@RequestMapping(value = { "/list", "" })
 	public String list(Model model, Pageable pageable, String queryName, String queryValue) {
@@ -36,16 +38,17 @@ public class SupervisionCustomerController {
 	
 	@RequestMapping(value = "/add")
 	public String add(Model model){
-		model.addAttribute("supervisorList", supervisorService.findAll());
 		model.addAttribute("delegatorList", delegatorService.findAll());
+		model.addAttribute("supervisorList", supervisorService.findByUnUsedList());
+		model.addAttribute("warehouseList", warehouseService.findByUnUsedList());
 		return "manage/supervisionCustomer/add";
 	}
 	
 	
 	@RequestMapping(value = "/save")
-	public String save(SupervisionCustomer SupervisionCustomer, RedirectAttributes ra){
+	public String save(SupervisionCustomer supervisionCustomer, String oldWarehouseId, String oldSupervisorId, RedirectAttributes ra){
 		try {
-			supervisionCustomerService.save(SupervisionCustomer);
+			supervisionCustomerService.save(supervisionCustomer, oldWarehouseId, oldSupervisorId);
 			ra.addFlashAttribute("messageOK", "保存成功！");
 		} catch (Exception e) {
 			ra.addFlashAttribute("messageErr", "保存失败！");
@@ -58,8 +61,9 @@ public class SupervisionCustomerController {
 	@RequestMapping(value = "/edit/{id}")
 	public String edit(@PathVariable("id")String id, Model model){
 		model.addAttribute("supervisionCustomer", supervisionCustomerService.findById(id));
-		model.addAttribute("supervisorList", supervisorService.findAll());
 		model.addAttribute("delegatorList", delegatorService.findAll());
+		model.addAttribute("supervisorList", supervisorService.findByUnUsedList());
+		model.addAttribute("warehouseList", warehouseService.findByUnUsedList());
 		return "manage/supervisionCustomer/edit";
 	}
 	

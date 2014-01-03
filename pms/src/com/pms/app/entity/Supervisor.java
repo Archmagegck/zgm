@@ -98,6 +98,14 @@ public class Supervisor {
 	 */
 	@Column(name = "s_shippingWeight")
 	private Double shippingWeight;
+	
+	/**
+	 * 是否已分配<br>
+	 * 1:已分配
+	 * 0:未分配
+	 */
+	@Column(name = "s_used")
+	private Integer isUsed = 0;
 
 	public String getId() {
 		return id;
@@ -201,6 +209,14 @@ public class Supervisor {
 
 	public void setGender(Gender gender) {
 		this.gender = gender;
+	}
+
+	public Integer getIsUsed() {
+		return isUsed;
+	}
+
+	public void setIsUsed(Integer isUsed) {
+		this.isUsed = isUsed;
 	}
 
 	

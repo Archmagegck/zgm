@@ -8,4 +8,6 @@ import com.pms.base.dao.BaseDao;
 public interface SupervisorDao extends BaseDao<Supervisor, String> {
 	
 	List<Supervisor> findByUsernameAndPassword(String username, String password);
+	
+	List<Supervisor> findByIsUsed(Integer isUsed);
 }

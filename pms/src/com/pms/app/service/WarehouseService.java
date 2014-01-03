@@ -29,5 +29,9 @@ public class WarehouseService extends BaseService<Warehouse, String> {
 		Warehouse warehouse = supervisionCustomerList.get(0).getWarehouse();
 		return (warehouse != null) ? warehouse : null;
 	}
+
+	public List<Warehouse> findByUnUsedList() {
+		return warehouseDao.findByIsUsed(0);
+	}
 	
 }

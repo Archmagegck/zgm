@@ -8,4 +8,5 @@ import com.pms.base.dao.BaseDao;
 public interface DelegatorDao extends BaseDao<Delegator, String>{
 	
 	List<Delegator> findByUsernameAndPassword(String username, String password);
+	
 }

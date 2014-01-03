@@ -97,7 +97,7 @@
 							担保方（核心企业）:
 						</td>
 						<td width="80%">
-							<input id="guarantor" name="guarantor" value="${supervisionCustomer.guarantor }" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
+							<input id="guarantor" name="guarantor" value="${supervisionCustomer.guarantor }" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
 						</td>
 					</tr>
 					<tr>
@@ -121,6 +121,26 @@
 					</tr>
 					<tr>
 						<td width="20%">
+							仓库:
+						</td>
+						<td width="80%">
+						<select name = "warehouse.id" class="required">
+								<c:forEach items="${warehouseList }" var = "warehouse">
+									<c:choose>
+										<c:when test="${warehouse.id == supervisionCustomer.warehouse.id }">
+											<option selected="selected" value = "${warehouse.id }">${warehouse.name }</option>
+										</c:when>
+										<c:otherwise>
+											<option value = "${warehouse.id }">${warehouse.name }</option>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+						</select>
+						<input type="hidden" name="oldWarehouseId" value = "${supervisionCustomer.warehouse.id }" >
+						</td>
+					</tr>
+					<tr>
+						<td width="20%">
 							监管员:
 						</td>
 						<td width="80%">
@@ -136,6 +156,7 @@
 									</c:choose>
 								</c:forEach>
 						</select>
+						<input type="hidden" name="oldSupervisorId" value = "${supervisionCustomer.supervisor.id }" >
 						</td>
 					</tr>
 					<tr>
@@ -154,7 +175,7 @@
 							开票信息:
 						</td>
 						<td width="80%">
-							<input id="invoices" name="invoices" value="${supervisionCustomer.invoices }" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
+							<input id="invoices" name="invoices" value="${supervisionCustomer.invoices }"  style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
 						</td>
 					</tr>
 					<tr>
@@ -162,7 +183,7 @@
 							备注:
 						</td>
 						<td width="80%">
-							<input id="desc" name="desc" value="${supervisionCustomer.desc }" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
+							<input id="desc" name="desc" value="${supervisionCustomer.desc }" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
 						</td>
 					</tr>
 				</table>
