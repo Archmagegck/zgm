@@ -1,9 +1,13 @@
 package com.pms.app.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cache;
@@ -98,6 +102,31 @@ public class Supervisor {
 	 */
 	@Column(name = "s_shippingWeight")
 	private Double shippingWeight;
+	
+	/**
+	 * 监管客户
+	 */
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "sc_id")
+	private SupervisionCustomer supervisionCustomer;
+
+	
+	/**
+	 * 是否已分配<br>
+	 * 1:已分配
+	 * 0:未分配
+	 */
+	@Column(name = "s_used")
+	private Integer isUsed = 0;
+	
+	
+	public SupervisionCustomer getSupervisionCustomer() {
+		return supervisionCustomer;
+	}
+
+	public void setSupervisionCustomer(SupervisionCustomer supervisionCustomer) {
+		this.supervisionCustomer = supervisionCustomer;
+	}
 
 	public String getId() {
 		return id;
@@ -203,6 +232,14 @@ public class Supervisor {
 		this.gender = gender;
 	}
 
+	
+	public Integer getIsUsed() {
+		return isUsed;
+	}
+
+	public void setIsUsed(Integer isUsed) {
+		this.isUsed = isUsed;
+	}
 	
 	
 }
