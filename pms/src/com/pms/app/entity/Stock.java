@@ -113,13 +113,18 @@ public class Stock {
 		this.sumWeight += insRecordDetail.getSumWeight();
 	}
 	
-	//TODO
+	
+	/**
+	 * 出库
+	 * @param outsRecordDetail
+	 * @return 出库明细
+	 */
 	public int remove(OutsRecordDetail outsRecordDetail) {
 		double remainAmount = this.amount - outsRecordDetail.getAmount();
 		if(remainAmount == 0) //todo
 		this.amount -= outsRecordDetail.getAmount();
 		this.sumWeight -= new BigDecimal(outsRecordDetail.getAmount() * this.specWeight).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-		
+		//TODO
 		return 0;
 	}
 	

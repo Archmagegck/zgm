@@ -64,7 +64,6 @@
 						<td width="70%">
 							${sessionScope.warehouse.address}
 							<input type="hidden" name="warehouse.id" value="${sessionScope.warehouse.id}"/>
-							<input type="hidden" name="storage" value="${sessionScope.warehouse.address}"/>
 						</td>
 					</tr>
 					<tr>

@@ -24,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.pms.app.entity.InsRecord;
 import com.pms.app.entity.InsRecordDetail;
+import com.pms.app.entity.Warehouse;
 import com.pms.app.service.InsRecordService;
 import com.pms.app.service.PledgePurityService;
 import com.pms.app.service.StyleService;
@@ -56,7 +57,7 @@ public class InsRecordController {
 			DateTime endTime = new DateTime(endDate);
 			model.addAttribute("endDate", endTime.toString("yyyy-MM-dd"));
 		}
-		model.addAttribute("page", insRecordService.findPageByQuery(pageable, (String)session.getAttribute("warehouseId"), beginDate, endDate));
+		model.addAttribute("page", insRecordService.findPageByQuery(pageable,  ((Warehouse)session.getAttribute("warehouse")).getId(), beginDate, endDate));
 		return "supervisor/insRecord/list";
 	}
 	

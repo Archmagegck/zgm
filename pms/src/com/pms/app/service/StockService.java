@@ -22,6 +22,10 @@ public class StockService extends BaseService<Stock, String> {
 		return stockDao;
 	}
 	
+	public List<Stock> findByWarehouseId(String warehouseId) {
+		return stockDao.findByWarehouseId(warehouseId);
+	}
+	
 	public Map<String, Stock> findStockMapByWarehouseId(String warehouseId) {
 		Map<String, Stock> stockMap = new HashMap<String, Stock>();
 		List<Stock> stockList = stockDao.findByWarehouseId(warehouseId);

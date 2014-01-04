@@ -232,8 +232,8 @@
 	          </tr>
 	        </table>
 	        <ul class="MM">
-	        	<li><a href="${ctx}/feedPriceIndex/list" target="right">出库单列表</a></li>
-	        	<li><a href="${ctx}/productPriceIndex/list" target="right">登记出库货物明细</a></li>
+	        	<li><a href="${ctx}/supervisor/outsRecord" target="right">出库单列表</a></li>
+	        	<li><a href="${ctx}/supervisor/outsRecord/stockToOut" target="right">登记出库货物明细</a></li>
 	        </ul>
 	      </div>
 	      

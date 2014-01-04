@@ -71,13 +71,6 @@ public class InsRecord {
 	
 	
 	/**
-	 * 存储地点
-	 */
-	@Column(name = "in_storage")
-	private String storage;
-	
-	
-	/**
 	 * 是否封闭运输<br>
 	 * 0:否<br>
 	 * 1:是
@@ -202,16 +195,6 @@ public class InsRecord {
 
 	public void setSenderIdCard(String senderIdCard) {
 		this.senderIdCard = senderIdCard;
-	}
-
-
-	public String getStorage() {
-		return storage;
-	}
-
-
-	public void setStorage(String storage) {
-		this.storage = storage;
 	}
 
 

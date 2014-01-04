@@ -115,7 +115,7 @@
 									${insRecord.senderIdCard }&nbsp;
 								</td>
 								<td>
-									${insRecord.storage }&nbsp;
+									${sessionScope.warehouse.address}&nbsp;
 								</td>
 								<td>
 									${insRecord.date }&nbsp;
