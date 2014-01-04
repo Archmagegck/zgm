@@ -240,7 +240,5 @@ public class Supervisor {
 	public void setIsUsed(Integer isUsed) {
 		this.isUsed = isUsed;
 	}
-
-	
 	
 }
