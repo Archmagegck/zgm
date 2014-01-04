@@ -171,6 +171,7 @@
 	        	<li><a href="${ctx}/manage/supervisor" target="right">监管员管理</a></li>
 	          	<li><a href="${ctx}/manage/supervisionCustomer" target="right">监管客户管理</a></li>
 	          	<li><a href="${ctx}/manage/delegator" target="right">委托员管理</a></li>
+	          	<li><a href="${ctx}/manage/personalInfo/edit" target="right">个人信息修改</a></li>
 	        </ul>
 	      </div>
 	      
