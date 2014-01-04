@@ -104,20 +104,20 @@ public class Supervisor {
 	private Double shippingWeight;
 	
 	/**
-	 * 监管客户
-	 */
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "sc_id")
-	private SupervisionCustomer supervisionCustomer;
-
-	
-	/**
 	 * 是否已分配<br>
 	 * 1:已分配
 	 * 0:未分配
 	 */
 	@Column(name = "s_used")
 	private Integer isUsed = 0;
+
+	
+	/**
+	 * 监管客户
+	 */
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "sc_id")
+	private SupervisionCustomer supervisionCustomer;
 	
 	
 	public SupervisionCustomer getSupervisionCustomer() {
@@ -127,6 +127,7 @@ public class Supervisor {
 	public void setSupervisionCustomer(SupervisionCustomer supervisionCustomer) {
 		this.supervisionCustomer = supervisionCustomer;
 	}
+	
 
 	public String getId() {
 		return id;
@@ -231,7 +232,6 @@ public class Supervisor {
 	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
-
 	
 	public Integer getIsUsed() {
 		return isUsed;
@@ -240,6 +240,7 @@ public class Supervisor {
 	public void setIsUsed(Integer isUsed) {
 		this.isUsed = isUsed;
 	}
+
 	
 	
 }
