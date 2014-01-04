@@ -30,7 +30,6 @@ public class StockService extends BaseService<Stock, String> {
 		Map<String, Stock> stockMap = new HashMap<String, Stock>();
 		List<Stock> stockList = stockDao.findByWarehouseId(warehouseId);
 		for (Stock stock : stockList) {
-			System.out.println(stock.getKey());
 			stockMap.put(stock.getKey(), stock);
 		}
 		return stockMap;
