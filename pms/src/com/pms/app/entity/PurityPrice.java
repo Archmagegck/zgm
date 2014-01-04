@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -35,6 +37,7 @@ public class PurityPrice {
 	 * 日期
 	 */
 	@Column(name = "p_date")
+	@Temporal(TemporalType.DATE)
 	private Date date;
 	
 	/**

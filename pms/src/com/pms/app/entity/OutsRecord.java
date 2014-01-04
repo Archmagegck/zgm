@@ -134,7 +134,7 @@ public class OutsRecord {
 	/**
 	 * 出库单URL
 	 */
-	@Column(name = "out_inRecordUrl")
+	@Column(name = "out_outRecordUrl")
 	private String outRecordUrl;
 	
 	

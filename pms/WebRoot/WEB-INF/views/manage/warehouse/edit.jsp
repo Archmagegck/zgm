@@ -42,6 +42,7 @@
     			<legend><h3>请输入相关信息</h3></legend>
     			<br/>
     				<input type="hidden" name="id" value = "${warehouse.id }" >
+    				<input type="hidden" name="isUsed" value = "${warehouse.isUsed }" >
     				<table  cellpadding="0" cellspacing="0" width="100%"  class="list1">
 					<tr>
 						<td width="20%">
@@ -57,6 +58,14 @@
 						</td>
 						<td width="80%">
 							<input id="address" name="address" value="${warehouse.address }" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
+						</td>
+					</tr>
+					<tr>
+						<td width="20%">
+							备注:
+						</td>
+						<td width="80%">
+							<input id="desc" name="desc" value="${warehouse.desc }" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
 						</td>
 					</tr>
 				</table>

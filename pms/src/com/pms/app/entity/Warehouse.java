@@ -46,6 +46,13 @@ public class Warehouse {
 	private String desc;
 	
 	
+	/**
+	 * 是否已分配
+	 */
+	@Column(name = "s_used")
+	private Integer isUsed = 0;
+	
+	
 	public String getId() {
 		return id;
 	}
@@ -83,6 +90,16 @@ public class Warehouse {
 
 	public void setDesc(String desc) {
 		this.desc = desc;
+	}
+
+
+	public Integer getIsUsed() {
+		return isUsed;
+	}
+
+
+	public void setIsUsed(Integer isUsed) {
+		this.isUsed = isUsed;
 	}
 
 	

@@ -7,7 +7,7 @@
 <html>
   <head>
     
-    <title>修改用户</title>
+    <title>设置质押物要求</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -27,114 +27,107 @@
 
 		$(document).ready(function(){
 			$("#myForm").validate();
-			$("#gender").val("${supervisor.gender}");
 		});
 	</script>
 
   </head>
   
   <body>
-    <form id="myForm" name="myForm" action="${ctx}/manage/supervisor/save" method="post">
+    <form id="myForm" name="myForm" action="${ctx}/manage/pledgeConfig/update" method="post">
     	<div id="content">
     		<div style="margin-bottom: 10px;padding: 5px 10px;" id="box">
-    		<h3 id="addsupervisor">修改监管员</h3>
+    		<h3 id="addpledgeConfig">设置质押物要求</h3>
     		<br/>
     		<fieldset style="padding: 5px 10px;" id="personal">
     			<legend><h3>请输入相关信息</h3></legend>
     			<br/>
-    				<input type="hidden" name="id" value = "${supervisor.id }" >
-    				<input type="hidden" name="shippingWeight" value = "${supervisor.shippingWeight }" >
-    				<input type="hidden" name="isUsed" value = "${supervisor.isUsed }" >
+    				<input type="hidden" name="id" value = "${pledgeConfig.id }" >
     				<table  cellpadding="0" cellspacing="0" width="100%"  class="list1">
-					<tr>
+    				<tr>
 						<td width="20%">
-							监管员编号:
+							委托方:
 						</td>
 						<td width="80%">
-							<input id="code" name="code" value="${supervisor.code }" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
+							${pledgeConfig.delegator.name}
+							<input type="hidden" name="delegator.id" value="${pledgeConfig.delegator.id}" />
 						</td>
 					</tr>
 					<tr>
 						<td width="20%">
-							姓名:
+							监管客户:
 						</td>
 						<td width="80%">
-							<input id="name" name="name" value="${supervisor.name }" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
+							${pledgeConfig.supervisionCustomer.name}
+							<input type="hidden" name="supervisionCustomer.id" value="${pledgeConfig.supervisionCustomer.id}" />
 						</td>
 					</tr>
 					<tr>
 						<td width="20%">
-							性别:
+							监管员:
 						</td>
 						<td width="80%">
-							<select id="gender" name="gender">
-			            		<option value="Man">男</option>
-			            		<option value="Woman">女</option>
-			            	</select>
+							${pledgeConfig.supervisor.name}
+							<input type="hidden" name="supervisor.id" value="${pledgeConfig.supervisor.id}" />
 						</td>
 					</tr>
 					<tr>
 						<td width="20%">
-							登录名:
+							质押物最低成色要求:
 						</td>
 						<td width="80%">
-							<input id="username" name="username" value="${supervisor.username }" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
+							<select name="pledgePurity.id" class="required">
+							<option selected="selected" value="">--请选择--</option>
+							<c:forEach items="${pledgePurityList }" var = "pledgePurity">
+								<c:choose>
+									<c:when test="${pledgePurity.id == pledgeConfig.pledgePurity.id }">
+										<option selected="selected" value = "${pledgePurity.id }">${pledgePurity.name }</option>
+									</c:when>
+									<c:otherwise>
+										<option value = "${pledgePurity.id }">${pledgePurity.name }</option>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+						</select>
 						</td>
 					</tr>
 					<tr>
 						<td width="20%">
-							密码:
+							质押物的最低重量(kg):
 						</td>
 						<td width="80%">
-							<input id="password" name="password" value="${supervisor.password }" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
+							<input id="minWeight" name="minWeight" value="${pledgeConfig.minWeight }" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
 						</td>
 					</tr>
 					<tr>
 						<td width="20%">
-							住址:
+							质押物的最低价值（元）:
 						</td>
 						<td width="80%">
-							<input id="address" name="address" value="${supervisor.address }" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
+							<input id="minValue" name="minValue" value="${pledgeConfig.minValue }" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
 						</td>
 					</tr>
 					<tr>
 						<td width="20%">
-							身份证号:
+							监管员出库重量设置（kg）:
 						</td>
 						<td width="80%">
-							<input id="idcard" name="idcard" value="${supervisor.idcard }" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
+							<input id="shippingWeight" name="shippingWeight" value="${pledgeConfig.supervisor.shippingWeight }" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
 						</td>
 					</tr>
 					<tr>
 						<td width="20%">
-							联系电话:
+							警戒线上限（%）:
 						</td>
 						<td width="80%">
-							<input id="phone" name="phone" value="${supervisor.phone }" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
+							<input id="maxCordon" name="maxCordon" value="${pledgeConfig.maxCordon }" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
 						</td>
 					</tr>
 					<tr>
 						<td width="20%">
-							邮箱:
+							警戒线上限（%）:
 						</td>
 						<td width="80%">
-							<input id="email" name="email" value="${supervisor.email }" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
-						</td>
-					</tr>
-					<tr>
-						<td width="20%">
-							所属辖区:
-						</td>
-						<td width="80%">
-							<input id="area" name="area" value="${supervisor.area }" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
-						</td>
-					</tr>
-					<tr>
-						<td width="20%">
-							备注:
-						</td>
-						<td width="80%">
-							<input id="desc" name="desc" value="${supervisor.desc }" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
+							<input id="minCordon" name="minCordon" value="${pledgeConfig.minCordon }" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
 						</td>
 					</tr>
 				</table>

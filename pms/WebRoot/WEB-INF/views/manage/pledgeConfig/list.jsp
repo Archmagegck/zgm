@@ -6,7 +6,7 @@
 <html>
 	<head>
 
-		<title>每日价格记录</title>
+		<title>质押物要求信息列表</title>
 
 		<meta http-equiv="pragma" content="no-cache">
 		<meta http-equiv="cache-control" content="no-cache">
@@ -18,8 +18,6 @@
 		<link rel="stylesheet" type="text/css" href="${ctx }/css/admin/theme1.css">
 		
 		<script language="javascript" type="text/javascript" src="${ctx }/js/jquery.js"></script>
-		<script type="text/javascript" src="${ctx }/js/date/WdatePicker.js"></script>
-		
 		<script type="text/javascript">
     	$(document).ready(function(){
 		});
@@ -30,14 +28,6 @@
 			$("#myForm").submit();
 		}
 			
-		//删除
-		function del(index){
-			if (confirm("确定要删除吗？")){
-				$("#myForm").attr("action","${ctx }/manage/pledgePrice/" + index + "delete");
-				$("#myForm").submit();
-			}
-		}
-
     </script>
 	
 	<style type="text/css">
@@ -50,11 +40,11 @@
 	</head>
 
 	<body>
-		<form action="${ctx }/manage/pledgePrice/list" method="post" id="myForm" name="myForm">
+		<form action="${ctx }/manage/pledgeConfig/list" method="post" id="myForm" name="myForm">
 			<div align="center" id="content"">
 				<div id="box">
 					<h3 align="left">
-						每日价格记录
+						质押物要求信息列表
 					</h3>
 					<div>
 						&nbsp;
@@ -72,55 +62,105 @@
 						</c:if>
 					</div>
 					<div align="left" style="vertical-align: middle;">
-						&nbsp;&nbsp;&nbsp;选择日期
-						&nbsp;&nbsp;
-						<input name="date" value="${date}" onFocus="WdatePicker({isShowClear:false,isShowWeek:true,readOnly:true,skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"/>
+						&nbsp;&nbsp;&nbsp;委托方：
+						<select name = "delegatorId" class="required">
+							<option selected="selected" value="">--请选择--</option>
+							<c:forEach items="${delegatorList }" var = "delegator">
+								<c:choose>
+									<c:when test="${delegator.id == delegatorId }">
+										<option selected="selected" value = "${delegator.id }">${delegator.name }</option>
+									</c:when>
+									<c:otherwise>
+										<option value = "${delegator.id }">${delegator.name }</option>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+						</select>
+						&nbsp;&nbsp; 监管客户：
+						<select name = "supervisionCustomerId" class="required">
+							<option selected="selected" value="">--请选择--</option>
+							<c:forEach items="${supervisionCustomerList }" var = "supervisionCustomer">
+								<c:choose>
+									<c:when test="${supervisionCustomer.id == supervisionCustomerId }">
+										<option selected="selected" value = "${supervisionCustomer.id }">${supervisionCustomer.name }</option>
+									</c:when>
+									<c:otherwise>
+										<option value = "${supervisionCustomer.id }">${supervisionCustomer.name }</option>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+						</select>
 						&nbsp;&nbsp;&nbsp;
 						<input type="button" value="查询" class="button" onclick="gotoPage(1)" />
-						<input type="button" value="添加" class="button" onclick="location.href='${ctx}/manage/pledgePrice/add'" />
 						<input type="hidden" name="page.page" id="pageNo" value="${page.number+1}"/>
 					</div>
 					<br/>
 					<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
 						<thead>
 							<tr>
-								<th width="20%">
-									序号
+								<th>
+									委托方
 								</th>
 								<th>
-									日期
+									监管客户
 								</th>
 								<th>
-									标明成色
+									监管员
 								</th>
 								<th>
-									价格
+									监管员出库重量（kg）
+								</th>
+								<th>
+									质押物的最低成色要求
+								</th>
+								<th>
+									质押物的最低重量要求（kg）
+								</th>
+								<th>
+									质押物的最低价值要求（元）
+								</th>
+								<th>
+									警戒线上限（%）
+								</th>
+								<th>
+									警戒线下限（%）
 								</th>
 								<th>
 									操作
 								</th>
 							</tr>
 						</thead>
-						<c:forEach items="${page.content}" var="pledgePrice" varStatus="status">
+						<c:forEach items="${page.content}" var="pledgeConfig" varStatus="status">
 							<tr>
 								<td>
-									<input type="checkbox" name="idGroup" value="${pledgePrice.id }" />
+									${pledgeConfig.delegator.name }&nbsp;
 								</td>
 								<td>
-									${status.count}&nbsp;
+									${pledgeConfig.supervisionCustomer.name }&nbsp;
 								</td>
 								<td>
-									${pledgePrice.date }&nbsp;
+									${pledgeConfig.supervisor.name }&nbsp;
 								</td>
 								<td>
-									${pledgePrice.pledgePurity.name }&nbsp;
+									${pledgeConfig.supervisor.shippingWeight }&nbsp;
 								</td>
 								<td>
-									${pledgePrice.price }&nbsp;
+									${pledgeConfig.pledgePurity.name }&nbsp;
 								</td>
 								<td>
-									<a href="${ctx }/manage/pledgePrice/edit/${pledgePrice.id }">编辑</a>
-									<a href="#" onclick="del(${pledgePrice.id });">删除</a>
+									${pledgeConfig.minWeight }&nbsp;
+								</td>
+								<td>
+									${pledgeConfig.minValue }&nbsp;
+								</td>
+								<td>
+									${pledgeConfig.maxCordon }&nbsp;
+								</td>
+								<td>
+									${pledgeConfig.minCordon }&nbsp;
+								</td>
+								<td>
+									<a href="${ctx }/manage/pledgeConfig/edit/${pledgeConfig.id }">编辑</a>
 								</td>
 							</tr>
 						</c:forEach>

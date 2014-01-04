@@ -128,7 +128,6 @@ public class Supervisor {
 		this.supervisionCustomer = supervisionCustomer;
 	}
 	
-
 	public String getId() {
 		return id;
 	}

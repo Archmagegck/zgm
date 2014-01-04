@@ -6,7 +6,7 @@
 <html>
 	<head>
 
-		<title>仓库管理</title>
+		<title>每日价格记录</title>
 
 		<meta http-equiv="pragma" content="no-cache">
 		<meta http-equiv="cache-control" content="no-cache">
@@ -18,34 +18,23 @@
 		<link rel="stylesheet" type="text/css" href="${ctx }/css/admin/theme1.css">
 		
 		<script language="javascript" type="text/javascript" src="${ctx }/js/jquery.js"></script>
+		<script type="text/javascript" src="${ctx }/js/date/WdatePicker.js"></script>
+		
 		<script type="text/javascript">
     	$(document).ready(function(){
-			var query = "${queryName}";
-			if(query!=null && query.length > 0){
-				$("#queryName").val(query);
-			}
 		});
 
-		//全选
-		function selectAll(c){
-			$("[name='idGroup']").attr("checked", $(c).is(':checked'));
-		}
-		
 		//转向
 		function gotoPage(pageNo){
-			$("#pageNo").val(pageNo);
+			//$("#pageNo").val(pageNo);
 			$("#myForm").submit();
 		}
 			
 		//删除
-		function del(){
-			if($("[name='idGroup']:checked").length <= 0){
-				alert("请选择一个您要删除的！");
-			} else{
-				if (confirm("确定要删除吗？")){
-					$("#myForm").attr("action","${ctx}/manage/warehouse/delete");
-					$("#myForm").submit();
-				}
+		function del(index){
+			if (confirm("确定要删除吗？")){
+				$("#myForm").attr("action","${ctx }/manage/purityPrice/" + index + "delete");
+				$("#myForm").submit();
 			}
 		}
 
@@ -61,11 +50,11 @@
 	</head>
 
 	<body>
-		<form action="${ctx }/manage/warehouse/list" method="post" id="myForm" name="myForm">
+		<form action="${ctx }/manage/purityPrice/list" method="post" id="myForm" name="myForm">
 			<div align="center" id="content"">
 				<div id="box">
 					<h3 align="left">
-						仓库管理
+						每日价格记录
 					</h3>
 					<div>
 						&nbsp;
@@ -83,65 +72,49 @@
 						</c:if>
 					</div>
 					<div align="left" style="vertical-align: middle;">
-						&nbsp;&nbsp;&nbsp;根据
+						&nbsp;&nbsp;&nbsp;选择日期
 						&nbsp;&nbsp;
-						<select name="queryName" id="queryName">
-							<option value="name" selected="selected">仓库名称</option>
-							<option value="address">存储地址</option>
-						</select>
-						&nbsp;&nbsp; 查询:
-						<span id="values"><input type="text" name="queryValue" id="queryValue" value="${queryValue}" /> </span>
+						<input name="date" value="${date}" onFocus="WdatePicker({isShowClear:false,isShowWeek:true,readOnly:true,skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"/>
 						&nbsp;&nbsp;&nbsp;
 						<input type="button" value="查询" class="button" onclick="gotoPage(1)" />
-						<input type="button" value="添加" class="button" onclick="location.href='${ctx}/manage/warehouse/add'" />
-						<input type="button" value="删除" class="button" onclick="del()" />
-						<input type="hidden" name="page.page" id="pageNo" value="${page.number+1}"/>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="button" value="添加今日价格" class="button" onclick="location.href='${ctx}/manage/purityPrice/add'" />
 					</div>
 					<br/>
 					<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
 						<thead>
 							<tr>
 								<th width="10%">
-									全选
-									<input name="selAll" id="all" type="checkbox" onClick="selectAll(this)" />
+									序号
 								</th>
-								<th>
-									仓库名称
+								<th width="30%">
+									日期
 								</th>
-								<th>
-									存储地址
+								<th width="30%">
+									标明成色
 								</th>
-								<th>
-									备注
-								</th>
-								<th>
-									操作
+								<th width="30%">
+									价格
 								</th>
 							</tr>
 						</thead>
-						<c:forEach items="${page.content}" var="warehouse" varStatus="status">
+						<c:forEach items="${purityPriceList}" var="purityPrice" varStatus="status">
 							<tr>
 								<td>
-									<input type="checkbox" name="idGroup" value="${warehouse.id }" />
+									${status.count}&nbsp;
 								</td>
 								<td>
-									${warehouse.name }&nbsp;
+									${purityPrice.date }&nbsp;
 								</td>
 								<td>
-									${warehouse.address }&nbsp;
+									${purityPrice.pledgePurity.name }&nbsp;
 								</td>
 								<td>
-									${warehouse.desc }&nbsp;
-								</td>
-								<td>
-									<a href="${ctx }/manage/warehouse/edit/${warehouse.id }">编辑</a>
+									${purityPrice.price }&nbsp;
 								</td>
 							</tr>
 						</c:forEach>
 					</table>
-					<div align="left" id="pager">
-						<jsp:include page="../../common/page.jsp"></jsp:include>
-					</div>
 				</div>
 			</div>
 		</form>

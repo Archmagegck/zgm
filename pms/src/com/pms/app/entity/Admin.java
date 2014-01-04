@@ -11,7 +11,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
- * 管理员(监管经理)
+ * 监管经理
  * @author wangzz
  */
 @Entity

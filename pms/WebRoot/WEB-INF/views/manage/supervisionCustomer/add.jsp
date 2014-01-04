@@ -86,7 +86,7 @@
 							邮箱:
 						</td>
 						<td width="80%">
-							<input id="email" name="email" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
+							<input id="email" name="email" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
 						</td>
 					</tr>
 					<tr>
@@ -106,6 +106,19 @@
 								<option value="" selected="selected">--请选择--</option>
 								<c:forEach items="${delegatorList}" var = "delegator">
 									<option value = "${delegator.id }">${delegator.name }</option>
+								</c:forEach>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td width="20%">
+							仓库:
+						</td>
+						<td width="80%">
+							<select name="warehouse.id" class="required">
+								<option value="" selected="selected">--请选择--</option>
+								<c:forEach items="${warehouseList}" var = "warehouse">
+									<option value = "${warehouse.id }">${warehouse.name }</option>
 								</c:forEach>
 							</select>
 						</td>

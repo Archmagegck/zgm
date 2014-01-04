@@ -43,10 +43,10 @@ public class CheckDeny {
 	/**
 	 * 款式大类
 	 */
-	@Column(name = "cd_style")
-	private String style;
-	
-	
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "sty_id")
+	private Style style;
+		
 	/**
 	 * 成色
 	 */
@@ -149,10 +149,11 @@ public class CheckDeny {
 	
 	
 	/**
-	 * 操作监管员员姓名
+	 * 操作监管员
 	 */
-	@Column(name = "cd_supName")
-	private String supName;
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "s_id")
+	private Supervisor supervisor;
 	
 	
 	/**
@@ -166,7 +167,7 @@ public class CheckDeny {
 	 * 日期
 	 */
 	@Column(name = "cd_date")
-	private Date date;
+	private Date date = new Date();
 	
 
 	public Date getDate() {
@@ -198,17 +199,7 @@ public class CheckDeny {
 		this.warehouse = warehouse;
 	}
 
-
-	public String getStyle() {
-		return style;
-	}
-
-
-	public void setStyle(String style) {
-		this.style = style;
-	}
-
-
+	
 	public PledgePurity getPledgePurity() {
 		return pledgePurity;
 	}
@@ -349,16 +340,6 @@ public class CheckDeny {
 	}
 
 
-	public String getSupName() {
-		return supName;
-	}
-
-
-	public void setSupName(String supName) {
-		this.supName = supName;
-	}
-
-
 	public String getDesc() {
 		return desc;
 	}
@@ -366,6 +347,26 @@ public class CheckDeny {
 
 	public void setDesc(String desc) {
 		this.desc = desc;
+	}
+
+
+	public Style getStyle() {
+		return style;
+	}
+
+
+	public void setStyle(Style style) {
+		this.style = style;
+	}
+
+
+	public Supervisor getSupervisor() {
+		return supervisor;
+	}
+
+
+	public void setSupervisor(Supervisor supervisor) {
+		this.supervisor = supervisor;
 	}
 	
 }

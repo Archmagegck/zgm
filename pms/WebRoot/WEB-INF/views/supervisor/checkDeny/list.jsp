@@ -18,6 +18,9 @@
 		<link rel="stylesheet" type="text/css" href="${ctx }/css/admin/theme1.css">
 		
 		<script language="javascript" type="text/javascript" src="${ctx }/js/jquery.js"></script>
+		<script type="text/javascript" src="${ctx }/js/date/WdatePicker.js"></script>
+		
+		
 		<script type="text/javascript">
     	$(document).ready(function(){
 			var query = "${queryName}";
@@ -83,14 +86,16 @@
 						</c:if>
 					</div>
 					<div align="left" style="vertical-align: middle;">
-						&nbsp;&nbsp;&nbsp;根据
-						&nbsp;&nbsp;
-						<select name="queryName" id="queryName">
-							<option value="date" selected="selected">日期</option>
-						</select>
+						&nbsp;&nbsp;&nbsp;根据拒绝日期
 						&nbsp;&nbsp; 查询:
-						<span id="values"><input type="text" name="queryValue" id="queryValue" value="${queryValue}" /> </span>
-						&nbsp;&nbsp;&nbsp;
+						<span id="values">
+						从
+						<input name="beginDate" value="${beginDate}" onFocus="WdatePicker({isShowClear:false,isShowWeek:true,readOnly:true,skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"/>
+						&nbsp; 
+						到
+						<input name="endDate" value="${endDate}" onFocus="WdatePicker({isShowClear:false,isShowWeek:true,readOnly:true,skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"/>
+						&nbsp;&nbsp;
+						</span>
 						<input type="button" value="查询" class="button" onclick="gotoPage(1)" />
 						<input type="button" value="添加" class="button" onclick="location.href='${ctx}/supervisor/checkDeny/add'" />
 					<!-- 	<input type="button" value="删除" class="button" onclick="del()" />  -->
@@ -169,10 +174,10 @@
 									${status.count}&nbsp;
 								</td>
 								<td>
-									${checkDeny.style }&nbsp;
+									${checkDeny.style.name }&nbsp;
 								</td>
 								<td>
-									${checkDeny.pledgePurity.purity }&nbsp;
+									${checkDeny.pledgePurity.name }&nbsp;
 								</td>
 								<td>
 									${checkDeny.specWeight }&nbsp;
@@ -208,7 +213,7 @@
 									${checkDeny.senderIdCard }&nbsp;
 								</td>
 								<td>
-									${checkDeny.supName }&nbsp;
+									${checkDeny.supervisor.name }&nbsp;
 								</td>
 								<td>
 									${checkDeny.date }&nbsp;

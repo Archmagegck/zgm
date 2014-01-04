@@ -7,7 +7,7 @@
 <html>
   <head>
     
-    <title>添加仓库</title>
+    <title>添加每日价格</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -32,39 +32,44 @@
   </head>
   
   <body>
-    <form id="myForm" name="myForm" action="${ctx}/manage/warehouse/save" method="post">
+    <form id="myForm" name="myForm" action="${ctx}/manage/purityPrice/save" method="post">
     	<div id="content">
     		<div style="margin-bottom: 10px;padding: 5px 10px;" id="box">
-    		<h3 id="adduser">添加仓库</h3>
+    		<h3 id="adduser">今日抵押物价格单</h3>
     		<br/>
     		<fieldset style="padding: 5px 10px;" id="personal">
-    			<legend><h3>请输入相关信息</h3></legend>
+    			<legend><h3>${nowDate}</h3></legend>
     			<br/>
-    				<table  cellpadding="0" cellspacing="0" width="100%"  class="list1">
-					<tr>
-						<td width="20%">
-							仓库名称:
-						</td>
-						<td width="80%">
-							<input id="name" name="name" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
-						</td>
-					</tr>
-					<tr>
-						<td width="20%">
-							存储地址:
-						</td>
-						<td width="80%">
-							<input id="address" name="address" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
-						</td>
-					</tr>
-					<tr>
-						<td width="20%">
-							备注:
-						</td>
-						<td width="80%">
-							<input id="desc" name="desc" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
-						</td>
-					</tr>
+    				<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
+						<thead>
+							<tr>
+								<th width="20%">
+									序号
+								</th>
+								<th>
+									标明成色
+								</th>
+								<th>
+									价格
+								</th>
+							</tr>
+						</thead>
+						<c:forEach items="${pledgePurityList}" var="pledgePurity" varStatus="status">
+							<tr>
+								<td>
+									${status.count}&nbsp;
+								</td>
+								<td>
+									${pledgePurity.name }&nbsp;
+								</td>
+								<td>
+									<input id="purityPrices[${status.index}].price" name="purityPrices[${status.index}].price" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
+									&nbsp;
+									<input type="hidden" name="purityPrices[${status.index}].pledgePurity.id" value="${pledgePurity.id }">
+									<input type="hidden" name="purityPrices[${status.index}].date" value="${nowDate}">
+								</td>
+							</tr>
+						</c:forEach>
 					</table>
     			<br/>
     		</fieldset>

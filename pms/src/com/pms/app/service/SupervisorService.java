@@ -26,4 +26,8 @@ public class SupervisorService extends BaseService<Supervisor, String> {
 		return supervisorDao.findByUsernameAndPassword(username, password);
 	}
 	
+	public List<Supervisor> findByUnUsedList() {
+		return supervisorDao.findByIsUsed(0);
+	}
+	
 }
