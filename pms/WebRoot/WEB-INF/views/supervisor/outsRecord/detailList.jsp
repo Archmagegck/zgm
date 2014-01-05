@@ -58,7 +58,7 @@
 						</thead>
 						<tbody>
 							<tr>
-								<td>${outsRecord.supervisor.name}</td>
+								<td>${outsRecord.supName}</td>
 								<td>${outsRecord.date}</td>
 								<td>${outsRecord.picker}</td>
 								<td>${outsRecord.pickerIdCard}</td>

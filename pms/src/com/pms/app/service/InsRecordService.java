@@ -32,9 +32,9 @@ public class InsRecordService extends BaseService<InsRecord, String> {
 
 	
 	@Transactional
-	public void save(InsRecord insRecord) {
-		insRecord.setCode(CodeUtils.getInsRecordCode());
-		Map<String, Stock> stockMap = stockService.findStockMapByWarehouseId(insRecord.getWarehouse().getId());
+	public void save(InsRecord insRecord, String supervisionCustomerCode) {
+		insRecord.setCode(CodeUtils.getInsRecordCode(supervisionCustomerCode));
+		Map<String, Stock> stockMap = stockService.findStockKeyMapByWarehouseId(insRecord.getWarehouse().getId());
 		double sumWeight = 0;
 		List<InsRecordDetail> insRecordDetailList = insRecord.getInsRecordDetails();
 		for(InsRecordDetail detail : insRecordDetailList) {

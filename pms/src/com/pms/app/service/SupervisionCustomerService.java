@@ -31,6 +31,12 @@ public class SupervisionCustomerService extends BaseService<SupervisionCustomer,
 		return supervisionCustomerDao;
 	}
 	
+	public SupervisionCustomer findBySupervisorId(String supervisorId) {
+		List<SupervisionCustomer> supervisionCustomerList = supervisionCustomerDao.findListBySupervisorId(supervisorId);
+		if(supervisionCustomerList.isEmpty()) return null;
+		return supervisionCustomerList.get(0);
+	}
+	
 	@Transactional
 	public void save(SupervisionCustomer supervisionCustomer, String oldWarehouseId, String oldSupervisorId){
 		if(!StringUtils.hasText(supervisionCustomer.getId())) {

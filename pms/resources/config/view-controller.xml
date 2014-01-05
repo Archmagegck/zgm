@@ -14,10 +14,8 @@
     
     <mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="/admin/**"/>
-			<mvc:mapping path="/province/**"/>
-			<mvc:mapping path="/region/**"/>
-			<mvc:mapping path="/user/**"/>
+			<mvc:mapping path="/manage/**"/>
+			<mvc:mapping path="/supervisor/**"/>
 			<mvc:exclude-mapping path="/admin"/>
 			<mvc:exclude-mapping path="/admin/login"/>
 			<mvc:exclude-mapping path="/admin/exit"/>

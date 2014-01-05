@@ -129,9 +129,6 @@
 									${outsRecord.auditState.title }&nbsp;
 								</td>
 								<td>
-									${outsRecord.storage }&nbsp;
-								</td>
-								<td>
 									<c:if test="${outsRecord.attachState == 1}">已上传</c:if>
 									<c:if test="${outsRecord.attachState == 0}">
 									<a href="${ctx }/supervisor/outsRecord/${outsRecord.id }/toUpload">未上传</a>

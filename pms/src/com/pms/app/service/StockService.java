@@ -26,11 +26,20 @@ public class StockService extends BaseService<Stock, String> {
 		return stockDao.findByWarehouseId(warehouseId);
 	}
 	
-	public Map<String, Stock> findStockMapByWarehouseId(String warehouseId) {
+	public Map<String, Stock> findStockKeyMapByWarehouseId(String warehouseId) {
 		Map<String, Stock> stockMap = new HashMap<String, Stock>();
 		List<Stock> stockList = stockDao.findByWarehouseId(warehouseId);
 		for (Stock stock : stockList) {
 			stockMap.put(stock.getKey(), stock);
+		}
+		return stockMap;
+	}
+	
+	public Map<String, Stock> findStockMapByWarehouseId(String warehouseId) {
+		Map<String, Stock> stockMap = new HashMap<String, Stock>();
+		List<Stock> stockList = stockDao.findByWarehouseId(warehouseId);
+		for (Stock stock : stockList) {
+			stockMap.put(stock.getId(), stock);
 		}
 		return stockMap;
 	}

@@ -134,7 +134,7 @@ public class InsRecordController {
 	public String save(InsRecord insRecord, HttpSession session, RedirectAttributes ra){
 		try {
 			insRecord.setInsRecordDetails((List<InsRecordDetail>) session.getAttribute("insRecordDetailList"));
-			insRecordService.save(insRecord);
+			insRecordService.save(insRecord, (String)session.getAttribute("supervisionCustomerCode"));
 			session.removeAttribute("insRecordDetailList");
 			ra.addFlashAttribute("messageOK", "保存成功！");
 		} catch (Exception e) {

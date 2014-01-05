@@ -18,7 +18,7 @@
 		
 	<script type="text/javascript" src="${ctx }/js/jquery-1.6.1.js"></script>
 	<script type="text/javascript" src="${ctx}/js/lhgdialog/lhgcore.min.js"></script> 
-	<script type="text/javascript" src="${ctx}/js/lhgdialog/lhgdialog.min.js?t=self&s=facebook"></script>
+	<script type="text/javascript" src="${ctx}/js/lhgdialog/lhgdialog.min.js"></script>
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
@@ -33,42 +33,44 @@
 		}
 
 		function isValidate() {
-			var noticeFile = document.getElementById("noticeFile");
+			var noticeFile = document.getElementById("picfile");
 			if (noticeFile.value == "") {
 				alert("请选择文件上传！");
 				return false;
 			} 
-			alert(noticeFile.value);
 			return true;
 		}
 
 		
 		
 	</script>
-  </head>
-  
-  <body>
-  		<form action="${ctx}/supervisor/outsRecord/uploadNoticeFile" id="addForm" method="post">
-  			<table border="0" cellpadding="0" cellspacing="0" class="senfe1" width="100%">
-  				<tr class="list_head">
-					<td colspan="2" align="center">提货通知书上传&nbsp;</td>
-				</tr>
-				<tr>
-					<td>选择文件</td>
-					<td>
-						<input type="file" name="noticeFile" id="noticeFile" value="浏览"/>
-					</td>
-				</tr>
-  			</table>
-  		</form>
-    </body>
-    <c:if test="${message == 'ok'}">
+	<c:if test="${message == 'ok'}">
     		<script>
 				if (frameElement!=null)
 				{
 					alert("操作成功！");
-					DG.cancel();
+					DG.curWin.refreshUpload('${filePath}');
+					//DG.cancel();
 				}
 			</script>
     </c:if>
+  </head>
+  <body>
+  		<form action="${ctx}/supervisor/outsRecord/uploadNoticeFile" id="addForm" method="post" enctype="multipart/form-data">
+  			<table border="0" cellpadding="0" cellspacing="0" class="senfe1" width="100%">
+  				<tr class="list_head">
+					<td colspan="2" align="center">提货通知书上传&nbsp;${message}</td>
+				</tr>
+				<tr>
+					<td>选择文件</td>
+					<td>
+						<input type="file" name="picfile" id="picfile" value="浏览"/>
+					</td>
+				</tr>
+				<c:if test="${not empty error}">
+					<td colspan="2">${error}</td>
+				</c:if>
+  			</table>
+  		</form>
+    </body>
 </html>

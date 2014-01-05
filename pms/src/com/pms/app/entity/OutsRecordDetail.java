@@ -69,6 +69,13 @@ public class OutsRecordDetail {
 	
 	
 	/**
+	 * 总重量
+	 */
+	@Column(name = "outd_sumWeight")
+	private Double sumWeight = 0.0;
+	
+	
+	/**
 	 * 生产厂家
 	 */
 	@Column(name = "outd_company")
@@ -81,7 +88,6 @@ public class OutsRecordDetail {
 	 */
 	@Column(name = "outd_desc")
 	private String desc;
-
 
 
 	public String getId() {
@@ -176,6 +182,18 @@ public class OutsRecordDetail {
 
 	public void setDesc(String desc) {
 		this.desc = desc;
+	}
+
+
+
+	public Double getSumWeight() {
+		return sumWeight;
+	}
+
+
+
+	public void setSumWeight(Double sumWeight) {
+		this.sumWeight = sumWeight;
 	}
 
 

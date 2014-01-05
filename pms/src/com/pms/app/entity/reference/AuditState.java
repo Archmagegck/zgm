@@ -7,6 +7,16 @@ package com.pms.app.entity.reference;
 public enum AuditState {
 	
 	/**
+	 * 待审核
+	 */
+	Wait {
+		@Override
+		public String getTitle() {
+			return "待审核";
+		}
+	},
+	
+	/**
 	 * 通过
 	 */
 	Pass {

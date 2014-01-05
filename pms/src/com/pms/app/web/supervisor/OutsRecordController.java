@@ -3,6 +3,7 @@ package com.pms.app.web.supervisor;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -19,13 +20,15 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.pms.app.entity.OutsRecord;
 import com.pms.app.entity.Warehouse;
+import com.pms.app.entity.vo.OutStock;
 import com.pms.app.service.OutsRecordService;
 import com.pms.app.service.StockService;
 import com.pms.app.util.UploadUtils;
-import com.pms.app.web.manage.form.OutsRecordDetailForm;
+import com.pms.app.web.supervisor.form.StockForm;
 
 @Controller
 @RequestMapping(value = "/supervisor/outsRecord")
@@ -81,21 +84,49 @@ public class OutsRecordController {
 	
 	
 	@RequestMapping(value = "/uploadNoticeFile")
-	public String uploadNoticeFile(Model model, HttpServletRequest request) {
-		String picName = UploadUtils.uploadIndexPic(request, "product", 1);
-		System.out.println(picName);
-		return "supervisor/outsRecord/uploadNoticeFile";
+	public String uploadNoticeFile(HttpServletRequest request, Model model, RedirectAttributes ra) {
+		try {
+			String filePath = UploadUtils.uploadTempFile(request);
+			HttpSession session = request.getSession();
+			session.setAttribute("tempImg", filePath);
+			model.addAttribute("message", "ok");
+			model.addAttribute("filePath", filePath);
+		} catch (Exception e) {
+			logger.error("上传提货通知书", e);
+			ra.addFlashAttribute("error", e.getMessage());
+			return "redirect:/supervisor/outsRecord/toUpload";
+		}
+		return "supervisor/outsRecord/toUpload";
 	}
 	
 	
 	@RequestMapping(value = "/saveDetail")
-	public String saveDetail(Model model, OutsRecordDetailForm outsRecordDetailForm, HttpSession session) {
-		return "supervisor/outsRecord/stockToOut";
+	public String saveDetail(Model model, StockForm stockForm, HttpSession session) {
+		session.setAttribute("outStocks", stockForm.getOutStocks());
+		return "supervisor/outsRecord/addRecordInfo";
 	}
 	
 	
 	@RequestMapping(value = "/saveOutsRecord")
-	public String saveOutsRecord(Model model, OutsRecord outsRecord, HttpSession session) {
+	public String saveOutsRecord(Model model, OutsRecord outsRecord, HttpServletRequest request, RedirectAttributes ra) {
+		HttpSession session = request.getSession();
+		@SuppressWarnings("unchecked")
+		List<OutStock> outStocks = (List<OutStock>) session.getAttribute("outStocks");
+		String supervisionCustomerCode = (String)session.getAttribute("supervisionCustomerCode");
+		String tempImg = (String)session.getAttribute("tempImg");
+		try {
+			int hasPickFile = (tempImg == null) ? 1 : 0;
+			if(hasPickFile == 1) {
+				String pickNoticeUrl = UploadUtils.uploadPickFile(request, tempImg, supervisionCustomerCode);
+				outsRecord.setPickNoticeUrl(pickNoticeUrl);
+			}
+			outsRecordService.save(outsRecord, outStocks, hasPickFile, supervisionCustomerCode);
+			ra.addFlashAttribute("messageOK", "保存成功！");
+		} catch (Exception e) {
+			logger.error("保存失败", e);
+			ra.addFlashAttribute("messageErr", "保存失败！");
+			return "redirect:/supervisor/outsRecord/stockToOut";
+		}
 		return "supervisor/outsRecord/stockToOut";
 	}
 	

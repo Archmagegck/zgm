@@ -62,7 +62,7 @@ public class OutsRecord {
 	 * 总重量
 	 */
 	@Column(name = "out_sumWeight")
-	private String sumWeight;
+	private Double sumWeight;
 	
 	
 	/**
@@ -119,7 +119,7 @@ public class OutsRecord {
 	 * 审核状态
 	 */
 	@Column(name = "out_auditState")
-	private AuditState auditState;
+	private AuditState auditState = AuditState.Wait;
 	
 	
 	/**
@@ -199,12 +199,12 @@ public class OutsRecord {
 	}
 
 
-	public String getSumWeight() {
+	public Double getSumWeight() {
 		return sumWeight;
 	}
 
 
-	public void setSumWeight(String sumWeight) {
+	public void setSumWeight(Double sumWeight) {
 		this.sumWeight = sumWeight;
 	}
 

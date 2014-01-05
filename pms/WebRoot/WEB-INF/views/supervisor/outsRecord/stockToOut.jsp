@@ -86,18 +86,25 @@
 			jQuery("#myForm").validate();
 		});
 		
+		var dg = new J.dialog({ 
+			id:'dd2', 
+			title:'上传文件',
+			iconTitle:false,
+			page:'${ctx}/supervisor/outsRecord/toUpload', 
+			cover:true,
+			bgcolor:'#000',
+			drag:false, 
+			resize:false
+		}); 
+		
 		function upload() {
-			var dg = new J.dialog({ 
-				id:'dd2', 
-				title:'上传文件',
-				iconTitle:false,
-				page:'${ctx}/supervisor/outsRecord/toUpload', 
-				cover:true,
-				bgcolor:'#000',
-				drag:false, 
-				resize:false
-			}); 
 			dg.ShowDialog(); 
+		}
+		
+		function refreshUpload(filePath) {
+			dg.cancel(); 
+			location.reload();
+			//jQuery("#showPic").html("<a href='${ctx }/" + filePath + "'>查看</a>");
 		}
 		
 		
@@ -106,7 +113,7 @@
   </head>
   
   <body>
-    <form id="myForm" name="myForm" action="${ctx}/supervisor/outsRecord/save" method="post" class="myform">
+    <form id="myForm" name="myForm" action="${ctx}/supervisor/outsRecord/saveDetail" method="post" class="myform">
     	<div id="content">
     		<div style="margin-bottom: 10px;padding: 5px 10px;" id="box">
     		<h3 id="adduser">货物信息表</h3>
@@ -114,11 +121,26 @@
     		<fieldset style="padding: 5px 10px;" id="personal">
     			<legend><h3>请填写出库内容</h3></legend>
     			<br/>
+    			<c:if test="${not empty messageOK}">
+					<div class="flash notice">
+						&nbsp;&nbsp;${messageOK}
+					</div>
+				</c:if>
+				<c:if test="${not empty messageErr}">
+					<div class="flash error">
+						&nbsp;&nbsp;${messageErr}
+					</div>
+				</c:if>
     			<table  cellpadding="0" cellspacing="0" width="100%"  class="myTable">
 					<tr>
 						<td width="25%">"提货通知书"扫描文件上传：</td>
 						<td width="25%">
 							<input type="button" value="上传文件" onclick="upload();" />
+							<span id="showPic">
+							<c:if test="${not empty sessionScope.tempImg}">
+								<a href="${ctx}/images/${sessionScope.tempImg}" target=_blank>查看</a>
+							</c:if>
+							</span>
 						</td>
 						<td width="25%">提货类型</td>
 						<td width="25%">
@@ -180,11 +202,9 @@
 									${stock.desc}&nbsp;
 								</td>
 								<td>
-									
-									<input id="purityPrices[${status.index}].price" name="purityPrices[${status.index}].price" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
+									<input id="stocks[${status.index}].amount" name="outStocks[${status.index}].outAmount" class="{number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
+									<input type="hidden" name="outStocks[${status.index}].stockId" value="${stock.id }">
 									&nbsp;
-									<input type="hidden" name="purityPrices[${status.index}].pledgePurity.id" value="${pledgePurity.id }">
-									<input type="hidden" name="purityPrices[${status.index}].date" value="${nowDate}">
 								</td>
 							</tr>
 						</c:forEach>

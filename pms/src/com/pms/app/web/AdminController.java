@@ -18,6 +18,7 @@ import com.pms.app.entity.Supervisor;
 import com.pms.app.entity.Warehouse;
 import com.pms.app.service.AdminService;
 import com.pms.app.service.DelegatorService;
+import com.pms.app.service.SupervisionCustomerService;
 import com.pms.app.service.SupervisorService;
 import com.pms.app.service.WarehouseService;
 
@@ -29,6 +30,7 @@ public class AdminController {
 	@Autowired private SupervisorService supervisorService;
 	@Autowired private DelegatorService delegatorService;
 	@Autowired private WarehouseService warehouseService;
+	@Autowired private SupervisionCustomerService supervisionCustomerService;
 
 	@RequestMapping(value = { "" })
 	public String admin() {
@@ -71,17 +73,20 @@ public class AdminController {
 			if (!supervisorList.isEmpty()) {
 				if (supervisorList.size() == 1) {
 					Supervisor supervisor = supervisorList.get(0);
-					session.setAttribute("type", type);
-					session.setAttribute("user", supervisor);
-					Warehouse warehouse = warehouseService.findWarehouseBySupervisorId(supervisor.getId());
-					if(warehouse == null) {
-						ra.addFlashAttribute("message", "此监管员未分配仓库！");
-						return "redirect:/admin";
-					} else {
-						warehouse.getAddress();
-						session.setAttribute("warehouse", warehouse);
-						return "main/main";
+					if(supervisor.getIsUsed() == 1) {
+						session.setAttribute("type", type);
+						session.setAttribute("user", supervisor);
+						session.setAttribute("supervisionCustomerCode", supervisionCustomerService.findBySupervisorId(supervisor.getId()).getCode());
+						Warehouse warehouse = warehouseService.findWarehouseBySupervisorId(supervisor.getId());
+						if(warehouse != null) {
+							warehouse.getAddress();
+							session.setAttribute("warehouse", warehouse);
+							return "main/main";
+						}
 					}
+					session.invalidate();
+					ra.addFlashAttribute("message", "此监管员未分配仓库！");
+					return "redirect:/admin";
 				}
 			}
 			break;
@@ -99,7 +104,7 @@ public class AdminController {
 		default:
 			break;
 		}
-		
+		session.invalidate();
 		ra.addFlashAttribute("message", "账号或密码错误！");
 		return "redirect:/admin";
 	}
