@@ -143,6 +143,7 @@ public class InsRecordDetail {
 	
 	public String getKey() {
 		StringBuffer sb = new StringBuffer("{");
+		sb.append("\"warehouse\":\"").append(insRecord.getWarehouse().getId()).append("\",");
 		sb.append("\"style\":\"").append(style.getId()).append("\",");
 		sb.append("\"pledgePurity\":\"").append(pledgePurity.getId()).append("\",");
 		sb.append("\"specWeight\":\"").append(specWeight).append("\",");
