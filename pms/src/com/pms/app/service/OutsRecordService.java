@@ -15,7 +15,6 @@ import com.pms.app.entity.OutsRecord;
 import com.pms.app.entity.OutsRecordDetail;
 import com.pms.app.entity.Stock;
 import com.pms.app.entity.vo.OutStock;
-import com.pms.app.util.CodeUtils;
 import com.pms.base.dao.BaseDao;
 import com.pms.base.service.BaseService;
 
@@ -34,7 +33,6 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 	
 	@Transactional
 	public void save(OutsRecord outsRecord, List<OutStock> outStocks, int hasPickFile, String supervisionCustomerCode) {
-		outsRecord.setCode(CodeUtils.getOutsRecordCode(supervisionCustomerCode));
 		double sumWeight = 0;
 		Map<String, Stock> stockMap = stockService.findStockMapByWarehouseId(outsRecord.getWarehouse().getId());
 		List<Stock> updateStocks = new ArrayList<Stock>();
@@ -44,6 +42,7 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 		for (OutStock outStock : outStocks) {
 			Double outAmount = outStock.getOutAmount();
 			if(outAmount == null) continue;
+			sumWeight += outAmount;
 			Stock stock = stockMap.get(outStock.getStockId());
 			double remainAmount = stock.getAmount() - outAmount;
 			if(remainAmount == 0) 
@@ -53,7 +52,6 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 				stock.setAmount(remainAmount);
 				stock.setSumWeight(weight);
 				updateStocks.add(stock);
-				sumWeight += weight;
 			}
 			OutsRecordDetail outsRecordDetail = new OutsRecordDetail();
 			outsRecordDetail.setAmount(outStock.getOutAmount());

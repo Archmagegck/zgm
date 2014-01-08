@@ -14,6 +14,8 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
+import com.pms.app.entity.reference.CheckMethod;
+
 /**
  * 盘存明细
  * @author wangzz
@@ -57,10 +59,42 @@ public class InventoryDetail {
 	private Double specWeight;
 	
 	/**
-	 * 实际数量（件）
+	 * 数量（件）
 	 */
 	@Column(name = "id_amount")
+	private Double amount;
+	
+	/**
+	 * 总重量
+	 */
+	@Column(name = "id_sumWeight")
+	private Double sumWeight;
+	
+	/**
+	 * 生产厂家
+	 */
+	@Column(name = "id_company")
+	private String company = "";
+
+	/**
+	 * 是否封闭运输<br>
+	 * 0:否<br>
+	 * 1:是
+	 */
+	@Column(name = "id_closedTran")
+	private Integer closedTran;
+	
+	/**
+	 * 实际数量（件）
+	 */
+	@Column(name = "id_realAmount")
 	private Double realAmount;
+	
+	/**
+	 * 实际重量
+	 */
+	@Column(name = "id_realWeight")
+	private Double realWeight;
 	
 	/**
 	 * 实际成色
@@ -69,12 +103,29 @@ public class InventoryDetail {
 	private String realPledgePurity;
 	
 	/**
+	 * 检测方法
+	 */
+	@Column(name = "id_checkMethod")
+	private CheckMethod checkMethod;
+	
+	/**
 	 * 是否相符<br>
 	 * 1:一致
 	 * 0:不一致
 	 */
 	@Column(name = "id_equation")
 	private Integer equation = 1;
+	
+	public int getEqual() {
+		if(realAmount.doubleValue() != amount.doubleValue()) {
+			equation = 0;
+		} else if (realWeight.doubleValue() != sumWeight.doubleValue()) {
+			equation = 0;
+		} else if (!realPledgePurity.equals(pledgePurity.getName())) {
+			equation = 0;
+		}
+		return equation;
+	}
 
 	public String getId() {
 		return id;
@@ -138,6 +189,54 @@ public class InventoryDetail {
 
 	public void setEquation(Integer equation) {
 		this.equation = equation;
+	}
+
+	public Double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(Double amount) {
+		this.amount = amount;
+	}
+
+	public Double getSumWeight() {
+		return sumWeight;
+	}
+
+	public void setSumWeight(Double sumWeight) {
+		this.sumWeight = sumWeight;
+	}
+
+	public String getCompany() {
+		return company;
+	}
+
+	public void setCompany(String company) {
+		this.company = company;
+	}
+
+	public Integer getClosedTran() {
+		return closedTran;
+	}
+
+	public void setClosedTran(Integer closedTran) {
+		this.closedTran = closedTran;
+	}
+
+	public Double getRealWeight() {
+		return realWeight;
+	}
+
+	public void setRealWeight(Double realWeight) {
+		this.realWeight = realWeight;
+	}
+
+	public CheckMethod getCheckMethod() {
+		return checkMethod;
+	}
+
+	public void setCheckMethod(CheckMethod checkMethod) {
+		this.checkMethod = checkMethod;
 	}
 	
 	

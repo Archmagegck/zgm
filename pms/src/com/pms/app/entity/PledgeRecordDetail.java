@@ -15,26 +15,26 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
- * 每日质物清单明细
+ * 质物清单明细
  * @author wangzz
  */
 @Entity
-@Table(name = "t_pledgeDailyDetail")
+@Table(name = "t_pledgeRecordDetail")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class PledgeDailyDetail {
+public class PledgeRecordDetail {
 	
 	@Id
 	@GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
 	@GeneratedValue(generator = "uuid")
-	@Column(name = "pdd_id")
+	@Column(name = "prd_id")
 	private String id;
 	
 	/**
 	 * 所属质物清单
 	 */
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "pd_id")
-	private PledgeDaily pledgeDaily;
+	@JoinColumn(name = "pr_id")
+	private PledgeRecord pledgeRecord;
 	
 	/**
 	 * 款式大类
@@ -53,31 +53,31 @@ public class PledgeDailyDetail {
 	/**
 	 * 规格重量（kg/件）
 	 */
-	@Column(name = "pdd_specWeight")
+	@Column(name = "prd_specWeight")
 	private Double specWeight;
 	
 	/**
-	 * 实际数量（件）
+	 * 数量（件）
 	 */
-	@Column(name = "pdd_amount")
-	private Double realAmount;
+	@Column(name = "prd_amount")
+	private Double amount;
 	
 	/**
 	 * 总重量（kg）
 	 */
-	@Column(name = "pdd_sumWeight")
+	@Column(name = "prd_sumWeight")
 	private Double sumWeight;
 	
 	/**
 	 * 生产厂家
 	 */
-	@Column(name = "pdd_company")
+	@Column(name = "prd_company")
 	private String company;
 	
 	/**
 	 * 存储地点
 	 */
-	@Column(name = "pdd_storage")
+	@Column(name = "prd_storage")
 	private String storage;
 	
 	/**
@@ -85,25 +85,25 @@ public class PledgeDailyDetail {
 	 * 0:否<br>
 	 * 1:是
 	 */
-	@Column(name = "pdd_closedTran")
+	@Column(name = "prd_closedTran")
 	private int closedTran;
 	
 	/**
 	 * 光谱法抽检重量占比
 	 */
-	@Column(name = "pdd_spectrumRate")
+	@Column(name = "prd_spectrumRate")
 	private Double spectrumRate;
 	
 	/**
 	 * 溶金法抽检重量占比
 	 */
-	@Column(name = "pdd_dissolveRate")
+	@Column(name = "prd_dissolveRate")
 	private Double dissolveRate;
 	
 	/**
 	 * 标记
 	 */
-	@Column(name = "pdd_desc")
+	@Column(name = "prd_desc")
 	private String desc;
 
 	public String getId() {
@@ -114,12 +114,12 @@ public class PledgeDailyDetail {
 		this.id = id;
 	}
 
-	public PledgeDaily getPledgeDaily() {
-		return pledgeDaily;
+	public PledgeRecord getPledgeRecord() {
+		return pledgeRecord;
 	}
 
-	public void setPledgeDaily(PledgeDaily pledgeDaily) {
-		this.pledgeDaily = pledgeDaily;
+	public void setPledgeRecord(PledgeRecord pledgeRecord) {
+		this.pledgeRecord = pledgeRecord;
 	}
 
 	public Style getStyle() {
@@ -146,12 +146,12 @@ public class PledgeDailyDetail {
 		this.specWeight = specWeight;
 	}
 
-	public Double getRealAmount() {
-		return realAmount;
+	public Double getAmount() {
+		return amount;
 	}
 
-	public void setRealAmount(Double realAmount) {
-		this.realAmount = realAmount;
+	public void setAmount(Double amount) {
+		this.amount = amount;
 	}
 
 	public Double getSumWeight() {
@@ -209,9 +209,6 @@ public class PledgeDailyDetail {
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
-	
-	
-	
-	
+
 	
 }

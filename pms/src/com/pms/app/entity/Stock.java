@@ -1,7 +1,5 @@
 package com.pms.app.entity;
 
-import java.math.BigDecimal;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -113,20 +111,6 @@ public class Stock {
 		this.sumWeight += insRecordDetail.getSumWeight();
 	}
 	
-	
-	/**
-	 * 出库
-	 * @param outsRecordDetail
-	 * @return 出库明细
-	 */
-	public int remove(OutsRecordDetail outsRecordDetail) {
-		double remainAmount = this.amount - outsRecordDetail.getAmount();
-		if(remainAmount == 0) //todo
-		this.amount -= outsRecordDetail.getAmount();
-		this.sumWeight -= new BigDecimal(outsRecordDetail.getAmount() * this.specWeight).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-		//TODO
-		return 0;
-	}
 	
 	public String getKey() {
 		StringBuffer sb = new StringBuffer("{");

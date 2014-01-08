@@ -246,10 +246,10 @@
 	          </tr>
 	        </table>
 	        <ul class="MM">
-	        	<li><a href="${ctx}/province/list" target="right">库存盘点及成色检测</a></li>
-		        <li><a href="${ctx}/region/list" target="right">库存盘点检测记录</a></li>
-	        	<li><a href="${ctx}/user/list" target="right">最低价值核对</a></li>
-	        	<li><a href="${ctx}/config/show" target="right">生成质物清单</a></li>
+	        	<li><a href="${ctx}/supervisor/inventory/add" target="right">库存盘点及成色检测</a></li>
+		        <li><a href="${ctx}/supervisor/inventory" target="right">库存盘点检测记录</a></li>
+	        	<li><a href="${ctx}/supervisor/checkMinValue" target="right">最低价值核对</a></li>
+	        	<li><a href="${ctx}/supervisor/pledgeRecord/add" target="right">生成质物清单</a></li>
 	        </ul>
 	      </div>
 	      
@@ -261,8 +261,8 @@
 	          </tr>
 	        </table>
 	        <ul class="MM">
-	        	<li><a href="${ctx}/province/list" target="right">在途质物登记</a></li>
-		        <li><a href="${ctx}/region/list" target="right">在途质物记录</a></li>
+	        	<li><a href="${ctx}/supervisor/transitGoods/add" target="right">在途质物登记</a></li>
+		        <li><a href="${ctx}/supervisor/transitGoods" target="right">在途质物记录</a></li>
 	        </ul>
 	      </div>
 	      
@@ -274,8 +274,8 @@
 	          </tr>
 	        </table>
 	        <ul class="MM">
-	        	<li><a href="${ctx}/province/list" target="right">实时库存信息</a></li>
-		        <li><a href="${ctx}/region/list" target="right">每日质物清单</a></li>
+	        	<li><a href="${ctx}/supervisor/realTimeStocks" target="right">实时库存信息</a></li>
+		        <li><a href="${ctx}/supervisor/pledgeRecord" target="right">每日质物清单</a></li>
 	        </ul>
 	      </div>
 		</c:if>

@@ -20,18 +20,18 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
- * 每日质物清单
+ * 质物清单
  * @author wangzz
  */
 @Entity
-@Table(name = "t_pledgeDaily")
+@Table(name = "t_pledgeRecord")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class PledgeDaily {
+public class PledgeRecord {
 	
 	@Id
 	@GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
 	@GeneratedValue(generator = "uuid")
-	@Column(name = "pd_id")
+	@Column(name = "pr_id")
 	private String id;
 	
 	/**
@@ -44,26 +44,40 @@ public class PledgeDaily {
 	/**
 	 * 质物清单号
 	 */
-	@Column(name = "pd_code")
+	@Column(name = "pr_code")
 	private String code;
 	
 	/**
 	 * 总重量（kg）
 	 */
-	@Column(name = "pd_sumWeight")
-	private Double sumWeight;
+	@Column(name = "pr_sumWeight")
+	private Double sumWeight = 0.0;
 	
 	/**
 	 * 日期
 	 */
-	@Column(name = "pd_date")
-	private Date date;
+	@Column(name = "pr_date")
+	private Date date = new Date();
 	
 	/**
-	 * 明细
+	 * 文件路径
 	 */
-	@OneToMany(mappedBy = "pledgeDaily")
-	private List<PledgeDailyDetail> pledgeDailyDetails = new ArrayList<PledgeDailyDetail>();
+	@Column(name = "pr_recordFile")
+	public String recordFile;
+	
+	/**
+	 * 是否上传
+	 * 0:未上传
+	 * 1:已上传
+	 */
+	@Column(name = "pr_ifUpload")
+	public Integer ifUpload = 0;
+	
+	/**
+	 * 盘存明细
+	 */
+	@OneToMany(mappedBy = "pledgeRecord")
+	private List<PledgeRecordDetail> pledgeRecordDetails = new ArrayList<PledgeRecordDetail>();
 
 	public String getId() {
 		return id;
@@ -105,14 +119,29 @@ public class PledgeDaily {
 		this.date = date;
 	}
 
-	public List<PledgeDailyDetail> getPledgeDailyDetails() {
-		return pledgeDailyDetails;
+	public String getRecordFile() {
+		return recordFile;
 	}
 
-	public void setPledgeDailyDetails(List<PledgeDailyDetail> pledgeDailyDetails) {
-		this.pledgeDailyDetails = pledgeDailyDetails;
+	public void setRecordFile(String recordFile) {
+		this.recordFile = recordFile;
 	}
-	
+
+	public Integer getIfUpload() {
+		return ifUpload;
+	}
+
+	public void setIfUpload(Integer ifUpload) {
+		this.ifUpload = ifUpload;
+	}
+
+	public List<PledgeRecordDetail> getPledgeRecordDetails() {
+		return pledgeRecordDetails;
+	}
+
+	public void setPledgeRecordDetails(List<PledgeRecordDetail> pledgeRecordDetails) {
+		this.pledgeRecordDetails = pledgeRecordDetails;
+	}
 	
 	
 }

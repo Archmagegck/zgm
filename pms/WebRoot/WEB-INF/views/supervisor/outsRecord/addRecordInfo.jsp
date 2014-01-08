@@ -32,7 +32,7 @@
   </head>
   
   <body>
-    <form id="myForm" name="myForm" action="${ctx}/supervisor/outsRecord/saveOutsRecord" method="post">
+    <form id="myForm" name="myForm" action="${ctx}/supervisor/outsRecord/saveOutsRecord" method="post"  enctype="multipart/form-data">
     	<div id="content">
     		<div style="margin-bottom: 10px;padding: 5px 10px;" id="box">
     		<h3 id="adduser">提货人信息</h3>
@@ -62,7 +62,7 @@
 							身份证扫描件:
 						</td>
 						<td width="70%">
-							啊啊啊啊啊啊啊啊啊啊啊
+							<input id="picfile" type="file" name="picfile" style="background: url('${ctx}/static/css/admin/img/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;">
 						</td>
 					</tr>
 					<tr>

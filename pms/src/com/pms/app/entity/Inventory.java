@@ -1,6 +1,8 @@
 package com.pms.app.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cache;
@@ -62,7 +65,13 @@ public class Inventory {
 	 * 盘存日期
 	 */
 	@Column(name = "i_invDate")
-	private Date invDate;
+	private Date date = new Date();
+	
+	/**
+	 * 盘存明细
+	 */
+	@OneToMany(mappedBy = "inventory")
+	private List<InventoryDetail> inventoryDetails = new ArrayList<InventoryDetail>();
 
 	public String getId() {
 		return id;
@@ -104,12 +113,20 @@ public class Inventory {
 		this.supName = supName;
 	}
 
-	public Date getInvDate() {
-		return invDate;
+	public List<InventoryDetail> getInventoryDetails() {
+		return inventoryDetails;
 	}
 
-	public void setInvDate(Date invDate) {
-		this.invDate = invDate;
+	public void setInventoryDetails(List<InventoryDetail> inventoryDetails) {
+		this.inventoryDetails = inventoryDetails;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 	
 }

@@ -27,6 +27,7 @@ import com.pms.app.entity.Warehouse;
 import com.pms.app.entity.vo.OutStock;
 import com.pms.app.service.OutsRecordService;
 import com.pms.app.service.StockService;
+import com.pms.app.util.CodeUtils;
 import com.pms.app.util.UploadUtils;
 import com.pms.app.web.supervisor.form.StockForm;
 
@@ -115,19 +116,25 @@ public class OutsRecordController {
 		String supervisionCustomerCode = (String)session.getAttribute("supervisionCustomerCode");
 		String tempImg = (String)session.getAttribute("tempImg");
 		try {
-			int hasPickFile = (tempImg == null) ? 1 : 0;
+			outsRecord.setCode(CodeUtils.getOutsRecordCode(supervisionCustomerCode));
+			String idCardFile = UploadUtils.uploadFile(request, 2, supervisionCustomerCode, outsRecord.getCode());
+			outsRecord.setPickerIdCardPic(idCardFile);			
+			int hasPickFile = (tempImg == null) ? 0 : 1;
 			if(hasPickFile == 1) {
-				String pickNoticeUrl = UploadUtils.uploadPickFile(request, tempImg, supervisionCustomerCode);
+				String pickNoticeUrl = UploadUtils.uploadPickFile(request, tempImg, outsRecord.getCode(), supervisionCustomerCode);
 				outsRecord.setPickNoticeUrl(pickNoticeUrl);
+				outsRecord.setAttachState(1);
 			}
 			outsRecordService.save(outsRecord, outStocks, hasPickFile, supervisionCustomerCode);
 			ra.addFlashAttribute("messageOK", "保存成功！");
+			session.removeAttribute("outStocks");
+			session.removeAttribute("tempImg");
 		} catch (Exception e) {
 			logger.error("保存失败", e);
 			ra.addFlashAttribute("messageErr", "保存失败！");
 			return "redirect:/supervisor/outsRecord/stockToOut";
 		}
-		return "supervisor/outsRecord/stockToOut";
+		return "redirect:/supervisor/outsRecord/list";
 	}
 	
 }
