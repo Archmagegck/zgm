@@ -186,7 +186,7 @@
 	        	<li><a href="${ctx}/manage/warehouse" target="right">仓库管理</a></li>
 	        	<li><a href="${ctx}/manage/style" target="right">款式管理</a></li>
 	        	<li><a href="${ctx}/manage/pledgePurity" target="right">质押物成色管理</a></li>
-	        	<li><a href="${ctx}/manage/purityPrice" target="right">质押物每日价格设置</a></li>
+	        	<li><a href="${ctx}/manage/au9995Price" target="right">质押物每日价格设置</a></li>
 	        	<li><a href="${ctx}/manage/pledgeConfig" target="right">质押物要求及警戒线设置</a></li>
 	        </ul>
 	      </div>
@@ -199,7 +199,7 @@
 	          </tr>
 	        </table>
 	        <ul class="MM">
-	        	<li><a href="${ctx}/manage/supervisor" target="right">总库存</a></li>
+	        	<li><a href="${ctx}/manage/totalStocks" target="right">总库存</a></li>
 		        <li><a href="${ctx}/manage/supervisor" target="right">日常出货统计</a></li>
 	        	<li><a href="${ctx}/manage/supervisor" target="right">当日进出库查询</a></li>
 	        	<li><a href="${ctx}/manage/supervisor" target="right">当日库存查询</a></li>

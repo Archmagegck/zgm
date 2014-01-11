@@ -1,7 +1,9 @@
 package com.pms.app.service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,15 @@ public class PurityPriceService extends BaseService<PurityPrice, String> {
 		for(PurityPrice purityPrice : purityPrices) {
 			purityPriceDao.save(purityPrice);
 		}
+	}
+	
+	public Map<String, Double> findPriceMap() {
+		Map<String, Double> priceMap = new HashMap<String, Double>();
+		List<PurityPrice> purityPrices = purityPriceDao.findNewestList();
+		for (PurityPrice purityPrice : purityPrices) {
+			priceMap.put(purityPrice.getPledgePurity().getId(), purityPrice.getPrice());
+		}
+		return priceMap;
 	}
 
 }

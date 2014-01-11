@@ -39,7 +39,10 @@ public class PurityPriceController {
 	
 	@RequestMapping(value = { "/list", "" })
 	public String list(Model model, Date date) {
-		model.addAttribute("purityPriceList", purityPriceService.findListByDate(date == null ? new Date() : date));
+		Date selDate = date;
+		if(selDate == null) selDate = new Date();
+		model.addAttribute("date", new DateTime(selDate).toString("yyyy-MM-dd"));
+		model.addAttribute("purityPriceList", purityPriceService.findListByDate(selDate));
 		return "manage/purityPrice/list";
 	}
 	
