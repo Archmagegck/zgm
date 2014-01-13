@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
+import org.joda.time.DateTime;
 
 import com.pms.app.entity.reference.AuditState;
 import com.pms.app.entity.reference.PickType;
@@ -146,10 +147,11 @@ public class OutsRecord {
 	
 	
 	/**
-	 * 质物清单URL
+	 * 质物清单
 	 */
-	@Column(name = "out_pledgeUrl")
-	private String pledgeUrl;
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "pr_id")
+	private PledgeRecord pledgeRecord;
 	
 	
 	/**
@@ -157,6 +159,11 @@ public class OutsRecord {
 	 */
 	@OneToMany(mappedBy = "outsRecord")
 	private List<OutsRecordDetail> outsRecordDetails = new ArrayList<OutsRecordDetail>();
+	
+	
+	public String getDateStr() {
+		return new DateTime(date).toString("yyyy-MM-dd HH:mm:ss");
+	}
 
 
 	public String getId() {
@@ -309,16 +316,6 @@ public class OutsRecord {
 	}
 
 
-	public String getPledgeUrl() {
-		return pledgeUrl;
-	}
-
-
-	public void setPledgeUrl(String pledgeUrl) {
-		this.pledgeUrl = pledgeUrl;
-	}
-
-
 	public List<OutsRecordDetail> getOutsRecordDetails() {
 		return outsRecordDetails;
 	}
@@ -336,5 +333,15 @@ public class OutsRecord {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+
+	public PledgeRecord getPledgeRecord() {
+		return pledgeRecord;
+	}
+
+
+	public void setPledgeRecord(PledgeRecord pledgeRecord) {
+		this.pledgeRecord = pledgeRecord;
 	}
 }

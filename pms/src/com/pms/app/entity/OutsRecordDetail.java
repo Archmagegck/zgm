@@ -76,11 +76,16 @@ public class OutsRecordDetail {
 	
 	
 	/**
+	 * 出货后质物总量（kg）
+	 */
+	private Double remainWeight = 0.0;
+	
+	
+	/**
 	 * 生产厂家
 	 */
 	@Column(name = "outd_company")
 	private String company;
-	
 	
 	
 	/**
@@ -194,6 +199,18 @@ public class OutsRecordDetail {
 
 	public void setSumWeight(Double sumWeight) {
 		this.sumWeight = sumWeight;
+	}
+
+
+
+	public Double getRemainWeight() {
+		return remainWeight;
+	}
+
+
+
+	public void setRemainWeight(Double remainWeight) {
+		this.remainWeight = remainWeight;
 	}
 
 

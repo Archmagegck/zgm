@@ -60,6 +60,12 @@ public class PledgeRecord {
 	private Date date = new Date();
 	
 	/**
+	 * 文件名称
+	 */
+	@Column(name = "pr_recordName")
+	public String recordName;
+	
+	/**
 	 * 文件路径
 	 */
 	@Column(name = "pr_recordFile")
@@ -74,7 +80,7 @@ public class PledgeRecord {
 	public Integer ifUpload = 0;
 	
 	/**
-	 * 盘存明细
+	 * 质物清单明细
 	 */
 	@OneToMany(mappedBy = "pledgeRecord")
 	private List<PledgeRecordDetail> pledgeRecordDetails = new ArrayList<PledgeRecordDetail>();
@@ -141,6 +147,14 @@ public class PledgeRecord {
 
 	public void setPledgeRecordDetails(List<PledgeRecordDetail> pledgeRecordDetails) {
 		this.pledgeRecordDetails = pledgeRecordDetails;
+	}
+
+	public String getRecordName() {
+		return recordName;
+	}
+
+	public void setRecordName(String recordName) {
+		this.recordName = recordName;
 	}
 	
 	

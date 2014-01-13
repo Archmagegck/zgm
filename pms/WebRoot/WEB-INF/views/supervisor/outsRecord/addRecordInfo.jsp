@@ -85,6 +85,7 @@
 							<input id="supName" name="supName" type="hidden" value="${sessionScope.user.name}"/>
 							<input id="supervisor" name="supervisor.id" type="hidden" value="${sessionScope.user.id}"/>
 							<input id="warehouse.id" name="warehouse.id" type="hidden" value="${sessionScope.warehouse.id}"/>
+							<input type="hidden" name="warehouse.pledgeRecordCode" value="${sessionScope.warehouse.pledgeRecordCode}"/>
 							<input id="storage" name="storage" type="hidden" value="${sessionScope.warehouse.address}"/>
 						</td>
 					</tr>

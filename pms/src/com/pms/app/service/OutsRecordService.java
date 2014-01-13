@@ -11,10 +11,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pms.app.dao.OutsRecordDao;
 import com.pms.app.dao.OutsRecordDetailDao;
+import com.pms.app.dao.PledgeRecordDao;
+import com.pms.app.dao.PledgeRecordDetailDao;
 import com.pms.app.entity.OutsRecord;
 import com.pms.app.entity.OutsRecordDetail;
+import com.pms.app.entity.PledgeRecord;
+import com.pms.app.entity.PledgeRecordDetail;
 import com.pms.app.entity.Stock;
+import com.pms.app.entity.reference.PickType;
 import com.pms.app.entity.vo.OutStock;
+import com.pms.app.util.CodeUtils;
 import com.pms.base.dao.BaseDao;
 import com.pms.base.service.BaseService;
 
@@ -23,6 +29,8 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 
 	@Autowired private OutsRecordDao outsRecordDao;
 	@Autowired private OutsRecordDetailDao outsRecordDetailDao;
+	@Autowired private PledgeRecordDao pledgeRecordDao;
+	@Autowired private PledgeRecordDetailDao pledgeRecordDetailDao;
 	@Autowired private StockService stockService;
 
 	@Override
@@ -62,10 +70,29 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 			outsRecordDetail.setSpecWeight(stock.getSpecWeight());
 			outsRecordDetail.setStyle(stock.getStyle());
 			outsRecordDetail.setSumWeight(new BigDecimal(outsRecordDetail.getSpecWeight() * outsRecordDetail.getAmount()).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+			outsRecordDetail.setRemainWeight(remainAmount);
 			saveOutsRecordDetails.add(outsRecordDetail);
 		}
 		outsRecord.setSumWeight(sumWeight);
 		
+		if(delStocks.size() == stockMap.size()) {//全部出库
+			outsRecord.setPickType(PickType.All);
+		}
+		
+		PledgeRecord pledgeRecord = new PledgeRecord();
+		pledgeRecord.setCode(outsRecord.getWarehouse().getPledgeRecordCode());
+		pledgeRecord.setRecordName(CodeUtils.getPledgeRecordCode(supervisionCustomerCode));
+		pledgeRecord.setWarehouse(outsRecord.getWarehouse());
+		List<PledgeRecordDetail> pledgeRecordDetails = new ArrayList<PledgeRecordDetail>();
+		for (Stock stock : stockMap.values()) {
+			PledgeRecordDetail detail = new PledgeRecordDetail(stock, sumWeight);
+			detail.setPledgeRecord(pledgeRecord);
+			pledgeRecordDetails.add(detail);
+		}
+		pledgeRecordDao.save(pledgeRecord);
+		pledgeRecordDetailDao.save(pledgeRecordDetails);
+		
+		outsRecord.setPledgeRecord(pledgeRecord);
 		stockService.save(updateStocks);
 		stockService.delete(delStocks);
 		outsRecordDao.save(outsRecord);
