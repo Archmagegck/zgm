@@ -83,12 +83,16 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 		pledgeRecord.setCode(outsRecord.getWarehouse().getPledgeRecordCode());
 		pledgeRecord.setRecordName(CodeUtils.getPledgeRecordCode(supervisionCustomerCode));
 		pledgeRecord.setWarehouse(outsRecord.getWarehouse());
+		double stockSumWeight = 0;
 		List<PledgeRecordDetail> pledgeRecordDetails = new ArrayList<PledgeRecordDetail>();
 		for (Stock stock : stockMap.values()) {
 			PledgeRecordDetail detail = new PledgeRecordDetail(stock, sumWeight);
 			detail.setPledgeRecord(pledgeRecord);
+			stockSumWeight += detail.getSumWeight();
 			pledgeRecordDetails.add(detail);
 		}
+		stockSumWeight = new BigDecimal(stockSumWeight).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+		pledgeRecord.setSumWeight(stockSumWeight);
 		pledgeRecordDao.save(pledgeRecord);
 		pledgeRecordDetailDao.save(pledgeRecordDetails);
 		

@@ -211,6 +211,8 @@ public class OutsRecordController {
 		Supervisor supervisor = (Supervisor)session.getAttribute("user");
 		SupervisionCustomer supervisionCustomer = supervisionCustomerService.findBySupervisorId(supervisor.getId());
 		OutsRecord outsRecord = outsRecordService.findById(id);
+		String address = outsRecord.getWarehouse().getAddress();
+		model.addAttribute("address", address);
 		model.addAttribute("supervisionCustomerName", supervisionCustomer.getName());
 		model.addAttribute("outsRecord", outsRecord);
 		model.addAttribute("detailList", outsRecord.getOutsRecordDetails());
@@ -222,6 +224,7 @@ public class OutsRecordController {
 	public String printPledgeRecord(@PathVariable("id")String id, Model model, HttpSession session) {
 		OutsRecord outsRecord = outsRecordService.findById(id);
 		PledgeRecord pledgeRecord = pledgeRecordService.findById(outsRecord.getPledgeRecord().getId());
+		model.addAttribute("pledgeRecord", pledgeRecord);
 		model.addAttribute("detailList", pledgeRecord.getPledgeRecordDetails());
 		return "supervisor/outsRecord/printPledgeRecord";
 	}

@@ -84,22 +84,27 @@ public class InsRecordService extends BaseService<InsRecord, String> {
 				stock.add(detail);
 			}
 		}
+		sumWeight = new BigDecimal(sumWeight).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
 		
 		PledgeRecord pledgeRecord = new PledgeRecord();
 		pledgeRecord.setCode(pledgeRecordCode);
 		pledgeRecord.setRecordName(CodeUtils.getPledgeRecordCode(supervisionCustomerCode));
 		pledgeRecord.setWarehouse(insRecord.getWarehouse());
+		double stockSumWeight = 0;
 		List<PledgeRecordDetail> pledgeRecordDetails = new ArrayList<PledgeRecordDetail>();
 		for (Stock stock : stockMap.values()) {
 			PledgeRecordDetail detail = new PledgeRecordDetail(stock, sumWeight);
 			detail.setPledgeRecord(pledgeRecord);
+			stockSumWeight += detail.getSumWeight();
 			pledgeRecordDetails.add(detail);
 		}
+		stockSumWeight = new BigDecimal(stockSumWeight).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+		pledgeRecord.setSumWeight(stockSumWeight);
 		pledgeRecordDao.save(pledgeRecord);
 		pledgeRecordDetailDao.save(pledgeRecordDetails);
 		
 		insRecord.setPledgeRecord(pledgeRecord);
-		insRecord.setSumWeight(new BigDecimal(sumWeight).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+		insRecord.setSumWeight(sumWeight);
 		insRecordDao.save(insRecord);
 		insRecordDetailDao.save(insRecordDetailList);
 		stockService.save(stockMap);

@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.pms.app.entity.InsRecord;
 import com.pms.app.entity.OutsRecord;
+import com.pms.app.entity.PledgeRecord;
 import com.pms.base.service.ServiceException;
 
 public class UploadUtils {
@@ -240,6 +241,35 @@ public class UploadUtils {
 			}
 		}
 		return outsRecord;
+	}
+	
+	
+	public static PledgeRecord uploadPledgeRecordFile(HttpServletRequest request, PledgeRecord pledgeRecord, String supervisionCustomerCode) throws Exception {
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+		MultipartFile pledgeRecordFile = multipartRequest.getFile("pledgeRecordFile");
+		String pledgeRecordFileName = pledgeRecordFile.getOriginalFilename();
+		String path = request.getSession().getServletContext().getRealPath(separator);
+		String toFilePath = "attached" + separator + supervisionCustomerCode + separator + "每日质物清单" + separator + pledgeRecord.getCode();
+		
+		if (!(pledgeRecordFile.getOriginalFilename() == null || "".equals(pledgeRecordFile.getOriginalFilename()))) {
+			String ext = pledgeRecordFileName.substring(pledgeRecordFileName.lastIndexOf(".") + 1, pledgeRecordFileName.length()).toLowerCase();
+			if (!fileTypes.contains(ext)) {
+				throw new ServiceException("上传文件不是允许的类型！");
+			} else {// 如果扩展名属于允许上传的类型，则创建文件
+				File folder = new File(path + "images" + separator + toFilePath);
+				if(!folder.exists())
+					folder.mkdirs();
+				File file = new File(folder, pledgeRecord.getRecordName() + "." + ext);
+				try {
+					pledgeRecordFile.transferTo(file);
+				} catch (Exception e) {
+					throw new ServiceException("上传文件发生未知异常.", e);
+				}
+				String picUrl = toFilePath + separator + pledgeRecord.getRecordName() + "." + ext;
+				pledgeRecord.setRecordFile(picUrl);
+			}
+		}
+		return pledgeRecord;
 	}
 	
 	

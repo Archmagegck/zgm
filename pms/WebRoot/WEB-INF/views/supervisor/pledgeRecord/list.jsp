@@ -99,11 +99,11 @@
 								<td>
 									<c:if test="${pledgeRecord.ifUpload == 1}">已上传</c:if>
 									<c:if test="${pledgeRecord.ifUpload == 0}">
-									未上传
+									<a href="${ctx }/supervisor/pledgeRecord/${pledgeRecord.id }/toUpload">未上传</a>
 									</c:if>
 								</td>
 								<td>
-									<a href="${ctx }/supervisor/pledgeRecord/${pledgeRecord.id }/details">查看</a>
+									<a href="${ctx }/supervisor/pledgeRecord/${pledgeRecord.id}/printPledgeRecord">查看</a>
 								</td>
 							</tr>
 						</c:forEach>

@@ -96,9 +96,9 @@
 					<div align="center" id="pager">
 						<input type="button" value="查看并打印出库单" class="button" onclick="javascript:window.open('${ctx }/supervisor/outsRecord/${outsRecord.id}/printOutsRecord')" />
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="button" value="查看并打印提货通知书(回执)" class="button" onclick="javascript:window.open('${ctx }/supervisor/outsRecord/${outsRecord.id}/printInsRecord')" />
+						<input type="button" value="查看并打印提货通知书(回执)" class="button" onclick="javascript:window.open('${ctx }/supervisor/outsRecord/${outsRecord.id}/printPickRecord')" />
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="button" value="查看并打印质物清单" class="button" onclick="javascript:window.open('${ctx }/supervisor/outsRecord/${outsRecord.id}/printInsRecord')" />
+						<input type="button" value="查看并打印质物清单" class="button" onclick="javascript:window.open('${ctx }/supervisor/outsRecord/${outsRecord.id}/printPledgeRecord')" />
 					</div>
 				</div>
 			</div>

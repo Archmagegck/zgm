@@ -237,6 +237,7 @@ public class InsRecordController {
 	public String printPledgeRecord(@PathVariable("id")String id, Model model, HttpSession session) {
 		InsRecord insRecord = insRecordService.findById(id);
 		PledgeRecord pledgeRecord = pledgeRecordService.findById(insRecord.getPledgeRecord().getId());
+		model.addAttribute("pledgeRecord", pledgeRecord);
 		model.addAttribute("detailList", pledgeRecord.getPledgeRecordDetails());
 		return "supervisor/insRecord/printPledgeRecord";
 	}
