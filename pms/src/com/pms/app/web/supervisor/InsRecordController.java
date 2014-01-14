@@ -30,13 +30,11 @@ import com.pms.app.entity.InsRecord;
 import com.pms.app.entity.InsRecordDetail;
 import com.pms.app.entity.PledgeRecord;
 import com.pms.app.entity.SupervisionCustomer;
-import com.pms.app.entity.Supervisor;
 import com.pms.app.entity.Warehouse;
 import com.pms.app.service.InsRecordService;
 import com.pms.app.service.PledgePurityService;
 import com.pms.app.service.PledgeRecordService;
 import com.pms.app.service.StyleService;
-import com.pms.app.service.SupervisionCustomerService;
 import com.pms.app.util.CodeUtils;
 import com.pms.app.util.UploadUtils;
 
@@ -50,7 +48,6 @@ public class InsRecordController {
 	@Autowired private InsRecordService insRecordService;
 	@Autowired private PledgeRecordService pledgeRecordService;
 	@Autowired private PledgePurityService pledgePurityService;
-	@Autowired private SupervisionCustomerService supervisionCustomerService;
 	@Autowired private StyleService styleService;
 	
 	@InitBinder  
@@ -147,7 +144,7 @@ public class InsRecordController {
 	public String save(InsRecord insRecord, HttpSession session, RedirectAttributes ra){
 		try {
 			insRecord.setInsRecordDetails((List<InsRecordDetail>) session.getAttribute("insRecordDetailList"));
-			insRecordService.save(insRecord, (String)session.getAttribute("supervisionCustomerCode"));
+			insRecordService.save(insRecord, (SupervisionCustomer)session.getAttribute("supervisionCustomer"));
 			session.setAttribute("warehouse", insRecord.getWarehouse());
 			session.removeAttribute("insRecordDetailList");
 			ra.addFlashAttribute("messageOK", "保存成功！");
@@ -196,8 +193,7 @@ public class InsRecordController {
 	
 	@RequestMapping(value = "/{id}/printInsRecord")
 	public String printInsRecord(@PathVariable("id")String id, Model model, HttpSession session) {
-		Supervisor supervisor = (Supervisor)session.getAttribute("user");
-		SupervisionCustomer supervisionCustomer = supervisionCustomerService.findBySupervisorId(supervisor.getId());
+		SupervisionCustomer supervisionCustomer = (SupervisionCustomer)session.getAttribute("supervisionCustomer");
 		InsRecord insRecord = insRecordService.findById(id);
 		model.addAttribute("supervisionCustomerName", supervisionCustomer.getName());
 		model.addAttribute("insRecord", insRecord);
@@ -218,8 +214,7 @@ public class InsRecordController {
 	
 	@RequestMapping(value = "/{id}/printCheckRecord")
 	public String printCheckRecord(@PathVariable("id")String id, Model model, HttpSession session) {
-		Supervisor supervisor = (Supervisor)session.getAttribute("user");
-		SupervisionCustomer supervisionCustomer = supervisionCustomerService.findBySupervisorId(supervisor.getId());
+		SupervisionCustomer supervisionCustomer = (SupervisionCustomer)session.getAttribute("supervisionCustomer");
 		InsRecord insRecord = insRecordService.findById(id);
 		model.addAttribute("supervisionCustomerName", supervisionCustomer.getName());
 		model.addAttribute("insRecord", insRecord);

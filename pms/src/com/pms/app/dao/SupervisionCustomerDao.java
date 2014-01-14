@@ -9,4 +9,6 @@ public interface SupervisionCustomerDao extends BaseDao<SupervisionCustomer, Str
 	
 	public List<SupervisionCustomer> findListBySupervisorId(String supervisorId);
 	
+	public List<SupervisionCustomer> findListByDelegatorId(String delegatorId);
+	
 }

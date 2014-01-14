@@ -18,6 +18,7 @@ import com.pms.app.entity.OutsRecordDetail;
 import com.pms.app.entity.PledgeRecord;
 import com.pms.app.entity.PledgeRecordDetail;
 import com.pms.app.entity.Stock;
+import com.pms.app.entity.SupervisionCustomer;
 import com.pms.app.entity.reference.PickType;
 import com.pms.app.entity.vo.OutStock;
 import com.pms.app.util.CodeUtils;
@@ -40,7 +41,7 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 	
 	
 	@Transactional
-	public void save(OutsRecord outsRecord, List<OutStock> outStocks, int hasPickFile, String supervisionCustomerCode) {
+	public void save(OutsRecord outsRecord, List<OutStock> outStocks, int hasPickFile, SupervisionCustomer supervisionCustomer) {
 		double sumWeight = 0;
 		Map<String, Stock> stockMap = stockService.findStockMapByWarehouseId(outsRecord.getWarehouse().getId());
 		List<Stock> updateStocks = new ArrayList<Stock>();
@@ -62,6 +63,8 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 				updateStocks.add(stock);
 			}
 			OutsRecordDetail outsRecordDetail = new OutsRecordDetail();
+			outsRecordDetail.setDelegator(supervisionCustomer.getDelegator());
+			outsRecordDetail.setSupervisionCustomer(supervisionCustomer);
 			outsRecordDetail.setAmount(outStock.getOutAmount());
 			outsRecordDetail.setCompany(stock.getCompany());
 			outsRecordDetail.setDesc(stock.getCompany());
@@ -80,8 +83,10 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 		}
 		
 		PledgeRecord pledgeRecord = new PledgeRecord();
+		pledgeRecord.setDelegator(supervisionCustomer.getDelegator());
+		pledgeRecord.setSupervisionCustomer(supervisionCustomer);
 		pledgeRecord.setCode(outsRecord.getWarehouse().getPledgeRecordCode());
-		pledgeRecord.setRecordName(CodeUtils.getPledgeRecordCode(supervisionCustomerCode));
+		pledgeRecord.setRecordName(CodeUtils.getPledgeRecordCode(supervisionCustomer.getCode()));
 		pledgeRecord.setWarehouse(outsRecord.getWarehouse());
 		double stockSumWeight = 0;
 		List<PledgeRecordDetail> pledgeRecordDetails = new ArrayList<PledgeRecordDetail>();

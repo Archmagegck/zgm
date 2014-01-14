@@ -1,5 +1,7 @@
 package com.pms.app.entity;
 
+import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +15,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
+import org.joda.time.DateTime;
 
 /**
  * 出库单明细
@@ -36,6 +39,22 @@ public class OutsRecordDetail {
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "out_id")
 	private OutsRecord outsRecord;
+	
+	
+	/**
+	 * 委托方
+	 */
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "d_id")
+	private Delegator delegator;
+	
+	
+	/**
+	 * 监管客户
+	 */
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "sc_id")
+	private SupervisionCustomer supervisionCustomer;
 	
 	
 	/**
@@ -93,7 +112,22 @@ public class OutsRecordDetail {
 	 */
 	@Column(name = "outd_desc")
 	private String desc;
+	
+	
+	/**
+	 * 出库时间
+	 */
+	@Column(name = "outd_date")
+	private Date date = new Date();
 
+	public String getDateStr() {
+		return new DateTime(date).toString("yyyy-MM-dd");
+	}
+	
+	public String getTimeStr() {
+		return new DateTime(date).toString("HH:mm");
+	}
+	
 
 	public String getId() {
 		return id;
@@ -211,6 +245,42 @@ public class OutsRecordDetail {
 
 	public void setRemainWeight(Double remainWeight) {
 		this.remainWeight = remainWeight;
+	}
+
+
+
+	public Date getDate() {
+		return date;
+	}
+
+
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+
+
+	public Delegator getDelegator() {
+		return delegator;
+	}
+
+
+
+	public void setDelegator(Delegator delegator) {
+		this.delegator = delegator;
+	}
+
+
+
+	public SupervisionCustomer getSupervisionCustomer() {
+		return supervisionCustomer;
+	}
+
+
+
+	public void setSupervisionCustomer(SupervisionCustomer supervisionCustomer) {
+		this.supervisionCustomer = supervisionCustomer;
 	}
 
 

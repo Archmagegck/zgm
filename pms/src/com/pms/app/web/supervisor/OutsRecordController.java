@@ -29,13 +29,11 @@ import com.pms.app.entity.OutsRecord;
 import com.pms.app.entity.OutsRecordDetail;
 import com.pms.app.entity.PledgeRecord;
 import com.pms.app.entity.SupervisionCustomer;
-import com.pms.app.entity.Supervisor;
 import com.pms.app.entity.Warehouse;
 import com.pms.app.entity.vo.OutStock;
 import com.pms.app.service.OutsRecordService;
 import com.pms.app.service.PledgeRecordService;
 import com.pms.app.service.StockService;
-import com.pms.app.service.SupervisionCustomerService;
 import com.pms.app.util.CodeUtils;
 import com.pms.app.util.UploadUtils;
 import com.pms.app.web.supervisor.form.StockForm;
@@ -48,7 +46,6 @@ public class OutsRecordController {
 	
 	@Autowired private OutsRecordService outsRecordService;
 	@Autowired private PledgeRecordService pledgeRecordService;
-	@Autowired private SupervisionCustomerService supervisionCustomerService;
 	@Autowired private StockService stockService;
 	
 	@InitBinder  
@@ -124,19 +121,20 @@ public class OutsRecordController {
 		HttpSession session = request.getSession();
 		@SuppressWarnings("unchecked")
 		List<OutStock> outStocks = (List<OutStock>) session.getAttribute("outStocks");
-		String supervisionCustomerCode = (String)session.getAttribute("supervisionCustomerCode");
+		SupervisionCustomer supervisionCustomer = (SupervisionCustomer)session.getAttribute("supervisionCustomer");
 		String tempImg = (String)session.getAttribute("tempImg");
 		try {
-			outsRecord.setCode(CodeUtils.getOutsRecordCode(supervisionCustomerCode));
-			String idCardFile = UploadUtils.uploadFile(request, 2, supervisionCustomerCode, outsRecord.getCode());
+			String supCode = supervisionCustomer.getCode();
+			outsRecord.setCode(CodeUtils.getOutsRecordCode(supCode));
+			String idCardFile = UploadUtils.uploadFile(request, 2, supCode, outsRecord.getCode());
 			outsRecord.setPickerIdCardPic(idCardFile);			
 			int hasPickFile = (tempImg == null) ? 0 : 1;
 			if(hasPickFile == 1) {
-				String pickNoticeUrl = UploadUtils.uploadPickFile(request, tempImg, outsRecord.getCode(), supervisionCustomerCode);
+				String pickNoticeUrl = UploadUtils.uploadPickFile(request, tempImg, outsRecord.getCode(), supCode);
 				outsRecord.setPickNoticeUrl(pickNoticeUrl);
 				outsRecord.setAttachState(1);
 			}
-			outsRecordService.save(outsRecord, outStocks, hasPickFile, supervisionCustomerCode);
+			outsRecordService.save(outsRecord, outStocks, hasPickFile, supervisionCustomer);
 			ra.addFlashAttribute("messageOK", "保存成功！");
 			session.removeAttribute("outStocks");
 			session.removeAttribute("tempImg");
@@ -186,8 +184,7 @@ public class OutsRecordController {
 	
 	@RequestMapping(value = "/{id}/printOutsRecord")
 	public String printOutsRecord(@PathVariable("id")String id, Model model, HttpSession session) {
-		Supervisor supervisor = (Supervisor)session.getAttribute("user");
-		SupervisionCustomer supervisionCustomer = supervisionCustomerService.findBySupervisorId(supervisor.getId());
+		SupervisionCustomer supervisionCustomer = (SupervisionCustomer)session.getAttribute("supervisionCustomer");
 		OutsRecord outsRecord = outsRecordService.findById(id);
 		model.addAttribute("supervisionCustomerName", supervisionCustomer.getName());
 		model.addAttribute("outsRecord", outsRecord);
@@ -208,8 +205,7 @@ public class OutsRecordController {
 	
 	@RequestMapping(value = "/{id}/printPickRecord")
 	public String printPickRecord(@PathVariable("id")String id, Model model, HttpSession session) {
-		Supervisor supervisor = (Supervisor)session.getAttribute("user");
-		SupervisionCustomer supervisionCustomer = supervisionCustomerService.findBySupervisorId(supervisor.getId());
+		SupervisionCustomer supervisionCustomer = (SupervisionCustomer)session.getAttribute("supervisionCustomer");
 		OutsRecord outsRecord = outsRecordService.findById(id);
 		String address = outsRecord.getWarehouse().getAddress();
 		model.addAttribute("address", address);

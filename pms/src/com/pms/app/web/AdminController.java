@@ -76,6 +76,7 @@ public class AdminController {
 					if(supervisor.getIsUsed() == 1) {
 						session.setAttribute("type", type);
 						session.setAttribute("user", supervisor);
+						session.setAttribute("supervisionCustomer", supervisionCustomerService.findBySupervisorId(supervisor.getId()));
 						session.setAttribute("supervisionCustomerCode", supervisionCustomerService.findBySupervisorId(supervisor.getId()).getCode());
 						Warehouse warehouse = warehouseService.findWarehouseBySupervisorId(supervisor.getId());
 						if(warehouse != null) {

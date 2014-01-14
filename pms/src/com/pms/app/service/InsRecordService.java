@@ -20,6 +20,7 @@ import com.pms.app.entity.InsRecordDetail;
 import com.pms.app.entity.PledgeRecord;
 import com.pms.app.entity.PledgeRecordDetail;
 import com.pms.app.entity.Stock;
+import com.pms.app.entity.SupervisionCustomer;
 import com.pms.app.entity.Warehouse;
 import com.pms.app.util.CodeUtils;
 import com.pms.app.util.IdWorker;
@@ -45,8 +46,8 @@ public class InsRecordService extends BaseService<InsRecord, String> {
 
 	
 	@Transactional
-	public void save(InsRecord insRecord, String supervisionCustomerCode) {
-		insRecord.setCode(CodeUtils.getInsRecordCode(supervisionCustomerCode));
+	public void save(InsRecord insRecord, SupervisionCustomer supervisionCustomer) {
+		insRecord.setCode(CodeUtils.getInsRecordCode(supervisionCustomer.getCode()));
 		Map<String, Stock> stockMap = stockService.findStockKeyMapByWarehouseId(insRecord.getWarehouse().getId());
 		
 		String pledgeRecordCode = insRecord.getWarehouse().getPledgeRecordCode();
@@ -70,6 +71,8 @@ public class InsRecordService extends BaseService<InsRecord, String> {
 		List<InsRecordDetail> insRecordDetailList = insRecord.getInsRecordDetails();
 		for(InsRecordDetail detail : insRecordDetailList) {
 			detail.setInsRecord(insRecord);
+			detail.setDelegator(supervisionCustomer.getDelegator());
+			detail.setSupervisionCustomer(supervisionCustomer);
 			
 			double detailSumWeight = new BigDecimal(detail.getAmount() * detail.getSpecWeight()).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
 			detail.setSumWeight(detailSumWeight);
@@ -87,8 +90,10 @@ public class InsRecordService extends BaseService<InsRecord, String> {
 		sumWeight = new BigDecimal(sumWeight).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
 		
 		PledgeRecord pledgeRecord = new PledgeRecord();
+		pledgeRecord.setDelegator(supervisionCustomer.getDelegator());
+		pledgeRecord.setSupervisionCustomer(supervisionCustomer);
 		pledgeRecord.setCode(pledgeRecordCode);
-		pledgeRecord.setRecordName(CodeUtils.getPledgeRecordCode(supervisionCustomerCode));
+		pledgeRecord.setRecordName(CodeUtils.getPledgeRecordCode(supervisionCustomer.getCode()));
 		pledgeRecord.setWarehouse(insRecord.getWarehouse());
 		double stockSumWeight = 0;
 		List<PledgeRecordDetail> pledgeRecordDetails = new ArrayList<PledgeRecordDetail>();

@@ -200,12 +200,12 @@
 	        </table>
 	        <ul class="MM">
 	        	<li><a href="${ctx}/manage/totalStocks" target="right">总库存</a></li>
-		        <li><a href="${ctx}/manage/supervisor" target="right">日常出货统计</a></li>
-	        	<li><a href="${ctx}/manage/supervisor" target="right">当日进出库查询</a></li>
-	        	<li><a href="${ctx}/manage/supervisor" target="right">当日库存查询</a></li>
-	        	<li><a href="${ctx}/manage/supervisor" target="right">待审核出库单</a></li>
-	        	<li><a href="${ctx}/manage/supervisor" target="right">质物清单记录</a></li>
-	        	<li><a href="${ctx}/manage/supervisor" target="right">盘存记录</a></li>
+		        <li><a href="${ctx}/manage/dailyOutsRecord" target="right">日常出货统计</a></li>
+	        	<li><a href="${ctx}/manage/inOutsRecord" target="right">当日进出库查询</a></li>
+	        	<li><a href="${ctx}/manage/dailyStock" target="right">当日库存查询</a></li>
+	        	<li><a href="${ctx}/manage/waitAuditOutsRecord" target="right">待审核出库单</a></li>
+	        	<li><a href="${ctx}/manage/pledgeRecord" target="right">质物清单记录</a></li>
+	        	<li><a href="${ctx}/manage/inventory" target="right">盘存记录</a></li>
 	        </ul>
 	      </div>
 		</c:if>

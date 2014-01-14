@@ -42,6 +42,21 @@ public class PledgeRecord {
 	private Warehouse warehouse;
 	
 	/**
+	 * 委托方
+	 */
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "d_id")
+	private Delegator delegator;
+	
+	
+	/**
+	 * 监管客户
+	 */
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "sc_id")
+	private SupervisionCustomer supervisionCustomer;
+	
+	/**
 	 * 质物清单号
 	 */
 	@Column(name = "pr_code")
@@ -155,6 +170,22 @@ public class PledgeRecord {
 
 	public void setRecordName(String recordName) {
 		this.recordName = recordName;
+	}
+
+	public Delegator getDelegator() {
+		return delegator;
+	}
+
+	public void setDelegator(Delegator delegator) {
+		this.delegator = delegator;
+	}
+
+	public SupervisionCustomer getSupervisionCustomer() {
+		return supervisionCustomer;
+	}
+
+	public void setSupervisionCustomer(SupervisionCustomer supervisionCustomer) {
+		this.supervisionCustomer = supervisionCustomer;
 	}
 	
 	
