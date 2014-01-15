@@ -79,4 +79,5 @@ public class StockService extends BaseService<Stock, String> {
 		return totalStocks;
 	}
 
+
 }

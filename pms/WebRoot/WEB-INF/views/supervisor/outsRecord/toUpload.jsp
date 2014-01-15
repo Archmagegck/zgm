@@ -1,81 +1,76 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="ctx" value="${pageContext.request.contextPath}" />
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
     
-    <title>上传出库扫描件</title>
+   	<title>上传文件</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-
-	<link rel="stylesheet" type="text/css" href="${ctx }/js/validate/jquery.validate.css">
 	<link rel="stylesheet" type="text/css" href="${ctx }/css/admin/style.css">
 	<link rel="stylesheet" type="text/css" href="${ctx }/css/admin/theme1.css">
-
+		
 	<script type="text/javascript" src="${ctx }/js/jquery-1.6.1.js"></script>
-	<script type="text/javascript" src="${ctx }/js/validate/jquery.metadata.js"></script>
-	<script type="text/javascript" src="${ctx }/js/validate/jquery.validate.js"></script>
-	
+	<script type="text/javascript" src="${ctx}/js/lhgdialog/lhgcore.min.js"></script> 
+	<script type="text/javascript" src="${ctx}/js/lhgdialog/lhgdialog.min.js"></script>
+	<!--
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	-->
 	<script type="text/javascript">
-		$(document).ready(function(){
-			$("#myForm").validate();
-		});
+		var DG = frameElement.lhgDG;
+		DG.addBtn( 'ok', '确定', function(){ commitForm(); });
+		
+		function commitForm () {
+			if(isValidate()) {
+				document.forms[0].submit();
+			}
+		}
+
+		function isValidate() {
+			var noticeFile = document.getElementById("picfile");
+			if (noticeFile.value == "") {
+				alert("请选择文件上传！");
+				return false;
+			} 
+			return true;
+		}
+
+		
+		
 	</script>
-	
+	<c:if test="${message == 'ok'}">
+    		<script>
+				if (frameElement!=null)
+				{
+					alert("操作成功！");
+					DG.curWin.refreshUpload('${filePath}');
+					//DG.cancel();
+				}
+			</script>
+    </c:if>
   </head>
-  
   <body>
-    <form id="myForm" name="myForm" action="${ctx}/supervisor/outsRecord/uploadAttach" method="post" enctype="multipart/form-data">
-    	<div id="content">
-    		<div style="margin-bottom: 10px;padding: 5px 10px;" id="box">
-    		<h3 id="adduser">上传出库扫描件</h3>
-    		<br/>
-    		<fieldset style="padding: 5px 10px;" id="personal">
-    			<legend><h3>请选择文件上传</h3></legend>
-    			<input type="hidden" name="outsRecordId" value = "${id}" >
-    			<br/>
-    				<table  cellpadding="0" cellspacing="0" width="100%"  class="list1">
-					<tr>
-						<td width="35%">
-							出库单扫描件上传：
-						</td>
-						<td width="75%">
-							<input type="file" name="outsRecordFile" id="outsRecordFile" value="浏览"/>
-						</td>
-					</tr>
-					<tr>
-						<td width="35%">
-							提货通知（回馈）扫描件上传：
-						</td>
-							<td width="75%">
-							<input type="file" name="pickFeedFile" id="pickFeedFile" value="浏览"/>
-						</td>
-					</tr>
-					<tr>
-						<td width="35%">
-							质物清单扫描件上传：
-						</td>
-							<td width="75%">
-							<input type="file" name="pledgeRecordFile" id="pledgeRecordFile" value="浏览"/>
-						</td>
-					</tr>
-					</table>
-    			<br/>
-    		</fieldset>
-    		<br/>
-    		<div style="margin-bottom: 5px;padding: 3px;" align="center">
-    				<input id="button1" type="submit" value="提交" style="cursor: pointer;font-weight: bold;margin-left: 8px;padding-right: 5px;width: 205px; background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
-    				<input id="button2" type="button" value="返回" onclick="javascript:history.back();" style="cursor: pointer;font-weight: bold;margin-left: 8px;padding-right: 5px;width: 205px;background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;">
-    		</div>
-    	</div>
-    	</div>
-    </form>
-  </body>
+  		<form action="${ctx}/supervisor/outsRecord/uploadNoticeFile" id="addForm" method="post" enctype="multipart/form-data">
+  			<table border="0" cellpadding="0" cellspacing="0" class="senfe1" width="100%">
+  				<tr class="list_head">
+					<td colspan="2" align="center">提货通知书上传&nbsp;${message}</td>
+				</tr>
+				<tr>
+					<td>选择文件</td>
+					<td>
+						<input type="file" name="picfile" id="picfile" value="浏览"/>
+					</td>
+				</tr>
+				<c:if test="${not empty error}">
+					<td colspan="2">${error}</td>
+				</c:if>
+  			</table>
+  		</form>
+    </body>
 </html>

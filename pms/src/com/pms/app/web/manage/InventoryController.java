@@ -14,16 +14,16 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.pms.app.service.DelegatorService;
-import com.pms.app.service.InOutsRecordService;
+import com.pms.app.service.InventoryService;
 import com.pms.app.service.SupervisionCustomerService;
 
 @Controller
-@RequestMapping(value = "/manage/inOutsRecord")
-public class InOutsRecordController {
+@RequestMapping(value = "/manage/inventory")
+public class InventoryController {
 	
 	@Autowired DelegatorService delegatorService;
 	@Autowired SupervisionCustomerService supervisionCustomerService;
-	@Autowired InOutsRecordService inOutsRecordService;
+	@Autowired InventoryService inventoryService;
 	
 	@InitBinder  
 	public void initBinder(WebDataBinder binder) throws Exception {  
@@ -39,8 +39,8 @@ public class InOutsRecordController {
 		model.addAttribute("delegatorList", delegatorService.findAll());
 //		model.addAttribute("delegator", delegatorService.findById(delegatorId));
 		model.addAttribute("delegatorId", delegatorId);
-		model.addAttribute("inoutsMap", inOutsRecordService.queryByDelegatorAndDateBetween(delegatorId, beginDate, endDate));
-		return "manage/inOutsRecord/list";
+//		model.addAttribute("inoutsMap", inventoryService.queryByDelegatorAndDateBetween(delegatorId, beginDate, endDate));
+		return "manage/inventory/list";
 	}
 	
 	

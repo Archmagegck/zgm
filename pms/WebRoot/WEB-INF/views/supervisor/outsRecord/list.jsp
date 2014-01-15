@@ -131,7 +131,7 @@
 								<td>
 									<c:if test="${outsRecord.attachState == 1}">已上传</c:if>
 									<c:if test="${outsRecord.attachState == 0}">
-									<a href="${ctx }/supervisor/outsRecord/${outsRecord.id }/toUpload">未上传</a>
+									<a href="${ctx }/supervisor/outsRecord/${outsRecord.id }/toUpload3">未上传</a>
 									</c:if>
 									&nbsp;
 								</td>

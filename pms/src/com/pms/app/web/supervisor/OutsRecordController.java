@@ -37,6 +37,7 @@ import com.pms.app.service.StockService;
 import com.pms.app.util.CodeUtils;
 import com.pms.app.util.UploadUtils;
 import com.pms.app.web.supervisor.form.StockForm;
+import com.pms.base.service.ServiceException;
 
 @Controller
 @RequestMapping(value = "/supervisor/outsRecord")
@@ -138,6 +139,10 @@ public class OutsRecordController {
 			ra.addFlashAttribute("messageOK", "保存成功！");
 			session.removeAttribute("outStocks");
 			session.removeAttribute("tempImg");
+		} catch (ServiceException e) {
+			logger.warn("出库失败", e);
+			ra.addFlashAttribute("messageErr", e.getMessage());
+			return "redirect:/supervisor/outsRecord/stockToOut";
 		} catch (Exception e) {
 			logger.error("保存失败", e);
 			ra.addFlashAttribute("messageErr", "保存失败！");
@@ -151,6 +156,12 @@ public class OutsRecordController {
 	public String toUpload(@PathVariable("id")String id, Model model){
 		model.addAttribute("id", id);
 		return "supervisor/outsRecord/toUpload";
+	}
+	
+	@RequestMapping(value = "/{id}/toUpload3")
+	public String toUpload3(@PathVariable("id")String id, Model model){
+		model.addAttribute("id", id);
+		return "supervisor/outsRecord/toUpload3";
 	}
 	
 	

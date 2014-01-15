@@ -13,17 +13,15 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.pms.app.service.DailyStockService;
 import com.pms.app.service.DelegatorService;
-import com.pms.app.service.InOutsRecordService;
-import com.pms.app.service.SupervisionCustomerService;
 
 @Controller
-@RequestMapping(value = "/manage/inOutsRecord")
-public class InOutsRecordController {
+@RequestMapping(value = "/manage/dailyStock")
+public class DailyStockController {
 	
 	@Autowired DelegatorService delegatorService;
-	@Autowired SupervisionCustomerService supervisionCustomerService;
-	@Autowired InOutsRecordService inOutsRecordService;
+	@Autowired DailyStockService dailyStockService;
 	
 	@InitBinder  
 	public void initBinder(WebDataBinder binder) throws Exception {  
@@ -33,14 +31,12 @@ public class InOutsRecordController {
 	}  
 	
 	@RequestMapping(value = { "/list", "" })
-	public String list(Model model, String delegatorId, Date beginDate, Date endDate) {
-		model.addAttribute("beginDate", new DateTime(beginDate).toString("yyyy-MM-dd"));
-		model.addAttribute("endDate", new DateTime(endDate).toString("yyyy-MM-dd"));
+	public String list(Model model, String delegatorId) {
+		model.addAttribute("date", new DateTime().toString("yyyy-MM-dd"));
 		model.addAttribute("delegatorList", delegatorService.findAll());
-//		model.addAttribute("delegator", delegatorService.findById(delegatorId));
 		model.addAttribute("delegatorId", delegatorId);
-		model.addAttribute("inoutsMap", inOutsRecordService.queryByDelegatorAndDateBetween(delegatorId, beginDate, endDate));
-		return "manage/inOutsRecord/list";
+		model.addAttribute("stockMap", dailyStockService.queryByDelegatorAndDate(delegatorId));
+		return "manage/dailyStock/list";
 	}
 	
 	
