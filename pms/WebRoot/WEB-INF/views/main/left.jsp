@@ -300,7 +300,7 @@
 		          </tr>
 		        </table>
 		        <ul class="MM">
-		       	 	<li><a href="${ctx}/delegator/supervisorandsupervisoncustomer" target="right">查看库存及出入库信息</a></li>
+		        	<li><a href="${ctx}/delegator/supervisorandsupervisoncustomer" target="right">查看库存及出入库信息</a></li>
 		          	<li><a href="${ctx}/delegator/personalInfo/edit" target="right">修改密码</a></li>
 		        </ul>
 		      </div>
