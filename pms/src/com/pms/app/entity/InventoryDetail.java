@@ -1,5 +1,7 @@
 package com.pms.app.entity;
 
+import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +15,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
+import org.joda.time.DateTime;
 
 import com.pms.app.entity.reference.AuditState;
 import com.pms.app.entity.reference.CheckMethod;
@@ -133,6 +136,12 @@ public class InventoryDetail {
 	private Integer equation = 1;
 	
 	/**
+	 * 盘存日期
+	 */
+	@Column(name = "id_invDate")
+	private Date date = new Date();
+	
+	/**
 	 * 状态
 	 */
 	private AuditState auditState = AuditState.Wait;
@@ -146,6 +155,10 @@ public class InventoryDetail {
 			equation = 0;
 		}
 		return equation;
+	}
+	
+	public String getDateStr() {
+		return new DateTime(date).toString("yyyy-MM-dd");
 	}
 
 	public String getId() {
@@ -282,6 +295,14 @@ public class InventoryDetail {
 
 	public void setSupervisionCustomer(SupervisionCustomer supervisionCustomer) {
 		this.supervisionCustomer = supervisionCustomer;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 	
 	
