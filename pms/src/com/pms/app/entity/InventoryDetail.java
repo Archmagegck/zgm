@@ -1,5 +1,7 @@
 package com.pms.app.entity;
 
+import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +15,9 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
+import org.joda.time.DateTime;
 
+import com.pms.app.entity.reference.AuditState;
 import com.pms.app.entity.reference.CheckMethod;
 
 /**
@@ -30,6 +34,21 @@ public class InventoryDetail {
 	@GeneratedValue(generator = "uuid")
 	@Column(name = "id_id")
 	private String id;
+	
+	/**
+	 * 委托方
+	 */
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "d_id")
+	private Delegator delegator;
+	
+	
+	/**
+	 * 监管客户
+	 */
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "sc_id")
+	private SupervisionCustomer supervisionCustomer;
 	
 	/**
 	 * 所属盘存
@@ -116,6 +135,17 @@ public class InventoryDetail {
 	@Column(name = "id_equation")
 	private Integer equation = 1;
 	
+	/**
+	 * 盘存日期
+	 */
+	@Column(name = "id_invDate")
+	private Date date = new Date();
+	
+	/**
+	 * 状态
+	 */
+	private AuditState auditState = AuditState.Wait;
+	
 	public int getEqual() {
 		if(realAmount.doubleValue() != amount.doubleValue()) {
 			equation = 0;
@@ -125,6 +155,10 @@ public class InventoryDetail {
 			equation = 0;
 		}
 		return equation;
+	}
+	
+	public String getDateStr() {
+		return new DateTime(date).toString("yyyy-MM-dd");
 	}
 
 	public String getId() {
@@ -237,6 +271,38 @@ public class InventoryDetail {
 
 	public void setCheckMethod(CheckMethod checkMethod) {
 		this.checkMethod = checkMethod;
+	}
+
+	public AuditState getAuditState() {
+		return auditState;
+	}
+
+	public void setAuditState(AuditState auditState) {
+		this.auditState = auditState;
+	}
+
+	public Delegator getDelegator() {
+		return delegator;
+	}
+
+	public void setDelegator(Delegator delegator) {
+		this.delegator = delegator;
+	}
+
+	public SupervisionCustomer getSupervisionCustomer() {
+		return supervisionCustomer;
+	}
+
+	public void setSupervisionCustomer(SupervisionCustomer supervisionCustomer) {
+		this.supervisionCustomer = supervisionCustomer;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 	
 	

@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
+import org.joda.time.DateTime;
 
 /**
  * 入库单
@@ -125,10 +126,11 @@ public class InsRecord {
 	
 	
 	/**
-	 * 质物清单URL
+	 * 质物清单
 	 */
-	@Column(name = "in_pledgeUrl")
-	private String pledgeUrl;
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "pr_id")
+	private PledgeRecord pledgeRecord;
 	
 	
 	/**
@@ -248,16 +250,6 @@ public class InsRecord {
 	}
 
 
-	public String getPledgeUrl() {
-		return pledgeUrl;
-	}
-
-
-	public void setPledgeUrl(String pledgeUrl) {
-		this.pledgeUrl = pledgeUrl;
-	}
-
-
 	public List<InsRecordDetail> getInsRecordDetails() {
 		return insRecordDetails;
 	}
@@ -281,10 +273,24 @@ public class InsRecord {
 	public Date getDate() {
 		return date;
 	}
+	
+	public String getDateStr() {
+		return new DateTime(date).toString("yyyy-MM-dd HH:mm:ss");
+	}
 
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+
+	public PledgeRecord getPledgeRecord() {
+		return pledgeRecord;
+	}
+
+
+	public void setPledgeRecord(PledgeRecord pledgeRecord) {
+		this.pledgeRecord = pledgeRecord;
 	}
 	
 }

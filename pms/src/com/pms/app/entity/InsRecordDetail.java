@@ -1,5 +1,7 @@
 package com.pms.app.entity;
 
+import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +15,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
+import org.joda.time.DateTime;
 
 import com.pms.app.entity.reference.CheckMethod;
 
@@ -38,6 +41,22 @@ public class InsRecordDetail {
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "in_id")
 	private InsRecord insRecord;
+	
+	
+	/**
+	 * 委托方
+	 */
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "d_id")
+	private Delegator delegator;
+	
+	
+	/**
+	 * 监管客户
+	 */
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "sc_id")
+	private SupervisionCustomer supervisionCustomer;
 	
 	
 	/**
@@ -124,6 +143,22 @@ public class InsRecordDetail {
 	 */
 	@Column(name = "ind_desc")
 	private String desc;
+	
+	
+	/**
+	 * 入库时间
+	 */
+	@Column(name = "ind_date")
+	private Date date = new Date();
+	
+	
+	public String getDateStr() {
+		return new DateTime(date).toString("yyyy-MM-dd");
+	}
+	
+	public String getTimeStr() {
+		return new DateTime(date).toString("HH:mm");
+	}
 
 	
 	public void copy(InsRecordDetail insRecordDetail) {
@@ -143,6 +178,7 @@ public class InsRecordDetail {
 	
 	public String getKey() {
 		StringBuffer sb = new StringBuffer("{");
+		sb.append("\"warehouse\":\"").append(insRecord.getWarehouse().getId()).append("\",");
 		sb.append("\"style\":\"").append(style.getId()).append("\",");
 		sb.append("\"pledgePurity\":\"").append(pledgePurity.getId()).append("\",");
 		sb.append("\"specWeight\":\"").append(specWeight).append("\",");
@@ -290,6 +326,30 @@ public class InsRecordDetail {
 
 	public void setDesc(String desc) {
 		this.desc = desc;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public Delegator getDelegator() {
+		return delegator;
+	}
+
+	public void setDelegator(Delegator delegator) {
+		this.delegator = delegator;
+	}
+
+	public SupervisionCustomer getSupervisionCustomer() {
+		return supervisionCustomer;
+	}
+
+	public void setSupervisionCustomer(SupervisionCustomer supervisionCustomer) {
+		this.supervisionCustomer = supervisionCustomer;
 	}
 
 	

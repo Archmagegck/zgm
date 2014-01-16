@@ -53,6 +53,13 @@ public class Warehouse {
 	private Integer isUsed = 0;
 	
 	
+	/**
+	 * 质物清单编号
+	 */
+	@Column(name = "s_pledgeRecordCode")
+	private String pledgeRecordCode;
+	
+	
 	public String getId() {
 		return id;
 	}
@@ -100,6 +107,16 @@ public class Warehouse {
 
 	public void setIsUsed(Integer isUsed) {
 		this.isUsed = isUsed;
+	}
+
+
+	public String getPledgeRecordCode() {
+		return pledgeRecordCode;
+	}
+
+
+	public void setPledgeRecordCode(String pledgeRecordCode) {
+		this.pledgeRecordCode = pledgeRecordCode;
 	}
 
 	

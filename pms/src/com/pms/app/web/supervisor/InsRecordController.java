@@ -1,11 +1,13 @@
 package com.pms.app.web.supervisor;
 
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.joda.time.DateTime;
@@ -20,14 +22,21 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.pms.app.entity.InsRecord;
 import com.pms.app.entity.InsRecordDetail;
+import com.pms.app.entity.PledgeRecord;
+import com.pms.app.entity.SupervisionCustomer;
 import com.pms.app.entity.Warehouse;
 import com.pms.app.service.InsRecordService;
 import com.pms.app.service.PledgePurityService;
+import com.pms.app.service.PledgeRecordService;
 import com.pms.app.service.StyleService;
+import com.pms.app.util.CodeUtils;
+import com.pms.app.util.UploadUtils;
 
 @Controller
 @RequestMapping(value = "/supervisor/insRecord")
@@ -37,6 +46,7 @@ public class InsRecordController {
 	private Logger logger = LoggerFactory.getLogger(InsRecordController.class);
 	
 	@Autowired private InsRecordService insRecordService;
+	@Autowired private PledgeRecordService pledgeRecordService;
 	@Autowired private PledgePurityService pledgePurityService;
 	@Autowired private StyleService styleService;
 	
@@ -134,7 +144,8 @@ public class InsRecordController {
 	public String save(InsRecord insRecord, HttpSession session, RedirectAttributes ra){
 		try {
 			insRecord.setInsRecordDetails((List<InsRecordDetail>) session.getAttribute("insRecordDetailList"));
-			insRecordService.save(insRecord, (String)session.getAttribute("supervisionCustomerCode"));
+			insRecordService.save(insRecord, (SupervisionCustomer)session.getAttribute("supervisionCustomer"));
+			session.setAttribute("warehouse", insRecord.getWarehouse());
 			session.removeAttribute("insRecordDetailList");
 			ra.addFlashAttribute("messageOK", "保存成功！");
 		} catch (Exception e) {
@@ -145,15 +156,87 @@ public class InsRecordController {
 	}
 	
 	
-	@RequestMapping(value = "/toUpload")
-	public String toUpload(){
+	@RequestMapping(value = "/{id}/toUpload")
+	public String toUpload(@PathVariable("id")String id, Model model){
+		model.addAttribute("id", id);
 		return "supervisor/insRecord/toUpload";
 	}
 	
 	
 	@RequestMapping(value = "/uploadAttach")
-	public String upload(){
-		
+	public String upload(HttpServletRequest request, String insRecordId, Model model, RedirectAttributes ra){
+		String supervisionCustomerCode = (String)request.getSession().getAttribute("supervisionCustomerCode");
+		try {
+			InsRecord insRecord = insRecordService.findById(insRecordId);
+			insRecord = UploadUtils.uploadInsFile(request, insRecord, supervisionCustomerCode);
+			insRecord.setAttachState(1);
+			insRecordService.save(insRecord);
+			
+			MultipartFile pledgeRecordFile = ((MultipartHttpServletRequest) request).getFile("pledgeRecordFile");
+			if (!(pledgeRecordFile.getOriginalFilename() == null || "".equals(pledgeRecordFile.getOriginalFilename()))) {
+				PledgeRecord pledgeRecord = pledgeRecordService.findById(insRecord.getPledgeRecord().getId());
+				pledgeRecord.setRecordFile(insRecord.getPledgeRecord().getRecordFile());
+				pledgeRecord.setIfUpload(1);
+				pledgeRecord.setRecordName(CodeUtils.getPledgeRecordCode(supervisionCustomerCode));
+				pledgeRecordService.save(pledgeRecord);
+			}
+			
+			ra.addFlashAttribute("messageOK", "上传扫描件成功！");
+			
+		} catch (Exception e) {
+			ra.addFlashAttribute("messageErr", "上传文件出现异常！");
+			logger.error("上传文件出现异常", e);
+		}
 		return "redirect:/supervisor/insRecord/list";
 	}
+	
+	
+	@RequestMapping(value = "/{id}/printInsRecord")
+	public String printInsRecord(@PathVariable("id")String id, Model model, HttpSession session) {
+		SupervisionCustomer supervisionCustomer = (SupervisionCustomer)session.getAttribute("supervisionCustomer");
+		InsRecord insRecord = insRecordService.findById(id);
+		model.addAttribute("supervisionCustomerName", supervisionCustomer.getName());
+		model.addAttribute("insRecord", insRecord);
+		model.addAttribute("detailList", insRecord.getInsRecordDetails());
+		double sumAmount = 0;
+		double sumWeight = 0;
+		for(InsRecordDetail detail : insRecord.getInsRecordDetails()) {
+			sumAmount += detail.getAmount();
+			sumWeight += detail.getSumWeight();
+		}
+		sumAmount = new BigDecimal(sumAmount).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+		sumWeight = new BigDecimal(sumWeight).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+		model.addAttribute("sumAmount", sumAmount);
+		model.addAttribute("sumWeight", sumWeight);
+		return "supervisor/insRecord/printInsRecord";
+	}
+	
+	
+	@RequestMapping(value = "/{id}/printCheckRecord")
+	public String printCheckRecord(@PathVariable("id")String id, Model model, HttpSession session) {
+		SupervisionCustomer supervisionCustomer = (SupervisionCustomer)session.getAttribute("supervisionCustomer");
+		InsRecord insRecord = insRecordService.findById(id);
+		model.addAttribute("supervisionCustomerName", supervisionCustomer.getName());
+		model.addAttribute("insRecord", insRecord);
+		model.addAttribute("detailList", insRecord.getInsRecordDetails());
+		double checkSumWeight = 0;
+		for(InsRecordDetail detail : insRecord.getInsRecordDetails()) {
+			checkSumWeight += detail.getCheckWeight();
+		}
+		model.addAttribute("checkSumWeight", new BigDecimal(checkSumWeight).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+		return "supervisor/insRecord/printCheckRecord";
+	}
+	
+	
+	@RequestMapping(value = "/{id}/printPledgeRecord")
+	public String printPledgeRecord(@PathVariable("id")String id, Model model, HttpSession session) {
+		InsRecord insRecord = insRecordService.findById(id);
+		PledgeRecord pledgeRecord = pledgeRecordService.findById(insRecord.getPledgeRecord().getId());
+		model.addAttribute("pledgeRecord", pledgeRecord);
+		model.addAttribute("detailList", pledgeRecord.getPledgeRecordDetails());
+		return "supervisor/insRecord/printPledgeRecord";
+	}
+	
+	
+	
 }

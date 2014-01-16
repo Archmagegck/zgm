@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.pms.app.entity.Inventory;
+import com.pms.app.entity.SupervisionCustomer;
 import com.pms.app.entity.Supervisor;
 import com.pms.app.entity.Warehouse;
 import com.pms.app.service.InventoryService;
@@ -74,9 +75,9 @@ public class InventoryController {
 	public String save(Model model, InventoryForm inventoryForm, HttpSession session, RedirectAttributes ra){
 		try {
 			Warehouse warehouse = (Warehouse)session.getAttribute("warehouse");
-			String supervisionCustomerCode = (String)session.getAttribute("supervisionCustomerCode");
+			SupervisionCustomer supervisionCustomer = (SupervisionCustomer)session.getAttribute("supervisionCustomer");
 			String supName = ((Supervisor)session.getAttribute("user")).getName();
-			inventoryService.save(warehouse, supervisionCustomerCode, supName, inventoryForm.getInventoryDetails());
+			inventoryService.save(warehouse, supervisionCustomer, supName, inventoryForm.getInventoryDetails());
 		} catch (Exception e) {
 			logger.error("保存失败", e);
 			ra.addFlashAttribute("messageErr", "保存失败！");

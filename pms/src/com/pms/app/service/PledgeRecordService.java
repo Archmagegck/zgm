@@ -14,6 +14,7 @@ import com.pms.app.entity.PledgeRecordDetail;
 import com.pms.app.entity.Stock;
 import com.pms.app.entity.Warehouse;
 import com.pms.app.util.CodeUtils;
+import com.pms.app.util.IdWorker;
 import com.pms.base.dao.BaseDao;
 import com.pms.base.service.BaseService;
 
@@ -32,7 +33,8 @@ public class PledgeRecordService extends BaseService<PledgeRecord, String> {
 	public void save(String supervisionCustomerCode, Warehouse warehouse, List<Stock> stocks) {
 		List<PledgeRecordDetail> pledgeRecordDetails = new ArrayList<PledgeRecordDetail>();
 		PledgeRecord pledgeRecord = new PledgeRecord();
-		pledgeRecord.setCode(CodeUtils.getPledgeRecordCode(supervisionCustomerCode));
+		pledgeRecord.setCode(String.valueOf(new IdWorker(1, 2, 3).getId()));
+		pledgeRecord.setRecordName(CodeUtils.getPledgeRecordCode(supervisionCustomerCode));
 		pledgeRecord.setWarehouse(warehouse);
 		double sumWeight = 0;
 		for (Stock stock : stocks) {

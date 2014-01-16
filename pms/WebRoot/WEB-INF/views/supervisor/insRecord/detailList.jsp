@@ -104,11 +104,11 @@
 						</tbody>
 					</table>
 					<div align="center" id="pager">
-						<input type="button" value="查看并打印出库单" class="button" onclick="#" />
+						<input type="button" value="查看并打印出库单" class="button" onclick="javascript:window.open('${ctx }/supervisor/insRecord/${insRecord.id}/printInsRecord')" />
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="button" value="查看并打印检测结果评价单" class="button" onclick="#" />
+						<input type="button" value="查看并打印检测结果评价单" class="button" onclick="javascript:window.open('${ctx }/supervisor/insRecord/${insRecord.id}/printCheckRecord')" />
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="button" value="查看并打印质物清单" class="button" onclick="#" />
+						<input type="button" value="查看并打印质物清单" class="button" onclick="javascript:window.open('${ctx }/supervisor/insRecord/${insRecord.id}/printPledgeRecord')" />
 					</div>
 				</div>
 			</div>

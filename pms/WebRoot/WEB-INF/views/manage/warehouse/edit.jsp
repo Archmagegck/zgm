@@ -43,6 +43,7 @@
     			<br/>
     				<input type="hidden" name="id" value = "${warehouse.id }" >
     				<input type="hidden" name="isUsed" value = "${warehouse.isUsed }" >
+    				<input type="hidden" name="pledgeRecordCode" value = "${warehouse.pledgeRecordCode }" >
     				<table  cellpadding="0" cellspacing="0" width="100%"  class="list1">
 					<tr>
 						<td width="20%">

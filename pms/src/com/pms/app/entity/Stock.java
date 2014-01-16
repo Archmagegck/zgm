@@ -81,6 +81,7 @@ public class Stock {
 	 */
 	@Column(name = "s_closedTran")
 	private Integer closedTran;
+
 	
 	/**
 	 * 备注/标记
@@ -114,6 +115,7 @@ public class Stock {
 	
 	public String getKey() {
 		StringBuffer sb = new StringBuffer("{");
+		sb.append("\"warehouse\":\"").append(warehouse.getId()).append("\",");
 		sb.append("\"style\":\"").append(style.getId()).append("\",");
 		sb.append("\"pledgePurity\":\"").append(pledgePurity.getId()).append("\",");
 		sb.append("\"specWeight\":\"").append(specWeight).append("\",");
@@ -203,5 +205,5 @@ public class Stock {
 	public void setClosedTran(Integer closedTran) {
 		this.closedTran = closedTran;
 	}
-	
+
 }	

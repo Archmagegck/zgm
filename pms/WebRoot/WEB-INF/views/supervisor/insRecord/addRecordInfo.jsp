@@ -64,6 +64,8 @@
 						<td width="70%">
 							${sessionScope.warehouse.address}
 							<input type="hidden" name="warehouse.id" value="${sessionScope.warehouse.id}"/>
+							<input type="hidden" name="warehouse.address" value="${sessionScope.warehouse.address}"/>
+							<input type="hidden" name="warehouse.pledgeRecordCode" value="${sessionScope.warehouse.pledgeRecordCode}"/>
 						</td>
 					</tr>
 					<tr>

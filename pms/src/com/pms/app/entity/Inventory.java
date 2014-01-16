@@ -67,6 +67,7 @@ public class Inventory {
 	@Column(name = "i_invDate")
 	private Date date = new Date();
 	
+	
 	/**
 	 * 盘存明细
 	 */
@@ -128,5 +129,5 @@ public class Inventory {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	
+
 }

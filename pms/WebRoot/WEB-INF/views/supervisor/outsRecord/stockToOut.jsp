@@ -133,21 +133,14 @@
 				</c:if>
     			<table  cellpadding="0" cellspacing="0" width="100%"  class="myTable">
 					<tr>
-						<td width="25%">"提货通知书"扫描文件上传：</td>
-						<td width="25%">
+						<td width="30%">"提货通知书"扫描文件上传：</td>
+						<td width="70%" colspan="3">
 							<input type="button" value="上传文件" onclick="upload();" />
 							<span id="showPic">
 							<c:if test="${not empty sessionScope.tempImg}">
 								<a href="${ctx}/images/${sessionScope.tempImg}" target=_blank>查看</a>
 							</c:if>
 							</span>
-						</td>
-						<td width="25%">提货类型</td>
-						<td width="25%">
-							<select id="pickType" name="pickType">
-			            		<option value="Part" selected="selected">部分解除</option>
-			            		<option value="All">全部解除</option>
-			            	</select>
 						</td>
 					</tr>
 				</table>
@@ -202,7 +195,7 @@
 									${stock.desc}&nbsp;
 								</td>
 								<td>
-									<input id="stocks[${status.index}].amount" name="outStocks[${status.index}].outAmount" class="{number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
+									<input id="stocks[${status.index}].amount" name="outStocks[${status.index}].outAmount" class="{number:true,max:${stock.amount}}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
 									<input type="hidden" name="outStocks[${status.index}].stockId" value="${stock.id }">
 									&nbsp;
 								</td>
