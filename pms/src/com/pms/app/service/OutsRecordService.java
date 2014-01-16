@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
@@ -50,6 +52,10 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 		return outsRecordDao;
 	}
 	
+	public Page<OutsRecord> findWaitOutsRecord(Pageable pageable) {
+		return outsRecordDao.findPageByAuditState(pageable, AuditState.Wait);
+	}
+	
 	
 	@Transactional
 	public void save(OutsRecord outsRecord, List<OutStock> outStocks, int hasPickFile, SupervisionCustomer supervisionCustomer) throws ServiceException {
@@ -88,6 +94,8 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 			saveOutsRecordDetails.add(outsRecordDetail);
 		}
 		outsRecord.setSumWeight(sumWeight);
+		outsRecord.setDelegator(supervisionCustomer.getDelegator());
+		outsRecord.setSupervisionCustomer(supervisionCustomer);
 		
 		if(delStocks.size() == stockMap.size()) {//全部出库
 			outsRecord.setPickType(PickType.All);

@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
+import org.joda.time.DateTime;
 
 /**
  * 质物清单
@@ -99,6 +100,10 @@ public class PledgeRecord {
 	 */
 	@OneToMany(mappedBy = "pledgeRecord")
 	private List<PledgeRecordDetail> pledgeRecordDetails = new ArrayList<PledgeRecordDetail>();
+	
+	public String getDateStr(){
+		return new DateTime(date).toString("yyyy-MM-dd");
+	}
 
 	public String getId() {
 		return id;

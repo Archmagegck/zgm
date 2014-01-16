@@ -75,6 +75,22 @@ public class OutsRecord {
 	
 	
 	/**
+	 * 委托方
+	 */
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "d_id")
+	private Delegator delegator;
+	
+	
+	/**
+	 * 监管客户
+	 */
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "sc_id")
+	private SupervisionCustomer supervisionCustomer;
+	
+	
+	/**
 	 * 提货人姓名
 	 */
 	@Column(name = "out_picker")
@@ -343,5 +359,25 @@ public class OutsRecord {
 
 	public void setPledgeRecord(PledgeRecord pledgeRecord) {
 		this.pledgeRecord = pledgeRecord;
+	}
+
+
+	public Delegator getDelegator() {
+		return delegator;
+	}
+
+
+	public void setDelegator(Delegator delegator) {
+		this.delegator = delegator;
+	}
+
+
+	public SupervisionCustomer getSupervisionCustomer() {
+		return supervisionCustomer;
+	}
+
+
+	public void setSupervisionCustomer(SupervisionCustomer supervisionCustomer) {
+		this.supervisionCustomer = supervisionCustomer;
 	}
 }
