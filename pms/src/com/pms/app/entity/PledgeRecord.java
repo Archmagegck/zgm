@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
+import org.joda.time.DateTime;
 
 /**
  * 质物清单
@@ -42,6 +43,21 @@ public class PledgeRecord {
 	private Warehouse warehouse;
 	
 	/**
+	 * 委托方
+	 */
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "d_id")
+	private Delegator delegator;
+	
+	
+	/**
+	 * 监管客户
+	 */
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "sc_id")
+	private SupervisionCustomer supervisionCustomer;
+	
+	/**
 	 * 质物清单号
 	 */
 	@Column(name = "pr_code")
@@ -60,6 +76,12 @@ public class PledgeRecord {
 	private Date date = new Date();
 	
 	/**
+	 * 文件名称
+	 */
+	@Column(name = "pr_recordName")
+	public String recordName;
+	
+	/**
 	 * 文件路径
 	 */
 	@Column(name = "pr_recordFile")
@@ -74,10 +96,14 @@ public class PledgeRecord {
 	public Integer ifUpload = 0;
 	
 	/**
-	 * 盘存明细
+	 * 质物清单明细
 	 */
 	@OneToMany(mappedBy = "pledgeRecord")
 	private List<PledgeRecordDetail> pledgeRecordDetails = new ArrayList<PledgeRecordDetail>();
+	
+	public String getDateStr(){
+		return new DateTime(date).toString("yyyy-MM-dd");
+	}
 
 	public String getId() {
 		return id;
@@ -141,6 +167,30 @@ public class PledgeRecord {
 
 	public void setPledgeRecordDetails(List<PledgeRecordDetail> pledgeRecordDetails) {
 		this.pledgeRecordDetails = pledgeRecordDetails;
+	}
+
+	public String getRecordName() {
+		return recordName;
+	}
+
+	public void setRecordName(String recordName) {
+		this.recordName = recordName;
+	}
+
+	public Delegator getDelegator() {
+		return delegator;
+	}
+
+	public void setDelegator(Delegator delegator) {
+		this.delegator = delegator;
+	}
+
+	public SupervisionCustomer getSupervisionCustomer() {
+		return supervisionCustomer;
+	}
+
+	public void setSupervisionCustomer(SupervisionCustomer supervisionCustomer) {
+		this.supervisionCustomer = supervisionCustomer;
 	}
 	
 	

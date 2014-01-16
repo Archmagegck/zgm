@@ -39,20 +39,8 @@
 			$("#pageNo").val(pageNo);
 			$("#myForm").submit();
 		}
-			
-/* 		//删除
-		function del(){
-			if($("[name='idGroup']:checked").length <= 0){
-				alert("请选择一个您要删除的！");
-			} else{
-				if (confirm("确定要删除吗？")){
-					$("#myForm").attr("action","${ctx}/supervisor/checkDeny/delete");
-					$("#myForm").submit();
-				}
-			}
-		} */
-
-    </script>
+		
+    	</script>
 	
 	<style type="text/css">
 		.button{
@@ -98,8 +86,7 @@
 						</span>
 						<input type="button" value="查询" class="button" onclick="gotoPage(1)" />
 						<input type="button" value="添加" class="button" onclick="location.href='${ctx}/supervisor/checkDeny/add'" />
-					<!-- 	<input type="button" value="删除" class="button" onclick="del()" />  -->
-						<input type="hidden" name="page.page" id="pageNo" value="${page.number+1}"/>
+						<input type="hidden" name="page.page" id="pageNo" value="${page.number+1}"/>	
 					</div>
 					<br/>
 					<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">

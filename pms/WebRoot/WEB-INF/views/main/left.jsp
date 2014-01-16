@@ -186,7 +186,7 @@
 	        	<li><a href="${ctx}/manage/warehouse" target="right">仓库管理</a></li>
 	        	<li><a href="${ctx}/manage/style" target="right">款式管理</a></li>
 	        	<li><a href="${ctx}/manage/pledgePurity" target="right">质押物成色管理</a></li>
-	        	<li><a href="${ctx}/manage/purityPrice" target="right">质押物每日价格设置</a></li>
+	        	<li><a href="${ctx}/manage/au9995Price" target="right">质押物每日价格设置</a></li>
 	        	<li><a href="${ctx}/manage/pledgeConfig" target="right">质押物要求及警戒线设置</a></li>
 	        </ul>
 	      </div>
@@ -199,13 +199,13 @@
 	          </tr>
 	        </table>
 	        <ul class="MM">
-	        	<li><a href="${ctx}/manage/supervisor" target="right">总库存</a></li>
-		        <li><a href="${ctx}/manage/supervisor" target="right">日常出货统计</a></li>
-	        	<li><a href="${ctx}/manage/supervisor" target="right">当日进出库查询</a></li>
-	        	<li><a href="${ctx}/manage/supervisor" target="right">当日库存查询</a></li>
-	        	<li><a href="${ctx}/manage/supervisor" target="right">待审核出库单</a></li>
-	        	<li><a href="${ctx}/manage/supervisor" target="right">质物清单记录</a></li>
-	        	<li><a href="${ctx}/manage/supervisor" target="right">盘存记录</a></li>
+	        	<li><a href="${ctx}/manage/totalStocks" target="right">总库存</a></li>
+		        <li><a href="${ctx}/manage/dailyOutsRecord" target="right">日常出货统计</a></li>
+	        	<li><a href="${ctx}/manage/inOutsRecord" target="right">当日进出库查询</a></li>
+	        	<li><a href="${ctx}/manage/dailyStock" target="right">当日库存查询</a></li>
+	        	<li><a href="${ctx}/manage/waitAuditOutsRecord" target="right">待审核出库单</a></li>
+	        	<li><a href="${ctx}/manage/pledgeRecord" target="right">质物清单记录</a></li>
+	        	<li><a href="${ctx}/manage/inventory" target="right">盘存记录</a></li>
 	        </ul>
 	      </div>
 		</c:if>
@@ -278,6 +278,17 @@
 		        <li><a href="${ctx}/supervisor/pledgeRecord" target="right">每日质物清单</a></li>
 	        </ul>
 	      </div>
+	      <h1 class="type"><a href="javascript:void(0)">个人信息修改</a></h1>
+	      <div class="content">
+	        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+	          <tr>
+	            <td><img src="${ctx}/images/admin/images/menu_topline.gif" width="182" height="5" /></td>
+	          </tr>
+	        </table>
+	         <ul class="MM">
+	        	<li><a href="${ctx}/supervisor/personalInfo/edit" target="right">个人信息修改</a></li>
+	     	 </ul>
+	      </div>           
 		</c:if>
 		
 		<c:if test="${(sessionScope.user != null) && (sessionScope.type == 3)}">
@@ -289,8 +300,8 @@
 		          </tr>
 		        </table>
 		        <ul class="MM">
-		        	<li><a href="${ctx}/entrepotcoll/list" target="right">监管客户管理</a></li>
-		          	<li><a href="${ctx}/farmerscoll/list" target="right">修改密码</a></li>
+		       	 	<li><a href="${ctx}/delegator/supervisorandsupervisoncustomer" target="right">查看库存及出入库信息</a></li>
+		          	<li><a href="${ctx}/delegator/personalInfo/edit" target="right">修改密码</a></li>
 		        </ul>
 		      </div>
 		</c:if>
