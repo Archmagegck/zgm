@@ -80,6 +80,8 @@
 						<input type="hidden" name="page.page" id="pageNo" value="${page.number+1}"/>
 					</div>
 					<br/>
+					<c:set var="allSumAmount" value="0"></c:set>
+					<c:set var="allSumWeight" value="0"></c:set>
 					<c:forEach items="${stockMap}" var="item" >
 						<div align="left">
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -90,12 +92,12 @@
 						<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
 						<thead>
 							<tr>
-								<th>款式大类</th>
-								<th>标明成色</th>
-								<th>标明规格重量</th>
-								<th>存储地点 </th>
-								<th>数量 </th>
-								<th>总重</th>
+								<th width="18%">款式大类</th>
+								<th width="18%">标明成色</th>
+								<th width="15%">标明规格重量</th>
+								<th width="25%">存储地点 </th>
+								<th width="12%">数量 </th>
+								<th width="12%">总重</th>
 							</tr>
 						</thead>
 						<c:forEach items="${item.value}" var="stock" >
@@ -121,6 +123,8 @@
 							</tr>
 							<c:set var="sumAmount" value="${sumAmount + stock.amount}"></c:set>
 							<c:set var="sumWeight" value="${sumWeight + stock.sumWeight}"></c:set>
+							<c:set var="allSumAmount" value="${allSumAmount + sumAmount}"></c:set>
+							<c:set var="allSumWeight" value="${allSumWeight + sumWeight}"></c:set>
 						</c:forEach>
 						<tr>
 							<td>合计</td>
@@ -133,9 +137,34 @@
 					</table>
 					<br><br>
 					</c:forEach>
+					<br><br>
+					<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
+						<tr>
+							<th width="18%">合计</th>
+							<th width="18%">&nbsp;</th>
+							<th width="15%">&nbsp;</th>
+							<th width="25%">&nbsp; </th>
+							<th width="12%">${allSumAmount} </th>
+							<th width="12%">${allSumWeight}</th>
+						</tr>
+					</table>
+					<br>
+					<div align="center" id="pager">
+						<input type="button" value="生成报表并打印" class="button" onclick="generalAndPrint();" />
+					</div>
+					<br>
 				</div>
 			</div>
 		</form>
+		<script type="text/javascript">
+			function generalAndPrint() {
+				if('${delegatorId}' == '') {
+					alert('请先选择委托方查询！');
+					return;
+				}
+				window.open('${ctx }/manage/dailyStock/list/toPrint?delegatorId=${delegatorId}');
+			}
+		</script>
 	</body>
 </html>
 

@@ -53,7 +53,7 @@
 					</div>
 					<div align="left" style="vertical-align: middle;">
 						&nbsp;&nbsp;&nbsp;委托方：
-						<select name = "delegatorId" class="required">
+						<select id="selDelegator" name = "delegatorId" class="required">
 							<option selected="selected" value="">--请选择--</option>
 							<c:forEach items="${delegatorList }" var = "delegator">
 								<c:choose>
@@ -85,7 +85,6 @@
 						&nbsp;&nbsp;
 						<input name="date" value="${date }" onFocus="WdatePicker({isShowClear:false,isShowWeek:true,readOnly:true,skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"/>
 						<input type="button" value="查询" class="button" onclick="gotoPage(1)" />
-						<input type="hidden" name="page.page" id="pageNo" value="${page.number+1}"/>
 					</div>
 					<br/>
 					<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
@@ -105,7 +104,7 @@
 								<th>出货后质物总量（kg）</th>
 							</tr>
 						</thead>
-						<c:forEach items="${page.content}" var="outsRecordDetail" varStatus="status">
+						<c:forEach items="${dailyOutsRecordList}" var="outsRecordDetail" varStatus="status">
 							<tr>
 								<td>${status.count}&nbsp;</td>
 								<td>${outsRecordDetail.delegator.name}&nbsp;</td>
@@ -122,12 +121,23 @@
 							</tr>
 						</c:forEach>
 					</table>
-					<div align="left" id="pager">
-						<jsp:include page="../../common/page.jsp"></jsp:include>
+					<br>
+					<div align="center" id="pager">
+						<input type="button" value="生成报表并打印" class="button" onclick="generalAndPrint();" />
 					</div>
+					<br>
 				</div>
 			</div>
 		</form>
+		<script type="text/javascript">
+			function generalAndPrint() {
+				if('${delegatorId}' == '') {
+					alert('请先选择委托方查询！');
+					return;
+				}
+				window.open('${ctx }/manage/dailyOutsRecord/list/toPrint?delegatorId=${delegatorId}&supervisionCustomerId=${supervisionCustomerId}&date=${date}');
+			}
+		</script>
 	</body>
 </html>
 

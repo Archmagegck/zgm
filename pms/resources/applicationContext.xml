@@ -61,10 +61,10 @@
 	</bean>
 	
  	 <bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">  
-        <property name="host" value="smtp.gmail.com"></property>  
+        <property name="host" value="smtp.163.com"></property>  
         <property name="port" value="465"></property>  
-        <property name="username" value="cgw2011@gmail.com"></property>  
-        <property name="password" value="cgw#*#*"></property>  
+        <property name="username" value="hellodongdongmiao@163.com"></property>  
+        <property name="password" value="hello123"></property>  
         <property name="defaultEncoding" value="UTF-8"></property>  
         <property name="javaMailProperties">  
             <props>  

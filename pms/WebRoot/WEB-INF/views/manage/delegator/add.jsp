@@ -102,7 +102,7 @@
 							邮箱:
 						</td>
 						<td width="80%">
-							<input id="email" name="email" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
+							<input id="email" name="email" class="{required:true,email:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
 						</td>
 					</tr>
 					<tr>

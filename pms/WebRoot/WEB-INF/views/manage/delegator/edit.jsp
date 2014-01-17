@@ -104,7 +104,7 @@
 							邮箱:
 						</td>
 						<td width="80%">
-							<input id="email" name="email" value="${delegator.email }" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
+							<input id="email" name="email" value="${delegator.email }" class="{required:true,email:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
 						</td>
 					</tr>
 					<tr>
@@ -112,7 +112,7 @@
 							开票信息:
 						</td>
 						<td width="80%">
-							<input id="invoices" name="invoices" value="${delegator.invoices }" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
+							<input id="invoices" name="invoices" value="${delegator.invoices }" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
 						</td>
 					</tr>
 					<tr>
@@ -120,7 +120,7 @@
 							备注:
 						</td>
 						<td width="80%">
-							<input id="desc" name="desc" value="${delegator.desc }" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
+							<input id="desc" name="desc" value="${delegator.desc }" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
 						</td>
 					</tr>
 				</table>

@@ -84,6 +84,10 @@
 						<input type="hidden" name="page.page" id="pageNo" value="${page.number+1}"/>
 					</div>
 					<br/>
+					<c:set var="inAllSumAmount" value="0"></c:set>
+					<c:set var="inAllSumweight" value="0"></c:set>
+					<c:set var="outAllSumAmount" value="0"></c:set>
+					<c:set var="outAllSumweight" value="0"></c:set>
 					<c:forEach items="${inoutsMap}" var="item" >
 						<div align="left">
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -96,13 +100,13 @@
 						<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
 						<thead>
 							<tr>
-								<th>日期</th>
-								<th>操作类型</th>
-								<th>款式大类</th>
-								<th>标明成色</th>
-								<th>标明规格重量</th>
-								<th>数量 </th>
-								<th>总重</th>
+								<th width="20%">日期</th>
+								<th width="14%">操作类型</th>
+								<th width="14%">款式大类</th>
+								<th width="14%">标明成色</th>
+								<th width="14%">标明规格重量</th>
+								<th width="12%">数量 </th>
+								<th width="12%">总重</th>
 							</tr>
 						</thead>
 						<c:forEach items="${item.value}" var="inOutsRecord" >
@@ -132,35 +136,74 @@
 							<c:if test="${inOutsRecord.method eq '入库'}">
 								<c:set var="inSumAmount" value="${inSumAmount + inOutsRecord.amount}"></c:set>
 								<c:set var="inSumweight" value="${inSumweight + inOutsRecord.sumWeight}"></c:set>
+								<c:set var="inAllSumAmount" value="${inAllSumAmount + inSumAmount}"></c:set>
+								<c:set var="inAllSumweight" value="${inAllSumweight + inSumweight}"></c:set>
 							</c:if>
 							<c:if test="${inOutsRecord.method eq '出库'}">
 								<c:set var="outSumAmount" value="${outSumAmount + inOutsRecord.amount}"></c:set>
 								<c:set var="outSumweight" value="${outSumweight + inOutsRecord.sumWeight}"></c:set>
+								<c:set var="outAllSumAmount" value="${outAllSumAmount + outSumAmount}"></c:set>
+								<c:set var="outAllSumweight" value="${outAllSumweight + outSumweight}"></c:set>
 							</c:if>
 						</c:forEach>
 						<tr>
-							<td rowspan="2">合计</td>
-							<td>入库&nbsp;</td>
-							<td>&nbsp;</td>
-							<td>&nbsp;</td>
-							<td>&nbsp;</td>
-							<td>${inSumAmount}&nbsp;</td>
-							<td>${inSumweight}&nbsp;</td>
+							<td rowspan="2" width="20%">合计</td>
+							<td width="14%">入库&nbsp;</td>
+							<td width="14%">&nbsp;</td>
+							<td width="14%">&nbsp;</td>
+							<td width="14%">&nbsp;</td>
+							<td width="12%">${inSumAmount}&nbsp;</td>
+							<td width="12%">${inSumweight}&nbsp;</td>
 						</tr>
 						<tr>
-							<td>出库&nbsp;</td>
-							<td>&nbsp;</td>
-							<td>&nbsp;</td>
-							<td>&nbsp;</td>
-							<td>${outSumAmount}&nbsp;</td>
-							<td>${outSumweight}&nbsp;</td>
+							<td width="14%">出库&nbsp;</td>
+							<td width="14%">&nbsp;</td>
+							<td width="14%">&nbsp;</td>
+							<td width="14%">&nbsp;</td>
+							<td width="12%">${outSumAmount}&nbsp;</td>
+							<td width="12%">${outSumweight}&nbsp;</td>
 						</tr>
 					</table>
-					<br><br>
 					</c:forEach>
+					<br>
+					
+					<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
+						<tr>
+							<td rowspan="2" width="20%">合计</td>
+							<td width="14%">入库&nbsp;</td>
+							<td width="14%">&nbsp;</td>
+							<td width="14%">&nbsp;</td>
+							<td width="14%">&nbsp;</td>
+							<td width="12%">${inAllSumAmount}&nbsp;</td>
+							<td width="12%">${inAllSumweight}&nbsp;</td>
+						</tr>
+						<tr>
+							<td width="14%">出库&nbsp;</td>
+							<td width="14%">&nbsp;</td>
+							<td width="14%">&nbsp;</td>
+							<td width="14%">&nbsp;</td>
+							<td width="12%">${outAllSumAmount}&nbsp;</td>
+							<td width="12%">${outAllSumweight}&nbsp;</td>
+						</tr>
+					</table>
+					
+					<br>
+					<div align="center" id="pager">
+						<input type="button" value="生成报表并打印" class="button" onclick="generalAndPrint();" />
+					</div>
+					<br>
 				</div>
 			</div>
 		</form>
+		<script type="text/javascript">
+			function generalAndPrint() {
+				if('${delegatorId}' == '') {
+					alert('请先选择委托方查询！');
+					return;
+				}
+				window.open('${ctx }/manage/inOutsRecord/list/toPrint?delegatorId=${delegatorId}&beginDate=${beginDate}&endDate=${endDate}');
+			}
+		</script>
 	</body>
 </html>
 
