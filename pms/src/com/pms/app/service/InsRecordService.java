@@ -116,6 +116,11 @@ public class InsRecordService extends BaseService<InsRecord, String> {
 		
 	}
 	
-	
+//	@Transactional
+//	public void transitGoodsSave(InsRecord insRecord, SupervisionCustomer supervisionCustomer) {
+//		//保存入库单及入库单明细，同时修改stock中的存储地点
+//		
+//		
+//	}
 
 }

@@ -3,6 +3,8 @@ package com.pms.app.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -11,6 +13,7 @@ import com.pms.app.dao.PledgeConfigDao;
 import com.pms.app.dao.SupervisionCustomerDao;
 import com.pms.app.dao.SupervisorDao;
 import com.pms.app.dao.WarehouseDao;
+import com.pms.app.entity.Delegator;
 import com.pms.app.entity.PledgeConfig;
 import com.pms.app.entity.SupervisionCustomer;
 import com.pms.app.entity.Supervisor;
@@ -35,6 +38,11 @@ public class SupervisionCustomerService extends BaseService<SupervisionCustomer,
 		List<SupervisionCustomer> supervisionCustomerList = supervisionCustomerDao.findListBySupervisorId(supervisorId);
 		if(supervisionCustomerList.isEmpty()) return null;
 		return supervisionCustomerList.get(0);
+	}
+	
+	public Page<SupervisionCustomer> findByDelegator(Delegator delegator, Pageable page) {
+		Page<SupervisionCustomer> supervisionCustomerPage = supervisionCustomerDao.findPageByDelegator(delegator,page);
+		return supervisionCustomerPage;
 	}
 	
 	@Transactional
