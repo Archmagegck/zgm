@@ -115,7 +115,9 @@
 									<a href="${ctx }/manage/pledgeRecord/${pledgeRecord.id }/detail">查看</a>
 								</td>
 								<td>
-									<a href="${ctx}/images/${pledgeRecord.recordFile}" target=_blank>下载</a>
+									<c:if test="${not empty pledgeRecord.recordFile}">
+										<a href="${ctx}/images/${pledgeRecord.recordFile}" target=_blank>下载</a>
+									</c:if>
 								</td>
 							</tr>
 						</c:forEach>
