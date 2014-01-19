@@ -73,7 +73,7 @@ public class AdminController {
 			if (!supervisorList.isEmpty()) {
 				if (supervisorList.size() == 1) {
 					Supervisor supervisor = supervisorList.get(0);
-					if(supervisor.getIsUsed() == 1) {
+					if(supervisor.getIsUsed() != null && supervisor.getIsUsed() == 1) {
 						session.setAttribute("type", type);
 						session.setAttribute("user", supervisor);
 						session.setAttribute("supervisionCustomer", supervisionCustomerService.findBySupervisorId(supervisor.getId()));

@@ -98,7 +98,7 @@
 									${inventory.supName }&nbsp;
 								</td>
 								<td>
-									${inventory.date }&nbsp;
+									${inventory.dateStr }&nbsp;
 								</td>
 								<td>
 									<a href="${ctx }/supervisor/inventory/${inventory.id }/details">查看</a>

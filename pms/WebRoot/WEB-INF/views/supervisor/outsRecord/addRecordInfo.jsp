@@ -67,17 +67,6 @@
 					</tr>
 					<tr>
 						<td width="30%">
-							提货类型:
-						</td>
-						<td width="70%">
-							<select id="pickType" name="pickType">
-			            		<option value="Part" selected="selected">接触部分质押监管</option>
-			            		<option value="All">接触全部质押监管</option>
-			            	</select>
-						</td>
-					</tr>
-					<tr>
-						<td width="30%">
 							操作监管员员姓名:
 						</td>
 						<td width="70%">

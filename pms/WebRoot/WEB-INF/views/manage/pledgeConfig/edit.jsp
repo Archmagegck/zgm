@@ -124,7 +124,7 @@
 					</tr>
 					<tr>
 						<td width="20%">
-							警戒线上限（%）:
+							警戒线下限（%）:
 						</td>
 						<td width="80%">
 							<input id="minCordon" name="minCordon" value="${pledgeConfig.minCordon }" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>

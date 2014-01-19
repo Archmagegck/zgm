@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
+import org.joda.time.DateTime;
 
 /**
  * 盘存记录
@@ -67,12 +68,16 @@ public class Inventory {
 	@Column(name = "i_invDate")
 	private Date date = new Date();
 	
-	
 	/**
 	 * 盘存明细
 	 */
 	@OneToMany(mappedBy = "inventory")
 	private List<InventoryDetail> inventoryDetails = new ArrayList<InventoryDetail>();
+	
+	public String getDateStr() {
+		return new DateTime(date).toString("yyyy-MM-dd HH:mm:ss");
+	}
+	
 
 	public String getId() {
 		return id;

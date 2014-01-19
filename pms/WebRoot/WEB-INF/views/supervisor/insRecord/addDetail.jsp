@@ -80,7 +80,7 @@
 					</tr>
 					<tr>
 						<td width="30%">
-							标明规格重量（kg）:
+							标明规格重量（kg/件）:
 						</td>
 						<td width="70%">
 							<input id="specWeight" name="specWeight" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
