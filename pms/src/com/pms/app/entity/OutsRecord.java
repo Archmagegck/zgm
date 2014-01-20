@@ -44,6 +44,12 @@ public class OutsRecord {
 	@Column(name = "out_pickNoticeUrl")
 	private String pickNoticeUrl;
 	
+	/**
+	 * 提货通知书编号
+	 */
+	@Column(name = "out_pickNoticeCode")
+	private String pickNoticeCode;
+	
 	
 	/**
 	 * 提货类型
@@ -379,5 +385,15 @@ public class OutsRecord {
 
 	public void setSupervisionCustomer(SupervisionCustomer supervisionCustomer) {
 		this.supervisionCustomer = supervisionCustomer;
+	}
+
+
+	public String getPickNoticeCode() {
+		return pickNoticeCode;
+	}
+
+
+	public void setPickNoticeCode(String pickNoticeCode) {
+		this.pickNoticeCode = pickNoticeCode;
 	}
 }
