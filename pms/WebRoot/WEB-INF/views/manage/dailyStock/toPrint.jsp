@@ -142,7 +142,7 @@ table th {
 				$("#loading").show();
 				$
 						.ajax({
-							url : "${ctx }/manage/dailyStock/list/print?delegatorId=${delegator.id}",
+							url : "${ctx }/manage/dailyStock/list/print?delegatorId=${delegator.id}&supervisionCustomerId=${supervisionCustomerId}",
 							cache : false,
 							error : function() {
 								alert('发送通知失败，请再次点击重新发送!');

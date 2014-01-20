@@ -70,6 +70,20 @@
 								</c:choose>
 							</c:forEach>
 						</select>
+						&nbsp;&nbsp; 监管客户：
+						<select name = "supervisionCustomerId" class="required">
+							<option selected="selected" value="">--请选择--</option>
+							<c:forEach items="${supervisionCustomerList }" var = "supervisionCustomer">
+								<c:choose>
+									<c:when test="${supervisionCustomer.id == supervisionCustomerId }">
+										<option selected="selected" value = "${supervisionCustomer.id }">${supervisionCustomer.name }</option>
+									</c:when>
+									<c:otherwise>
+										<option value = "${supervisionCustomer.id }">${supervisionCustomer.name }</option>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+						</select>
 						&nbsp;&nbsp;&nbsp;
 						<span id="values">
 						起始日期:
@@ -201,7 +215,7 @@
 					alert('请先选择委托方查询！');
 					return;
 				}
-				window.open('${ctx }/manage/inOutsRecord/list/toPrint?delegatorId=${delegatorId}&beginDate=${beginDate}&endDate=${endDate}');
+				window.open('${ctx }/manage/inOutsRecord/list/toPrint?delegatorId=${delegatorId}&supervisionCustomerId=${supervisionCustomerId}&beginDate=${beginDate}&endDate=${endDate}');
 			}
 		</script>
 	</body>

@@ -21,7 +21,7 @@ import com.pms.base.service.BaseService;
 public class StockService extends BaseService<Stock, String> {
 
 	@Autowired private StockDao stockDao;
-	@Autowired private PurityPriceService purityPriceService;
+	@Autowired private Au9995PriceService au9995PriceService;
 
 	@Override
 	protected BaseDao<Stock, String> getEntityDao() {
@@ -55,7 +55,7 @@ public class StockService extends BaseService<Stock, String> {
 	}
 	
 	public List<TotalStock> findTotalList() {
-		Map<String, Double> priceMap = purityPriceService.findPriceMap();
+		double newestValue = au9995PriceService.findNewestPrice();
 		List<TotalStock> totalStocks = new ArrayList<TotalStock>();
 		List<Object[]> objList = stockDao.findTotalList();
 		for(Object[] ob : objList) {
@@ -69,10 +69,7 @@ public class StockService extends BaseService<Stock, String> {
 			totalStock.setStorage(warehouse.getAddress());
 			totalStock.setAmount((Double)ob[4]);
 			totalStock.setSumWeight((Double)ob[5]);
-			double price = 0;
-			if(priceMap.get(pledgePurity.getId()) != null) 
-				price = priceMap.get(pledgePurity.getId());
-			double sumValue = totalStock.getSumWeight().doubleValue() * price;
+			double sumValue = totalStock.getSumWeight().doubleValue() * newestValue;
 			totalStock.setSumValue(sumValue);
 			totalStocks.add(totalStock);
 		}

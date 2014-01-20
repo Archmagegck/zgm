@@ -54,7 +54,7 @@
 							送货人身份证:
 						</td>
 						<td width="70%">
-							<input id="senderIdCard" name="senderIdCard" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
+							<input id="senderIdCard" name="senderIdCard" class="{required:true,isIdCardNo:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
 						</td>
 					</tr>
 					<tr>

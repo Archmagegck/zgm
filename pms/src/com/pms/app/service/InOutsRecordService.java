@@ -48,12 +48,11 @@ public class InOutsRecordService {
 	@Autowired OutsRecordDetailDao outsRecordDetailDao;
 	@Autowired SupervisionCustomerDao supervisionCustomerDao;
 
-	public Map<SupervisionCustomer, List<InOutsRecord>> queryByDelegatorAndDateBetween(String delegatorId, Date beginDate, Date endDate) {
+	public Map<SupervisionCustomer, List<InOutsRecord>> queryByDelegatorAndDateBetween(String delegatorId, String supervisionCustomerId, Date beginDate, Date endDate) {
 		Map<SupervisionCustomer, List<InOutsRecord>> inoutsRecordMap = new HashMap<SupervisionCustomer, List<InOutsRecord>>();
-		List<SupervisionCustomer> supervisionCustomerList = supervisionCustomerDao.findListByDelegatorId(delegatorId);
-		for (SupervisionCustomer supervisionCustomer : supervisionCustomerList) {
+		if(StringUtils.hasText(supervisionCustomerId)) {
+			SupervisionCustomer supervisionCustomer = supervisionCustomerDao.findOne(supervisionCustomerId);
 			List<InOutsRecord> inOutsRecordList = new ArrayList<InOutsRecord>();
-			String supervisionCustomerId = supervisionCustomer.getId();
 			List<InsRecordDetail> insRecordDetails = insRecordDetailDao.findAll(getInsSpec(supervisionCustomerId, beginDate, endDate));
 			for (InsRecordDetail insRecordDetail : insRecordDetails) {
 				inOutsRecordList.add(new InOutsRecord(insRecordDetail));
@@ -65,6 +64,23 @@ public class InOutsRecordService {
 			Collections.sort(inOutsRecordList);
 			if(!inOutsRecordList.isEmpty())
 				inoutsRecordMap.put(supervisionCustomer, inOutsRecordList);
+		} else {
+			List<SupervisionCustomer> supervisionCustomerList = supervisionCustomerDao.findListByDelegatorId(delegatorId);
+			for (SupervisionCustomer supervisionCustomer : supervisionCustomerList) {
+				List<InOutsRecord> inOutsRecordList = new ArrayList<InOutsRecord>();
+				String scId = supervisionCustomer.getId();
+				List<InsRecordDetail> insRecordDetails = insRecordDetailDao.findAll(getInsSpec(scId, beginDate, endDate));
+				for (InsRecordDetail insRecordDetail : insRecordDetails) {
+					inOutsRecordList.add(new InOutsRecord(insRecordDetail));
+				}
+				List<OutsRecordDetail> outsRecordDetails = outsRecordDetailDao.findAll(getOutsSpec(scId, beginDate, endDate));
+				for (OutsRecordDetail outsRecordDetail : outsRecordDetails) {
+					inOutsRecordList.add(new InOutsRecord(outsRecordDetail));
+				}
+				Collections.sort(inOutsRecordList);
+				if(!inOutsRecordList.isEmpty())
+					inoutsRecordMap.put(supervisionCustomer, inOutsRecordList);
+			}
 		}
 		return inoutsRecordMap;
 	}
@@ -128,8 +144,8 @@ public class InOutsRecordService {
 		return specificationIns;
 	}
 
-	public File generalRecordFile(Delegator delegator, Date beginDate, Date endDate)  throws Exception {
-		Map<SupervisionCustomer, List<InOutsRecord>> map = this.queryByDelegatorAndDateBetween(delegator.getId(), beginDate, endDate);
+	public File generalRecordFile(Delegator delegator,  String supervisionCustomerId, Date beginDate, Date endDate)  throws Exception {
+		Map<SupervisionCustomer, List<InOutsRecord>> map = this.queryByDelegatorAndDateBetween(delegator.getId(), supervisionCustomerId, beginDate, endDate);
 		Workbook wb = new HSSFWorkbook();
 		Sheet s = wb.createSheet("出入库明细报表");
 		String[] title = { "日期", "操作类型", "款式大类", "标明成色", "标明重量规格", "数量", "总重" };

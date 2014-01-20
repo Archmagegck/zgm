@@ -19,6 +19,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.pms.app.dao.StockDao;
 import com.pms.app.dao.SupervisionCustomerDao;
@@ -32,20 +33,28 @@ public class DailyStockService {
 	@Autowired SupervisionCustomerDao supervisionCustomerDao;
 	@Autowired StockDao stockDao;
 
-	public Map<SupervisionCustomer, List<Stock>>  queryByDelegatorAndDate(String delegatorId) {
+	public Map<SupervisionCustomer, List<Stock>>  queryByDelegatorAndDate(String delegatorId, String supervisionCustomerId) {
 		Map<SupervisionCustomer, List<Stock>> stockMap = new HashMap<SupervisionCustomer, List<Stock>>();
-		List<SupervisionCustomer> supervisionCustomerList = supervisionCustomerDao.findListByDelegatorId(delegatorId);
-		for (SupervisionCustomer supervisionCustomer : supervisionCustomerList) {
+		if(StringUtils.hasText(supervisionCustomerId)) {
+			SupervisionCustomer supervisionCustomer = supervisionCustomerDao.findOne(supervisionCustomerId);
 			String warehouseId = supervisionCustomer.getWarehouse().getId();
 			List<Stock> stockList = stockDao.findByWarehouseId(warehouseId);
 			if(!stockList.isEmpty())
 				stockMap.put(supervisionCustomer, stockList);
+		} else {
+			List<SupervisionCustomer> supervisionCustomerList = supervisionCustomerDao.findListByDelegatorId(delegatorId);
+			for (SupervisionCustomer supervisionCustomer : supervisionCustomerList) {
+				String warehouseId = supervisionCustomer.getWarehouse().getId();
+				List<Stock> stockList = stockDao.findByWarehouseId(warehouseId);
+				if(!stockList.isEmpty())
+					stockMap.put(supervisionCustomer, stockList);
+			}
 		}
 		return stockMap;
 	}
 
-	public File generalRecordFile(Delegator delegator) throws Exception {
-		Map<SupervisionCustomer, List<Stock>> map = queryByDelegatorAndDate(delegator.getId());
+	public File generalRecordFile(Delegator delegator, String supervisionCustomerId) throws Exception {
+		Map<SupervisionCustomer, List<Stock>> map = queryByDelegatorAndDate(delegator.getId(), supervisionCustomerId);
 		Workbook wb = new HSSFWorkbook();
 		Sheet s = wb.createSheet("库存表");
 		String[] title = { "款式大类", "标明成色", "标明规格重量", "存储地点", "数量", "总重" };
