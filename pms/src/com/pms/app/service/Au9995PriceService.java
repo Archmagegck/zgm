@@ -35,5 +35,14 @@ public class Au9995PriceService extends BaseService<Au9995Price, String> {
 		else
 			return au9995PriceDao.findByDate(pageable, date);
 	}
+	
+	public double findNewestPrice() {
+		double newestValue = 0;
+		List<Au9995Price> list = au9995PriceDao.findNewestList();
+		if(!list.isEmpty()) {
+			newestValue = list.get(0).getPrice();
+		}
+		return newestValue;
+	}
 
 }

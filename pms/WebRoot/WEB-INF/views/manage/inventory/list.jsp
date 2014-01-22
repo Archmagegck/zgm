@@ -128,7 +128,8 @@
 								</td>
 								<td>${inventoryDetail.dateStr}&nbsp;</td>
 								<td>
-									<a href="${ctx}/manage/inventory/${inventoryDetail.id}/audit">通过</a>
+									<c:if test="${inventoryDetail.auditState == 'Pass'}">已通过</c:if>
+									<c:if test="${inventoryDetail.auditState == 'Wait'}"><a href="${ctx}/manage/inventory/${inventoryDetail.id}/audit">通过</a></c:if>
 								</td>
 							</tr>
 						</c:forEach>

@@ -24,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.pms.app.entity.PledgeRecord;
 import com.pms.app.entity.Stock;
+import com.pms.app.entity.SupervisionCustomer;
 import com.pms.app.entity.Warehouse;
 import com.pms.app.service.PledgeRecordService;
 import com.pms.app.service.StockService;
@@ -68,10 +69,10 @@ public class PledgeRecordController {
 	@RequestMapping(value = "save")
 	public String save(HttpSession session, RedirectAttributes ra){
 		try {
-			String supervisionCustomerCode = (String)session.getAttribute("supervisionCustomerCode");
+			SupervisionCustomer supervisionCustomer = (SupervisionCustomer)session.getAttribute("supervisionCustomer");
 			Warehouse warehouse = (Warehouse)session.getAttribute("warehouse");
 			List<Stock> stocks = stockService.findByWarehouseId(warehouse.getId());
-			pledgeRecordService.save(supervisionCustomerCode, warehouse, stocks);
+			pledgeRecordService.save(supervisionCustomer, warehouse, stocks);
 		} catch (Exception e) {
 			logger.error("保存失败", e);
 			ra.addFlashAttribute("messageErr", "保存失败！");

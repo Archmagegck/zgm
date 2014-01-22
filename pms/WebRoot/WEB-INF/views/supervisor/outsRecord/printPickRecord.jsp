@@ -33,7 +33,7 @@
 			<h3>（监管人签发）</h3>
 			</div>
 			<div style="line-height:200%" align="right">编号：
-			<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>
+			<u>&nbsp;&nbsp;&nbsp;&nbsp;${outsRecord.pickNoticeCode }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			</div>
 			<div style="line-height:200%;font-family:宋体;font-size:14px">

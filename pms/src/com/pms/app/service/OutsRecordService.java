@@ -68,8 +68,8 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 		for (OutStock outStock : outStocks) {
 			Double outAmount = outStock.getOutAmount();
 			if(outAmount == null) continue;
-			sumWeight += outAmount;
 			Stock stock = stockMap.get(outStock.getStockId());
+			sumWeight += new BigDecimal(stock.getSpecWeight() * outAmount).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
 			double remainAmount = stock.getAmount() - outAmount;
 			if(remainAmount == 0) 
 				delStocks.add(stock);
@@ -90,7 +90,7 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 			outsRecordDetail.setSpecWeight(stock.getSpecWeight());
 			outsRecordDetail.setStyle(stock.getStyle());
 			outsRecordDetail.setSumWeight(new BigDecimal(outsRecordDetail.getSpecWeight() * outsRecordDetail.getAmount()).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
-			outsRecordDetail.setRemainWeight(remainAmount);
+			outsRecordDetail.setRemainWeight(new BigDecimal(stock.getSpecWeight() * remainAmount).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 			saveOutsRecordDetails.add(outsRecordDetail);
 		}
 		outsRecord.setSumWeight(sumWeight);

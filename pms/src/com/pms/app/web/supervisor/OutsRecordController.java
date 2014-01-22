@@ -35,6 +35,7 @@ import com.pms.app.service.OutsRecordService;
 import com.pms.app.service.PledgeRecordService;
 import com.pms.app.service.StockService;
 import com.pms.app.util.CodeUtils;
+import com.pms.app.util.IdWorker;
 import com.pms.app.util.UploadUtils;
 import com.pms.app.web.supervisor.form.StockForm;
 import com.pms.base.service.ServiceException;
@@ -127,8 +128,9 @@ public class OutsRecordController {
 		try {
 			String supCode = supervisionCustomer.getCode();
 			outsRecord.setCode(CodeUtils.getOutsRecordCode(supCode));
+			outsRecord.setPickNoticeCode(String.valueOf(new IdWorker(3, 2, 1).getId()));
 			String idCardFile = UploadUtils.uploadFile(request, 2, supCode, outsRecord.getCode());
-			outsRecord.setPickerIdCardPic(idCardFile);			
+			outsRecord.setPickerIdCardPic(idCardFile);
 			int hasPickFile = (tempImg == null) ? 0 : 1;
 			if(hasPickFile == 1) {
 				String pickNoticeUrl = UploadUtils.uploadPickFile(request, tempImg, outsRecord.getCode(), supCode);

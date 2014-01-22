@@ -46,35 +46,38 @@ public class InOutsRecordController {
 	}  
 	
 	@RequestMapping(value = { "/list", "" })
-	public String list(Model model, String delegatorId, Date beginDate, Date endDate) {
+	public String list(Model model, String delegatorId, String supervisionCustomerId, Date beginDate, Date endDate) {
 		model.addAttribute("beginDate", new DateTime(beginDate).toString("yyyy-MM-dd"));
 		model.addAttribute("endDate", new DateTime(endDate).toString("yyyy-MM-dd"));
 		model.addAttribute("delegatorList", delegatorService.findAll());
+		model.addAttribute("supervisionCustomerList", supervisionCustomerService.findAll());
+		model.addAttribute("supervisionCustomerId", supervisionCustomerId);
 //		model.addAttribute("delegator", delegatorService.findById(delegatorId));
 		model.addAttribute("delegatorId", delegatorId);
-		model.addAttribute("inoutsMap", inOutsRecordService.queryByDelegatorAndDateBetween(delegatorId, beginDate, endDate));
+		model.addAttribute("inoutsMap", inOutsRecordService.queryByDelegatorAndDateBetween(delegatorId, supervisionCustomerId, beginDate, endDate));
 		return "manage/inOutsRecord/list";
 	}
 	
 	
 	@RequestMapping(value = "/list/toPrint")
-	public String toPrint(Model model, String delegatorId, Date beginDate, Date endDate) {
+	public String toPrint(Model model, String delegatorId, String supervisionCustomerId, Date beginDate, Date endDate) {
 		model.addAttribute("delegator", delegatorService.findById(delegatorId));
 		model.addAttribute("beginDate", new DateTime(beginDate).toString("yyyy-MM-dd"));
 		model.addAttribute("endDate", new DateTime(endDate).toString("yyyy-MM-dd"));
 		model.addAttribute("date", new DateTime().toString("yyyy-MM-dd"));
-		model.addAttribute("inoutsMap", inOutsRecordService.queryByDelegatorAndDateBetween(delegatorId, beginDate, endDate));
+		model.addAttribute("supervisionCustomerId", supervisionCustomerId);
+		model.addAttribute("inoutsMap", inOutsRecordService.queryByDelegatorAndDateBetween(delegatorId, supervisionCustomerId, beginDate, endDate));
 		return "manage/inOutsRecord/toPrint";
 	}
 	
 	
 	@RequestMapping(value = "/list/print")
 	@ResponseBody
-	public String print(Model model, String delegatorId, Date beginDate, Date endDate) {
+	public String print(Model model, String delegatorId, String supervisionCustomerId, Date beginDate, Date endDate) {
 		try {
 			Delegator delegator = delegatorService.findById(delegatorId);
 					
-			File file = inOutsRecordService.generalRecordFile(delegator, beginDate, endDate);
+			File file = inOutsRecordService.generalRecordFile(delegator, supervisionCustomerId, beginDate, endDate);
 			
 			MimeMessage msg = javaMailSender.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(msg, true);

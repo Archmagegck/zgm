@@ -149,8 +149,6 @@ public class InventoryDetail {
 	public int getEqual() {
 		if(realAmount.doubleValue() != amount.doubleValue()) {
 			equation = 0;
-		} else if (realWeight.doubleValue() != sumWeight.doubleValue()) {
-			equation = 0;
 		} else if (!realPledgePurity.equals(pledgePurity.getName())) {
 			equation = 0;
 		}

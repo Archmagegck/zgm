@@ -179,7 +179,7 @@ table th {
 			function printSend() {
 				$("#loading").show();
 				$.ajax({
-							url : "${ctx }/manage/inOutsRecord/list/print?delegatorId=${delegator.id}&beginDate=${beginDate}&endDate=${endDate}",
+							url : "${ctx }/manage/inOutsRecord/list/print?delegatorId=${delegator.id}&supervisionCustomerId=${supervisionCustomerId}&beginDate=${beginDate}&endDate=${endDate}",
 							cache : false,
 							error : function() {
 								alert('发送通知失败，请再次点击重新发送!');

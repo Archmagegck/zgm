@@ -38,11 +38,28 @@ public class OutsRecord {
 	@Column(name = "out_id")
 	private String id;
 	
+	
 	/**
 	 * 提货通知书
 	 */
 	@Column(name = "out_pickNoticeUrl")
 	private String pickNoticeUrl;
+	
+	
+	/**
+	 * 提货通知书编号
+	 */
+	@Column(name = "out_pickNoticeCode")
+	private String pickNoticeCode;
+	
+	
+	/**
+	 * 通知状态<br>
+	 * 0:通知<br>
+	 * 1:不通知
+	 */
+	@Column(name = "out_notice")
+	private int notice = 0;
 	
 	
 	/**
@@ -379,5 +396,25 @@ public class OutsRecord {
 
 	public void setSupervisionCustomer(SupervisionCustomer supervisionCustomer) {
 		this.supervisionCustomer = supervisionCustomer;
+	}
+
+
+	public String getPickNoticeCode() {
+		return pickNoticeCode;
+	}
+
+
+	public void setPickNoticeCode(String pickNoticeCode) {
+		this.pickNoticeCode = pickNoticeCode;
+	}
+
+
+	public int getNotice() {
+		return notice;
+	}
+
+
+	public void setNotice(int notice) {
+		this.notice = notice;
 	}
 }

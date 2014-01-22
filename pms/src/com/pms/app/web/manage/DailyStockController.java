@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.pms.app.entity.Delegator;
 import com.pms.app.service.DailyStockService;
 import com.pms.app.service.DelegatorService;
+import com.pms.app.service.SupervisionCustomerService;
 
 @Controller
 @RequestMapping(value = "/manage/dailyStock")
@@ -32,6 +33,7 @@ public class DailyStockController {
 	
 	@Autowired DelegatorService delegatorService;
 	@Autowired DailyStockService dailyStockService;
+	@Autowired SupervisionCustomerService supervisionCustomerService;
 	@Autowired JavaMailSender javaMailSender;
 	
 	private Logger logger = LoggerFactory.getLogger(DailyStockController.class);
@@ -44,30 +46,33 @@ public class DailyStockController {
 	}  
 	
 	@RequestMapping(value = { "/list", "" })
-	public String list(Model model, String delegatorId) {
+	public String list(Model model, String delegatorId, String supervisionCustomerId) {
 		model.addAttribute("date", new DateTime().toString("yyyy-MM-dd"));
 		model.addAttribute("delegatorList", delegatorService.findAll());
 		model.addAttribute("delegatorId", delegatorId);
-		model.addAttribute("stockMap", dailyStockService.queryByDelegatorAndDate(delegatorId));
+		model.addAttribute("supervisionCustomerList", supervisionCustomerService.findAll());
+		model.addAttribute("supervisionCustomerId", supervisionCustomerId);
+		model.addAttribute("stockMap", dailyStockService.queryByDelegatorAndDate(delegatorId, supervisionCustomerId));
 		return "manage/dailyStock/list";
 	}
 	
 	@RequestMapping(value = "/list/toPrint")
-	public String toPrint(Model model, String delegatorId) {
+	public String toPrint(Model model, String delegatorId, String supervisionCustomerId) {
 		model.addAttribute("delegator", delegatorService.findById(delegatorId));
 		model.addAttribute("date", new DateTime().toString("yyyy-MM-dd"));
-		model.addAttribute("stockMap", dailyStockService.queryByDelegatorAndDate(delegatorId));
+		model.addAttribute("supervisionCustomerId", supervisionCustomerId);
+		model.addAttribute("stockMap", dailyStockService.queryByDelegatorAndDate(delegatorId, supervisionCustomerId));
 		return "manage/dailyStock/toPrint";
 	}
 	
 	
 	@RequestMapping(value = "/list/print")
 	@ResponseBody
-	public String print(Model model, String delegatorId) {
+	public String print(Model model, String delegatorId, String supervisionCustomerId) {
 		try {
 			Delegator delegator = delegatorService.findById(delegatorId);
 					
-			File file = dailyStockService.generalRecordFile(delegator);
+			File file = dailyStockService.generalRecordFile(delegator, supervisionCustomerId);
 			
 			MimeMessage msg = javaMailSender.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(msg, true);
