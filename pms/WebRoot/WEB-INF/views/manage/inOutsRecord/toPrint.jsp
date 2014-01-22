@@ -111,9 +111,9 @@ table th {
 						<c:set var="inSumweight"
 							value="${inSumweight + inOutsRecord.sumWeight}"></c:set>
 						<c:set var="inAllSumAmount"
-							value="${inAllSumAmount + inSumAmount}"></c:set>
+							value="${inAllSumAmount + inOutsRecord.amount}"></c:set>
 						<c:set var="inAllSumweight"
-							value="${inAllSumweight + inSumweight}"></c:set>
+							value="${inAllSumweight + inOutsRecord.sumWeight}"></c:set>
 					</c:if>
 					<c:if test="${inOutsRecord.method eq '出库'}">
 						<c:set var="outSumAmount"
@@ -121,9 +121,9 @@ table th {
 						<c:set var="outSumweight"
 							value="${outSumweight + inOutsRecord.sumWeight}"></c:set>
 						<c:set var="outAllSumAmount"
-							value="${outAllSumAmount + outSumAmount}"></c:set>
+							value="${outAllSumAmount + inOutsRecord.amount}"></c:set>
 						<c:set var="outAllSumweight"
-							value="${outAllSumweight + outSumweight}"></c:set>
+							value="${outAllSumweight + inOutsRecord.sumWeight}"></c:set>
 					</c:if>
 				</c:forEach>
 				<tr>

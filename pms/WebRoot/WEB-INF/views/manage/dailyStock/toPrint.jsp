@@ -103,8 +103,8 @@ table th {
 					</tr>
 					<c:set var="sumAmount" value="${sumAmount + stock.amount}"></c:set>
 					<c:set var="sumWeight" value="${sumWeight + stock.sumWeight}"></c:set>
-					<c:set var="allSumAmount" value="${allSumAmount + sumAmount}"></c:set>
-					<c:set var="allSumWeight" value="${allSumWeight + sumWeight}"></c:set>
+					<c:set var="allSumAmount" value="${allSumAmount + stock.amount}"></c:set>
+					<c:set var="allSumWeight" value="${allSumWeight + stock.sumWeight}"></c:set>
 				</c:forEach>
 				<tr>
 					<td>合计</td>
