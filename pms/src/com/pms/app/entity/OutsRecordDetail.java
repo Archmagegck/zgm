@@ -119,6 +119,19 @@ public class OutsRecordDetail {
 	 */
 	@Column(name = "outd_date")
 	private Date date = new Date();
+	
+	
+	public String getKey() {
+		StringBuffer sb = new StringBuffer("{");
+		sb.append("\"warehouse\":\"").append(outsRecord.getWarehouse().getId()).append("\",");
+		sb.append("\"style\":\"").append(style.getId()).append("\",");
+		sb.append("\"pledgePurity\":\"").append(pledgePurity.getId()).append("\",");
+		sb.append("\"specWeight\":\"").append(specWeight).append("\",");
+		sb.append("\"company\":\"").append(company).append("\",");
+		sb.append("\"desc\":\"").append(desc).append("\"");
+		sb.append("}");
+		return sb.toString();
+	}
 
 	public String getDateStr() {
 		return new DateTime(date).toString("yyyy-MM-dd");

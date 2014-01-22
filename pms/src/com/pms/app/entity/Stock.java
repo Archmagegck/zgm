@@ -112,7 +112,6 @@ public class Stock {
 		this.sumWeight += insRecordDetail.getSumWeight();
 	}
 	
-	
 	public String getKey() {
 		StringBuffer sb = new StringBuffer("{");
 		sb.append("\"warehouse\":\"").append(warehouse.getId()).append("\",");
@@ -121,6 +120,18 @@ public class Stock {
 		sb.append("\"specWeight\":\"").append(specWeight).append("\",");
 		sb.append("\"company\":\"").append(company).append("\",");
 		sb.append("\"closedTran\":\"").append(closedTran).append("\",");
+		sb.append("\"desc\":\"").append(desc).append("\"");
+		sb.append("}");
+		return sb.toString();
+	}
+	
+	public String getOutKey() {
+		StringBuffer sb = new StringBuffer("{");
+		sb.append("\"warehouse\":\"").append(warehouse.getId()).append("\",");
+		sb.append("\"style\":\"").append(style.getId()).append("\",");
+		sb.append("\"pledgePurity\":\"").append(pledgePurity.getId()).append("\",");
+		sb.append("\"specWeight\":\"").append(specWeight).append("\",");
+		sb.append("\"company\":\"").append(company).append("\",");
 		sb.append("\"desc\":\"").append(desc).append("\"");
 		sb.append("}");
 		return sb.toString();
