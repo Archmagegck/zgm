@@ -89,6 +89,12 @@ public class Stock {
 	@Column(name = "s_desc")
 	private String desc = "";
 	
+	/**
+	 * 是否在库,0:不在，1：在
+	 */
+	@Column(name = "s_inStock")
+	private Integer inStock = 1;
+	
 	public Stock() {}
 	
 	public Stock(Warehouse warehouse, Integer closedTran, InsRecordDetail insRecordDetail) {
@@ -206,4 +212,12 @@ public class Stock {
 		this.closedTran = closedTran;
 	}
 
+	public Integer getInStock() {
+		return inStock;
+	}
+
+	public void setInStock(Integer inStock) {
+		this.inStock = inStock;
+	}
+	
 }	
