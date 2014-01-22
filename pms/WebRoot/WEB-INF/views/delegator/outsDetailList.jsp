@@ -6,7 +6,7 @@
 <html>
 	<head>
 
-		<title>入库单信息</title>
+		<title>出库单信息</title>
 
 		<meta http-equiv="pragma" content="no-cache">
 		<meta http-equiv="cache-control" content="no-cache">
@@ -38,7 +38,7 @@
 			<div align="center" id="content"">
 				<div id="box">
 					<h3 align="center">
-						入库单信息
+						出库单信息
 					</h3>
 					<div>
 						&nbsp;
@@ -57,16 +57,16 @@
 							</tr>
 						</thead>
 						<tbody>
-						<c:forEach items="${detailList}" var="insRecordDetail" varStatus="status">
+						<c:forEach items="${detailList}" var="outssRecordDetail" varStatus="status">
 							<tr>
 								<td>${status.count}&nbsp;</td>
-								<td>${insRecordDetail.style.name}&nbsp;</td>
-								<td>${insRecordDetail.pledgePurity.name}&nbsp;</td>
-								<td>${insRecordDetail.specWeight}&nbsp;</td>
-								<td>${insRecordDetail.amount}&nbsp;</td>
-								<td>${insRecordDetail.sumWeight}&nbsp;</td>
-								<td>${insRecordDetail.company}&nbsp;</td>
-								<td>${insRecordDetail.desc}&nbsp;</td>
+								<td>${outssRecordDetail.style.name}&nbsp;</td>
+								<td>${outssRecordDetail.pledgePurity.name}&nbsp;</td>
+								<td>${outssRecordDetail.specWeight}&nbsp;</td>
+								<td>${outssRecordDetail.amount}&nbsp;</td>
+								<td>${outssRecordDetail.sumWeight}&nbsp;</td>
+								<td>${outssRecordDetail.company}&nbsp;</td>
+								<td>${outssRecordDetail.desc}&nbsp;</td>
 							</tr>
 						</c:forEach>
 						</tbody>

@@ -89,6 +89,12 @@ public class Stock {
 	@Column(name = "s_desc")
 	private String desc = "";
 	
+	/**
+	 * 是否在库,0:不在，1：在
+	 */
+	@Column(name = "s_inStock")
+	private Integer inStock = 1;
+	
 	public Stock() {}
 	
 	public Stock(Warehouse warehouse, Integer closedTran, InsRecordDetail insRecordDetail) {
@@ -120,6 +126,18 @@ public class Stock {
 		sb.append("\"specWeight\":\"").append(specWeight).append("\",");
 		sb.append("\"company\":\"").append(company).append("\",");
 		sb.append("\"closedTran\":\"").append(closedTran).append("\",");
+		sb.append("\"desc\":\"").append(desc).append("\"");
+		sb.append("}");
+		return sb.toString();
+	}
+	
+	public String getOutKey() {
+		StringBuffer sb = new StringBuffer("{");
+		sb.append("\"warehouse\":\"").append(warehouse.getId()).append("\",");
+		sb.append("\"style\":\"").append(style.getId()).append("\",");
+		sb.append("\"pledgePurity\":\"").append(pledgePurity.getId()).append("\",");
+		sb.append("\"specWeight\":\"").append(specWeight).append("\",");
+		sb.append("\"company\":\"").append(company).append("\",");
 		sb.append("\"desc\":\"").append(desc).append("\"");
 		sb.append("}");
 		return sb.toString();
@@ -217,4 +235,12 @@ public class Stock {
 		this.closedTran = closedTran;
 	}
 
+	public Integer getInStock() {
+		return inStock;
+	}
+
+	public void setInStock(Integer inStock) {
+		this.inStock = inStock;
+	}
+	
 }	

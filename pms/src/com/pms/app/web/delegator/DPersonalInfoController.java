@@ -20,7 +20,7 @@ public class DPersonalInfoController {
 	
 	private Logger logger = LoggerFactory.getLogger(DPersonalInfoController.class);
 	
-	@Autowired DelegatorService delegatorService = new DelegatorService();
+	@Autowired DelegatorService delegatorService;
 	
 	@RequestMapping(value = { "/list", "" })
 	public String list(Model model, Pageable pageable, HttpSession session ) {
@@ -47,6 +47,8 @@ public class DPersonalInfoController {
 	
 	@RequestMapping(value = "/edit")
 	public String edit(Model model, HttpSession session){
+		Delegator delegator = (Delegator)session.getAttribute("user");
+		model.addAttribute("delegator", delegator);
 		return "delegator/personalInfo/edit";
 	}
 

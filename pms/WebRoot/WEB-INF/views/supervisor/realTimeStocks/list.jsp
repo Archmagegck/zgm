@@ -79,7 +79,12 @@
 									<c:if test="${realTimeStocks.closedTran == 1}">是</c:if>
 								</td>
 								<td>
-									${sessionScope.warehouse.address}&nbsp;
+									<c:if test="${realTimeStocks.inStock == 1}">
+										${sessionScope.warehouse.address}&nbsp;
+									</c:if>
+									<c:if test="${realTimeStocks.inStock == 0}">
+										在途
+									</c:if>
 								</td>
 								<td>
 									${realTimeStocks.desc}&nbsp;
