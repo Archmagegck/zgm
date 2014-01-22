@@ -55,11 +55,11 @@ public class OutsRecord {
 	
 	/**
 	 * 通知状态<br>
-	 * 0:通知<br>
-	 * 1:不通知
+	 * 1:通知<br>
+	 * 0:不通知
 	 */
 	@Column(name = "out_notice")
-	private int notice = 0;
+	private Integer notice = 0;
 	
 	
 	/**
@@ -409,12 +409,12 @@ public class OutsRecord {
 	}
 
 
-	public int getNotice() {
+	public Integer getNotice() {
 		return notice;
 	}
 
 
-	public void setNotice(int notice) {
+	public void setNotice(Integer notice) {
 		this.notice = notice;
 	}
 }
