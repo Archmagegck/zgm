@@ -92,11 +92,7 @@
 					<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
 						<thead>
 							<tr>
-								<th width="15%">
-									全选
-									<input name="selAll" id="all" type="checkbox" onClick="selectAll(this)" />
-								</th>
-								<th width="20%">
+								<th>
 									序号
 								</th>
 								<th>
@@ -154,9 +150,6 @@
 						</thead>
 						<c:forEach items="${page.content}" var="checkDeny" varStatus="status">
 							<tr>
-								<td>
-									<input type="checkbox" name="idGroup" value="${pledgePurity.id }" />
-								</td>
 								<td>
 									${status.count}&nbsp;
 								</td>
