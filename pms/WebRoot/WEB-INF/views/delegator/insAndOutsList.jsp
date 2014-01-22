@@ -203,8 +203,8 @@
 									</td>
 									<td>								
 										<c:choose>	
-											<c:when test="${not empty ins.pledgeRecord。recordFile}">
-												<a href="${ctx}/images/${ins.pledgeRecord。recordFile }" target=_blank>${ins.pledgeRecord.code}</a>
+											<c:when test="${not empty ins.pledgeRecord.recordFile}">
+												<a href="${ctx}/images/${ins.pledgeRecord.recordFile }" target=_blank>${ins.pledgeRecord.code}</a>
 											</c:when>
 											<c:otherwise>
 												未上传
