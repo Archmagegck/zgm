@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>   
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -200,8 +201,15 @@
 									<td>
 										${ins.date}
 									</td>
-									<td>
-										<a href="">${ins.pledgeRecord.code}</a>
+									<td>								
+										<c:choose>	
+											<c:when test="${not empty ins.inRecordUrl}">
+												<a href="${ctx}/images/${ins.inRecordUrl}" target=_blank>${ins.pledgeRecord.code}</a>
+											</c:when>
+											<c:otherwise>
+												未上传
+											</c:otherwise>
+										</c:choose>									 
 									</td>
 									<td>
 										<a href="${ctx }/delegator/ins/${supervisionCustomer.id}/${ins.id}">查看</a>&nbsp;
@@ -244,11 +252,25 @@
 									<td>
 										${outs.date}
 									</td>
-									<td>
-										<a href="">${outs.pledgeRecord.code}</a>
+									<td> 									
+										<c:choose>	
+											<c:when test="${not empty outs.outRecordUrl}">
+											<a href="${ctx}/images/${outs.outRecordUrl}" target=_blank>${outs.pledgeRecord.code}</a>
+										</c:when>
+											<c:otherwise>
+												未上传
+											</c:otherwise>
+										</c:choose>
 									</td>
 									<td>
-										<a href="">${outs.pledgeRecord.code}</a>
+										<c:choose>	 									
+											<c:when test="${not empty outs.pickFeedbackUrl}">
+												<a href="${ctx}/images/${outs.pickFeedbackUrl} target=_blank">回执的编号在哪儿？</a>
+											</c:when>
+											<c:otherwise>
+												未上传
+											</c:otherwise>
+										</c:choose>
 									</td>
 									<td>
 										<a href="${ctx }/delegator/outs/${supervisionCustomer.id}/${outs.id}">查看</a>&nbsp;

@@ -69,7 +69,7 @@ public class InsAndOutsController {
 			}
 			model.addAttribute("page", outsRecordService.findPageByQuery(pageable,  ((Warehouse)supervisionCustomer.getWarehouse()).getId(), beginDate, endDate));
 		}
-		
+
 		model.addAttribute("state",state);
 		return "delegator/insAndOutsList";
 	}

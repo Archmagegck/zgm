@@ -53,7 +53,7 @@ private Logger logger = LoggerFactory.getLogger(TransitGoodsController.class);
 	
 	
 	@RequestMapping(value = "/save")
-	public String save(TransitGoods transitGoods, RedirectAttributes ra){
+	public String save(TransitGoods transitGoods, RedirectAttributes ra, HttpSession session){
 		try {
 			Stock stock = new Stock();
 			stock.setStyle(transitGoods.getStyle());
@@ -64,6 +64,8 @@ private Logger logger = LoggerFactory.getLogger(TransitGoodsController.class);
 			stock.setCompany(transitGoods.getCompany());
 			stock.setClosedTran(transitGoods.getClosedTran());
 			stock.setDesc(transitGoods.getDesc());
+			stock.setWarehouse((Warehouse)session.getAttribute("warehouse"));
+			stock.setInStock(0);
 			stockService.save(stock);
 			
 			transitGoods.setStock(stock);
