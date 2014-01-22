@@ -97,6 +97,7 @@ public class Stock {
 	
 	public Stock() {}
 	
+	//直接入库的构造方法
 	public Stock(Warehouse warehouse, Integer closedTran, InsRecordDetail insRecordDetail) {
 		this.warehouse = warehouse;
 		this.style = insRecordDetail.getStyle();
@@ -110,12 +111,21 @@ public class Stock {
 	}
 	
 	/**
-	 * 入库
+	 * 直接入库
 	 * @param insRecordDetail 入库明细
 	 */
 	public void add(InsRecordDetail insRecordDetail) {
 		this.amount += insRecordDetail.getAmount();
 		this.sumWeight += insRecordDetail.getSumWeight();
+	}
+	
+	/**
+	 * 在途入库
+	 * @return 
+	 */
+	public void add(Stock stock){
+		this.amount += stock.getAmount();
+		this.sumWeight += stock.getSumWeight();
 	}
 	
 	public String getKey() {
@@ -143,18 +153,6 @@ public class Stock {
 		return sb.toString();
 	}
 	
-	public String getOutKey() {
-		StringBuffer sb = new StringBuffer("{");
-		sb.append("\"warehouse\":\"").append(warehouse.getId()).append("\",");
-		sb.append("\"style\":\"").append(style.getId()).append("\",");
-		sb.append("\"pledgePurity\":\"").append(pledgePurity.getId()).append("\",");
-		sb.append("\"specWeight\":\"").append(specWeight).append("\",");
-		sb.append("\"company\":\"").append(company).append("\",");
-		sb.append("\"desc\":\"").append(desc).append("\"");
-		sb.append("}");
-		return sb.toString();
-	}
-
 	public String getId() {
 		return id;
 	}

@@ -100,6 +100,9 @@
 									生产厂家
 								</th>
 								<th>
+									是否封闭运输
+								</th>
+								<th>
 									备注
 								</th>
 								<th>
@@ -129,6 +132,14 @@
 								</td>
 								<td>
 									${transitGoods.company }&nbsp;
+								</td>
+								<td>
+									<c:if test="${transitGoods.closedTran == 0}">
+										否
+									</c:if>
+									<c:if test="${transitGoods.closedTran == 1}">
+										是
+									</c:if>
 								</td>
 								<td>
 									${transitGoods.desc }&nbsp;
