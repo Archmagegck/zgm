@@ -150,14 +150,14 @@
 							<c:if test="${inOutsRecord.method eq '入库'}">
 								<c:set var="inSumAmount" value="${inSumAmount + inOutsRecord.amount}"></c:set>
 								<c:set var="inSumweight" value="${inSumweight + inOutsRecord.sumWeight}"></c:set>
-								<c:set var="inAllSumAmount" value="${inAllSumAmount + inSumAmount}"></c:set>
-								<c:set var="inAllSumweight" value="${inAllSumweight + inSumweight}"></c:set>
+								<c:set var="inAllSumAmount" value="${inAllSumAmount + inOutsRecord.amount}"></c:set>
+								<c:set var="inAllSumweight" value="${inAllSumweight + inOutsRecord.sumWeight}"></c:set>
 							</c:if>
 							<c:if test="${inOutsRecord.method eq '出库'}">
 								<c:set var="outSumAmount" value="${outSumAmount + inOutsRecord.amount}"></c:set>
 								<c:set var="outSumweight" value="${outSumweight + inOutsRecord.sumWeight}"></c:set>
-								<c:set var="outAllSumAmount" value="${outAllSumAmount + outSumAmount}"></c:set>
-								<c:set var="outAllSumweight" value="${outAllSumweight + outSumweight}"></c:set>
+								<c:set var="outAllSumAmount" value="${outAllSumAmount + inOutsRecord.amount}"></c:set>
+								<c:set var="outAllSumweight" value="${outAllSumweight + inOutsRecord.sumWeight}"></c:set>
 							</c:if>
 						</c:forEach>
 						<tr>
