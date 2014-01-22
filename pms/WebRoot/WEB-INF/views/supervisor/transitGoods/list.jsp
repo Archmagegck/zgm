@@ -73,18 +73,18 @@
 							</div>
 						</c:if>
 					</div>
-					
+					<input type="hidden" name="page.page" id="pageNo" value="${page.number+1}"/>
 					<br/>
 					<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
 						<thead>
 							<tr>
-								<th width="20%">
+								<th width="8%">
 									序号
 								</th>
-								<th>
+								<th width="12%">
 									款式大类
 								</th>
-								<th>
+								<th width="12%">
 									标明成色
 								</th>
 								<th>
@@ -101,6 +101,12 @@
 								</th>
 								<th>
 									是否封闭运输
+								</th>
+								<th>
+									送货人姓名
+								</th>
+								<th>
+									送货人身份证
 								</th>
 								<th>
 									备注
@@ -141,6 +147,12 @@
 										是
 									</c:if>
 								</td>
+								<td>
+									${transitGoods.sender }&nbsp;
+								</td>	
+								<td>
+									${transitGoods.senderIdCard }&nbsp;
+								</td>	
 								<td>
 									${transitGoods.desc }&nbsp;
 								</td>							

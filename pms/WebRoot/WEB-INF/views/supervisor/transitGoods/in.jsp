@@ -64,28 +64,6 @@
 						</td>
 						<td width="70%">
 							${sessionScope.warehouse.address}
-							<input type="hidden" name="warehouse.id" value="${sessionScope.warehouse.id}"/>
-							<input type="hidden" name="warehouse.address" value="${sessionScope.warehouse.address}"/>
-							<input type="hidden" name="warehouse.pledgeRecordCode" value="${sessionScope.warehouse.pledgeRecordCode}"/>
-						</td>
-					</tr>
-					<tr>
-						<td width="30%">
-							是否封闭运输:
-						</td>
-						<td width="70%">
-							<select id="closedTran" name="closedTran">
-			            		<option value="1" selected="selected">是</option>
-			            		<option value="0">否</option>
-			            	</select>
-						</td>
-					</tr>
-					<tr>
-						<td width="30%">
-							备注:
-						</td>
-						<td width="70%">
-							<input id="desc" name="desc" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
 						</td>
 					</tr>
 					<tr>
@@ -94,7 +72,6 @@
 						</td>
 						<td width="70%">
 							${sessionScope.user.name}
-							<input id="supervisor" name="supervisor.id" type="hidden" value="${sessionScope.user.id}"/>
 						</td>
 					</tr>
 					</table>

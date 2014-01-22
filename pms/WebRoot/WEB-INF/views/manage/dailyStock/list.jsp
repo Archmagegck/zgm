@@ -126,7 +126,12 @@
 									${stock.specWeight }&nbsp;
 								</td>
 								<td>
-									${stock.warehouse.address}&nbsp;
+									<c:if test="${stock.inStock == 1}">
+										${stock.warehouse.address}&nbsp;
+									</c:if>
+									<c:if test="${stock.inStock == 0}">
+										在途&nbsp;
+									</c:if>
 								</td>
 								<td>
 									${stock.amount}&nbsp;

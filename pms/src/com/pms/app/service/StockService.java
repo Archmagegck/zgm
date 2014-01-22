@@ -32,6 +32,14 @@ public class StockService extends BaseService<Stock, String> {
 		return stockDao.findByWarehouseId(warehouseId);
 	}
 	
+	public List<Stock> findInStockByWarehouseId(String warehouseId) {
+		return stockDao.findByWarehouseIdAndInStock(warehouseId, 1);
+	}
+	
+	public List<Stock> findTranStockByWarehouseId(String warehouseId) {
+		return stockDao.findByWarehouseIdAndInStock(warehouseId, 0);
+	}
+	
 	public Map<String, Stock> findStockKeyMapByWarehouseId(String warehouseId) {
 		Map<String, Stock> stockMap = new HashMap<String, Stock>();
 		List<Stock> stockList = stockDao.findByWarehouseId(warehouseId);
@@ -59,6 +67,24 @@ public class StockService extends BaseService<Stock, String> {
 		return stockMap;
 	}
 	
+	public Map<String, Stock> findTranStockKeyMapByWarehouseId(String warehouseId) {
+		Map<String, Stock> stockMap = new HashMap<String, Stock>();
+		List<Stock> stockList = stockDao.findByWarehouseIdAndInStock(warehouseId, 0);
+		for (Stock stock : stockList) {
+			stockMap.put(stock.getKey(), stock);
+		}
+		return stockMap;
+	}
+	
+	public Map<String, Stock> findNoTranStockKeyMapByWarehouseId(String warehouseId) {
+		Map<String, Stock> stockMap = new HashMap<String, Stock>();
+		List<Stock> stockList = stockDao.findByWarehouseIdAndInStock(warehouseId, 1);
+		for (Stock stock : stockList) {
+			stockMap.put(stock.getKey(), stock);
+		}
+		return stockMap;
+	}
+	
 	public void save(Map<String, Stock> stockMap) {
 		stockDao.save(stockMap.values());
 	}
@@ -75,11 +101,16 @@ public class StockService extends BaseService<Stock, String> {
 			totalStock.setPledgePurityName(pledgePurity.getName());
 			totalStock.setSpecWeight((Double)ob[2]);
 			Warehouse warehouse = (Warehouse) ob[3];
-			totalStock.setStorage(warehouse.getAddress());
 			totalStock.setAmount((Double)ob[4]);
 			totalStock.setSumWeight((Double)ob[5]);
 			double sumValue = totalStock.getSumWeight().doubleValue() * newestValue;
 			totalStock.setSumValue(sumValue);
+			int inStock = (Integer)ob[6];
+			if(inStock == 1) {
+				totalStock.setStorage(warehouse.getAddress());
+			} else {
+				totalStock.setStorage("在途");
+			}
 			totalStocks.add(totalStock);
 		}
 		return totalStocks;

@@ -66,7 +66,7 @@ public class InventoryController {
 	
 	@RequestMapping(value = "add")
 	public String add(Model model, HttpSession session){
-		model.addAttribute("stockList", stockService.findByWarehouseId(((Warehouse)session.getAttribute("warehouse")).getId()));
+		model.addAttribute("stockList", stockService.findInStockByWarehouseId(((Warehouse)session.getAttribute("warehouse")).getId()));
 		return "supervisor/inventory/add";
 	}
 	

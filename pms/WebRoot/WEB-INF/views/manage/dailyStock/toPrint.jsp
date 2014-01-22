@@ -97,7 +97,14 @@ table th {
 						<td>${stock.style.name }&nbsp;</td>
 						<td>${stock.pledgePurity.name }&nbsp;</td>
 						<td>${stock.specWeight }&nbsp;</td>
-						<td>${stock.warehouse.address}&nbsp;</td>
+						<td>
+						<c:if test="${stock.inStock == 1}">
+							${stock.warehouse.address}&nbsp;
+						</c:if>
+						<c:if test="${stock.inStock == 0}">
+							在途&nbsp;
+						</c:if>
+						</td>
 						<td>${stock.amount}&nbsp;</td>
 						<td>${stock.sumWeight }&nbsp;</td>
 					</tr>

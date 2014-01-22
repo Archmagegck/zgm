@@ -137,7 +137,11 @@ public class DailyStockService {
 				
 				c = r.createCell(3);
 				c.setCellStyle(cOtherCellStyle);
-				c.setCellValue(stock.getWarehouse().getAddress());
+				String address = stock.getWarehouse().getAddress();
+				if(stock.getInStock() == 0) {
+					address = "在途";
+				}
+				c.setCellValue(address);
 				
 				c = r.createCell(4);
 				c.setCellStyle(cOtherCellStyle);

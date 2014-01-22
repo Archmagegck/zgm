@@ -1,5 +1,7 @@
 package com.pms.app.entity;
 
+import java.math.BigDecimal;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -110,6 +112,20 @@ public class Stock {
 		this.desc = insRecordDetail.getDesc();
 	}
 	
+	public Stock(TransitGoods transitGoods) {
+		this.warehouse = transitGoods.getWarehouse();
+		this.style = transitGoods.getStyle();
+		this.pledgePurity = transitGoods.getPledgePurity();
+		this.specWeight = transitGoods.getSpecWeight();
+		this.amount = transitGoods.getAmount();
+		this.sumWeight = transitGoods.getSumWeight();
+		this.company = transitGoods.getCompany();
+		this.closedTran = transitGoods.getClosedTran();
+		this.desc = transitGoods.getDesc();
+		this.sumWeight = this.amount * this.specWeight;
+		this.inStock = 0;
+	}
+	
 	/**
 	 * 直接入库
 	 * @param insRecordDetail 入库明细
@@ -123,9 +139,14 @@ public class Stock {
 	 * 在途入库
 	 * @return 
 	 */
-	public void add(Stock stock){
-		this.amount += stock.getAmount();
-		this.sumWeight += stock.getSumWeight();
+	public void add(TransitGoods transitGoods){
+		this.amount += transitGoods.getAmount();
+		this.sumWeight = new BigDecimal(amount * specWeight).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+	}
+	
+	public void minus(TransitGoods transitGoods){
+		this.amount -= transitGoods.getAmount();
+		this.sumWeight = new BigDecimal(amount * specWeight).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
 	}
 	
 	public String getKey() {

@@ -10,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cache;
@@ -96,11 +95,24 @@ public class TransitGoods {
 	private String desc;
 	
 	/**
+	 * 送货人姓名
+	 */
+	@Column(name = "tg_sender")
+	private String sender;
+	
+	
+	/**
+	 * 送货人身份证
+	 */
+	@Column(name = "tg_senderIdCard")
+	private String senderIdCard;
+	
+	/**
 	 * 是否已经入库
 	 * 0:未入库，1:已入库
 	 */
 	@Column(name="tg_state")
-	private Integer state;
+	private Integer state = 0;
 	
 	/**
 	 * 入库时间
@@ -108,12 +120,18 @@ public class TransitGoods {
 	@Column(name = "tg_date")
 	private Date date = new Date();
 	
-	/**
-	 * 所属库存记录
-	 */
-	@OneToOne
-	@JoinColumn(name="s_id")
-	private Stock stock; 
+	public String getKey() {
+		StringBuffer sb = new StringBuffer("{");
+		sb.append("\"warehouse\":\"").append(warehouse.getId()).append("\",");
+		sb.append("\"style\":\"").append(style.getId()).append("\",");
+		sb.append("\"pledgePurity\":\"").append(pledgePurity.getId()).append("\",");
+		sb.append("\"specWeight\":\"").append(specWeight).append("\",");
+		sb.append("\"company\":\"").append(company).append("\",");
+		sb.append("\"closedTran\":\"").append(closedTran).append("\",");
+		sb.append("\"desc\":\"").append(desc).append("\"");
+		sb.append("}");
+		return sb.toString();
+	}
 	
 	public String getId() {
 		return id;
@@ -223,13 +241,21 @@ public class TransitGoods {
 		this.date = date;
 	}
 
-	public Stock getStock() {
-		return stock;
+	public String getSender() {
+		return sender;
 	}
 
-	public void setStock(Stock stock) {
-		this.stock = stock;
+	public void setSender(String sender) {
+		this.sender = sender;
 	}
-	
+
+	public String getSenderIdCard() {
+		return senderIdCard;
+	}
+
+	public void setSenderIdCard(String senderIdCard) {
+		this.senderIdCard = senderIdCard;
+	}
+
 	
 }
