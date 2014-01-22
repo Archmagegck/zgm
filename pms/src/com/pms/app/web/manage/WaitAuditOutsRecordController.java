@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.pms.app.entity.OutsRecord;
-import com.pms.app.entity.reference.AuditState;
 import com.pms.app.service.OutsRecordService;
 
 @Controller
@@ -41,16 +40,7 @@ public class WaitAuditOutsRecordController {
 	@RequestMapping(value = "/{id}/audit")
 	public String audit(Model model, @PathVariable("id")String id, Integer state, RedirectAttributes ra){
 		try {
-			OutsRecord outsRecord = outsRecordService.findById(id);
-			switch (state) {
-			case 1:
-				outsRecord.setAuditState(AuditState.Pass);
-				break;
-			case 0:
-				outsRecord.setAuditState(AuditState.Refuse);
-				break;
-			}
-			outsRecordService.save(outsRecord);
+			outsRecordService.audit(outsRecordService.findById(id), state);
 			ra.addFlashAttribute("messageOK", "审核结果操作成功！");
 		}  catch (Exception e) {
 			ra.addFlashAttribute("messageErr", "保存失败！");
