@@ -68,7 +68,8 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 	}
 
 	@Transactional
-	public void save(OutsRecord outsRecord, List<OutStock> outStocks, int hasPickFile, SupervisionCustomer supervisionCustomer) throws ServiceException {
+	public String save(OutsRecord outsRecord, List<OutStock> outStocks, int hasPickFile, SupervisionCustomer supervisionCustomer) throws ServiceException {
+		String message = "出库成功!";
 		double sumWeight = 0;
 		Map<String, Stock> stockMap = stockService.findStockMapByWarehouseId(outsRecord.getWarehouse().getId());
 		List<Stock> updateStocks = new ArrayList<Stock>();
@@ -95,7 +96,7 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 			outsRecordDetail.setSupervisionCustomer(supervisionCustomer);
 			outsRecordDetail.setAmount(outStock.getOutAmount());
 			outsRecordDetail.setCompany(stock.getCompany());
-			outsRecordDetail.setDesc(stock.getCompany());
+			outsRecordDetail.setDesc(stock.getDesc());
 			outsRecordDetail.setOutsRecord(outsRecord);
 			outsRecordDetail.setPledgePurity(stock.getPledgePurity());
 			outsRecordDetail.setSpecWeight(stock.getSpecWeight());
@@ -163,6 +164,7 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 			// 需审核
 			if (sumWeight > shippingWeight || (stockSumValue > ((minValue * mincordon) / 100) && stockSumValue < ((minValue * maxcordon) / 100))) {
 				outsRecord.setAuditState(AuditState.Wait);// 出库待定
+				message = "请等待监管经理审核!";
 			} else {
 				outsRecord.setAuditState(AuditState.Pass);
 			}
@@ -180,6 +182,7 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 		outsRecordDao.save(outsRecord);
 		outsRecordDetailDao.save(saveOutsRecordDetails);
 
+		return message;
 	}
 
 	public void audit(OutsRecord outsRecord, Integer state) {

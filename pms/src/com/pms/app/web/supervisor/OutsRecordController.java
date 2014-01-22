@@ -137,8 +137,8 @@ public class OutsRecordController {
 				outsRecord.setPickNoticeUrl(pickNoticeUrl);
 				outsRecord.setAttachState(1);
 			}
-			outsRecordService.save(outsRecord, outStocks, hasPickFile, supervisionCustomer);
-			ra.addFlashAttribute("messageOK", "保存成功！");
+			String message = outsRecordService.save(outsRecord, outStocks, hasPickFile, supervisionCustomer);
+			ra.addFlashAttribute("messageOK", message);
 			session.removeAttribute("outStocks");
 			session.removeAttribute("tempImg");
 		} catch (ServiceException e) {

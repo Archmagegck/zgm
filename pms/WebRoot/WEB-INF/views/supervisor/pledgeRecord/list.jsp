@@ -94,7 +94,7 @@
 									${pledgeRecord.sumWeight }&nbsp;
 								</td>
 								<td>
-									${pledgeRecord.date }&nbsp;
+									${pledgeRecord.dateYmdhmsStr }&nbsp;
 								</td>
 								<td>
 									<c:if test="${pledgeRecord.ifUpload == 1}">已上传</c:if>

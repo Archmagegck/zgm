@@ -36,11 +36,25 @@ public class DailyStockService {
 	public Map<SupervisionCustomer, List<Stock>>  queryByDelegatorAndDate(String delegatorId, String supervisionCustomerId) {
 		Map<SupervisionCustomer, List<Stock>> stockMap = new HashMap<SupervisionCustomer, List<Stock>>();
 		if(StringUtils.hasText(supervisionCustomerId)) {
-			SupervisionCustomer supervisionCustomer = supervisionCustomerDao.findOne(supervisionCustomerId);
-			String warehouseId = supervisionCustomer.getWarehouse().getId();
-			List<Stock> stockList = stockDao.findByWarehouseId(warehouseId);
-			if(!stockList.isEmpty())
-				stockMap.put(supervisionCustomer, stockList);
+			int has = 0;
+			if(StringUtils.hasText(delegatorId)){
+				List<SupervisionCustomer> supervisionCustomerList = supervisionCustomerDao.findListByDelegatorId(delegatorId);
+				for (SupervisionCustomer s : supervisionCustomerList) {
+					if(s.getId().equals(supervisionCustomerId)) {
+						has = 1;
+					}
+				}
+			} else {
+				has = 1;
+			}
+			if(has == 1) {
+				SupervisionCustomer supervisionCustomer = supervisionCustomerDao.findOne(supervisionCustomerId);
+				String warehouseId = supervisionCustomer.getWarehouse().getId();
+				List<Stock> stockList = stockDao.findByWarehouseId(warehouseId);
+				if(!stockList.isEmpty())
+					stockMap.put(supervisionCustomer, stockList);
+			}
+			
 		} else {
 			List<SupervisionCustomer> supervisionCustomerList = supervisionCustomerDao.findListByDelegatorId(delegatorId);
 			for (SupervisionCustomer supervisionCustomer : supervisionCustomerList) {

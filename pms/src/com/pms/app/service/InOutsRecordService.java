@@ -53,11 +53,11 @@ public class InOutsRecordService {
 		if(StringUtils.hasText(supervisionCustomerId)) {
 			SupervisionCustomer supervisionCustomer = supervisionCustomerDao.findOne(supervisionCustomerId);
 			List<InOutsRecord> inOutsRecordList = new ArrayList<InOutsRecord>();
-			List<InsRecordDetail> insRecordDetails = insRecordDetailDao.findAll(getInsSpec(supervisionCustomerId, beginDate, endDate));
+			List<InsRecordDetail> insRecordDetails = insRecordDetailDao.findAll(getInsSpec(delegatorId, supervisionCustomerId, beginDate, endDate));
 			for (InsRecordDetail insRecordDetail : insRecordDetails) {
 				inOutsRecordList.add(new InOutsRecord(insRecordDetail));
 			}
-			List<OutsRecordDetail> outsRecordDetails = outsRecordDetailDao.findAll(getOutsSpec(supervisionCustomerId, beginDate, endDate));
+			List<OutsRecordDetail> outsRecordDetails = outsRecordDetailDao.findAll(getOutsSpec(delegatorId, supervisionCustomerId, beginDate, endDate));
 			for (OutsRecordDetail outsRecordDetail : outsRecordDetails) {
 				inOutsRecordList.add(new InOutsRecord(outsRecordDetail));
 			}
@@ -121,6 +121,76 @@ public class InOutsRecordService {
 			@Override
 			public Predicate toPredicate(Root<OutsRecordDetail> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 				List<Predicate> predicates = new ArrayList<Predicate>();
+				if (StringUtils.hasText(supervisionCustomerId)) {
+					Path expression = root.get("supervisionCustomer");
+					expression = expression.get("id");
+					predicates.add(cb.equal(expression, supervisionCustomerId));
+				}
+				if (!StringUtils.isEmpty(beginDate)) {
+					Path expression = root.get("date");
+					predicates.add(cb.greaterThanOrEqualTo(expression, DateUtils.dateToDayBegin(beginDate)));
+				}
+				if (!StringUtils.isEmpty(endDate)) {
+					Path expression = root.get("date");
+					predicates.add(cb.lessThanOrEqualTo(expression, DateUtils.dateToDayEnd(endDate)));
+				}
+				query.orderBy(cb.desc(root.get("date")));
+				if (predicates.size() > 0) {
+					return cb.and(predicates.toArray(new Predicate[predicates.size()]));
+				}
+				return cb.conjunction();
+			}
+		};
+		return specificationIns;
+	}
+	
+	
+	public Specification<InsRecordDetail> getInsSpec(final String delegatorId, final String supervisionCustomerId, final Date beginDate, final Date endDate) {
+		Specification<InsRecordDetail> specificationIns = new Specification<InsRecordDetail>() {
+			@SuppressWarnings({ "rawtypes", "unchecked" })
+			@Override
+			public Predicate toPredicate(Root<InsRecordDetail> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+				List<Predicate> predicates = new ArrayList<Predicate>();
+				if (StringUtils.hasText(delegatorId)) {
+					Path expression = root.get("delegator");
+					expression = expression.get("id");
+					predicates.add(cb.equal(expression, delegatorId));
+				}
+				if (StringUtils.hasText(supervisionCustomerId)) {
+					Path expression = root.get("supervisionCustomer");
+					expression = expression.get("id");
+					predicates.add(cb.equal(expression, supervisionCustomerId));
+				}
+				if (!StringUtils.isEmpty(beginDate)) {
+					Path expression = root.get("date");
+					predicates.add(cb.greaterThanOrEqualTo(expression, DateUtils.dateToDayBegin(beginDate)));
+				}
+				if (!StringUtils.isEmpty(endDate)) {
+					Path expression = root.get("date");
+					predicates.add(cb.lessThanOrEqualTo(expression, DateUtils.dateToDayEnd(endDate)));
+				}
+				query.orderBy(cb.desc(root.get("date")));
+				if (predicates.size() > 0) {
+					return cb.and(predicates.toArray(new Predicate[predicates.size()]));
+				}
+				return cb.conjunction();
+			}
+		};
+		return specificationIns;
+	}
+	
+	
+	public Specification<OutsRecordDetail> getOutsSpec(final String delegatorId, final String supervisionCustomerId, final Date beginDate, final Date endDate) {
+		Specification<OutsRecordDetail> specificationIns = new Specification<OutsRecordDetail>() {
+			@SuppressWarnings({ "rawtypes", "unchecked" })
+			@Override
+			public Predicate toPredicate(Root<OutsRecordDetail> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+				List<Predicate> predicates = new ArrayList<Predicate>();
+				if (StringUtils.hasText(delegatorId)) {
+					Path expression = root.get("delegator");
+					expression = expression.get("id");
+					predicates.add(cb.equal(expression, delegatorId));
+				}
 				if (StringUtils.hasText(supervisionCustomerId)) {
 					Path expression = root.get("supervisionCustomer");
 					expression = expression.get("id");

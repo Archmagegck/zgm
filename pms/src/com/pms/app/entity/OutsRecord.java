@@ -66,7 +66,7 @@ public class OutsRecord {
 	 * 提货类型
 	 */
 	@Column(name = "out_pickType")
-	private PickType pickType;
+	private PickType pickType = PickType.Part;
 	
 	
 	/**

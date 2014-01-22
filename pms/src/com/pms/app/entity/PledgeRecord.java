@@ -104,6 +104,10 @@ public class PledgeRecord {
 	public String getDateStr(){
 		return new DateTime(date).toString("yyyy-MM-dd");
 	}
+	
+	public String getDateYmdhmsStr(){
+		return new DateTime(date).toString("yyyy-MM-dd HH:mm:ss");
+	}
 
 	public String getId() {
 		return id;

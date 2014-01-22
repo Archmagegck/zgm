@@ -111,7 +111,12 @@
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;月&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			</div>
 			<div align="center">
-				<a href="${ctx}/images/${pledgeRecord.recordFile}" target=_blank>下载</a>
+				<c:if test="${not empty pledgeRecord.recordFile}">
+					<a href="${ctx}/images/${pledgeRecord.recordFile}" target=_blank>下载</a>
+				</c:if>
+				<c:if test="${empty pledgeRecord.recordFile}">
+					质物清单未上传
+				</c:if>
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<br>
 				<br>

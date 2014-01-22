@@ -15,7 +15,6 @@ import com.pms.app.entity.Stock;
 import com.pms.app.entity.SupervisionCustomer;
 import com.pms.app.entity.Warehouse;
 import com.pms.app.util.CodeUtils;
-import com.pms.app.util.IdWorker;
 import com.pms.base.dao.BaseDao;
 import com.pms.base.service.BaseService;
 
@@ -36,7 +35,7 @@ public class PledgeRecordService extends BaseService<PledgeRecord, String> {
 		PledgeRecord pledgeRecord = new PledgeRecord();
 		pledgeRecord.setDelegator(supervisionCustomer.getDelegator());
 		pledgeRecord.setSupervisionCustomer(supervisionCustomer);
-		pledgeRecord.setCode(String.valueOf(new IdWorker(1, 2, 3).getId()));
+		pledgeRecord.setCode(warehouse.getPledgeRecordCode());
 		pledgeRecord.setRecordName(CodeUtils.getPledgeRecordCode(supervisionCustomer.getCode()));
 		pledgeRecord.setWarehouse(warehouse);
 		double sumWeight = 0;

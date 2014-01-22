@@ -2,6 +2,8 @@ package com.pms.app.web.manage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefaults;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +19,7 @@ public class NoticeOutsRecordController {
 	@Autowired OutsRecordService outsRecordService;
 	
 	@RequestMapping(value = { "/list", "" })
-	public String list(Model model, Pageable pageable) {
+	public String list(Model model, @PageableDefaults(sort="date", sortDir=Direction.DESC)Pageable pageable) {
 		model.addAttribute("page", outsRecordService.findNoticeOutsRecord(pageable));
 		return "manage/noticeOutsRecord/list";
 	}
