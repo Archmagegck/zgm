@@ -92,11 +92,8 @@
 						</c:forEach>
 						</tbody>
 					</table>
-					<div align="center" id="pager">
-						<input type="button" value="拒绝出库" class="button" onclick="javascript:location.href='${ctx }/manage/waitAuditOutsRecord/${outsRecord.id}/audit?state=0'" />
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="button" value="同意执行" class="button" onclick="javascript:location.href='${ctx }/manage/waitAuditOutsRecord/${outsRecord.id}/audit?state=1'" />
-					</div>
+					<br>
+					<br>
 				</div>
 			</div>
 		</form>
