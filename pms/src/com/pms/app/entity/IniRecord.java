@@ -1,7 +1,5 @@
 package com.pms.app.entity;
 
-import java.util.Date;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,22 +13,22 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
-import org.joda.time.DateTime;
 
 /**
- * 盘存明细
+ * 初始状态登记记录
  * @author wangzz
  */
 @Entity
-@Table(name = "t_inventoryDetail")
+@Table(name = "t_iniRecord")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class InventoryDetail {
+public class IniRecord {
 	
 	@Id
 	@GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
 	@GeneratedValue(generator = "uuid")
-	@Column(name = "id_id")
+	@Column(name = "ii_id")
 	private String id;
+	
 	
 	/**
 	 * 所属仓库
@@ -39,18 +37,6 @@ public class InventoryDetail {
 	@JoinColumn(name = "w_id")
 	private Warehouse warehouse;
 	
-	/**
-	 * 所属盘存
-	 */
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "i_id")
-	private Inventory inventory;
-	
-	/**
-	 * 托盘号
-	 */
-	@Column(name = "id_trayNo")
-	private int trayNo;
 	
 	/**
 	 * 款式大类
@@ -59,22 +45,12 @@ public class InventoryDetail {
 	@JoinColumn(name = "sty_id")
 	private Style style;
 	
+	
 	/**
-	 * 重量
+	 * 重量（g）
 	 */
-	@Column(name = "id_weight")
+	@Column(name = "ii_weight")
 	private Double weight;
-	
-	/**
-	 * 盘存日期
-	 */
-	@Column(name = "id_invDate")
-	private Date date = new Date();
-	
-	
-	public String getDateStr() {
-		return new DateTime(date).toString("yyyy-MM-dd");
-	}
 
 
 	public String getId() {
@@ -97,26 +73,6 @@ public class InventoryDetail {
 	}
 
 
-	public Inventory getInventory() {
-		return inventory;
-	}
-
-
-	public void setInventory(Inventory inventory) {
-		this.inventory = inventory;
-	}
-
-
-	public int getTrayNo() {
-		return trayNo;
-	}
-
-
-	public void setTrayNo(int trayNo) {
-		this.trayNo = trayNo;
-	}
-
-
 	public Style getStyle() {
 		return style;
 	}
@@ -135,18 +91,5 @@ public class InventoryDetail {
 	public void setWeight(Double weight) {
 		this.weight = weight;
 	}
-
-
-	public Date getDate() {
-		return date;
-	}
-
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
-	
-	
 	
 }

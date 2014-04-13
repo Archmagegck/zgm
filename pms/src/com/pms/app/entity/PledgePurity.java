@@ -26,6 +26,13 @@ public class PledgePurity {
 	private String id;
 	
 	/**
+	 * 类型
+	 * 1：合格
+	 * 0：不合格
+	 */
+	private Integer type;
+	
+	/**
 	 * 成色
 	 */
 	@Column(name = "pp_name")
@@ -45,6 +52,14 @@ public class PledgePurity {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
 	}
 	
 	

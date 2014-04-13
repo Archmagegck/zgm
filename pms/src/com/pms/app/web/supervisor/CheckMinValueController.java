@@ -23,10 +23,10 @@ public class CheckMinValueController {
 	@RequestMapping(value = { "/list", "" })
 	public String list(Model model, HttpSession session) {
 		Supervisor supervisor = (Supervisor)session.getAttribute("user");
-		SupervisionCustomer customer = supervisionCustomerService.findBySupervisorId(supervisor.getId());
+//		SupervisionCustomer customer = supervisionCustomerService.findBySupervisorId(supervisor.getId());
 		String warehouseId = ((Warehouse)session.getAttribute("warehouse")).getId();
 		model.addAttribute("stockMinValue", checkMinValueService.getStockMinValue(warehouseId));
-		model.addAttribute("warehouseMinValue", checkMinValueService.getWarehouseMinValue(customer.getId()));
+//		model.addAttribute("warehouseMinValue", checkMinValueService.getWarehouseMinValue(customer.getId()));
 		return "supervisor/checkMinValue/list";
 	}
 	

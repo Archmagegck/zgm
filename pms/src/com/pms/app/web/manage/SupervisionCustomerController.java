@@ -1,7 +1,5 @@
 package com.pms.app.web.manage;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.pms.app.entity.SupervisionCustomer;
-import com.pms.app.entity.Supervisor;
-import com.pms.app.entity.Warehouse;
 import com.pms.app.service.DelegatorService;
 import com.pms.app.service.SupervisionCustomerService;
-import com.pms.app.service.SupervisorService;
 import com.pms.app.service.WarehouseService;
 
 @Controller
@@ -27,7 +22,6 @@ public class SupervisionCustomerController {
 	private Logger logger = LoggerFactory.getLogger(SupervisionCustomerController.class);
 	
 	@Autowired private SupervisionCustomerService supervisionCustomerService;
-	@Autowired private SupervisorService supervisorService;
 	@Autowired private DelegatorService delegatorService;
 	@Autowired private WarehouseService warehouseService;
 	
@@ -43,16 +37,15 @@ public class SupervisionCustomerController {
 	@RequestMapping(value = "/add")
 	public String add(Model model){
 		model.addAttribute("delegatorList", delegatorService.findAll());
-		model.addAttribute("supervisorList", supervisorService.findByUnUsedList());
-		model.addAttribute("warehouseList", warehouseService.findByUnUsedList());
+		model.addAttribute("warehouseList", warehouseService.findAll());
 		return "manage/supervisionCustomer/add";
 	}
 	
 	
 	@RequestMapping(value = "/save")
-	public String save(SupervisionCustomer supervisionCustomer, String oldWarehouseId, String oldSupervisorId, RedirectAttributes ra){
+	public String save(SupervisionCustomer supervisionCustomer,  RedirectAttributes ra){
 		try {
-			supervisionCustomerService.save(supervisionCustomer, oldWarehouseId, oldSupervisorId);
+			supervisionCustomerService.save(supervisionCustomer);
 			ra.addFlashAttribute("messageOK", "保存成功！");
 		} catch (Exception e) {
 			ra.addFlashAttribute("messageErr", "保存失败！");
@@ -66,17 +59,8 @@ public class SupervisionCustomerController {
 	public String edit(@PathVariable("id")String id, Model model){
 		SupervisionCustomer supervisionCustomer = supervisionCustomerService.findById(id);
 		model.addAttribute("supervisionCustomer", supervisionCustomer);
+		model.addAttribute("warehouseList", warehouseService.findAll());
 		model.addAttribute("delegatorList", delegatorService.findAll());
-		
-		Supervisor supervisor = supervisorService.findById(supervisionCustomer.getSupervisor().getId());
-		List<Supervisor> supervisorList = supervisorService.findByUnUsedList();
-		supervisorList.add(supervisor);
-		model.addAttribute("supervisorList", supervisorList);
-		
-		Warehouse warehouse = warehouseService.findById(supervisionCustomer.getWarehouse().getId());
-		List<Warehouse> warehouseList = warehouseService.findByUnUsedList();
-		warehouseList.add(warehouse);
-		model.addAttribute("warehouseList", warehouseList);
 		return "manage/supervisionCustomer/edit";
 	}
 	

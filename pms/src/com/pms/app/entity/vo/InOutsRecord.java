@@ -34,9 +34,8 @@ public class InOutsRecord implements Comparable<InOutsRecord> {
 		this.date = detail.getDate();
 		this.style = detail.getStyle().getName();
 		this.pledgePurity = detail.getPledgePurity().getName();
-		this.specWeight = detail.getSpecWeight().toString();
 		this.amount = detail.getAmount();
-		this.sumWeight = detail.getSumWeight();
+		this.sumWeight = detail.getWeight();
 	}
 	
 	public InOutsRecord(OutsRecordDetail detail) {
@@ -44,9 +43,7 @@ public class InOutsRecord implements Comparable<InOutsRecord> {
 		this.date = detail.getDate();
 		this.style = detail.getStyle().getName();
 		this.pledgePurity = detail.getPledgePurity().getName();
-		this.specWeight = detail.getSpecWeight().toString();
-		this.amount = detail.getAmount();
-		this.sumWeight = detail.getSumWeight();
+		this.sumWeight = detail.getWeight();
 	}
 	
 	@Override

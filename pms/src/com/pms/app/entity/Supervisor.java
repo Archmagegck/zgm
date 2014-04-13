@@ -1,9 +1,13 @@
 package com.pms.app.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cache;
@@ -52,6 +56,13 @@ public class Supervisor {
 	private String password;
 	
 	/**
+	 * 仓库
+	 */
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "w_id")
+	private Warehouse warehouse;
+	
+	/**
 	 * 性别
 	 */
 	@Column(name = "s_gender")
@@ -92,21 +103,6 @@ public class Supervisor {
 	 */
 	@Column(name = "s_desc")
 	private String desc;
-	
-	/**
-	 * 出货重量权限(kg)
-	 */
-	@Column(name = "s_shippingWeight")
-	private Double shippingWeight;
-	
-	/**
-	 * 是否已分配<br>
-	 * 1:已分配
-	 * 0:未分配
-	 */
-	@Column(name = "s_used")
-	private Integer isUsed = 0;
-
 	
 	public String getId() {
 		return id;
@@ -188,14 +184,6 @@ public class Supervisor {
 		this.desc = desc;
 	}
 
-	public Double getShippingWeight() {
-		return shippingWeight;
-	}
-
-	public void setShippingWeight(Double shippingWeight) {
-		this.shippingWeight = shippingWeight;
-	}
-
 	public String getIdcard() {
 		return idcard;
 	}
@@ -211,13 +199,13 @@ public class Supervisor {
 	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
-	
-	public Integer getIsUsed() {
-		return isUsed;
+
+	public Warehouse getWarehouse() {
+		return warehouse;
 	}
 
-	public void setIsUsed(Integer isUsed) {
-		this.isUsed = isUsed;
+	public void setWarehouse(Warehouse warehouse) {
+		this.warehouse = warehouse;
 	}
 	
 }

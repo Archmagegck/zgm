@@ -112,12 +112,6 @@
 									监管客户名称
 								</th>
 								<th>
-									监管员
-								</th>
-								<th>
-									委托方
-								</th>
-								<th>
 									地址
 								</th>
 								<th>
@@ -139,7 +133,7 @@
 									备注
 								</th>
 								<th>
-									贷款方式
+									融资方式
 								</th>
 								<th>
 									操作
@@ -156,12 +150,6 @@
 								</td>
 								<td>
 									${supervisionCustomer.name }&nbsp;
-								</td>
-								<td>
-									${supervisionCustomer.supervisor.name }&nbsp;
-								</td>
-								<td>
-									${supervisionCustomer.delegator.name }&nbsp;
 								</td>
 								<td>
 									${supervisionCustomer.address }&nbsp;

@@ -111,21 +111,10 @@ public class PledgeRecordDetail {
 	public PledgeRecordDetail(Stock stock, double sumWeight) {
 		this.style = stock.getStyle();
 		this.pledgePurity = stock.getPledgePurity();
-		this.specWeight = stock.getSpecWeight();
-		this.amount = stock.getAmount();
 		this.sumWeight = stock.getSumWeight();
-		this.company = stock.getCompany();
-		if(stock.getInStock() == 1) {
-			this.storage = stock.getWarehouse().getAddress();
-		} else {
-			this.storage = "在途";
-		}
-		this.closedTran = stock.getClosedTran();
 		
 //		spectrumRate = new BigDecimal(this.amount / sumWeight).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
 //		dissolveRate = new BigDecimal(this.amount / sumWeight).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-		
-		this.desc = stock.getDesc();
 		
 	}
 

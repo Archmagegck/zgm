@@ -125,24 +125,12 @@
 					</tr>
 					<tr>
 						<td width="20%">
-							监管员:
-						</td>
-						<td width="80%">
-							<select name="supervisor.id" class="required">
-								<c:forEach items="${supervisorList}" var="supervisor">
-									<option value = "${supervisor.id }">${supervisor.name }</option>
-								</c:forEach>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td width="20%">
-							贷款方式:
+							融资方式:
 						</td>
 						<td width="80%">
 							<select id="loans" name="loans">
 			            		<option value="Rent" selected="selected">租赁方式</option>
-			            		<option value="Finance">融资方式</option>
+			            		<option value="Cash">现金方式</option>
 			            	</select>
 						</td>
 					</tr>

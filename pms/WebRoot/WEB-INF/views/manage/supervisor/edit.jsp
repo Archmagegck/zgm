@@ -43,8 +43,6 @@
     			<legend><h3>请输入相关信息</h3></legend>
     			<br/>
     				<input type="hidden" name="id" value = "${supervisor.id }" >
-    				<input type="hidden" name="shippingWeight" value = "${supervisor.shippingWeight }" >
-    				<input type="hidden" name="isUsed" value = "${supervisor.isUsed }" >
     				<table  cellpadding="0" cellspacing="0" width="100%"  class="list1">
 					<tr>
 						<td width="20%">
@@ -127,6 +125,25 @@
 						</td>
 						<td width="80%">
 							<input id="area" name="area" value="${supervisor.area }" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
+						</td>
+					</tr>
+					<tr>
+						<td width="20%">
+							所属仓库:
+						</td>
+						<td width="80%">
+							<select name = "warehouse.id" class="required">
+								<c:forEach items="${warehouseList }" var = "warehouse">
+									<c:choose>
+										<c:when test="${warehouse.id == supervisor.warehouse.id }">
+											<option selected="selected" value = "${warehouse.id }">${warehouse.name }</option>
+										</c:when>
+										<c:otherwise>
+											<option value = "${warehouse.id }">${warehouse.name }</option>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+							</select>
 						</td>
 					</tr>
 					<tr>

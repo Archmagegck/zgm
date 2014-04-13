@@ -1,7 +1,5 @@
 package com.pms.app.entity;
 
-import java.util.Date;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,22 +13,24 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
-import org.joda.time.DateTime;
+
+import com.pms.app.entity.reference.CheckMethod;
 
 /**
- * 盘存明细
+ * 初始状态检测记录
  * @author wangzz
  */
 @Entity
-@Table(name = "t_inventoryDetail")
+@Table(name = "t_iniCheck")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class InventoryDetail {
+public class IniCheck {
 	
 	@Id
 	@GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
 	@GeneratedValue(generator = "uuid")
-	@Column(name = "id_id")
+	@Column(name = "ic_id")
 	private String id;
+	
 	
 	/**
 	 * 所属仓库
@@ -39,18 +39,6 @@ public class InventoryDetail {
 	@JoinColumn(name = "w_id")
 	private Warehouse warehouse;
 	
-	/**
-	 * 所属盘存
-	 */
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "i_id")
-	private Inventory inventory;
-	
-	/**
-	 * 托盘号
-	 */
-	@Column(name = "id_trayNo")
-	private int trayNo;
 	
 	/**
 	 * 款式大类
@@ -59,22 +47,26 @@ public class InventoryDetail {
 	@JoinColumn(name = "sty_id")
 	private Style style;
 	
-	/**
-	 * 重量
-	 */
-	@Column(name = "id_weight")
-	private Double weight;
 	
 	/**
-	 * 盘存日期
+	 * 检测方法
 	 */
-	@Column(name = "id_invDate")
-	private Date date = new Date();
+	@Column(name = "ic_checkMethod")
+	private CheckMethod checkMethod;
 	
 	
-	public String getDateStr() {
-		return new DateTime(date).toString("yyyy-MM-dd");
-	}
+	/**
+	 * 检测重量（kg）
+	 */
+	@Column(name = "ic_checkWeight")
+	private Double checkWeight;
+	
+	
+	/**
+	 * 检测结果
+	 */
+	@Column(name = "ic_checkResult")
+	private CheckMethod checkResult;
 
 
 	public String getId() {
@@ -97,26 +89,6 @@ public class InventoryDetail {
 	}
 
 
-	public Inventory getInventory() {
-		return inventory;
-	}
-
-
-	public void setInventory(Inventory inventory) {
-		this.inventory = inventory;
-	}
-
-
-	public int getTrayNo() {
-		return trayNo;
-	}
-
-
-	public void setTrayNo(int trayNo) {
-		this.trayNo = trayNo;
-	}
-
-
 	public Style getStyle() {
 		return style;
 	}
@@ -127,26 +99,34 @@ public class InventoryDetail {
 	}
 
 
-	public Double getWeight() {
-		return weight;
+	public CheckMethod getCheckMethod() {
+		return checkMethod;
 	}
 
 
-	public void setWeight(Double weight) {
-		this.weight = weight;
+	public void setCheckMethod(CheckMethod checkMethod) {
+		this.checkMethod = checkMethod;
 	}
 
 
-	public Date getDate() {
-		return date;
+	public Double getCheckWeight() {
+		return checkWeight;
 	}
 
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setCheckWeight(Double checkWeight) {
+		this.checkWeight = checkWeight;
 	}
 
-	
+
+	public CheckMethod getCheckResult() {
+		return checkResult;
+	}
+
+
+	public void setCheckResult(CheckMethod checkResult) {
+		this.checkResult = checkResult;
+	}
 	
 	
 }

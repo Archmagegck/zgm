@@ -35,7 +35,7 @@ public class PledgeRecordService extends BaseService<PledgeRecord, String> {
 		PledgeRecord pledgeRecord = new PledgeRecord();
 		pledgeRecord.setDelegator(supervisionCustomer.getDelegator());
 		pledgeRecord.setSupervisionCustomer(supervisionCustomer);
-		pledgeRecord.setCode(warehouse.getPledgeRecordCode());
+//		pledgeRecord.setCode(warehouse.getPledgeRecordCode());
 		pledgeRecord.setRecordName(CodeUtils.getPledgeRecordCode(supervisionCustomer.getCode()));
 		pledgeRecord.setWarehouse(warehouse);
 		double sumWeight = 0;
@@ -44,19 +44,14 @@ public class PledgeRecordService extends BaseService<PledgeRecord, String> {
 			pledgeRecordDetail.setPledgeRecord(pledgeRecord);
 			pledgeRecordDetail.setStyle(stock.getStyle());
 			pledgeRecordDetail.setPledgePurity(stock.getPledgePurity());
-			pledgeRecordDetail.setSpecWeight(stock.getSpecWeight());
-			pledgeRecordDetail.setAmount(stock.getAmount());
 			pledgeRecordDetail.setSumWeight(stock.getSumWeight());
 			double weight = stock.getSumWeight();
 			sumWeight += weight;
-			pledgeRecordDetail.setCompany(stock.getCompany());
 			pledgeRecordDetail.setStorage(warehouse.getAddress());
-			pledgeRecordDetail.setClosedTran(stock.getClosedTran());
 			
 			//TODO
 			//各种占比计算？
 			
-			pledgeRecordDetail.setDesc(stock.getDesc());
 			pledgeRecordDetails.add(pledgeRecordDetail);
 		}
 		pledgeRecord.setSumWeight(sumWeight);

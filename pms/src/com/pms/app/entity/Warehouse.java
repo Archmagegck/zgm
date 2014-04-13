@@ -46,20 +46,6 @@ public class Warehouse {
 	private String desc;
 	
 	
-	/**
-	 * 是否已分配
-	 */
-	@Column(name = "s_used")
-	private Integer isUsed = 0;
-	
-	
-	/**
-	 * 质物清单编号
-	 */
-	@Column(name = "s_pledgeRecordCode")
-	private String pledgeRecordCode;
-	
-	
 	public String getId() {
 		return id;
 	}
@@ -97,26 +83,6 @@ public class Warehouse {
 
 	public void setDesc(String desc) {
 		this.desc = desc;
-	}
-
-
-	public Integer getIsUsed() {
-		return isUsed;
-	}
-
-
-	public void setIsUsed(Integer isUsed) {
-		this.isUsed = isUsed;
-	}
-
-
-	public String getPledgeRecordCode() {
-		return pledgeRecordCode;
-	}
-
-
-	public void setPledgeRecordCode(String pledgeRecordCode) {
-		this.pledgeRecordCode = pledgeRecordCode;
 	}
 
 	

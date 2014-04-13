@@ -74,44 +74,10 @@ public class OutsRecordDetail {
 	
 	
 	/**
-	 * 规格重量（kg/件）
+	 * 重量
 	 */
-	@Column(name = "outd_specWeight")
-	private Double specWeight;
-	
-	
-	/**
-	 * 数量（件）
-	 */
-	@Column(name = "outd_amount")
-	private Double amount;
-	
-	
-	/**
-	 * 总重量
-	 */
-	@Column(name = "outd_sumWeight")
-	private Double sumWeight = 0.0;
-	
-	
-	/**
-	 * 出货后质物总量（kg）
-	 */
-	private Double remainWeight = 0.0;
-	
-	
-	/**
-	 * 生产厂家
-	 */
-	@Column(name = "outd_company")
-	private String company;
-	
-	
-	/**
-	 * 备注
-	 */
-	@Column(name = "outd_desc")
-	private String desc;
+	@Column(name = "outd_weight")
+	private Double weight = 0.0;
 	
 	
 	/**
@@ -126,9 +92,6 @@ public class OutsRecordDetail {
 		sb.append("\"warehouse\":\"").append(outsRecord.getWarehouse().getId()).append("\",");
 		sb.append("\"style\":\"").append(style.getId()).append("\",");
 		sb.append("\"pledgePurity\":\"").append(pledgePurity.getId()).append("\",");
-		sb.append("\"specWeight\":\"").append(specWeight).append("\",");
-		sb.append("\"company\":\"").append(company).append("\",");
-		sb.append("\"desc\":\"").append(desc).append("\"");
 		sb.append("}");
 		return sb.toString();
 	}
@@ -140,162 +103,69 @@ public class OutsRecordDetail {
 	public String getTimeStr() {
 		return new DateTime(date).toString("HH:mm");
 	}
-	
 
 	public String getId() {
 		return id;
 	}
 
-
-
 	public void setId(String id) {
 		this.id = id;
 	}
-
-
 
 	public OutsRecord getOutsRecord() {
 		return outsRecord;
 	}
 
-
-
 	public void setOutsRecord(OutsRecord outsRecord) {
 		this.outsRecord = outsRecord;
 	}
-
-
-
-	public Style getStyle() {
-		return style;
-	}
-
-
-
-	public void setStyle(Style style) {
-		this.style = style;
-	}
-
-
-
-	public PledgePurity getPledgePurity() {
-		return pledgePurity;
-	}
-
-
-
-	public void setPledgePurity(PledgePurity pledgePurity) {
-		this.pledgePurity = pledgePurity;
-	}
-
-
-
-	public Double getSpecWeight() {
-		return specWeight;
-	}
-
-
-
-	public void setSpecWeight(Double specWeight) {
-		this.specWeight = specWeight;
-	}
-
-
-
-	public Double getAmount() {
-		return amount;
-	}
-
-
-
-	public void setAmount(Double amount) {
-		this.amount = amount;
-	}
-
-
-
-	public String getCompany() {
-		return company;
-	}
-
-
-
-	public void setCompany(String company) {
-		this.company = company;
-	}
-
-
-
-	public String getDesc() {
-		return desc;
-	}
-
-
-
-	public void setDesc(String desc) {
-		this.desc = desc;
-	}
-
-
-
-	public Double getSumWeight() {
-		return sumWeight;
-	}
-
-
-
-	public void setSumWeight(Double sumWeight) {
-		this.sumWeight = sumWeight;
-	}
-
-
-
-	public Double getRemainWeight() {
-		return remainWeight;
-	}
-
-
-
-	public void setRemainWeight(Double remainWeight) {
-		this.remainWeight = remainWeight;
-	}
-
-
-
-	public Date getDate() {
-		return date;
-	}
-
-
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
-
 
 	public Delegator getDelegator() {
 		return delegator;
 	}
 
-
-
 	public void setDelegator(Delegator delegator) {
 		this.delegator = delegator;
 	}
-
-
 
 	public SupervisionCustomer getSupervisionCustomer() {
 		return supervisionCustomer;
 	}
 
-
-
 	public void setSupervisionCustomer(SupervisionCustomer supervisionCustomer) {
 		this.supervisionCustomer = supervisionCustomer;
 	}
 
+	public Style getStyle() {
+		return style;
+	}
 
+	public void setStyle(Style style) {
+		this.style = style;
+	}
+
+	public PledgePurity getPledgePurity() {
+		return pledgePurity;
+	}
+
+	public void setPledgePurity(PledgePurity pledgePurity) {
+		this.pledgePurity = pledgePurity;
+	}
+
+	public Double getWeight() {
+		return weight;
+	}
+
+	public void setWeight(Double weight) {
+		this.weight = weight;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
 	
 }

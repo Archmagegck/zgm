@@ -20,40 +20,19 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
- * 入库单
+ * 超期检测记录
  * @author wangzz
  */
 @Entity
-@Table(name = "t_insRecord")
+@Table(name = "t_extendedCheck")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class InsRecord {
+public class ExtendedCheck {
 	
 	@Id
 	@GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
 	@GeneratedValue(generator = "uuid")
-	@Column(name = "in_id")
+	@Column(name = "ec_id")
 	private String id;
-	
-	/**
-	 * 入库单号
-	 */
-	@Column(name = "in_code")
-	private String code;
-	
-	
-	/**
-	 * 入库单加密号
-	 */
-	@Column(name = "in_secretCode")
-	private String secretCode;
-	
-	
-	/**
-	 * 总重量
-	 */
-	@Column(name = "in_sumWeight")
-	private Double sumWeight;
-	
 	
 	/**
 	 * 所属仓库
@@ -61,6 +40,30 @@ public class InsRecord {
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "w_id")
 	private Warehouse warehouse;
+	
+	/**
+	 * 超期检测单号
+	 */
+	@Column(name = "ec_code")
+	private String code;
+	
+	/**
+	 * 超期检测总重量
+	 */
+	@Column(name = "ec_sumWeight")
+	private Double sumWeight;
+	
+	/**
+	 * 光谱法检测重量
+	 */
+	@Column(name = "ec_gpWeight")
+	private Double gpWeight;
+	
+	/**
+	 * 溶金法检测重量
+	 */
+	@Column(name = "ec_rjWeight")
+	private Double rjWeight;
 	
 	
 	/**
@@ -72,34 +75,17 @@ public class InsRecord {
 	
 	
 	/**
-	 * 入库时间
+	 * 检测时间
 	 */
-	@Column(name = "in_date")
+	@Column(name = "ec_date")
 	private Date date = new Date();
-	
-	
-	/**
-	 * 扫描件状态<br>
-	 * 0:未上传<br>
-	 * 1:已上传
-	 */
-	@Column(name = "in_attachState")
-	private Integer attachState = 0;
-	
-	
-	/**
-	 * 扫描件<br>
-	 * 保存上传地址
-	 */
-	@Column(name = "in_attach")
-	private String attach;
 	
 	
 	/**
 	 * 明细
 	 */
-	@OneToMany(mappedBy = "insRecord")
-	private List<InsRecordDetail> insRecordDetails = new ArrayList<InsRecordDetail>();
+	@OneToMany(mappedBy = "extendedCheckDetail")
+	private List<ExtendedCheckDetail> extendedCheckDetails = new ArrayList<ExtendedCheckDetail>();
 
 
 	public String getId() {
@@ -109,6 +95,16 @@ public class InsRecord {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+
+	public Warehouse getWarehouse() {
+		return warehouse;
+	}
+
+
+	public void setWarehouse(Warehouse warehouse) {
+		this.warehouse = warehouse;
 	}
 
 
@@ -122,16 +118,6 @@ public class InsRecord {
 	}
 
 
-	public String getSecretCode() {
-		return secretCode;
-	}
-
-
-	public void setSecretCode(String secretCode) {
-		this.secretCode = secretCode;
-	}
-
-
 	public Double getSumWeight() {
 		return sumWeight;
 	}
@@ -142,13 +128,23 @@ public class InsRecord {
 	}
 
 
-	public Warehouse getWarehouse() {
-		return warehouse;
+	public Double getGpWeight() {
+		return gpWeight;
 	}
 
 
-	public void setWarehouse(Warehouse warehouse) {
-		this.warehouse = warehouse;
+	public void setGpWeight(Double gpWeight) {
+		this.gpWeight = gpWeight;
+	}
+
+
+	public Double getRjWeight() {
+		return rjWeight;
+	}
+
+
+	public void setRjWeight(Double rjWeight) {
+		this.rjWeight = rjWeight;
 	}
 
 
@@ -172,33 +168,13 @@ public class InsRecord {
 	}
 
 
-	public Integer getAttachState() {
-		return attachState;
+	public List<ExtendedCheckDetail> getExtendedCheckDetails() {
+		return extendedCheckDetails;
 	}
 
 
-	public void setAttachState(Integer attachState) {
-		this.attachState = attachState;
-	}
-
-
-	public String getAttach() {
-		return attach;
-	}
-
-
-	public void setAttach(String attach) {
-		this.attach = attach;
-	}
-
-
-	public List<InsRecordDetail> getInsRecordDetails() {
-		return insRecordDetails;
-	}
-
-
-	public void setInsRecordDetails(List<InsRecordDetail> insRecordDetails) {
-		this.insRecordDetails = insRecordDetails;
+	public void setExtendedCheckDetails(List<ExtendedCheckDetail> extendedCheckDetails) {
+		this.extendedCheckDetails = extendedCheckDetails;
 	}
 
 

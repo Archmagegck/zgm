@@ -1,29 +1,28 @@
 package com.pms.app.entity.reference;
 
 /**
- * 贷款（融资）方式
+ * 检测状态
  * @author wangzz
  */
-public enum Loans {
+public enum CheckState {
 	
 	/**
-	 * 租赁方式
+	 * 合格
 	 */
-	Rent {
+	Ok {
 		@Override
 		public String getTitle() {
-			return "租赁方式";
+			return "合格";
 		}
 	},
 	
-	
 	/**
-	 * 现金方式
+	 * 通过
 	 */
-	Cash {
+	Fail {
 		@Override
 		public String getTitle() {
-			return "现金方式";
+			return "不合格";
 		}
 	};
 	
@@ -37,4 +36,6 @@ public enum Loans {
     public int getValue(){   
         return this.ordinal();   
     }
+	
+	
 }

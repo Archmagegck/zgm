@@ -133,25 +133,25 @@ public class DailyStockService {
 				
 				c = r.createCell(2);
 				c.setCellStyle(cOtherCellStyle);
-				c.setCellValue(stock.getSpecWeight());
+//				c.setCellValue(stock.getSpecWeight());
 				
 				c = r.createCell(3);
 				c.setCellStyle(cOtherCellStyle);
 				String address = stock.getWarehouse().getAddress();
-				if(stock.getInStock() == 0) {
-					address = "在途";
-				}
+//				if(stock.getInStock() == 0) {
+//					address = "在途";
+//				}
 				c.setCellValue(address);
 				
 				c = r.createCell(4);
 				c.setCellStyle(cOtherCellStyle);
-				c.setCellValue(stock.getAmount());
+//				c.setCellValue(stock.getAmount());
 				
 				c = r.createCell(5);
 				c.setCellStyle(cOtherCellStyle);
 				c.setCellValue(stock.getSumWeight());
 				
-				sumAmount = sumAmount + stock.getAmount();
+//				sumAmount = sumAmount + stock.getAmount();
 				sumWeight = sumWeight + stock.getSumWeight();
 				allSumAmount = allSumAmount + sumAmount;
 				allSumWeight = allSumWeight + sumWeight;

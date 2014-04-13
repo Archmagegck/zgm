@@ -88,19 +88,19 @@ public class DailyOutsRecordService extends BaseService<OutsRecordDetail, String
 			
 			c = r.createCell(4);
 			c.setCellStyle(cOtherCellStyle);
-			c.setCellValue(outsRecordDetail.getSpecWeight());
+//			c.setCellValue(outsRecordDetail.getSpecWeight());
 			
 			c = r.createCell(5);
 			c.setCellStyle(cOtherCellStyle);
-			c.setCellValue(outsRecordDetail.getAmount());
+//			c.setCellValue(outsRecordDetail.getAmount());
 			
 			c = r.createCell(6);
 			c.setCellStyle(cOtherCellStyle);
-			c.setCellValue(outsRecordDetail.getSumWeight());
+//			c.setCellValue(outsRecordDetail.getSumWeight());
 			
 			c = r.createCell(7);
 			c.setCellStyle(cOtherCellStyle);
-			c.setCellValue(outsRecordDetail.getCompany());
+//			c.setCellValue(outsRecordDetail.getCompany());
 			
 			c = r.createCell(8);
 			c.setCellStyle(cOtherCellStyle);
@@ -108,7 +108,7 @@ public class DailyOutsRecordService extends BaseService<OutsRecordDetail, String
 			
 			c = r.createCell(9);
 			c.setCellStyle(cOtherCellStyle);
-			c.setCellValue(outsRecordDetail.getRemainWeight());
+//			c.setCellValue(outsRecordDetail.getRemainWeight());
 			
 			row++;
 			order++;

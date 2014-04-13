@@ -51,12 +51,12 @@ public class PledgeConfig {
 	@JoinColumn(name = "s_id")
 	private Supervisor supervisor;
 	
+	
 	/**
-	 * 最低成色要求
+	 * 监管员出库重量（kg）
 	 */
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "pp_id")
-	private PledgePurity pledgePurity;
+	@Column(name = "pc_outWeight")
+	private Double outWeight;
 	
 	
 	/**
@@ -82,6 +82,29 @@ public class PledgeConfig {
 	 */
 	@Column(name = "pc_minCordon")
 	private Double minCordon;
+	
+	/**
+	 * 盘存误差范围（%）
+	 */
+	@Column(name = "pc_ieRange")
+	private Double ieRange;
+	
+	/**
+	 * 初始状态登记记录
+	 * 0：未记录
+	 * 1：已记录
+	 */
+	@Column(name = "pc_iniRecord")
+	private int iniRecord = 0;
+	
+	/**
+	 * 初始状态检测记录
+	 * 0：未记录
+	 * 1：已记录
+	 */
+	@Column(name = "pc_iniCheck")
+	private int iniCheck = 0;
+	
 
 	public String getId() {
 		return id;
@@ -115,13 +138,6 @@ public class PledgeConfig {
 		this.supervisor = supervisor;
 	}
 
-	public PledgePurity getPledgePurity() {
-		return pledgePurity;
-	}
-
-	public void setPledgePurity(PledgePurity pledgePurity) {
-		this.pledgePurity = pledgePurity;
-	}
 
 	public Double getMinWeight() {
 		return minWeight;
@@ -153,6 +169,38 @@ public class PledgeConfig {
 
 	public void setMinCordon(Double minCordon) {
 		this.minCordon = minCordon;
+	}
+
+	public Double getOutWeight() {
+		return outWeight;
+	}
+
+	public void setOutWeight(Double outWeight) {
+		this.outWeight = outWeight;
+	}
+
+	public Double getIeRange() {
+		return ieRange;
+	}
+
+	public void setIeRange(Double ieRange) {
+		this.ieRange = ieRange;
+	}
+
+	public int getIniRecord() {
+		return iniRecord;
+	}
+
+	public void setIniRecord(int iniRecord) {
+		this.iniRecord = iniRecord;
+	}
+
+	public int getIniCheck() {
+		return iniCheck;
+	}
+
+	public void setIniCheck(int iniCheck) {
+		this.iniCheck = iniCheck;
 	}
 	
 	

@@ -134,6 +134,9 @@
 									所属辖区
 								</th>
 								<th>
+									所属仓库
+								</th>
+								<th>
 									备注
 								</th>
 								<th>
@@ -172,6 +175,9 @@
 								</td>
 								<td>
 									${supervisor.area }&nbsp;
+								</td>
+								<td>
+									${supervisor.warehouse.name }&nbsp;
 								</td>
 								<td>
 									${supervisor.desc }&nbsp;

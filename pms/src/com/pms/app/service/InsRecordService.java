@@ -23,7 +23,6 @@ import com.pms.app.entity.Stock;
 import com.pms.app.entity.SupervisionCustomer;
 import com.pms.app.entity.Warehouse;
 import com.pms.app.util.CodeUtils;
-import com.pms.app.util.IdWorker;
 import com.pms.base.dao.BaseDao;
 import com.pms.base.service.BaseService;
 
@@ -50,19 +49,19 @@ public class InsRecordService extends BaseService<InsRecord, String> {
 		insRecord.setCode(CodeUtils.getInsRecordCode(supervisionCustomer.getCode()));
 		Map<String, Stock> stockMap = stockService.findNoTranStockKeyMapByWarehouseId(insRecord.getWarehouse().getId());
 		
-		String pledgeRecordCode = insRecord.getWarehouse().getPledgeRecordCode();
-		if(StringUtils.hasText(pledgeRecordCode)) {
+//		String pledgeRecordCode = insRecord.getWarehouse().getPledgeRecordCode();
+		if(StringUtils.hasText("")) {
 			if(stockMap.isEmpty()){
-				pledgeRecordCode = String.valueOf(new IdWorker(1, 2, 3).getId());
+//				pledgeRecordCode = String.valueOf(new IdWorker(1, 2, 3).getId());
 				Warehouse warehouse = warehouseDao.findOne(insRecord.getWarehouse().getId());
-				warehouse.setPledgeRecordCode(pledgeRecordCode);
+//				warehouse.setPledgeRecordCode(pledgeRecordCode);
 				warehouseDao.save(warehouse);
 				insRecord.setWarehouse(warehouse);
 			}
 		} else {
-			pledgeRecordCode = String.valueOf(new IdWorker(1, 2, 3).getId());
+//			pledgeRecordCode = String.valueOf(new IdWorker(1, 2, 3).getId());
 			Warehouse warehouse = warehouseDao.findOne(insRecord.getWarehouse().getId());
-			warehouse.setPledgeRecordCode(pledgeRecordCode);
+//			warehouse.setPledgeRecordCode(pledgeRecordCode);
 			warehouseDao.save(warehouse);
 			insRecord.setWarehouse(warehouse);
 		}
@@ -74,14 +73,13 @@ public class InsRecordService extends BaseService<InsRecord, String> {
 			detail.setDelegator(supervisionCustomer.getDelegator());
 			detail.setSupervisionCustomer(supervisionCustomer);
 			
-			double detailSumWeight = new BigDecimal(detail.getAmount() * detail.getSpecWeight()).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-			detail.setSumWeight(detailSumWeight);
-			sumWeight += detailSumWeight;
+			detail.setWeight(detail.getWeight());
+			sumWeight += detail.getWeight();
 			
 			String key = detail.getKey();
 			Stock stock = stockMap.get(key);
 			if(stock == null) {
-				stock = new Stock(insRecord.getWarehouse(), insRecord.getClosedTran(), detail);
+				stock = new Stock(insRecord.getWarehouse(), detail);
 				stockMap.put(key, stock);
 			} else {
 				stock.add(detail);
@@ -92,7 +90,7 @@ public class InsRecordService extends BaseService<InsRecord, String> {
 		PledgeRecord pledgeRecord = new PledgeRecord();
 		pledgeRecord.setDelegator(supervisionCustomer.getDelegator());
 		pledgeRecord.setSupervisionCustomer(supervisionCustomer);
-		pledgeRecord.setCode(pledgeRecordCode);
+//		pledgeRecord.setCode(pledgeRecordCode);
 		pledgeRecord.setRecordName(CodeUtils.getPledgeRecordCode(supervisionCustomer.getCode()));
 		pledgeRecord.setWarehouse(insRecord.getWarehouse());
 		
@@ -117,7 +115,6 @@ public class InsRecordService extends BaseService<InsRecord, String> {
 		pledgeRecordDao.save(pledgeRecord);
 		pledgeRecordDetailDao.save(pledgeRecordDetails);
 		
-		insRecord.setPledgeRecord(pledgeRecord);
 		insRecord.setSumWeight(sumWeight);
 		insRecordDao.save(insRecord);
 		insRecordDetailDao.save(insRecordDetailList);

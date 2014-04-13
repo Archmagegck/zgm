@@ -43,18 +43,10 @@ public class Inventory {
 	private Warehouse warehouse;
 	
 	/**
-	 * 记录编号
+	 * 盘存编号
 	 */
 	@Column(name = "i_code")
 	private String code;
-	
-	/**
-	 * 是否相符<br>
-	 * 1:一致
-	 * 0:不一致
-	 */
-	@Column(name = "i_equation")
-	private Integer equation = 1;
 	
 	/**
 	 * 监管员姓名
@@ -77,7 +69,6 @@ public class Inventory {
 	public String getDateStr() {
 		return new DateTime(date).toString("yyyy-MM-dd HH:mm:ss");
 	}
-	
 
 	public String getId() {
 		return id;
@@ -103,28 +94,12 @@ public class Inventory {
 		this.code = code;
 	}
 
-	public Integer getEquation() {
-		return equation;
-	}
-
-	public void setEquation(Integer equation) {
-		this.equation = equation;
-	}
-
 	public String getSupName() {
 		return supName;
 	}
 
 	public void setSupName(String supName) {
 		this.supName = supName;
-	}
-
-	public List<InventoryDetail> getInventoryDetails() {
-		return inventoryDetails;
-	}
-
-	public void setInventoryDetails(List<InventoryDetail> inventoryDetails) {
-		this.inventoryDetails = inventoryDetails;
 	}
 
 	public Date getDate() {
@@ -134,5 +109,14 @@ public class Inventory {
 	public void setDate(Date date) {
 		this.date = date;
 	}
+
+	public List<InventoryDetail> getInventoryDetails() {
+		return inventoryDetails;
+	}
+
+	public void setInventoryDetails(List<InventoryDetail> inventoryDetails) {
+		this.inventoryDetails = inventoryDetails;
+	}
+	
 
 }

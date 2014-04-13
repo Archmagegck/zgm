@@ -21,7 +21,6 @@ import com.pms.base.service.BaseService;
 public class StockService extends BaseService<Stock, String> {
 
 	@Autowired private StockDao stockDao;
-	@Autowired private Au9995PriceService au9995PriceService;
 
 	@Override
 	protected BaseDao<Stock, String> getEntityDao() {
@@ -53,7 +52,7 @@ public class StockService extends BaseService<Stock, String> {
 		Map<String, Stock> stockMap = new HashMap<String, Stock>();
 		List<Stock> stockList = stockDao.findByWarehouseId(warehouseId);
 		for (Stock stock : stockList) {
-			stockMap.put(stock.getOutKey(), stock);
+			stockMap.put(stock.getKey(), stock);
 		}
 		return stockMap;
 	}
@@ -90,7 +89,7 @@ public class StockService extends BaseService<Stock, String> {
 	}
 	
 	public List<TotalStock> findTotalList() {
-		double newestValue = au9995PriceService.findNewestPrice();
+//		double newestValue = au9995PriceService.findNewestPrice();
 		List<TotalStock> totalStocks = new ArrayList<TotalStock>();
 		List<Object[]> objList = stockDao.findTotalList();
 		for(Object[] ob : objList) {
@@ -103,8 +102,8 @@ public class StockService extends BaseService<Stock, String> {
 			Warehouse warehouse = (Warehouse) ob[3];
 			totalStock.setAmount((Double)ob[4]);
 			totalStock.setSumWeight((Double)ob[5]);
-			double sumValue = totalStock.getSumWeight().doubleValue() * newestValue;
-			totalStock.setSumValue(sumValue);
+//			double sumValue = totalStock.getSumWeight().doubleValue() * newestValue;
+//			totalStock.setSumValue(sumValue);
 			int inStock = (Integer)ob[6];
 			if(inStock == 1) {
 				totalStock.setStorage(warehouse.getAddress());

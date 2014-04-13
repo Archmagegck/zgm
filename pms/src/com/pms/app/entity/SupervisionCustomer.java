@@ -44,14 +44,6 @@ public class SupervisionCustomer {
 	private String name;
 	
 	/**
-	 * 监管员
-	 */
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "s_id")
-	private Supervisor supervisor;
-	
-	
-	/**
 	 * 仓库
 	 */
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
@@ -66,7 +58,7 @@ public class SupervisionCustomer {
 	private Delegator delegator;
 	
 	/**
-	 * 贷款方式
+	 * 融资方式
 	 */
 	@Column(name = "s_loans")
 	private Loans loans;
@@ -191,14 +183,6 @@ public class SupervisionCustomer {
 
 	public void setDesc(String desc) {
 		this.desc = desc;
-	}
-
-	public Supervisor getSupervisor() {
-		return supervisor;
-	}
-
-	public void setSupervisor(Supervisor supervisor) {
-		this.supervisor = supervisor;
 	}
 
 	public Delegator getDelegator() {

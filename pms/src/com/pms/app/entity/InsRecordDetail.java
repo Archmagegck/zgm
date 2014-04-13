@@ -17,8 +17,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 import org.joda.time.DateTime;
 
-import com.pms.app.entity.reference.CheckMethod;
-
 /**
  * 入库单明细
  * @author wangzz
@@ -76,13 +74,6 @@ public class InsRecordDetail {
 	
 	
 	/**
-	 * 规格重量（kg/件）
-	 */
-	@Column(name = "ind_specWeight")
-	private Double specWeight;
-	
-	
-	/**
 	 * 数量（件）
 	 */
 	@Column(name = "ind_amount")
@@ -90,10 +81,10 @@ public class InsRecordDetail {
 	
 	
 	/**
-	 * 总重量
+	 * 重量
 	 */
-	@Column(name = "ind_sumWeight")
-	private Double sumWeight = 0.0;
+	@Column(name = "ind_weight")
+	private Double weight = 0.0;
 	
 	
 	/**
@@ -101,41 +92,6 @@ public class InsRecordDetail {
 	 */
 	@Column(name = "ind_company")
 	private String company;
-	
-	
-	/**
-	 * 检测成色
-	 */
-	@Column(name = "ind_checkPurity")
-	private String checkPurity;
-	
-	
-	/**
-	 * 检测规格重量（kg/件）
-	 */
-	@Column(name = "ind_checkSpecWeight")
-	private Double checkSpecWeight;
-	
-	
-	/**
-	 * 检测数量（件）
-	 */
-	@Column(name = "ind_checkAmount")
-	private Double checkAmount;
-	
-	
-	/**
-	 * 检测重量（kg）
-	 */
-	@Column(name = "ind_checkWeight")
-	private Double checkWeight;
-	
-	
-	/**
-	 * 检测方法
-	 */
-	@Column(name = "ind_checkMethod")
-	private CheckMethod checkMethod;
 	
 	
 	/**
@@ -152,6 +108,16 @@ public class InsRecordDetail {
 	private Date date = new Date();
 	
 	
+	public String getKey() {
+		StringBuffer sb = new StringBuffer("{");
+		sb.append("\"warehouse\":\"").append(insRecord.getWarehouse().getId()).append("\",");
+		sb.append("\"style\":\"").append(style.getId()).append("\",");
+		sb.append("\"pledgePurity\":\"").append(pledgePurity.getId()).append("\",");
+		sb.append("}");
+		return sb.toString();
+	}
+	
+	
 	public String getDateStr() {
 		return new DateTime(date).toString("yyyy-MM-dd");
 	}
@@ -160,180 +126,20 @@ public class InsRecordDetail {
 		return new DateTime(date).toString("HH:mm");
 	}
 
-	
-	public void copy(InsRecordDetail insRecordDetail) {
-		this.amount = insRecordDetail.getAmount();
-		this.checkAmount = insRecordDetail.getCheckAmount();
-		this.checkMethod = insRecordDetail.getCheckMethod();
-		this.checkPurity = insRecordDetail.getCheckPurity();
-		this.checkSpecWeight = insRecordDetail.getCheckSpecWeight();
-		this.checkWeight = insRecordDetail.getCheckWeight();
-		this.company = insRecordDetail.getCompany();
-		this.desc = insRecordDetail.getDesc();
-		this.pledgePurity = insRecordDetail.getPledgePurity();
-		this.specWeight = insRecordDetail.getSpecWeight();
-		this.style = insRecordDetail.getStyle();
-		this.sumWeight = insRecordDetail.getAmount() * insRecordDetail.getSpecWeight();
-	}
-	
-	public String getKey() {
-		StringBuffer sb = new StringBuffer("{");
-		sb.append("\"warehouse\":\"").append(insRecord.getWarehouse().getId()).append("\",");
-		sb.append("\"style\":\"").append(style.getId()).append("\",");
-		sb.append("\"pledgePurity\":\"").append(pledgePurity.getId()).append("\",");
-		sb.append("\"specWeight\":\"").append(specWeight).append("\",");
-		sb.append("\"company\":\"").append(company).append("\",");
-		sb.append("\"closedTran\":\"").append(insRecord.getClosedTran()).append("\",");
-		sb.append("\"desc\":\"").append(desc).append("\"");
-		sb.append("}");
-		return sb.toString();
-	}
-
 	public String getId() {
 		return id;
 	}
-
 
 	public void setId(String id) {
 		this.id = id;
 	}
 
-
 	public InsRecord getInsRecord() {
 		return insRecord;
 	}
 
-
 	public void setInsRecord(InsRecord insRecord) {
 		this.insRecord = insRecord;
-	}
-
-
-	public Style getStyle() {
-		return style;
-	}
-
-
-	public void setStyle(Style style) {
-		this.style = style;
-	}
-
-
-	public PledgePurity getPledgePurity() {
-		return pledgePurity;
-	}
-
-
-	public void setPledgePurity(PledgePurity pledgePurity) {
-		this.pledgePurity = pledgePurity;
-	}
-
-
-	public Double getSpecWeight() {
-		return specWeight;
-	}
-
-
-	public void setSpecWeight(Double specWeight) {
-		this.specWeight = specWeight;
-	}
-
-
-	public Double getAmount() {
-		return amount;
-	}
-
-
-	public void setAmount(Double amount) {
-		this.amount = amount;
-	}
-
-
-	public Double getSumWeight() {
-		return sumWeight;
-	}
-
-
-	public void setSumWeight(Double sumWeight) {
-		this.sumWeight = sumWeight;
-	}
-
-
-	public String getCompany() {
-		return company;
-	}
-
-
-	public void setCompany(String company) {
-		this.company = company;
-	}
-
-
-	public String getCheckPurity() {
-		return checkPurity;
-	}
-
-
-	public void setCheckPurity(String checkPurity) {
-		this.checkPurity = checkPurity;
-	}
-
-
-	public Double getCheckSpecWeight() {
-		return checkSpecWeight;
-	}
-
-
-	public void setCheckSpecWeight(Double checkSpecWeight) {
-		this.checkSpecWeight = checkSpecWeight;
-	}
-
-
-	public Double getCheckAmount() {
-		return checkAmount;
-	}
-
-
-	public void setCheckAmount(Double checkAmount) {
-		this.checkAmount = checkAmount;
-	}
-
-
-	public Double getCheckWeight() {
-		return checkWeight;
-	}
-
-
-	public void setCheckWeight(Double checkWeight) {
-		this.checkWeight = checkWeight;
-	}
-
-
-	public CheckMethod getCheckMethod() {
-		return checkMethod;
-	}
-
-
-	public void setCheckMethod(CheckMethod checkMethod) {
-		this.checkMethod = checkMethod;
-	}
-
-
-	public String getDesc() {
-		return desc;
-	}
-
-
-	public void setDesc(String desc) {
-		this.desc = desc;
-	}
-
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
 	}
 
 	public Delegator getDelegator() {
@@ -351,6 +157,63 @@ public class InsRecordDetail {
 	public void setSupervisionCustomer(SupervisionCustomer supervisionCustomer) {
 		this.supervisionCustomer = supervisionCustomer;
 	}
+
+	public Style getStyle() {
+		return style;
+	}
+
+	public void setStyle(Style style) {
+		this.style = style;
+	}
+
+	public PledgePurity getPledgePurity() {
+		return pledgePurity;
+	}
+
+	public void setPledgePurity(PledgePurity pledgePurity) {
+		this.pledgePurity = pledgePurity;
+	}
+
+	public Double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(Double amount) {
+		this.amount = amount;
+	}
+
+	public Double getWeight() {
+		return weight;
+	}
+
+	public void setWeight(Double weight) {
+		this.weight = weight;
+	}
+
+	public String getCompany() {
+		return company;
+	}
+
+	public void setCompany(String company) {
+		this.company = company;
+	}
+
+	public String getDesc() {
+		return desc;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
 
 	
 }

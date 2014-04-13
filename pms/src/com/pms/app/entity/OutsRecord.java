@@ -21,7 +21,6 @@ import org.hibernate.annotations.GenericGenerator;
 import org.joda.time.DateTime;
 
 import com.pms.app.entity.reference.AuditState;
-import com.pms.app.entity.reference.PickType;
 
 /**
  * 出库单
@@ -37,50 +36,6 @@ public class OutsRecord {
 	@GeneratedValue(generator = "uuid")
 	@Column(name = "out_id")
 	private String id;
-	
-	
-	/**
-	 * 提货通知书
-	 */
-	@Column(name = "out_pickNoticeUrl")
-	private String pickNoticeUrl;
-	
-	
-	/**
-	 * 提货通知书编号
-	 */
-	@Column(name = "out_pickNoticeCode")
-	private String pickNoticeCode;
-	
-	
-	/**
-	 * 通知状态<br>
-	 * 1:通知<br>
-	 * 0:不通知
-	 */
-	@Column(name = "out_notice")
-	private Integer notice = 0;
-	
-	
-	/**
-	 * 提货类型
-	 */
-	@Column(name = "out_pickType")
-	private PickType pickType = PickType.Part;
-	
-	
-	/**
-	 * 出库单号
-	 */
-	@Column(name = "out_code")
-	private String code;
-	
-	
-	/**
-	 * 总重量
-	 */
-	@Column(name = "out_sumWeight")
-	private Double sumWeight;
 	
 	
 	/**
@@ -108,31 +63,24 @@ public class OutsRecord {
 	
 	
 	/**
-	 * 提货人姓名
+	 * 出库单号
 	 */
-	@Column(name = "out_picker")
-	private String picker;
+	@Column(name = "out_code")
+	private String code;
 	
 	
 	/**
-	 * 提货人身份证
+	 * 出库单加密号
 	 */
-	@Column(name = "out_pickerIdCard")
-	private String pickerIdCard;
+	@Column(name = "out_secretCode")
+	private String secretCode;
 	
 	
 	/**
-	 * 提货人身份证扫描件
+	 * 重量
 	 */
-	@Column(name = "out_pickerIdCardPic")
-	private String pickerIdCardPic;
-	
-	
-	/**
-	 * 存储地点
-	 */
-	@Column(name = "out_storage")
-	private String storage;
+	@Column(name = "out_weight")
+	private Double weight;
 	
 	
 	/**
@@ -157,34 +105,26 @@ public class OutsRecord {
 	
 	
 	/**
-	 * 扫描件状态<br>
-	 * 0:未上传<br>
-	 * 1:已上传
+	 * 出库单扫描件
 	 */
-	@Column(name = "out_attachState")
-	private int attachState = 0;
+	@Column(name = "out_attach")
+	private String attach;
 	
 	
 	/**
-	 * 出库单URL
+	 * 备注
 	 */
-	@Column(name = "out_outRecordUrl")
-	private String outRecordUrl;
+	@Column(name = "out_desc")
+	private String desc;
 	
 	
 	/**
-	 * 提货通知书（回执）URL
+	 * 通知状态<br>
+	 * 1:全部<br>
+	 * 0:部分
 	 */
-	@Column(name = "out_pickFeedbackUrl")
-	private String pickFeedbackUrl;
-	
-	
-	/**
-	 * 质物清单
-	 */
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "pr_id")
-	private PledgeRecord pledgeRecord;
+	@Column(name = "out_notice")
+	private Integer notice = 0;
 	
 	
 	/**
@@ -209,46 +149,6 @@ public class OutsRecord {
 	}
 
 
-	public String getPickNoticeUrl() {
-		return pickNoticeUrl;
-	}
-
-
-	public void setPickNoticeUrl(String pickNoticeUrl) {
-		this.pickNoticeUrl = pickNoticeUrl;
-	}
-
-
-	public PickType getPickType() {
-		return pickType;
-	}
-
-
-	public void setPickType(PickType pickType) {
-		this.pickType = pickType;
-	}
-
-
-	public String getCode() {
-		return code;
-	}
-
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-
-	public Double getSumWeight() {
-		return sumWeight;
-	}
-
-
-	public void setSumWeight(Double sumWeight) {
-		this.sumWeight = sumWeight;
-	}
-
-
 	public Warehouse getWarehouse() {
 		return warehouse;
 	}
@@ -256,126 +156,6 @@ public class OutsRecord {
 
 	public void setWarehouse(Warehouse warehouse) {
 		this.warehouse = warehouse;
-	}
-
-
-	public String getPicker() {
-		return picker;
-	}
-
-
-	public void setPicker(String picker) {
-		this.picker = picker;
-	}
-
-
-	public String getPickerIdCard() {
-		return pickerIdCard;
-	}
-
-
-	public void setPickerIdCard(String pickerIdCard) {
-		this.pickerIdCard = pickerIdCard;
-	}
-
-
-	public String getPickerIdCardPic() {
-		return pickerIdCardPic;
-	}
-
-
-	public void setPickerIdCardPic(String pickerIdCardPic) {
-		this.pickerIdCardPic = pickerIdCardPic;
-	}
-
-
-	public String getStorage() {
-		return storage;
-	}
-
-
-	public void setStorage(String storage) {
-		this.storage = storage;
-	}
-
-
-	public String getSupName() {
-		return supName;
-	}
-
-
-	public void setSupName(String supName) {
-		this.supName = supName;
-	}
-
-
-	public AuditState getAuditState() {
-		return auditState;
-	}
-
-
-	public void setAuditState(AuditState auditState) {
-		this.auditState = auditState;
-	}
-
-
-	public int getAttachState() {
-		return attachState;
-	}
-
-
-	public void setAttachState(int attachState) {
-		this.attachState = attachState;
-	}
-
-
-	public String getOutRecordUrl() {
-		return outRecordUrl;
-	}
-
-
-	public void setOutRecordUrl(String outRecordUrl) {
-		this.outRecordUrl = outRecordUrl;
-	}
-
-
-	public String getPickFeedbackUrl() {
-		return pickFeedbackUrl;
-	}
-
-
-	public void setPickFeedbackUrl(String pickFeedbackUrl) {
-		this.pickFeedbackUrl = pickFeedbackUrl;
-	}
-
-
-	public List<OutsRecordDetail> getOutsRecordDetails() {
-		return outsRecordDetails;
-	}
-
-
-	public void setOutsRecordDetails(List<OutsRecordDetail> outsRecordDetails) {
-		this.outsRecordDetails = outsRecordDetails;
-	}
-
-
-	public Date getDate() {
-		return date;
-	}
-
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
-
-	public PledgeRecord getPledgeRecord() {
-		return pledgeRecord;
-	}
-
-
-	public void setPledgeRecord(PledgeRecord pledgeRecord) {
-		this.pledgeRecord = pledgeRecord;
 	}
 
 
@@ -399,13 +179,93 @@ public class OutsRecord {
 	}
 
 
-	public String getPickNoticeCode() {
-		return pickNoticeCode;
+	public String getCode() {
+		return code;
 	}
 
 
-	public void setPickNoticeCode(String pickNoticeCode) {
-		this.pickNoticeCode = pickNoticeCode;
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+
+	public String getSecretCode() {
+		return secretCode;
+	}
+
+
+	public void setSecretCode(String secretCode) {
+		this.secretCode = secretCode;
+	}
+
+
+	public Double getWeight() {
+		return weight;
+	}
+
+
+	public void setWeight(Double weight) {
+		this.weight = weight;
+	}
+
+
+	public String getSupName() {
+		return supName;
+	}
+
+
+	public void setSupName(String supName) {
+		this.supName = supName;
+	}
+
+
+	public Date getDate() {
+		return date;
+	}
+
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+
+	public AuditState getAuditState() {
+		return auditState;
+	}
+
+
+	public void setAuditState(AuditState auditState) {
+		this.auditState = auditState;
+	}
+
+
+	public String getAttach() {
+		return attach;
+	}
+
+
+	public void setAttach(String attach) {
+		this.attach = attach;
+	}
+
+
+	public String getDesc() {
+		return desc;
+	}
+
+
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+
+
+	public List<OutsRecordDetail> getOutsRecordDetails() {
+		return outsRecordDetails;
+	}
+
+
+	public void setOutsRecordDetails(List<OutsRecordDetail> outsRecordDetails) {
+		this.outsRecordDetails = outsRecordDetails;
 	}
 
 
@@ -417,4 +277,7 @@ public class OutsRecord {
 	public void setNotice(Integer notice) {
 		this.notice = notice;
 	}
+
+
+	
 }

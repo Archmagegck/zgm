@@ -1,7 +1,5 @@
 package com.pms.app.entity;
 
-import java.math.BigDecimal;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -53,77 +51,26 @@ public class Stock {
 	private PledgePurity pledgePurity;
 	
 	/**
-	 * 规格重量（kg/件）
-	 */
-	@Column(name = "s_specWeight")
-	private Double specWeight;
-	
-	/**
-	 * 数量（件）
-	 */
-	@Column(name = "s_amount")
-	private Double amount;
-	
-	/**
 	 * 总重量
 	 */
 	@Column(name = "s_sumWeight")
 	private Double sumWeight;
 	
-	/**
-	 * 生产厂家
-	 */
-	@Column(name = "s_company")
-	private String company = "";
-	
-	/**
-	 * 是否封闭运输<br>
-	 * 0:否<br>
-	 * 1:是
-	 */
-	@Column(name = "s_closedTran")
-	private Integer closedTran;
-
-	
-	/**
-	 * 备注/标记
-	 */
-	@Column(name = "s_desc")
-	private String desc = "";
-	
-	/**
-	 * 是否在库,0:不在，1：在
-	 */
-	@Column(name = "s_inStock")
-	private Integer inStock = 1;
-	
 	public Stock() {}
 	
 	//直接入库的构造方法
-	public Stock(Warehouse warehouse, Integer closedTran, InsRecordDetail insRecordDetail) {
+	public Stock(Warehouse warehouse, InsRecordDetail insRecordDetail) {
 		this.warehouse = warehouse;
 		this.style = insRecordDetail.getStyle();
 		this.pledgePurity = insRecordDetail.getPledgePurity();
-		this.specWeight = insRecordDetail.getSpecWeight();
-		this.amount = insRecordDetail.getAmount();
-		this.sumWeight = insRecordDetail.getSumWeight();
-		this.company = insRecordDetail.getCompany();
-		this.closedTran = closedTran;
-		this.desc = insRecordDetail.getDesc();
+		this.sumWeight = insRecordDetail.getWeight();
 	}
 	
 	public Stock(TransitGoods transitGoods) {
 		this.warehouse = transitGoods.getWarehouse();
 		this.style = transitGoods.getStyle();
 		this.pledgePurity = transitGoods.getPledgePurity();
-		this.specWeight = transitGoods.getSpecWeight();
-		this.amount = transitGoods.getAmount();
 		this.sumWeight = transitGoods.getSumWeight();
-		this.company = transitGoods.getCompany();
-		this.closedTran = transitGoods.getClosedTran();
-		this.desc = transitGoods.getDesc();
-		this.sumWeight = this.amount * this.specWeight;
-		this.inStock = 0;
 	}
 	
 	/**
@@ -131,22 +78,7 @@ public class Stock {
 	 * @param insRecordDetail 入库明细
 	 */
 	public void add(InsRecordDetail insRecordDetail) {
-		this.amount += insRecordDetail.getAmount();
-		this.sumWeight += insRecordDetail.getSumWeight();
-	}
-	
-	/**
-	 * 在途入库
-	 * @return 
-	 */
-	public void add(TransitGoods transitGoods){
-		this.amount += transitGoods.getAmount();
-		this.sumWeight = new BigDecimal(amount * specWeight).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-	}
-	
-	public void minus(TransitGoods transitGoods){
-		this.amount -= transitGoods.getAmount();
-		this.sumWeight = new BigDecimal(amount * specWeight).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+		this.sumWeight += insRecordDetail.getWeight();
 	}
 	
 	public String getKey() {
@@ -154,22 +86,6 @@ public class Stock {
 		sb.append("\"warehouse\":\"").append(warehouse.getId()).append("\",");
 		sb.append("\"style\":\"").append(style.getId()).append("\",");
 		sb.append("\"pledgePurity\":\"").append(pledgePurity.getId()).append("\",");
-		sb.append("\"specWeight\":\"").append(specWeight).append("\",");
-		sb.append("\"company\":\"").append(company).append("\",");
-		sb.append("\"closedTran\":\"").append(closedTran).append("\",");
-		sb.append("\"desc\":\"").append(desc).append("\"");
-		sb.append("}");
-		return sb.toString();
-	}
-	
-	public String getOutKey() {
-		StringBuffer sb = new StringBuffer("{");
-		sb.append("\"warehouse\":\"").append(warehouse.getId()).append("\",");
-		sb.append("\"style\":\"").append(style.getId()).append("\",");
-		sb.append("\"pledgePurity\":\"").append(pledgePurity.getId()).append("\",");
-		sb.append("\"specWeight\":\"").append(specWeight).append("\",");
-		sb.append("\"company\":\"").append(company).append("\",");
-		sb.append("\"desc\":\"").append(desc).append("\"");
 		sb.append("}");
 		return sb.toString();
 	}
@@ -206,60 +122,12 @@ public class Stock {
 		this.pledgePurity = pledgePurity;
 	}
 
-	public Double getSpecWeight() {
-		return specWeight;
-	}
-
-	public void setSpecWeight(Double specWeight) {
-		this.specWeight = specWeight;
-	}
-
-	public Double getAmount() {
-		return amount;
-	}
-
-	public void setAmount(Double amount) {
-		this.amount = amount;
-	}
-
 	public Double getSumWeight() {
 		return sumWeight;
 	}
 
 	public void setSumWeight(Double sumWeight) {
 		this.sumWeight = sumWeight;
-	}
-
-	public String getCompany() {
-		return company;
-	}
-
-	public void setCompany(String company) {
-		this.company = company;
-	}
-
-	public String getDesc() {
-		return desc;
-	}
-
-	public void setDesc(String desc) {
-		this.desc = desc;
-	}
-
-	public Integer getClosedTran() {
-		return closedTran;
-	}
-
-	public void setClosedTran(Integer closedTran) {
-		this.closedTran = closedTran;
-	}
-
-	public Integer getInStock() {
-		return inStock;
-	}
-
-	public void setInStock(Integer inStock) {
-		this.inStock = inStock;
 	}
 	
 }	

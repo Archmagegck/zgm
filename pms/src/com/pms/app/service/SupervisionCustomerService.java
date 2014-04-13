@@ -11,13 +11,10 @@ import org.springframework.util.StringUtils;
 
 import com.pms.app.dao.PledgeConfigDao;
 import com.pms.app.dao.SupervisionCustomerDao;
-import com.pms.app.dao.SupervisorDao;
 import com.pms.app.dao.WarehouseDao;
 import com.pms.app.entity.Delegator;
 import com.pms.app.entity.PledgeConfig;
 import com.pms.app.entity.SupervisionCustomer;
-import com.pms.app.entity.Supervisor;
-import com.pms.app.entity.Warehouse;
 import com.pms.base.dao.BaseDao;
 import com.pms.base.service.BaseService;
 
@@ -26,18 +23,11 @@ public class SupervisionCustomerService extends BaseService<SupervisionCustomer,
 
 	@Autowired private SupervisionCustomerDao supervisionCustomerDao;
 	@Autowired private PledgeConfigDao pledgeConfigDao;
-	@Autowired private SupervisorDao supervisorDao;
 	@Autowired private WarehouseDao warehouseDao;
 
 	@Override
 	protected BaseDao<SupervisionCustomer, String> getEntityDao() {
 		return supervisionCustomerDao;
-	}
-	
-	public SupervisionCustomer findBySupervisorId(String supervisorId) {
-		List<SupervisionCustomer> supervisionCustomerList = supervisionCustomerDao.findListBySupervisorId(supervisorId);
-		if(supervisionCustomerList.isEmpty()) return null;
-		return supervisionCustomerList.get(0);
 	}
 	
 	public Page<SupervisionCustomer> findByDelegator(Delegator delegator, Pageable page) {
@@ -46,34 +36,14 @@ public class SupervisionCustomerService extends BaseService<SupervisionCustomer,
 	}
 	
 	@Transactional
-	public void save(SupervisionCustomer supervisionCustomer, String oldWarehouseId, String oldSupervisorId){
+	public void save(SupervisionCustomer supervisionCustomer){
 		if(!StringUtils.hasText(supervisionCustomer.getId())) {
 			PledgeConfig pledgeConfig = new PledgeConfig();
 			pledgeConfig.setDelegator(supervisionCustomer.getDelegator());
 			pledgeConfig.setSupervisionCustomer(supervisionCustomer);
-			pledgeConfig.setSupervisor(supervisionCustomer.getSupervisor());
+//			pledgeConfig.setSupervisor(supervisionCustomer.getSupervisor());
 			pledgeConfigDao.save(pledgeConfig);
-		} else {
-			if(StringUtils.hasText(oldWarehouseId)) {
-				Warehouse warehouseOld = warehouseDao.findOne(oldWarehouseId);
-				warehouseOld.setIsUsed(0);
-				warehouseDao.save(warehouseOld);
-			}
-			if(StringUtils.hasText(oldSupervisorId)) {
-				Supervisor supervisorOld = supervisorDao.findOne(oldSupervisorId);
-				supervisorOld.setIsUsed(0);
-				supervisorDao.save(supervisorOld);
-			}
-		}
-		
-		Warehouse warehouse = warehouseDao.findOne(supervisionCustomer.getWarehouse().getId());
-		warehouse.setIsUsed(1);
-		warehouseDao.save(warehouse);
-		
-		Supervisor supervisor = supervisorDao.findOne(supervisionCustomer.getSupervisor().getId());
-		supervisor.setIsUsed(1);
-		supervisorDao.save(supervisor);
-		
+		} 
 		supervisionCustomerDao.save(supervisionCustomer);
 	}
 	
@@ -84,17 +54,7 @@ public class SupervisionCustomerService extends BaseService<SupervisionCustomer,
 		if(!pledgeConfigs.isEmpty()) {
 			pledgeConfigDao.delete(pledgeConfigs);
 		}
-		SupervisionCustomer supervisionCustomer = supervisionCustomerDao.findOne(id);
-		
-		Warehouse warehouse = warehouseDao.findOne(supervisionCustomer.getWarehouse().getId());
-		warehouse.setIsUsed(0);
-		warehouseDao.save(warehouse);
-		
-		Supervisor supervisor = supervisorDao.findOne(supervisionCustomer.getSupervisor().getId());
-		supervisor.setIsUsed(0);
-		supervisorDao.save(supervisor);
-		
-		supervisionCustomerDao.delete(supervisionCustomer);
+		supervisionCustomerDao.delete(id);
 	}
 	
 	

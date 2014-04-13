@@ -38,7 +38,7 @@ public class PurityPrice {
 	 */
 	@Column(name = "p_date")
 	@Temporal(TemporalType.DATE)
-	private Date date;
+	private Date date = new Date();
 	
 	/**
 	 * 成色

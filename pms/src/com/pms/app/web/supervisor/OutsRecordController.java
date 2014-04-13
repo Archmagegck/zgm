@@ -128,14 +128,14 @@ public class OutsRecordController {
 		try {
 			String supCode = supervisionCustomer.getCode();
 			outsRecord.setCode(CodeUtils.getOutsRecordCode(supCode));
-			outsRecord.setPickNoticeCode(String.valueOf(new IdWorker(3, 2, 1).getId()));
+//			outsRecord.setPickNoticeCode(String.valueOf(new IdWorker(3, 2, 1).getId()));
 			String idCardFile = UploadUtils.uploadFile(request, 2, supCode, outsRecord.getCode());
-			outsRecord.setPickerIdCardPic(idCardFile);
+//			outsRecord.setPickerIdCardPic(idCardFile);
 			int hasPickFile = (tempImg == null) ? 0 : 1;
 			if(hasPickFile == 1) {
 				String pickNoticeUrl = UploadUtils.uploadPickFile(request, tempImg, outsRecord.getCode(), supCode);
-				outsRecord.setPickNoticeUrl(pickNoticeUrl);
-				outsRecord.setAttachState(1);
+//				outsRecord.setPickNoticeUrl(pickNoticeUrl);
+//				outsRecord.setAttachState(1);
 			}
 			String message = outsRecordService.save(outsRecord, outStocks, hasPickFile, supervisionCustomer);
 			ra.addFlashAttribute("messageOK", message);
@@ -173,16 +173,16 @@ public class OutsRecordController {
 		try {
 			OutsRecord outsRecord = outsRecordService.findById(outsRecordId);
 			outsRecord = UploadUtils.uploadOutsFile(request, outsRecord, supervisionCustomerCode);
-			outsRecord.setAttachState(1);
+//			outsRecord.setAttachState(1);
 			outsRecordService.save(outsRecord);
 			
 			MultipartFile pledgeRecordFile = ((MultipartHttpServletRequest) request).getFile("pledgeRecordFile");
 			if (!(pledgeRecordFile.getOriginalFilename() == null || "".equals(pledgeRecordFile.getOriginalFilename()))) {
-				PledgeRecord pledgeRecord = pledgeRecordService.findById(outsRecord.getPledgeRecord().getId());
-				pledgeRecord.setRecordFile(outsRecord.getPledgeRecord().getRecordFile());
-				pledgeRecord.setIfUpload(1);
-				pledgeRecord.setRecordName(CodeUtils.getPledgeRecordCode(supervisionCustomerCode));
-				pledgeRecordService.save(pledgeRecord);
+//				PledgeRecord pledgeRecord = pledgeRecordService.findById(outsRecord.getPledgeRecord().getId());
+//				pledgeRecord.setRecordFile(outsRecord.getPledgeRecord().getRecordFile());
+//				pledgeRecord.setIfUpload(1);
+//				pledgeRecord.setRecordName(CodeUtils.getPledgeRecordCode(supervisionCustomerCode));
+//				pledgeRecordService.save(pledgeRecord);
 			}
 			
 			ra.addFlashAttribute("messageOK", "上传扫描件成功！");
@@ -205,8 +205,8 @@ public class OutsRecordController {
 		double sumAmount = 0;
 		double sumWeight = 0;
 		for(OutsRecordDetail detail : outsRecord.getOutsRecordDetails()) {
-			sumAmount += detail.getAmount();
-			sumWeight += detail.getSumWeight();
+//			sumAmount += detail.getAmount();
+//			sumWeight += detail.getSumWeight();
 		}
 		sumAmount = new BigDecimal(sumAmount).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
 		sumWeight = new BigDecimal(sumWeight).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
@@ -232,9 +232,9 @@ public class OutsRecordController {
 	@RequestMapping(value = "/{id}/printPledgeRecord")
 	public String printPledgeRecord(@PathVariable("id")String id, Model model, HttpSession session) {
 		OutsRecord outsRecord = outsRecordService.findById(id);
-		PledgeRecord pledgeRecord = pledgeRecordService.findById(outsRecord.getPledgeRecord().getId());
-		model.addAttribute("pledgeRecord", pledgeRecord);
-		model.addAttribute("detailList", pledgeRecord.getPledgeRecordDetails());
+//		PledgeRecord pledgeRecord = pledgeRecordService.findById(outsRecord.getPledgeRecord().getId());
+//		model.addAttribute("pledgeRecord", pledgeRecord);
+//		model.addAttribute("detailList", pledgeRecord.getPledgeRecordDetails());
 		return "supervisor/outsRecord/printPledgeRecord";
 	}
 	

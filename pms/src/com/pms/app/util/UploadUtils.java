@@ -126,7 +126,7 @@ public class UploadUtils {
 					throw new ServiceException("上传文件发生未知异常.", e);
 				}
 				String picUrl = toFilePath + separator + "入库单扫描件" + "." + ext;
-				insRecord.setInRecordUrl(picUrl);
+//				insRecord.setInRecordUrl(picUrl);
 			}
 		}
 		
@@ -145,7 +145,7 @@ public class UploadUtils {
 					throw new ServiceException("上传文件发生未知异常.", e);
 				}
 				String picUrl = toFilePath + separator + "检测评价结果单扫描件" + "." + ext;
-				insRecord.setCheckRecordUrl(picUrl);
+//				insRecord.setCheckRecordUrl(picUrl);
 			}
 		}
 
@@ -164,7 +164,7 @@ public class UploadUtils {
 					throw new ServiceException("上传文件发生未知异常.", e);
 				}
 				String picUrl = toFilePath + separator + "质物清单扫描件" + "." + ext;
-				insRecord.getPledgeRecord().setRecordFile(picUrl);
+//				insRecord.getPledgeRecord().setRecordFile(picUrl);
 			}
 		}
 		return insRecord;
@@ -199,7 +199,7 @@ public class UploadUtils {
 					throw new ServiceException("上传文件发生未知异常.", e);
 				}
 				String picUrl = toFilePath + separator + "出库单扫描件" + "." + ext;
-				outsRecord.setOutRecordUrl(picUrl);
+//				outsRecord.setOutRecordUrl(picUrl);
 			}
 		}
 		
@@ -218,7 +218,7 @@ public class UploadUtils {
 					throw new ServiceException("上传文件发生未知异常.", e);
 				}
 				String picUrl = toFilePath + separator + "提货通知（回馈）扫描件" + "." + ext;
-				outsRecord.setPickFeedbackUrl(picUrl);
+//				outsRecord.setPickFeedbackUrl(picUrl);
 			}
 		}
 
@@ -237,7 +237,7 @@ public class UploadUtils {
 					throw new ServiceException("上传文件发生未知异常.", e);
 				}
 				String picUrl = toFilePath + separator + "质物清单扫描件" + "." + ext;
-				outsRecord.getPledgeRecord().setRecordFile(picUrl);
+//				outsRecord.getPledgeRecord().setRecordFile(picUrl);
 			}
 		}
 		return outsRecord;

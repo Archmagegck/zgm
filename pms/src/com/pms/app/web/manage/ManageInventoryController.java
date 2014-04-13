@@ -14,12 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.pms.app.entity.InventoryDetail;
-import com.pms.app.entity.reference.AuditState;
 import com.pms.app.service.DelegatorService;
 import com.pms.app.service.InventoryDetailService;
 import com.pms.app.service.SupervisionCustomerService;
@@ -54,20 +50,6 @@ public class ManageInventoryController {
 		model.addAttribute("supervisionCustomerId", supervisionCustomerId);
 		model.addAttribute("page", inventoryDetailService.findPageByQuery(pageable, delegatorId, supervisionCustomerId, date));
 		return "manage/inventory/list";
-	}
-	
-	@RequestMapping(value = "/{id}/audit")
-	public String audit(Model model, @PathVariable("id")String id, RedirectAttributes ra){
-		try {
-			InventoryDetail inventoryDetail = inventoryDetailService.findById(id);
-			inventoryDetail.setAuditState(AuditState.Pass);
-			inventoryDetailService.save(inventoryDetail);
-			ra.addFlashAttribute("messageOK", "操作成功！");
-		}  catch (Exception e) {
-			ra.addFlashAttribute("messageErr", "操作失败！");
-			logger.error("监管经理盘存操作异常", e);
-		}
-		return "redirect:/manage/inventory/list";
 	}
 	
 	

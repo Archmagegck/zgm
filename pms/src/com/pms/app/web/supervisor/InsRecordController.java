@@ -88,7 +88,7 @@ public class InsRecordController {
 			insRecordDetailsList = (List<InsRecordDetail>) session.getAttribute("insRecordDetailList");
 		}
 		if(insRecordDetail.getAmount() != null) {
-			insRecordDetail.setSumWeight(insRecordDetail.getAmount() * insRecordDetail.getSpecWeight());
+			insRecordDetail.setWeight(insRecordDetail.getWeight());
 			insRecordDetailsList.add(insRecordDetail);
 			session.setAttribute("insRecordDetailList", insRecordDetailsList);
 		}
@@ -129,7 +129,7 @@ public class InsRecordController {
 	public String updateDetail(@PathVariable("index")Integer index, InsRecordDetail insRecordDetail, HttpSession session){
 		List<InsRecordDetail> insRecordDetailsList = (List<InsRecordDetail>) session.getAttribute("insRecordDetailList");
 		InsRecordDetail insDetail = insRecordDetailsList.get(index - 1);
-		insDetail.copy(insRecordDetail);
+//		insDetail.copy(insRecordDetail);
 		return "redirect:/supervisor/insRecord/showDetailList";
 	}
 	
@@ -174,11 +174,11 @@ public class InsRecordController {
 			
 			MultipartFile pledgeRecordFile = ((MultipartHttpServletRequest) request).getFile("pledgeRecordFile");
 			if (!(pledgeRecordFile.getOriginalFilename() == null || "".equals(pledgeRecordFile.getOriginalFilename()))) {
-				PledgeRecord pledgeRecord = pledgeRecordService.findById(insRecord.getPledgeRecord().getId());
-				pledgeRecord.setRecordFile(insRecord.getPledgeRecord().getRecordFile());
-				pledgeRecord.setIfUpload(1);
-				pledgeRecord.setRecordName(CodeUtils.getPledgeRecordCode(supervisionCustomerCode));
-				pledgeRecordService.save(pledgeRecord);
+//				PledgeRecord pledgeRecord = pledgeRecordService.findById(insRecord.getPledgeRecord().getId());
+//				pledgeRecord.setRecordFile(insRecord.getPledgeRecord().getRecordFile());
+//				pledgeRecord.setIfUpload(1);
+//				pledgeRecord.setRecordName(CodeUtils.getPledgeRecordCode(supervisionCustomerCode));
+//				pledgeRecordService.save(pledgeRecord);
 			}
 			
 			ra.addFlashAttribute("messageOK", "上传扫描件成功！");
@@ -202,7 +202,7 @@ public class InsRecordController {
 		double sumWeight = 0;
 		for(InsRecordDetail detail : insRecord.getInsRecordDetails()) {
 			sumAmount += detail.getAmount();
-			sumWeight += detail.getSumWeight();
+//			sumWeight += detail.getSumWeight();
 		}
 		sumAmount = new BigDecimal(sumAmount).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
 		sumWeight = new BigDecimal(sumWeight).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
@@ -221,7 +221,7 @@ public class InsRecordController {
 		model.addAttribute("detailList", insRecord.getInsRecordDetails());
 		double checkSumWeight = 0;
 		for(InsRecordDetail detail : insRecord.getInsRecordDetails()) {
-			checkSumWeight += detail.getCheckWeight();
+//			checkSumWeight += detail.getCheckWeight();
 		}
 		model.addAttribute("checkSumWeight", new BigDecimal(checkSumWeight).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 		return "supervisor/insRecord/printCheckRecord";
@@ -231,9 +231,9 @@ public class InsRecordController {
 	@RequestMapping(value = "/{id}/printPledgeRecord")
 	public String printPledgeRecord(@PathVariable("id")String id, Model model, HttpSession session) {
 		InsRecord insRecord = insRecordService.findById(id);
-		PledgeRecord pledgeRecord = pledgeRecordService.findById(insRecord.getPledgeRecord().getId());
-		model.addAttribute("pledgeRecord", pledgeRecord);
-		model.addAttribute("detailList", pledgeRecord.getPledgeRecordDetails());
+//		PledgeRecord pledgeRecord = pledgeRecordService.findById(insRecord.getPledgeRecord().getId());
+//		model.addAttribute("pledgeRecord", pledgeRecord);
+//		model.addAttribute("detailList", pledgeRecord.getPledgeRecordDetails());
 		return "supervisor/insRecord/printPledgeRecord";
 	}
 	

@@ -35,7 +35,7 @@ public class TransitGoodsService extends BaseService<TransitGoods, String> {
 			stock = new Stock(transitGoods);
 			stockService.save(stock);
 		} else {
-			stock.add(transitGoods);
+//			stock.add(transitGoods);
 			stockService.save(stock);
 		}
 		transitGoodsDao.save(transitGoods);
@@ -48,30 +48,30 @@ public class TransitGoodsService extends BaseService<TransitGoods, String> {
 		Map<String, Stock> stockMap = stockService.findNoTranStockKeyMapByWarehouseId(warehouseId);
 		String key = transitGoods.getKey();
 		Stock tranStock = tranStockMap.get(key);
-		double remainAmount = tranStock.getAmount() - transitGoods.getAmount();
-		boolean ifdel = false;
-		if(remainAmount > 0) {
-			tranStock.minus(transitGoods);
-			stockService.save(tranStock);
-		} else {
-			ifdel = true;
-			stockService.delete(tranStock);
-		}
-		
-		Stock inStock = stockMap.get(key);
-		if(inStock == null) {
-			if(ifdel) {
-				Stock stt = new Stock(transitGoods);
-				stt.setInStock(1);
-				stockService.save(stt);
-			} else {
-				tranStock.setInStock(1);
-				stockService.save(tranStock);
-			}
-		} else {
-			inStock.add(transitGoods);
-			stockService.save(inStock);
-		}
+//		double remainAmount = tranStock.getAmount() - transitGoods.getAmount();
+//		boolean ifdel = false;
+//		if(remainAmount > 0) {
+//			tranStock.minus(transitGoods);
+//			stockService.save(tranStock);
+//		} else {
+//			ifdel = true;
+//			stockService.delete(tranStock);
+//		}
+//		
+//		Stock inStock = stockMap.get(key);
+//		if(inStock == null) {
+//			if(ifdel) {
+//				Stock stt = new Stock(transitGoods);
+//				stt.setInStock(1);
+//				stockService.save(stt);
+//			} else {
+//				tranStock.setInStock(1);
+//				stockService.save(tranStock);
+//			}
+//		} else {
+//			inStock.add(transitGoods);
+//			stockService.save(inStock);
+//		}
 		
 		transitGoodsDao.save(transitGoods);
 	}

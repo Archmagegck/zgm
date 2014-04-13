@@ -18,9 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import com.pms.app.dao.PledgeConfigDao;
-import com.pms.app.dao.SupervisorDao;
 import com.pms.app.entity.PledgeConfig;
-import com.pms.app.entity.Supervisor;
 import com.pms.base.dao.BaseDao;
 import com.pms.base.service.BaseService;
 
@@ -28,7 +26,6 @@ import com.pms.base.service.BaseService;
 public class PledgeConfigService extends BaseService<PledgeConfig, String> {
 
 	@Autowired private PledgeConfigDao pledgeConfigDao;
-	@Autowired private SupervisorDao supervisorDao;
 
 	@Override
 	protected BaseDao<PledgeConfig, String> getEntityDao() {
@@ -37,8 +34,6 @@ public class PledgeConfigService extends BaseService<PledgeConfig, String> {
 	
 	@Transactional
 	public void update(PledgeConfig pledgeConfig, Double shippingWeight) {
-		Supervisor supervisor = supervisorDao.findOne(pledgeConfig.getSupervisor().getId());
-		supervisor.setShippingWeight(shippingWeight);
 		pledgeConfigDao.save(pledgeConfig);
 	}
 	

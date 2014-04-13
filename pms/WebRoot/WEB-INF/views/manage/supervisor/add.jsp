@@ -126,6 +126,19 @@
 					</tr>
 					<tr>
 						<td width="20%">
+							所属仓库:
+						</td>
+						<td width="80%">
+							<select name="warehouse.id" class="required">
+								<option value="" selected="selected">--请选择--</option>
+								<c:forEach items="${warehouseList}" var = "warehouse">
+									<option value = "${warehouse.id }">${warehouse.name }</option>
+								</c:forEach>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td width="20%">
 							备注:
 						</td>
 						<td width="80%">

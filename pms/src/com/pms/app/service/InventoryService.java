@@ -9,10 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pms.app.dao.InventoryDao;
 import com.pms.app.dao.InventoryDetailDao;
-import com.pms.app.dao.PledgePurityDao;
 import com.pms.app.entity.Inventory;
 import com.pms.app.entity.InventoryDetail;
-import com.pms.app.entity.PledgePurity;
 import com.pms.app.entity.SupervisionCustomer;
 import com.pms.app.entity.Warehouse;
 import com.pms.app.util.CodeUtils;
@@ -24,7 +22,6 @@ public class InventoryService extends BaseService<Inventory, String> {
 
 	@Autowired private InventoryDao inventoryDao;
 	@Autowired private InventoryDetailDao inventoryDetailDao;
-	@Autowired private PledgePurityDao pledgePurityDao;
 
 	@Override
 	protected BaseDao<Inventory, String> getEntityDao() {
@@ -39,14 +36,7 @@ public class InventoryService extends BaseService<Inventory, String> {
 		inventory.setSupName(supName);
 		List<InventoryDetail> inventoryDetailList = new ArrayList<InventoryDetail>();
 		for (InventoryDetail inventoryDetail : inventoryDetails) {
-			PledgePurity pledgePurity = pledgePurityDao.findOne(inventoryDetail.getPledgePurity().getId());
-			inventoryDetail.setPledgePurity(pledgePurity);
 			inventoryDetail.setInventory(inventory);
-			if(inventoryDetail.getEqual() == 0) {
-				inventory.setEquation(0);
-			}
-			inventoryDetail.setDelegator(supervisionCustomer.getDelegator());
-			inventoryDetail.setSupervisionCustomer(supervisionCustomer);
 			inventoryDetailList.add(inventoryDetail);
 		}
 		inventoryDao.save(inventory);

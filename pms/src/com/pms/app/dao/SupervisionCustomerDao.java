@@ -11,8 +11,6 @@ import com.pms.base.dao.BaseDao;
 
 public interface SupervisionCustomerDao extends BaseDao<SupervisionCustomer, String>{
 	
-	public List<SupervisionCustomer> findListBySupervisorId(String supervisorId);
-	
 	public List<SupervisionCustomer> findListByDelegatorId(String delegatorId);
 	
 	public Page<SupervisionCustomer> findPageByDelegator(Delegator delegator, Pageable pageable);

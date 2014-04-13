@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.pms.app.entity.Supervisor;
 import com.pms.app.service.SupervisorService;
+import com.pms.app.service.WarehouseService;
 
 @Controller
 @RequestMapping(value = "/manage/supervisor")
@@ -20,6 +21,7 @@ public class SupervisorController {
 	private Logger logger = LoggerFactory.getLogger(SupervisorController.class);
 	
 	@Autowired private SupervisorService supervisorService;
+	@Autowired private WarehouseService warehouseService;
 	
 	@RequestMapping(value = { "/list", "" })
 	public String list(Model model, Pageable pageable, String queryName, String queryValue) {
@@ -32,6 +34,7 @@ public class SupervisorController {
 	
 	@RequestMapping(value = "/add")
 	public String add(Model model){
+		model.addAttribute("warehouseList", warehouseService.findAll());
 		return "manage/supervisor/add";
 	}
 	
@@ -52,6 +55,7 @@ public class SupervisorController {
 	@RequestMapping(value = "/edit/{id}")
 	public String edit(@PathVariable("id")String id, Model model){
 		model.addAttribute("supervisor", supervisorService.findById(id));
+		model.addAttribute("warehouseList", warehouseService.findAll());
 		return "manage/supervisor/edit";
 	}
 	
