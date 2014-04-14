@@ -15,6 +15,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.pms.app.entity.reference.CheckMethod;
+import com.pms.app.entity.reference.CheckResult;
 
 /**
  * 初始状态检测记录
@@ -66,7 +67,7 @@ public class IniCheck {
 	 * 检测结果
 	 */
 	@Column(name = "ic_checkResult")
-	private CheckMethod checkResult;
+	private CheckResult checkResult;
 
 
 	public String getId() {
@@ -119,14 +120,16 @@ public class IniCheck {
 	}
 
 
-	public CheckMethod getCheckResult() {
+	public CheckResult getCheckResult() {
 		return checkResult;
 	}
 
 
-	public void setCheckResult(CheckMethod checkResult) {
+	public void setCheckResult(CheckResult checkResult) {
 		this.checkResult = checkResult;
 	}
+
+
 	
 	
 }

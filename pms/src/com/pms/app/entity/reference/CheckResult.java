@@ -1,10 +1,10 @@
 package com.pms.app.entity.reference;
 
 /**
- * 检测状态
+ * 检测结果
  * @author wangzz
  */
-public enum CheckState {
+public enum CheckResult {
 	
 	/**
 	 * 合格
@@ -17,7 +17,7 @@ public enum CheckState {
 	},
 	
 	/**
-	 * 通过
+	 * 不合格
 	 */
 	Fail {
 		@Override

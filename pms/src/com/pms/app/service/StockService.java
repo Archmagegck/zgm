@@ -31,14 +31,6 @@ public class StockService extends BaseService<Stock, String> {
 		return stockDao.findByWarehouseId(warehouseId);
 	}
 	
-	public List<Stock> findInStockByWarehouseId(String warehouseId) {
-		return stockDao.findByWarehouseIdAndInStock(warehouseId, 1);
-	}
-	
-	public List<Stock> findTranStockByWarehouseId(String warehouseId) {
-		return stockDao.findByWarehouseIdAndInStock(warehouseId, 0);
-	}
-	
 	public Map<String, Stock> findStockKeyMapByWarehouseId(String warehouseId) {
 		Map<String, Stock> stockMap = new HashMap<String, Stock>();
 		List<Stock> stockList = stockDao.findByWarehouseId(warehouseId);
@@ -62,24 +54,6 @@ public class StockService extends BaseService<Stock, String> {
 		List<Stock> stockList = stockDao.findByWarehouseId(warehouseId);
 		for (Stock stock : stockList) {
 			stockMap.put(stock.getId(), stock);
-		}
-		return stockMap;
-	}
-	
-	public Map<String, Stock> findTranStockKeyMapByWarehouseId(String warehouseId) {
-		Map<String, Stock> stockMap = new HashMap<String, Stock>();
-		List<Stock> stockList = stockDao.findByWarehouseIdAndInStock(warehouseId, 0);
-		for (Stock stock : stockList) {
-			stockMap.put(stock.getKey(), stock);
-		}
-		return stockMap;
-	}
-	
-	public Map<String, Stock> findNoTranStockKeyMapByWarehouseId(String warehouseId) {
-		Map<String, Stock> stockMap = new HashMap<String, Stock>();
-		List<Stock> stockList = stockDao.findByWarehouseIdAndInStock(warehouseId, 1);
-		for (Stock stock : stockList) {
-			stockMap.put(stock.getKey(), stock);
 		}
 		return stockMap;
 	}

@@ -83,7 +83,6 @@ public class OutsRecordController {
 	
 	@RequestMapping(value = "/stockToOut")
 	public String stockToOut(Model model, Pageable pageable, HttpSession session) {
-		model.addAttribute("stockList", stockService.findInStockByWarehouseId(((Warehouse)session.getAttribute("warehouse")).getId()));
 		return "supervisor/outsRecord/stockToOut";
 	}
 	

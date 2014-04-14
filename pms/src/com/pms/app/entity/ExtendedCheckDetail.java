@@ -15,6 +15,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.pms.app.entity.reference.CheckMethod;
+import com.pms.app.entity.reference.CheckResult;
 
 /**
  * 超期检测记录明细
@@ -66,7 +67,7 @@ public class ExtendedCheckDetail {
 	 * 检测结果
 	 */
 	@Column(name = "ecd_checkResult")
-	private CheckMethod checkResult;
+	private CheckResult checkResult;
 
 
 	public String getId() {
@@ -76,6 +77,16 @@ public class ExtendedCheckDetail {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+
+	public ExtendedCheck getExtendedCheck() {
+		return extendedCheck;
+	}
+
+
+	public void setExtendedCheck(ExtendedCheck extendedCheck) {
+		this.extendedCheck = extendedCheck;
 	}
 
 
@@ -109,24 +120,16 @@ public class ExtendedCheckDetail {
 	}
 
 
-	public CheckMethod getCheckResult() {
+	public CheckResult getCheckResult() {
 		return checkResult;
 	}
 
 
-	public void setCheckResult(CheckMethod checkResult) {
+	public void setCheckResult(CheckResult checkResult) {
 		this.checkResult = checkResult;
 	}
 
 
-	public ExtendedCheck getExtendedCheck() {
-		return extendedCheck;
-	}
-
-
-	public void setExtendedCheck(ExtendedCheck extendedCheck) {
-		this.extendedCheck = extendedCheck;
-	}
 
 
 

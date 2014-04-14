@@ -84,7 +84,7 @@ public class InsCheck {
 	/**
 	 * 明细
 	 */
-	@OneToMany(mappedBy = "insCheckDetail")
+	@OneToMany(mappedBy = "InsCheck")
 	private List<InsCheckDetail> insCheckDetails = new ArrayList<InsCheckDetail>();
 
 

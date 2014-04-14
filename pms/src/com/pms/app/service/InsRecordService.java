@@ -46,87 +46,8 @@ public class InsRecordService extends BaseService<InsRecord, String> {
 	
 	@Transactional
 	public void save(InsRecord insRecord, SupervisionCustomer supervisionCustomer) {
-		insRecord.setCode(CodeUtils.getInsRecordCode(supervisionCustomer.getCode()));
-		Map<String, Stock> stockMap = stockService.findNoTranStockKeyMapByWarehouseId(insRecord.getWarehouse().getId());
-		
-//		String pledgeRecordCode = insRecord.getWarehouse().getPledgeRecordCode();
-		if(StringUtils.hasText("")) {
-			if(stockMap.isEmpty()){
-//				pledgeRecordCode = String.valueOf(new IdWorker(1, 2, 3).getId());
-				Warehouse warehouse = warehouseDao.findOne(insRecord.getWarehouse().getId());
-//				warehouse.setPledgeRecordCode(pledgeRecordCode);
-				warehouseDao.save(warehouse);
-				insRecord.setWarehouse(warehouse);
-			}
-		} else {
-//			pledgeRecordCode = String.valueOf(new IdWorker(1, 2, 3).getId());
-			Warehouse warehouse = warehouseDao.findOne(insRecord.getWarehouse().getId());
-//			warehouse.setPledgeRecordCode(pledgeRecordCode);
-			warehouseDao.save(warehouse);
-			insRecord.setWarehouse(warehouse);
-		}
-		
-		double sumWeight = 0;
-		List<InsRecordDetail> insRecordDetailList = insRecord.getInsRecordDetails();
-		for(InsRecordDetail detail : insRecordDetailList) {
-			detail.setInsRecord(insRecord);
-			detail.setDelegator(supervisionCustomer.getDelegator());
-			detail.setSupervisionCustomer(supervisionCustomer);
-			
-			detail.setWeight(detail.getWeight());
-			sumWeight += detail.getWeight();
-			
-			String key = detail.getKey();
-			Stock stock = stockMap.get(key);
-			if(stock == null) {
-				stock = new Stock(insRecord.getWarehouse(), detail);
-				stockMap.put(key, stock);
-			} else {
-				stock.add(detail);
-			}
-		}
-		sumWeight = new BigDecimal(sumWeight).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-		
-		PledgeRecord pledgeRecord = new PledgeRecord();
-		pledgeRecord.setDelegator(supervisionCustomer.getDelegator());
-		pledgeRecord.setSupervisionCustomer(supervisionCustomer);
-//		pledgeRecord.setCode(pledgeRecordCode);
-		pledgeRecord.setRecordName(CodeUtils.getPledgeRecordCode(supervisionCustomer.getCode()));
-		pledgeRecord.setWarehouse(insRecord.getWarehouse());
-		
-		double stockSumWeight = 0;
-		List<PledgeRecordDetail> pledgeRecordDetails = new ArrayList<PledgeRecordDetail>();
-		for (Stock stock : stockMap.values()) {
-			PledgeRecordDetail detail = new PledgeRecordDetail(stock, sumWeight);
-			detail.setPledgeRecord(pledgeRecord);
-			stockSumWeight += detail.getSumWeight();
-			pledgeRecordDetails.add(detail);
-		}
-		Map<String, Stock> tranStockMap = stockService.findTranStockKeyMapByWarehouseId(insRecord.getWarehouse().getId());
-		for (Stock stock : tranStockMap.values()) {
-			PledgeRecordDetail detail = new PledgeRecordDetail(stock, sumWeight);
-			detail.setPledgeRecord(pledgeRecord);
-			stockSumWeight += detail.getSumWeight();
-			pledgeRecordDetails.add(detail);
-		}
-		
-		stockSumWeight = new BigDecimal(stockSumWeight).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-		pledgeRecord.setSumWeight(stockSumWeight);
-		pledgeRecordDao.save(pledgeRecord);
-		pledgeRecordDetailDao.save(pledgeRecordDetails);
-		
-		insRecord.setSumWeight(sumWeight);
-		insRecordDao.save(insRecord);
-		insRecordDetailDao.save(insRecordDetailList);
-		stockService.save(stockMap);
-		
+//		insRecord.setCode(CodeUtils.getInsRecordCode(supervisionCustomer.getCode()));
+//		stockService.save(stockMap);
 	}
-	
-//	@Transactional
-//	public void transitGoodsSave(InsRecord insRecord, SupervisionCustomer supervisionCustomer) {
-//		//保存入库单及入库单明细，同时修改stock中的存储地点
-//		
-//		
-//	}
 
 }

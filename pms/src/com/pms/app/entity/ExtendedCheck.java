@@ -84,7 +84,7 @@ public class ExtendedCheck {
 	/**
 	 * 明细
 	 */
-	@OneToMany(mappedBy = "extendedCheckDetail")
+	@OneToMany(mappedBy = "extendedCheck")
 	private List<ExtendedCheckDetail> extendedCheckDetails = new ArrayList<ExtendedCheckDetail>();
 
 
