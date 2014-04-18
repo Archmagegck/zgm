@@ -75,17 +75,17 @@ public class Stock {
 	
 	/**
 	 * 直接入库
-	 * @param insRecordDetail 入库明细
+	 * @param weight 入库重量
 	 */
-	public void add(InsRecordDetail insRecordDetail) {
-		this.sumWeight += insRecordDetail.getWeight();
+	public void add(double weight) {
+		this.sumWeight += weight;
 	}
 	
 	public String getKey() {
 		StringBuffer sb = new StringBuffer("{");
 		sb.append("\"warehouse\":\"").append(warehouse.getId()).append("\",");
 		sb.append("\"style\":\"").append(style.getId()).append("\",");
-		sb.append("\"pledgePurity\":\"").append(pledgePurity.getId()).append("\",");
+		sb.append("\"pledgePurity\":\"").append(pledgePurity.getType()).append("\",");
 		sb.append("}");
 		return sb.toString();
 	}

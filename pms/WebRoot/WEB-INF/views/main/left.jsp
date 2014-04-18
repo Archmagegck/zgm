@@ -256,6 +256,21 @@
 		</c:if>
 		
 		<c:if test="${(sessionScope.user != null) && (sessionScope.type == 2)}">
+		  <h1 class="type"><a href="javascript:void(0)">初始状态管理</a></h1>
+	      <div class="content">
+	        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+	          <tr>
+	            <td><img src="${ctx}/images/admin/images/menu_topline.gif" width="182" height="5" /></td>
+	          </tr>
+	        </table>
+	        <ul class="MM">
+	        	<li><a href="${ctx}/supervisor/iniCheck/addList" target="right">初始状态检测</a></li>
+	          	<li><a href="${ctx}/supervisor/iniRecord/add" target="right">初始状态登记</a></li>
+	          	<li><a href="${ctx}/supervisor/iniCheck" target="right">初始状态检测记录</a></li>
+	          	<li><a href="${ctx}/supervisor/iniRecord" target="right">初始状态登记记录</a></li>
+	        </ul>
+	      </div>
+		
 		  <h1 class="type"><a href="javascript:void(0)">入库管理</a></h1>
 	      <div class="content">
 	        <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -265,8 +280,9 @@
 	        </table>
 	        <ul class="MM">
 	        	<li><a href="${ctx}/supervisor/insRecord" target="right">入库单列表</a></li>
-	          	<li><a href="${ctx}/supervisor/insRecord/showDetailList" target="right">登记货物明细</a></li>
-	          	<li><a href="${ctx}/supervisor/checkDeny/list" target="right">检测拒绝记录</a></li>
+	          	<li><a href="${ctx}/supervisor/insRecord/showDetailList" target="right">登记入库货物明细</a></li>
+	          	<li><a href="${ctx}/supervisor/checkDeny/list" target="right">入库检测</a></li>
+	          	<li><a href="${ctx}/supervisor/checkDeny/list" target="right">入库检测列表</a></li>
 	        </ul>
 	      </div>
 	      
@@ -283,7 +299,7 @@
 	        </ul>
 	      </div>
 	      
-	      <h1 class="type"><a href="javascript:void(0)">每日营业后操作</a></h1>
+	      <h1 class="type"><a href="javascript:void(0)">每日盘点</a></h1>
 	      <div class="content">
 	        <table width="100%" border="0" cellspacing="0" cellpadding="0">
 	          <tr>
@@ -291,14 +307,14 @@
 	          </tr>
 	        </table>
 	        <ul class="MM">
-	        	<li><a href="${ctx}/supervisor/inventory/add" target="right">库存盘点及成色检测</a></li>
-		        <li><a href="${ctx}/supervisor/inventory" target="right">库存盘点检测记录</a></li>
-	        	<li><a href="${ctx}/supervisor/checkMinValue" target="right">最低价值核对</a></li>
-	        	<li><a href="${ctx}/supervisor/pledgeRecord/add" target="right">生成质物清单</a></li>
+	        	<li><a href="${ctx}/supervisor/inventory/add" target="right">库存盘点</a></li>
+		        <li><a href="${ctx}/supervisor/inventory" target="right">库存盘点列表</a></li>
+	        	<li><a href="${ctx}/supervisor/checkMinValue" target="right">盘点检测</a></li>
+	        	<li><a href="${ctx}/supervisor/pledgeRecord/add" target="right">盘点检测列表</a></li>
 	        </ul>
 	      </div>
 	      
-	      <h1 class="type"><a href="javascript:void(0)">在途管理</a></h1>
+	      <h1 class="type"><a href="javascript:void(0)">实时库存</a></h1>
 	      <div class="content">
 	        <table width="100%" border="0" cellspacing="0" cellpadding="0">
 	          <tr>
@@ -306,12 +322,11 @@
 	          </tr>
 	        </table>
 	        <ul class="MM">
-	        	<li><a href="${ctx}/supervisor/transitGoods/add" target="right">在途质物登记</a></li>
-		        <li><a href="${ctx}/supervisor/transitGoods" target="right">在途质物记录</a></li>
+	        	<li><a href="${ctx}/supervisor/realTimeStocks" target="right">实时库存</a></li>
 	        </ul>
 	      </div>
 	      
-	      <h1 class="type"><a href="javascript:void(0)">质物管理</a></h1>
+	      <h1 class="type"><a href="javascript:void(0)">超期检测管理</a></h1>
 	      <div class="content">
 	        <table width="100%" border="0" cellspacing="0" cellpadding="0">
 	          <tr>
@@ -319,10 +334,11 @@
 	          </tr>
 	        </table>
 	        <ul class="MM">
-	        	<li><a href="${ctx}/supervisor/realTimeStocks" target="right">实时库存信息</a></li>
-		        <li><a href="${ctx}/supervisor/pledgeRecord" target="right">每日质物清单</a></li>
+	        	<li><a href="${ctx}/supervisor/realTimeStocks" target="right">超期检测</a></li>
+		        <li><a href="${ctx}/supervisor/pledgeRecord" target="right">超期检测记录</a></li>
 	        </ul>
 	      </div>
+	      
 	      <h1 class="type"><a href="javascript:void(0)">个人信息修改</a></h1>
 	      <div class="content">
 	        <table width="100%" border="0" cellspacing="0" cellpadding="0">

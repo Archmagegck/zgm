@@ -64,10 +64,10 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 	public String save(OutsRecord outsRecord, List<OutStock> outStocks, int hasPickFile, SupervisionCustomer supervisionCustomer) throws ServiceException {
 		String message = "出库成功!";
 		double sumWeight = 0;
-		Map<String, Stock> stockMap = stockService.findStockMapByWarehouseId(outsRecord.getWarehouse().getId());
-		List<Stock> updateStocks = new ArrayList<Stock>();
-		List<Stock> delStocks = new ArrayList<Stock>();
-		List<OutsRecordDetail> saveOutsRecordDetails = new ArrayList<OutsRecordDetail>();
+//		Map<String, Stock> stockMap = stockService.findStockMapByWarehouseId(outsRecord.getWarehouse().getId());
+//		List<Stock> updateStocks = new ArrayList<Stock>();
+//		List<Stock> delStocks = new ArrayList<Stock>();
+//		List<OutsRecordDetail> saveOutsRecordDetails = new ArrayList<OutsRecordDetail>();
 
 		for (OutStock outStock : outStocks) {
 //			Double outAmount = outStock.getOutAmount();
@@ -110,13 +110,13 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 		pledgeRecord.setRecordName(CodeUtils.getPledgeRecordCode(supervisionCustomer.getCode()));
 		pledgeRecord.setWarehouse(outsRecord.getWarehouse());
 		double stockSumWeight = 0;
-		List<PledgeRecordDetail> pledgeRecordDetails = new ArrayList<PledgeRecordDetail>();
-		for (Stock stock : stockMap.values()) {
-			PledgeRecordDetail detail = new PledgeRecordDetail(stock, sumWeight);
-			detail.setPledgeRecord(pledgeRecord);
-			stockSumWeight += detail.getSumWeight();
-			pledgeRecordDetails.add(detail);
-		}
+//		List<PledgeRecordDetail> pledgeRecordDetails = new ArrayList<PledgeRecordDetail>();
+//		for (Stock stock : stockMap.values()) {
+//			PledgeRecordDetail detail = new PledgeRecordDetail(stock, sumWeight);
+//			detail.setPledgeRecord(pledgeRecord);
+//			stockSumWeight += detail.getSumWeight();
+//			pledgeRecordDetails.add(detail);
+//		}
 		stockSumWeight = new BigDecimal(stockSumWeight).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
 		pledgeRecord.setSumWeight(stockSumWeight);
 
@@ -160,17 +160,17 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 			}
 		}
 
-		if (outsRecord.getAuditState() == AuditState.Pass) { // 如果是通过，更改库存，生成质物清单，不通过则不更改库存
-			pledgeRecordDao.save(pledgeRecord);
-			pledgeRecordDetailDao.save(pledgeRecordDetails);
-
-//			outsRecord.setPledgeRecord(pledgeRecord);
-			stockService.save(updateStocks);
-			stockService.delete(delStocks);
-		}
-
-		outsRecordDao.save(outsRecord);
-		outsRecordDetailDao.save(saveOutsRecordDetails);
+//		if (outsRecord.getAuditState() == AuditState.Pass) { // 如果是通过，更改库存，生成质物清单，不通过则不更改库存
+//			pledgeRecordDao.save(pledgeRecord);
+//			pledgeRecordDetailDao.save(pledgeRecordDetails);
+//
+////			outsRecord.setPledgeRecord(pledgeRecord);
+//			stockService.save(updateStocks);
+//			stockService.delete(delStocks);
+//		}
+//
+//		outsRecordDao.save(outsRecord);
+//		outsRecordDetailDao.save(saveOutsRecordDetails);
 
 		return message;
 	}
@@ -181,11 +181,11 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 			outsRecord.setAuditState(AuditState.Pass);
 			List<Stock> updateStocks = new ArrayList<Stock>();
 			List<Stock> delStocks = new ArrayList<Stock>();
-			Map<String, Stock> stockMap = stockService.findOutStockKeyMapByWarehouseId(outsRecord.getWarehouse().getId());
+//			Map<String, Stock> stockMap = stockService.findOutStockKeyMapByWarehouseId(outsRecord.getWarehouse().getId());
 			List<OutsRecordDetail> outsRecordDetails = outsRecord.getOutsRecordDetails();
 			for (OutsRecordDetail outsRecordDetail : outsRecordDetails) {
 				String key = outsRecordDetail.getKey();
-				Stock stock = stockMap.get(key);
+//				Stock stock = stockMap.get(key);
 //				double outAmount = outsRecordDetail.getAmount();
 //				double remainAmount = stock.getAmount() - outAmount;
 //				if (remainAmount == 0)
@@ -206,19 +206,19 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 			pledgeRecord.setWarehouse(outsRecord.getWarehouse());
 
 			double stockSumWeight = 0;
-			List<PledgeRecordDetail> pledgeRecordDetails = new ArrayList<PledgeRecordDetail>();
-			for (Stock stock : stockMap.values()) {
-				PledgeRecordDetail detail = new PledgeRecordDetail(stock, outsRecord.getWeight());
-				detail.setPledgeRecord(pledgeRecord);
-				stockSumWeight += detail.getSumWeight();
-				pledgeRecordDetails.add(detail);
-			}
+//			List<PledgeRecordDetail> pledgeRecordDetails = new ArrayList<PledgeRecordDetail>();
+//			for (Stock stock : stockMap.values()) {
+//				PledgeRecordDetail detail = new PledgeRecordDetail(stock, outsRecord.getWeight());
+//				detail.setPledgeRecord(pledgeRecord);
+//				stockSumWeight += detail.getSumWeight();
+//				pledgeRecordDetails.add(detail);
+//			}
 			stockSumWeight = new BigDecimal(stockSumWeight).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
 			pledgeRecord.setSumWeight(stockSumWeight);
 
 			// 保存
 			pledgeRecordDao.save(pledgeRecord);
-			pledgeRecordDetailDao.save(pledgeRecordDetails);
+//			pledgeRecordDetailDao.save(pledgeRecordDetails);
 
 			stockService.save(updateStocks);
 			stockService.delete(delStocks);

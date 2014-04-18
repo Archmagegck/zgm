@@ -79,15 +79,6 @@ public class InsRecord {
 	
 	
 	/**
-	 * 扫描件状态<br>
-	 * 0:未上传<br>
-	 * 1:已上传
-	 */
-	@Column(name = "in_attachState")
-	private Integer attachState = 0;
-	
-	
-	/**
 	 * 扫描件<br>
 	 * 保存上传地址
 	 */
@@ -171,17 +162,7 @@ public class InsRecord {
 		this.date = date;
 	}
 
-
-	public Integer getAttachState() {
-		return attachState;
-	}
-
-
-	public void setAttachState(Integer attachState) {
-		this.attachState = attachState;
-	}
-
-
+	
 	public String getAttach() {
 		return attach;
 	}

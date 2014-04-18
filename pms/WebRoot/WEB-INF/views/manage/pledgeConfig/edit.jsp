@@ -72,22 +72,10 @@
 					</tr>
 					<tr>
 						<td width="20%">
-							质押物最低成色要求:
+							监管员出库重量(kg):
 						</td>
 						<td width="80%">
-							<select name="pledgePurity.id" class="required">
-							<option selected="selected" value="">--请选择--</option>
-							<c:forEach items="${pledgePurityList }" var = "pledgePurity">
-								<c:choose>
-									<c:when test="${pledgePurity.id == pledgeConfig.pledgePurity.id }">
-										<option selected="selected" value = "${pledgePurity.id }">${pledgePurity.name }</option>
-									</c:when>
-									<c:otherwise>
-										<option value = "${pledgePurity.id }">${pledgePurity.name }</option>
-									</c:otherwise>
-								</c:choose>
-							</c:forEach>
-						</select>
+							<input id="outWeight" name="outWeight" value="${pledgeConfig.outWeight }" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
 						</td>
 					</tr>
 					<tr>
@@ -108,14 +96,6 @@
 					</tr>
 					<tr>
 						<td width="20%">
-							监管员出库重量设置（kg）:
-						</td>
-						<td width="80%">
-							<input id="shippingWeight" name="shippingWeight" value="${pledgeConfig.supervisor.shippingWeight }" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
-						</td>
-					</tr>
-					<tr>
-						<td width="20%">
 							警戒线上限（%）:
 						</td>
 						<td width="80%">
@@ -128,6 +108,14 @@
 						</td>
 						<td width="80%">
 							<input id="minCordon" name="minCordon" value="${pledgeConfig.minCordon }" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
+						</td>
+					</tr>
+					<tr>
+						<td width="20%">
+							盘存误差范围（%）:
+						</td>
+						<td width="80%">
+							<input id="ieRange" name="ieRange" value="${pledgeConfig.ieRange }" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
 						</td>
 					</tr>
 				</table>

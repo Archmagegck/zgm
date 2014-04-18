@@ -42,6 +42,7 @@
     			<legend><h3>请输入相关信息</h3></legend>
     			<br/>
     				<input type="hidden" name="id" value = "${pledgePurity.id }" >
+    				<input type="hidden" name="type" value = "${pledgePurity.type }" >
     				<table  cellpadding="0" cellspacing="0" width="100%"  class="list1">
 					<tr>
 						<td width="20%">

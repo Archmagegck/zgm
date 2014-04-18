@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.pms.app.entity.Warehouse;
 import com.pms.app.service.StockService;
 
 @Controller
@@ -18,7 +17,7 @@ public class RealTimeStocksController {
 	
 	@RequestMapping(value = { "/list", "" })
 	public String list(Model model, HttpSession session) {
-		model.addAttribute("realTimeStocksList", stockService.findAllEq("warehouse.id", ((Warehouse)session.getAttribute("warehouse")).getId()));
+		model.addAttribute("realTimeStocksList", stockService.findAllEq("warehouse.id", (String)session.getAttribute("warehouseId")));
 		return "supervisor/realTimeStocks/list";
 	}
 	

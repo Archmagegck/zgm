@@ -65,16 +65,10 @@
 								<th width="5%">序号</th>
 								<th>款式大类</th>
 								<th>标明成色</th>
-								<th>标明规格重量（kg/件）</th>
-								<th>数量（件）</th>
-								<th>总重量（kg）</th>
 								<th>生产厂家</th>
-								<th>检测成色</th>
-								<th>检测规格重量（kg/件）</th>
-								<th>检测数量（件）</th>
-								<th>检测重量（kg）</th>
-								<th>检测方法</th>
-								<th>标记/备注</th>
+								<th>数量（件）</th>
+								<th>重量（g）</th>
+								<th>备注</th>
 								<th>&nbsp;</th>
 							</tr>
 						</thead>
@@ -84,15 +78,9 @@
 								<td>${status.count}&nbsp;</td>
 								<td>${insRecordDetail.style.name}&nbsp;</td>
 								<td>${insRecordDetail.pledgePurity.name}&nbsp;</td>
-								<td>${insRecordDetail.specWeight}&nbsp;</td>
-								<td>${insRecordDetail.amount}&nbsp;</td>
-								<td>${insRecordDetail.sumWeight}&nbsp;</td>
 								<td>${insRecordDetail.company}&nbsp;</td>
-								<td>${insRecordDetail.checkPurity}&nbsp;</td>
-								<td>${insRecordDetail.checkSpecWeight}&nbsp;</td>
-								<td>${insRecordDetail.checkAmount}&nbsp;</td>
-								<td>${insRecordDetail.checkWeight}&nbsp;</td>
-								<td>${insRecordDetail.checkMethod.title}&nbsp;</td>
+								<td>${insRecordDetail.amount}&nbsp;</td>
+								<td>${insRecordDetail.weight}&nbsp;</td>
 								<td>${insRecordDetail.desc}&nbsp;</td>
 								<th>
 									<a href="${ctx }/supervisor/insRecord/editDetail/${status.count}">编辑</a>
@@ -106,7 +94,7 @@
 						<input type="button" value="添加货物" class="button" onclick="addDetail()" />
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<c:if test="${detailListCount > 0}">
-							<input type="button" value="下一步" class="button" onclick="addRecordInfo()" />
+							<input type="button" value="入库" class="button" onclick="save()" />
 						</c:if>
 					</div>
 				</div>

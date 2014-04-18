@@ -26,7 +26,6 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$("#myForm").validate();
-			$("#checkMethod").val("${insRecordDetail.checkMethod}");
 		});
 		
 		function changeStyle() {
@@ -95,10 +94,10 @@
 					</tr>
 					<tr>
 						<td width="30%">
-							标明规格重量（kg）:
+							生产厂家:
 						</td>
 						<td width="70%">
-							<input id="specWeight" name="specWeight" value="${insRecordDetail.specWeight}" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
+							<input id="company" name="company" value="${insRecordDetail.company}" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
 						</td>
 					</tr>
 					<tr>
@@ -111,53 +110,10 @@
 					</tr>
 					<tr>
 						<td width="30%">
-							生产厂家:
+							重量（g）:
 						</td>
 						<td width="70%">
-							<input id="company" name="company" value="${insRecordDetail.company}" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
-						</td>
-					</tr>
-					<tr>
-						<td width="30%">
-							实际检测成色:
-						</td>
-						<td width="70%">
-							<input id="checkPurity" name="checkPurity" value="${insRecordDetail.checkPurity}" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
-						</td>
-					</tr>
-					<tr>
-						<td width="30%">
-							实际检测重量规格（kg/件）：
-						</td>
-						<td width="70%">
-							<input id="checkSpecWeight" name="checkSpecWeight" value="${insRecordDetail.checkSpecWeight}" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
-						</td>
-					</tr>
-					<tr>
-						<td width="30%">
-							检测数量:
-						</td>
-						<td width="70%">
-							<input id="checkAmount" name="checkAmount" value="${insRecordDetail.checkAmount}" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
-						</td>
-					</tr>
-					<tr>
-						<td width="30%">
-							检测重量（kg）:
-						</td>
-						<td width="70%">
-							<input id="checkWeight" name="checkWeight" value="${insRecordDetail.checkWeight}" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
-						</td>
-					</tr>
-					<tr>
-						<td width="30%">
-							检测方法:
-						</td>
-						<td width="70%">
-							<select id="checkMethod" name="checkMethod">
-			            		<option value="Spectrum" selected="selected">光谱法</option>
-			            		<option value="Dissolve">溶金法</option>
-			            	</select>
+							<input id="specWeight" name="specWeight" value="${insRecordDetail.weight}" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
 						</td>
 					</tr>
 					<tr>

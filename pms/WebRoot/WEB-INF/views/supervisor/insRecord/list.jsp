@@ -89,11 +89,8 @@
 								<th width="8%">序号</th>
 								<th>入库单号</th>
 								<th>总重量（kg）</th>
-								<th>送货人姓名</th>
-								<th>送货人身份证</th>
 								<th>存储地点</th>
 								<th>入库时间</th>
-								<th>入库单扫描件状态</th>
 								<th>&nbsp;</th>
 							</tr>
 						</thead>
@@ -109,26 +106,14 @@
 									${insRecord.sumWeight }&nbsp;
 								</td>
 								<td>
-									${insRecord.sender }&nbsp;
-								</td>
-								<td>
-									${insRecord.senderIdCard }&nbsp;
-								</td>
-								<td>
 									${sessionScope.warehouse.address}&nbsp;
 								</td>
 								<td>
 									${insRecord.date }&nbsp;
 								</td>
 								<td>
-									<c:if test="${insRecord.attachState == 1}">已上传</c:if>
-									<c:if test="${insRecord.attachState == 0}">
-									<a href="${ctx }/supervisor/insRecord/${insRecord.id }/toUpload">未上传</a>
-									</c:if>
-									&nbsp;
-								</td>
-								<td>
 									<a href="${ctx }/supervisor/insRecord/${insRecord.id }/details">查看</a>
+									&nbsp;
 								</td>
 							</tr>
 						</c:forEach>

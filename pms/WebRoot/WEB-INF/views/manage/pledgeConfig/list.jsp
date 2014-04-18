@@ -111,9 +111,6 @@
 									监管员出库重量（kg）
 								</th>
 								<th>
-									质押物的最低成色要求
-								</th>
-								<th>
 									质押物的最低重量要求（kg）
 								</th>
 								<th>
@@ -124,6 +121,9 @@
 								</th>
 								<th>
 									警戒线下限（%）
+								</th>
+								<th>
+									盘存误差范围（%）
 								</th>
 								<th>
 									操作
@@ -142,10 +142,7 @@
 									${pledgeConfig.supervisor.name }&nbsp;
 								</td>
 								<td>
-									${pledgeConfig.supervisor.shippingWeight }&nbsp;
-								</td>
-								<td>
-									${pledgeConfig.pledgePurity.name }&nbsp;
+									${pledgeConfig.outWeight }&nbsp;
 								</td>
 								<td>
 									${pledgeConfig.minWeight }&nbsp;
@@ -158,6 +155,9 @@
 								</td>
 								<td>
 									${pledgeConfig.minCordon }&nbsp;
+								</td>
+								<td>
+									${pledgeConfig.ieRange }&nbsp;
 								</td>
 								<td>
 									<a href="${ctx }/manage/pledgeConfig/edit/${pledgeConfig.id }">编辑</a>

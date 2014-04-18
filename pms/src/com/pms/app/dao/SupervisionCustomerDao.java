@@ -13,6 +13,8 @@ public interface SupervisionCustomerDao extends BaseDao<SupervisionCustomer, Str
 	
 	public List<SupervisionCustomer> findListByDelegatorId(String delegatorId);
 	
+	public List<SupervisionCustomer> findListByWarehouseId(String warehouseId);
+	
 	public Page<SupervisionCustomer> findPageByDelegator(Delegator delegator, Pageable pageable);
 	
 	public Page<SupervisionCustomer> findPageByName(String name, Pageable pageable);

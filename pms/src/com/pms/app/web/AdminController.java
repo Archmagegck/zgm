@@ -78,7 +78,8 @@ public class AdminController {
 //						session.setAttribute("supervisionCustomer", supervisionCustomerService.findBySupervisorId(supervisor.getId()));
 //						session.setAttribute("supervisionCustomerCode", supervisionCustomerService.findBySupervisorId(supervisor.getId()).getCode());
 						warehouse.getAddress();
-						session.setAttribute("warehouse", warehouse);
+//						session.setAttribute("warehouse", warehouse);
+						session.setAttribute("warehouseId", warehouse.getId());
 						return "main/main";
 					}
 					session.invalidate();

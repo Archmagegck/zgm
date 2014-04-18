@@ -117,6 +117,16 @@ public class InsRecordDetail {
 		return sb.toString();
 	}
 	
+	public void replace(InsRecordDetail detail) {
+		this.amount = detail.getAmount();
+		this.company = detail.getCompany();
+		this.date = detail.getDate();
+		this.desc = detail.getDesc();
+		this.pledgePurity = detail.getPledgePurity();
+		this.style = detail.getStyle();
+		this.weight = detail.getWeight();
+	}
+	
 	
 	public String getDateStr() {
 		return new DateTime(date).toString("yyyy-MM-dd");

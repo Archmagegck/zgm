@@ -51,6 +51,16 @@ public class IniRecord {
 	 */
 	@Column(name = "ii_weight")
 	private Double weight;
+	
+	
+	public String getKey() {
+		StringBuffer sb = new StringBuffer("{");
+		sb.append("\"warehouse\":\"").append(warehouse.getId()).append("\",");
+		sb.append("\"style\":\"").append(style.getId()).append("\",");
+		sb.append("\"pledgePurity\":\"").append("1").append("\",");
+		sb.append("}");
+		return sb.toString();
+	}
 
 
 	public String getId() {

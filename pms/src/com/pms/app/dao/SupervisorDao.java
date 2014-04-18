@@ -9,4 +9,6 @@ public interface SupervisorDao extends BaseDao<Supervisor, String> {
 	
 	List<Supervisor> findByUsernameAndPassword(String username, String password);
 	
+	List<Supervisor> findByWarehouseId(String warehouseId);
+	
 }

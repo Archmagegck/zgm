@@ -40,24 +40,6 @@ public class StockService extends BaseService<Stock, String> {
 		return stockMap;
 	}
 	
-	public Map<String, Stock> findOutStockKeyMapByWarehouseId(String warehouseId) {
-		Map<String, Stock> stockMap = new HashMap<String, Stock>();
-		List<Stock> stockList = stockDao.findByWarehouseId(warehouseId);
-		for (Stock stock : stockList) {
-			stockMap.put(stock.getKey(), stock);
-		}
-		return stockMap;
-	}
-	
-	public Map<String, Stock> findStockMapByWarehouseId(String warehouseId) {
-		Map<String, Stock> stockMap = new HashMap<String, Stock>();
-		List<Stock> stockList = stockDao.findByWarehouseId(warehouseId);
-		for (Stock stock : stockList) {
-			stockMap.put(stock.getId(), stock);
-		}
-		return stockMap;
-	}
-	
 	public void save(Map<String, Stock> stockMap) {
 		stockDao.save(stockMap.values());
 	}

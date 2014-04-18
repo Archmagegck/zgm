@@ -11,10 +11,10 @@ import org.springframework.util.StringUtils;
 
 import com.pms.app.dao.PledgeConfigDao;
 import com.pms.app.dao.SupervisionCustomerDao;
-import com.pms.app.dao.WarehouseDao;
 import com.pms.app.entity.Delegator;
 import com.pms.app.entity.PledgeConfig;
 import com.pms.app.entity.SupervisionCustomer;
+import com.pms.app.entity.Supervisor;
 import com.pms.base.dao.BaseDao;
 import com.pms.base.service.BaseService;
 
@@ -22,8 +22,8 @@ import com.pms.base.service.BaseService;
 public class SupervisionCustomerService extends BaseService<SupervisionCustomer, String> {
 
 	@Autowired private SupervisionCustomerDao supervisionCustomerDao;
+	@Autowired private SupervisorService supervisorService;
 	@Autowired private PledgeConfigDao pledgeConfigDao;
-	@Autowired private WarehouseDao warehouseDao;
 
 	@Override
 	protected BaseDao<SupervisionCustomer, String> getEntityDao() {
@@ -37,13 +37,20 @@ public class SupervisionCustomerService extends BaseService<SupervisionCustomer,
 	
 	@Transactional
 	public void save(SupervisionCustomer supervisionCustomer){
-		if(!StringUtils.hasText(supervisionCustomer.getId())) {
-			PledgeConfig pledgeConfig = new PledgeConfig();
-			pledgeConfig.setDelegator(supervisionCustomer.getDelegator());
-			pledgeConfig.setSupervisionCustomer(supervisionCustomer);
-//			pledgeConfig.setSupervisor(supervisionCustomer.getSupervisor());
-			pledgeConfigDao.save(pledgeConfig);
+		PledgeConfig pledgeConfig = new PledgeConfig();
+		if(StringUtils.hasText(supervisionCustomer.getId())) {
+			List<PledgeConfig> pledgeConfigList = pledgeConfigDao.findBySupervisionCustomerId(supervisionCustomer.getId());
+			if(!pledgeConfigList.isEmpty()) {
+				pledgeConfig = pledgeConfigList.get(0);
+			}
 		} 
+		pledgeConfig.setDelegator(supervisionCustomer.getDelegator());
+		pledgeConfig.setSupervisionCustomer(supervisionCustomer);
+		
+		Supervisor supervisor = supervisorService.findOneByWarehouseId(supervisionCustomer.getWarehouse().getId());
+		pledgeConfig.setSupervisor(supervisor);
+		pledgeConfigDao.save(pledgeConfig);
+		
 		supervisionCustomerDao.save(supervisionCustomer);
 	}
 	

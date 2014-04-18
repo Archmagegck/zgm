@@ -7,7 +7,7 @@
 <html>
   <head>
     
-    <title>添加入库货物</title>
+    <title>添加检测记录</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -26,6 +26,11 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$("#myForm").validate();
+			
+			$("#style").val('${iniCheck.style.id}');
+			$("#checkMethod").val('${iniCheck.checkMethod}');
+			$("#checkResult").val('${iniCheck.checkResult}');
+			
 		});
 		
 		function changeStyle() {
@@ -33,81 +38,63 @@
 			$("#styleName").val(selStyle);
 		}
 		
-		function changePurity(ob) {
-			var selPurity = $("#purity").find("option:selected").text();
-			$("#pledgePurityName").val(selPurity);
-		}
-		
 	</script>
 	
   </head>
   
   <body>
-    <form id="myForm" name="myForm" action="${ctx}/supervisor/insRecord/showDetailList" method="post">
+    <form id="myForm" name="myForm" action="${ctx}/supervisor/iniCheck/update/${index}" method="post">
     	<div id="content">
     		<div style="margin-bottom: 10px;padding: 5px 10px;" id="box">
-    		<h3 id="adduser">添加入库货物</h3>
+    		<h3 id="adduser">添加检测记录</h3>
     		<br/>
     		<fieldset style="padding: 5px 10px;" id="personal">
     			<legend><h3>请输入相关信息</h3></legend>
     			<br/>
-    				<table cellpadding="0" cellspacing="0" width="100%"  class="list1">
+    				<input type="hidden" name="index" value = "${index}" >
+    				<input type="hidden" name="warehouse.id" value = "${sessionScope.warehouseId }" >
+    				<table  cellpadding="0" cellspacing="0" width="100%"  class="list1">
 					<tr>
 						<td width="30%">
 							款式大类:
 						</td>
 						<td width="70%">
-							<select id="style" name="style.id" class="required" onchange="changeStyle()">
+							<select id="style" name="style.id" class="required" onchange="changeStyle();">
 								<c:forEach items="${styleList}" var="style">
 									<option value = "${style.id }">${style.name }</option>
 								</c:forEach>
 							</select>
-							<input type="hidden" id="styleName" name="style.name" value="${styleList[0].name}">
+							<input type="hidden" id="styleName" name="style.name" value="${iniCheck.style.name}"/>
 						</td>
 					</tr>
 					<tr>
 						<td width="30%">
-							标明成色:
+							检测方法:
 						</td>
 						<td width="70%">
-							<select id="purity" name="pledgePurity.id" class="required" onchange="changePurity()">
-								<c:forEach items="${pledgePurityList}" var="pledgePurity">
-									<option value = "${pledgePurity.id }">${pledgePurity.name }</option>
-								</c:forEach>
-							</select>
-							<input type="hidden" id="pledgePurityName" name="pledgePurity.name" value="${pledgePurityList[0].name}">
+							<select id="checkMethod" name="checkMethod">
+			            		<option value="Spectrum" selected="selected">光谱法</option>
+			            		<option value="Dissolve">溶金法</option>
+			            	</select>
 						</td>
 					</tr>
 					<tr>
 						<td width="30%">
-							生产厂家:
+							检测重量
 						</td>
 						<td width="70%">
-							<input id="company" name="company" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
+							<input id="checkWeight" name="checkWeight" value="${iniCheck.checkWeight}" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
 						</td>
 					</tr>
 					<tr>
 						<td width="30%">
-							数量（件）:
+							检测结果:
 						</td>
 						<td width="70%">
-							<input id="amount" name="amount" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
-						</td>
-					</tr>
-					<tr>
-						<td width="30%">
-							重量（g）:
-						</td>
-						<td width="70%">
-							<input id="weight" name="weight" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
-						</td>
-					</tr>
-					<tr>
-						<td width="30%">
-							备注:
-						</td>
-						<td width="70%">
-							<input id="desc" name="desc" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
+							<select id="checkResult" name="checkResult">
+			            		<option value="Ok" selected="selected">合格</option>
+			            		<option value="Fail">不合格</option>
+			            	</select>
 						</td>
 					</tr>
 					</table>

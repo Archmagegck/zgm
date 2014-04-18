@@ -6,7 +6,7 @@
 <html>
 	<head>
 
-		<title>质押物成色类别管理</title>
+		<title>初始状态检测结果</title>
 
 		<meta http-equiv="pragma" content="no-cache">
 		<meta http-equiv="cache-control" content="no-cache">
@@ -18,22 +18,7 @@
 		<link rel="stylesheet" type="text/css" href="${ctx }/css/admin/theme1.css">
 		
 		<script language="javascript" type="text/javascript" src="${ctx }/js/jquery.js"></script>
-		<script type="text/javascript">
-    	$(document).ready(function(){
-			var query = "${queryName}";
-			if(query!=null && query.length > 0){
-				$("#queryName").val(query);
-			}
-		});
-
 		
-		//转向
-		function gotoPage(pageNo){
-			$("#pageNo").val(pageNo);
-			$("#myForm").submit();
-		}
-
-    </script>
 	
 	<style type="text/css">
 		.button{
@@ -45,64 +30,47 @@
 	</head>
 
 	<body>
-		<form action="${ctx }/manage/pledgePurity/list" method="post" id="myForm" name="myForm">
 			<div align="center" id="content"">
 				<div id="box">
 					<h3 align="left">
-						质押物成色类别管理
+						初始状态检测结果
 					</h3>
 					<div>
 						&nbsp;
-					</div>
-					<div align="left">
-						<c:if test="${not empty messageOK}">
-							<div class="flash notice">
-								&nbsp;&nbsp;${messageOK}
-							</div>
-						</c:if>
-						<c:if test="${not empty messageErr}">
-							<div class="flash error">
-								&nbsp;&nbsp;${messageErr}
-							</div>
-						</c:if>
 					</div>
 					<br/>
 					<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
 						<thead>
 							<tr>
-								<th width="20%">
-									序号
-								</th>
-								<th>
-									标明成色
-								</th>
-								<th>
-									操作
-								</th>
+								<th width="8%">序号</th>
+								<th>款式大类</th>
+								<th>检测方法</th>
+								<th>检测重量</th>
+								<th>检测结果</th>
 							</tr>
 						</thead>
-						<c:forEach items="${page.content}" var="pledgePurity" varStatus="status">
+						<c:forEach items="${iniCheckList}" var="iniCheck" varStatus="status">
 							<tr>
 								<td>
 									${status.count}&nbsp;
 								</td>
 								<td>
-									${pledgePurity.name }&nbsp;
+									${iniCheck.style.name }&nbsp;
 								</td>
 								<td>
-									<c:if test="${pledgePurity.type == 1}">
-										<a href="${ctx }/manage/pledgePurity/edit/${pledgePurity.id }">编辑</a>
-									</c:if>
+									${iniCheck.checkMethod.title }&nbsp;
+								</td>
+								<td>
+									${iniCheck.checkWeight }&nbsp;
+								</td>
+								<td>
+									${iniCheck.checkResult.title }&nbsp;
 								</td>
 							</tr>
 						</c:forEach>
 					</table>
-					<div align="left" id="pager">
-						<jsp:include page="../../common/page.jsp"></jsp:include>
-					</div>
 				</div>
 			</div>
-		</form>
 	</body>
 </html>
 

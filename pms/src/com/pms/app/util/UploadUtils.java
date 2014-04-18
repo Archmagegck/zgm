@@ -31,6 +31,45 @@ public class UploadUtils {
 	}
 	
 	
+	public static String uploadFile(HttpServletRequest request, Integer type, String warehouseName) throws ServiceException {
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+		MultipartFile imgfile = multipartRequest.getFile("picfile");
+		String fileName = imgfile.getOriginalFilename();
+		String imgName = UUID.randomUUID().toString();
+		String typeName = "未知";
+		switch (type) {
+		case 1:
+			typeName = "入库";
+			break;
+		case 2:
+			typeName = "出库";
+			break;
+		}
+		String folderName = "attached" + separator + warehouseName + separator + typeName;
+		String path = request.getSession().getServletContext().getRealPath(separator);
+		if (!(imgfile.getOriginalFilename() == null || "".equals(imgfile.getOriginalFilename()))) {
+			String ext = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length()).toLowerCase();
+			if (!fileTypes.contains(ext)) {
+				throw new ServiceException("上传文件不是允许的类型！");
+			} else {// 如果扩展名属于允许上传的类型，则创建文件
+				File folder = new File(path + "images" + separator + folderName);
+				if(!folder.exists())
+					folder.mkdirs();
+				imgName = imgName + "." + ext;
+				File file = new File(folder, imgName);
+				try {
+					imgfile.transferTo(file);
+				} catch (Exception e) {
+					throw new ServiceException("上传文件发生未知异常.", e);
+				}
+				String picUrl = folderName + separator + imgName;
+				return picUrl;
+			}
+		}
+		return null;
+	}
+	
+	
 	public static String uploadFile(HttpServletRequest request, Integer type, String supervisionCustomerCode, String code) throws ServiceException {
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		MultipartFile imgfile = multipartRequest.getFile("picfile");
@@ -125,7 +164,7 @@ public class UploadUtils {
 				} catch (Exception e) {
 					throw new ServiceException("上传文件发生未知异常.", e);
 				}
-				String picUrl = toFilePath + separator + "入库单扫描件" + "." + ext;
+//				String picUrl = toFilePath + separator + "入库单扫描件" + "." + ext;
 //				insRecord.setInRecordUrl(picUrl);
 			}
 		}
@@ -144,7 +183,7 @@ public class UploadUtils {
 				} catch (Exception e) {
 					throw new ServiceException("上传文件发生未知异常.", e);
 				}
-				String picUrl = toFilePath + separator + "检测评价结果单扫描件" + "." + ext;
+//				String picUrl = toFilePath + separator + "检测评价结果单扫描件" + "." + ext;
 //				insRecord.setCheckRecordUrl(picUrl);
 			}
 		}
@@ -163,7 +202,7 @@ public class UploadUtils {
 				} catch (Exception e) {
 					throw new ServiceException("上传文件发生未知异常.", e);
 				}
-				String picUrl = toFilePath + separator + "质物清单扫描件" + "." + ext;
+//				String picUrl = toFilePath + separator + "质物清单扫描件" + "." + ext;
 //				insRecord.getPledgeRecord().setRecordFile(picUrl);
 			}
 		}
@@ -198,7 +237,7 @@ public class UploadUtils {
 				} catch (Exception e) {
 					throw new ServiceException("上传文件发生未知异常.", e);
 				}
-				String picUrl = toFilePath + separator + "出库单扫描件" + "." + ext;
+//				String picUrl = toFilePath + separator + "出库单扫描件" + "." + ext;
 //				outsRecord.setOutRecordUrl(picUrl);
 			}
 		}
@@ -217,7 +256,7 @@ public class UploadUtils {
 				} catch (Exception e) {
 					throw new ServiceException("上传文件发生未知异常.", e);
 				}
-				String picUrl = toFilePath + separator + "提货通知（回馈）扫描件" + "." + ext;
+//				String picUrl = toFilePath + separator + "提货通知（回馈）扫描件" + "." + ext;
 //				outsRecord.setPickFeedbackUrl(picUrl);
 			}
 		}
@@ -236,7 +275,7 @@ public class UploadUtils {
 				} catch (Exception e) {
 					throw new ServiceException("上传文件发生未知异常.", e);
 				}
-				String picUrl = toFilePath + separator + "质物清单扫描件" + "." + ext;
+//				String picUrl = toFilePath + separator + "质物清单扫描件" + "." + ext;
 //				outsRecord.getPledgeRecord().setRecordFile(picUrl);
 			}
 		}

@@ -26,4 +26,10 @@ public class SupervisorService extends BaseService<Supervisor, String> {
 		return supervisorDao.findByUsernameAndPassword(username, password);
 	}
 	
+	public Supervisor findOneByWarehouseId(String warehouseId) {
+		List<Supervisor> supervisors = supervisorDao.findByWarehouseId(warehouseId);
+		if(supervisors.isEmpty()) return null;
+		return supervisors.get(0);
+	}
+	
 }

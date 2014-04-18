@@ -69,6 +69,15 @@ public class IniCheck {
 	@Column(name = "ic_checkResult")
 	private CheckResult checkResult;
 
+	
+	public void update(IniCheck iniCheck) {
+		this.warehouse = iniCheck.getWarehouse();
+		this.style = iniCheck.getStyle();
+		this.checkMethod = iniCheck.getCheckMethod();
+		this.checkResult = iniCheck.getCheckResult();
+		this.checkWeight = iniCheck.getCheckWeight();
+	}
+	
 
 	public String getId() {
 		return id;
