@@ -6,7 +6,7 @@
 <html>
 	<head>
 
-		<title>入库单信息</title>
+		<title>入库检测详细信息</title>
 
 		<meta http-equiv="pragma" content="no-cache">
 		<meta http-equiv="cache-control" content="no-cache">
@@ -38,48 +38,46 @@
 			<div align="center" id="content"">
 				<div id="box">
 					<h3 align="center">
-						入库单信息
+						入库检测详细信息
 					</h3>
 					<div>
 						&nbsp;
 					</div>
 					<div align="left">
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						入库单号：${insRecord.code}
+						入库检测总重量（g）：${insCheck.sumWeight}
 						<br/>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						入库单加密号：${insRecord.secretCode}
+						光谱法检测重量（g）：${insCheck.gpWeight}
+						<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						熔金法检测重量（g）：${insCheck.rjWeight}
 					</div>
 					<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
 						<thead>
 							<tr>
 								<th width="8%">序号</th>
 								<th>款式大类</th>
-								<th>标明成色</th>
-								<th>生产厂家</th>
-								<th>数量（件）</th>
-								<th>重量（g）</th>
-								<th>备注</th>
+								<th>检测方法</th>
+								<th>检测重量</th>
+								<th>检测结果</th>
 							</tr>
 						</thead>
 						<tbody>
-						<c:forEach items="${detailList}" var="insRecordDetail" varStatus="status">
+						<c:forEach items="${detailList}" var="insCheckDetail" varStatus="status">
 							<tr>
 								<td>${status.count}&nbsp;</td>
-								<td>${insRecordDetail.style.name}&nbsp;</td>
-								<td>${insRecordDetail.pledgePurity.name}&nbsp;</td>
-								<td>${insRecordDetail.company}&nbsp;</td>
-								<td>${insRecordDetail.amount}&nbsp;</td>
-								<td>${insRecordDetail.weight}&nbsp;</td>
-								<td>${insRecordDetail.desc}&nbsp;</td>
+								<td>${insCheckDetail.style.name}&nbsp;</td>
+								<td>${insCheckDetail.checkMethod.title}&nbsp;</td>
+								<td>${insCheckDetail.checkWeight}&nbsp;</td>
+								<td>${insCheckDetail.checkResult.title}&nbsp;</td>
 							</tr>
 						</c:forEach>
 						</tbody>
 					</table>
 					<div align="center" id="pager">
-						<a href="${ctx }/images/${insRecord.attach}">入库单扫描文件查看</a>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="button" value="打印入库单加密号" class="button" onclick="javascript:window.open('${ctx }/supervisor/insRecord/${insRecord.id}/print')" />
+						&nbsp;
+						<input id="button2" type="button" value="返回" onclick="javascript:history.back();" style="cursor: pointer;font-weight: bold;margin-left: 8px;padding-right: 5px;width: 205px;background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;">
 					</div>
 				</div>
 			</div>

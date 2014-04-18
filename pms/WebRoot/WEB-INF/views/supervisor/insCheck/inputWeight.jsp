@@ -7,7 +7,7 @@
 <html>
   <head>
     
-    <title>上传入库单扫描件</title>
+    <title>添加入库货物</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -32,38 +32,21 @@
   </head>
   
   <body>
-    <form id="myForm" name="myForm" action="${ctx}/supervisor/insRecord/uploadAttach" method="post" enctype="multipart/form-data">
+    <form id="myForm" name="myForm" action="${ctx}/supervisor/insCheck/showDetailList" method="post">
     	<div id="content">
     		<div style="margin-bottom: 10px;padding: 5px 10px;" id="box">
-    		<h3 id="adduser">上传入库单扫描件</h3>
+    		<h3 id="adduser">入库检测</h3>
     		<br/>
     		<fieldset style="padding: 5px 10px;" id="personal">
-    			<legend><h3>请选择文件上传</h3></legend>
-    			<input type="hidden" name="insRecordId" value = "${id}" >
+    			<legend><h3>请输入相关信息</h3></legend>
     			<br/>
-    				<table  cellpadding="0" cellspacing="0" width="100%"  class="list1">
+    				<table cellpadding="0" cellspacing="0" width="100%"  class="list1">
 					<tr>
-						<td width="20%">
-							入库单扫描件上传：
+						<td width="30%">
+							入库检测总重量（g）:
 						</td>
-						<td width="80%">
-							<input type="file" name="insRecordFile" id="insRecordFile" value="浏览"/>
-						</td>
-					</tr>
-					<tr>
-						<td width="20%">
-							检测评价结果单扫描件上传：
-						</td>
-						<td width="80%">
-							<input type="file" name="checkRecordFile" id="checkRecordFile" value="浏览"/>
-						</td>
-					</tr>
-					<tr>
-						<td width="20%">
-							质物清单扫描件上传：
-						</td>
-						<td width="80%">
-							<input type="file" name="pledgeRecordFile" id="pledgeRecordFile" value="浏览"/>
+						<td width="70%">
+							<input id="sumWeight" name="sumWeight" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
 						</td>
 					</tr>
 					</table>
@@ -71,8 +54,7 @@
     		</fieldset>
     		<br/>
     		<div style="margin-bottom: 5px;padding: 3px;" align="center">
-    				<input id="button1" type="submit" value="提交" style="cursor: pointer;font-weight: bold;margin-left: 8px;padding-right: 5px;width: 205px; background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
-    				<input id="button2" type="button" value="返回" onclick="javascript:history.back();" style="cursor: pointer;font-weight: bold;margin-left: 8px;padding-right: 5px;width: 205px;background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;">
+    				<input id="button1" type="submit" value="生成检测重量" style="cursor: pointer;font-weight: bold;margin-left: 8px;padding-right: 5px;width: 205px; background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
     		</div>
     	</div>
     	</div>

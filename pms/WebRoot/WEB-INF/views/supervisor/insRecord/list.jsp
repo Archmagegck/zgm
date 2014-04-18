@@ -106,7 +106,7 @@
 									${insRecord.sumWeight }&nbsp;
 								</td>
 								<td>
-									${sessionScope.warehouse.address}&nbsp;
+									${insRecord.warehouse.address}&nbsp;
 								</td>
 								<td>
 									${insRecord.date }&nbsp;

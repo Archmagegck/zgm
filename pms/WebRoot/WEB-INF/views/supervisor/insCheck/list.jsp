@@ -6,7 +6,7 @@
 <html>
 	<head>
 
-		<title>入库单信息</title>
+		<title>入库检测列表</title>
 
 		<meta http-equiv="pragma" content="no-cache">
 		<meta http-equiv="cache-control" content="no-cache">
@@ -21,8 +21,20 @@
 		<script type="text/javascript" src="${ctx }/js/date/WdatePicker.js"></script>
 		
 		<script type="text/javascript">
-    		
-    	</script>
+    	$(document).ready(function(){
+			var query = "${queryName}";
+			if(query!=null && query.length > 0){
+				$("#queryName").val(query);
+			}
+		});
+
+		//转向
+		function gotoPage(pageNo){
+			$("#pageNo").val(pageNo);
+			$("#myForm").submit();
+		}
+
+    </script>
 	
 	<style type="text/css">
 		.button{
@@ -34,52 +46,56 @@
 	</head>
 
 	<body>
-		<form action="${ctx }/supervisor/insRecord" method="post" id="myForm" name="myForm">
+		<form action="${ctx }/supervisor/insRecord/list" method="get" id="myForm" name="myForm">
 			<div align="center" id="content"">
 				<div id="box">
-					<h3 align="center">
-						入库单信息
+					<h3 align="left">
+						入库检测列表
 					</h3>
 					<div>
 						&nbsp;
 					</div>
-					<div align="left">
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						入库单号：${insRecord.code}
-						<br/>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						入库单加密号：${insRecord.secretCode}
+					<div align="left" style="vertical-align: middle;">
+						&nbsp;&nbsp;&nbsp;根据时间
+						&nbsp;&nbsp; 查询:
+						<span id="values">
+						<input name="date" value="${date}" onFocus="WdatePicker({isShowClear:false,isShowWeek:true,readOnly:true,skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"/>
+						&nbsp;&nbsp;
+						</span>
+						&nbsp;&nbsp;&nbsp;
+						<input type="button" value="查询" class="button" onclick="gotoPage(1)" />
+						<input type="hidden" name="page.page" id="pageNo" value="${page.number+1}"/>
 					</div>
+					<br/>
 					<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
 						<thead>
 							<tr>
 								<th width="8%">序号</th>
-								<th>款式大类</th>
-								<th>标明成色</th>
-								<th>生产厂家</th>
-								<th>数量（件）</th>
-								<th>重量（g）</th>
-								<th>备注</th>
+								<th>入库检测单号</th>
+								<th>检测时间</th>
+								<th>&nbsp;</th>
 							</tr>
 						</thead>
-						<tbody>
-						<c:forEach items="${detailList}" var="insRecordDetail" varStatus="status">
+						<c:forEach items="${page.content}" var="insCheck" varStatus="status">
 							<tr>
-								<td>${status.count}&nbsp;</td>
-								<td>${insRecordDetail.style.name}&nbsp;</td>
-								<td>${insRecordDetail.pledgePurity.name}&nbsp;</td>
-								<td>${insRecordDetail.company}&nbsp;</td>
-								<td>${insRecordDetail.amount}&nbsp;</td>
-								<td>${insRecordDetail.weight}&nbsp;</td>
-								<td>${insRecordDetail.desc}&nbsp;</td>
+								<td>
+									${status.count}&nbsp;
+								</td>
+								<td>
+									${insCheck.code }&nbsp;
+								</td>
+								<td>
+									${insCheck.date }&nbsp;
+								</td>
+								<td>
+									<a href="${ctx }/supervisor/insCheck/${insCheck.id }/details">查看</a>
+									&nbsp;
+								</td>
 							</tr>
 						</c:forEach>
-						</tbody>
 					</table>
-					<div align="center" id="pager">
-						<a href="${ctx }/images/${insRecord.attach}">入库单扫描文件查看</a>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="button" value="打印入库单加密号" class="button" onclick="javascript:window.open('${ctx }/supervisor/insRecord/${insRecord.id}/print')" />
+					<div align="left" id="pager">
+						<jsp:include page="../../common/page.jsp"></jsp:include>
 					</div>
 				</div>
 			</div>

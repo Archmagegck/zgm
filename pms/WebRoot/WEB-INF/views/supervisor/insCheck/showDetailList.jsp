@@ -6,7 +6,7 @@
 <html>
 	<head>
 
-		<title>入库货物信息表</title>
+		<title>入库检测</title>
 
 		<meta http-equiv="pragma" content="no-cache">
 		<meta http-equiv="cache-control" content="no-cache">
@@ -29,17 +29,17 @@
 			});
 		
     		function addDetail(){
-				window.location.href = "${ctx}/supervisor/insRecord/addDetail";
+				window.location.href = "${ctx}/supervisor/insCheck/addDetail";
 			}
 			
 			function addRecordInfo(){
-				window.location.href = "${ctx}/supervisor/insRecord/addRecordInfo";
+				window.location.href = "${ctx}/supervisor/insCheck/addRecordInfo";
 			}
 			
 			//删除
 			function del(index){
 				if (confirm("确定要删除吗？")){
-					$("#myForm").attr("action","${ctx }/supervisor/insRecord/delDetail/" + index);
+					$("#myForm").attr("action","${ctx }/supervisor/insCheck/delDetail/" + index);
 					$("#myForm").submit();
 				}
 			}
@@ -56,13 +56,19 @@
 	</head>
 
 	<body>
-		<form action="${ctx }/supervisor/insRecord/save" method="post" id="myForm" name="myForm" enctype="multipart/form-data">
+		<form action="${ctx }/supervisor/insCheck/saveList" method="post" id="myForm" name="myForm" enctype="multipart/form-data">
 			<div align="center" id="content"">
 				<div id="box">
 					<h3 align="left">
-						入库货物信息表
+						入库检测
 					</h3>
 					<div>
+						入库检测总重量（g）：${ sessionScope.weight[0]} 
+						<br>
+						光谱法检测重量（g）：${ sessionScope.weight[1]} 
+						<br>
+						熔金法检测重量（g）：${ sessionScope.weight[2]} 
+						<br>
 						&nbsp;
 					</div>
 					<br/>
@@ -71,26 +77,22 @@
 							<tr>
 								<th width="5%">序号</th>
 								<th>款式大类</th>
-								<th>标明成色</th>
-								<th>生产厂家</th>
-								<th>数量（件）</th>
-								<th>重量（g）</th>
-								<th>备注</th>
+								<th>检测方法</th>
+								<th>检测重量</th>
+								<th>检测结果</th>
 								<th>&nbsp;</th>
 							</tr>
 						</thead>
 						<tbody>
-						<c:forEach items="${detailList}" var="insRecordDetail" varStatus="status">
+						<c:forEach items="${detailList}" var="insCheckDetail" varStatus="status">
 							<tr>
 								<td>${status.count}&nbsp;</td>
-								<td>${insRecordDetail.style.name}&nbsp;</td>
-								<td>${insRecordDetail.pledgePurity.name}&nbsp;</td>
-								<td>${insRecordDetail.company}&nbsp;</td>
-								<td>${insRecordDetail.amount}&nbsp;</td>
-								<td>${insRecordDetail.weight}&nbsp;</td>
-								<td>${insRecordDetail.desc}&nbsp;</td>
+								<td>${insCheckDetail.style.name}&nbsp;</td>
+								<td>${insCheckDetail.checkMethod.title}&nbsp;</td>
+								<td>${insCheckDetail.checkWeight}&nbsp;</td>
+								<td>${insCheckDetail.checkResult.title}&nbsp;</td>
 								<th>
-									<a href="${ctx }/supervisor/insRecord/editDetail/${status.count}">编辑</a>
+									<a href="${ctx }/supervisor/insCheck/editDetail/${status.count}">编辑</a>
 									<a href="#" onclick="del(${status.count});">删除</a>
 								</th>
 							</tr>
@@ -98,19 +100,10 @@
 						</tbody>
 					</table>
 					<div align="center" id="pager">
-						<c:if test="${detailListCount > 0}">
-							入库扫描件上传：
-							<input type="file" name="picfile" id="picfile" value="浏览" class="required" />
-						</c:if>
-					</div>
-					<div align="center" id="pager">
-						&nbsp;<br>
-					</div>
-					<div align="center" id="pager">
-						<input type="button" value="添加货物" class="button" onclick="addDetail()" />
+						<input type="button" value="添加记录" class="button" onclick="addDetail()" />
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<c:if test="${detailListCount > 0}">
-							<input type="submit" value="入库" class="button" />
+							<input type="submit" value="生成入库检测单" class="button" />
 						</c:if>
 					</div>
 				</div>

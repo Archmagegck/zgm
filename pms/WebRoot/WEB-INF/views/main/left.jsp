@@ -281,8 +281,8 @@
 	        <ul class="MM">
 	        	<li><a href="${ctx}/supervisor/insRecord" target="right">入库单列表</a></li>
 	          	<li><a href="${ctx}/supervisor/insRecord/showDetailList" target="right">登记入库货物明细</a></li>
-	          	<li><a href="${ctx}/supervisor/checkDeny/list" target="right">入库检测</a></li>
-	          	<li><a href="${ctx}/supervisor/checkDeny/list" target="right">入库检测列表</a></li>
+	          	<li><a href="${ctx}/supervisor/insCheck/inputWeight" target="right">入库检测</a></li>
+	          	<li><a href="${ctx}/supervisor/insCheck/list" target="right">入库检测列表</a></li>
 	        </ul>
 	      </div>
 	      

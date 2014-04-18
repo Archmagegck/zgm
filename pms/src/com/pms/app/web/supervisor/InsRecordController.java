@@ -32,6 +32,7 @@ import com.pms.app.service.PledgePurityService;
 import com.pms.app.service.StyleService;
 import com.pms.app.service.WarehouseService;
 import com.pms.app.util.UploadUtils;
+import com.pms.base.service.ServiceException;
 
 @Controller
 @RequestMapping(value = "/supervisor/insRecord")
@@ -136,6 +137,9 @@ public class InsRecordController {
 			insRecordService.saveDetails((List<InsRecordDetail>) session.getAttribute("insRecordDetailList"), warehouse, (Supervisor) session.getAttribute("user"), attachPath);
 			session.removeAttribute("insRecordDetailList");
 			ra.addFlashAttribute("messageOK", "保存成功！");
+		} catch (ServiceException e) {
+			ra.addFlashAttribute("messageErr", "保存失败：" + e.getMessage());
+			logger.error("监管员保存异常", e);
 		} catch (Exception e) {
 			ra.addFlashAttribute("messageErr", "保存失败！");
 			logger.error("监管员保存异常", e);
@@ -146,7 +150,9 @@ public class InsRecordController {
 	
 	@RequestMapping(value = "/{id}/print")
 	public String print(@PathVariable("id")String id, Model model, HttpSession session) {
-		return "supervisor/insRecord/printPledgeRecord";
+		InsRecord insRecord = insRecordService.findById(id);
+		model.addAttribute("insRecord", insRecord);
+		return "supervisor/insRecord/print";
 	}
 	
 	

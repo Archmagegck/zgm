@@ -70,6 +70,14 @@ public class InsCheckDetail {
 	private CheckResult checkResult;
 
 
+	public void replace(InsCheckDetail detail) {
+		this.checkMethod = detail.getCheckMethod();
+		this.checkResult = detail.getCheckResult();
+		this.checkWeight = detail.getCheckWeight();
+		this.style = detail.getStyle();
+	}
+	
+	
 	public String getId() {
 		return id;
 	}
