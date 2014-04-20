@@ -68,8 +68,10 @@ public class InsRecordService extends BaseService<InsRecord, String> {
 			Stock stock = stockMap.get(insRecordDetail.getKey());
 			if(stock != null) {
 				stock.add(insRecordDetail.getWeight());
-				updateStocks.add(stock);
+			} else {
+				stock = new Stock(warehouse, insRecordDetail);
 			}
+			updateStocks.add(stock);
 			sumWeight += insRecordDetail.getWeight();
 		}
 		

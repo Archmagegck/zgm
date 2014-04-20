@@ -307,7 +307,7 @@
 	          </tr>
 	        </table>
 	        <ul class="MM">
-	        	<li><a href="${ctx}/supervisor/inventory/add" target="right">库存盘点</a></li>
+	        	<li><a href="${ctx}/supervisor/inventory/addList" target="right">库存盘点</a></li>
 		        <li><a href="${ctx}/supervisor/inventory" target="right">库存盘点列表</a></li>
 	        	<li><a href="${ctx}/supervisor/checkMinValue" target="right">盘点检测</a></li>
 	        	<li><a href="${ctx}/supervisor/pledgeRecord/add" target="right">盘点检测列表</a></li>

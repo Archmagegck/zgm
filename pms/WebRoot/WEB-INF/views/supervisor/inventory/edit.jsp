@@ -27,7 +27,7 @@
 		$(document).ready(function(){
 			$("#myForm").validate();
 			
-			$("#style").val('${inventory.style.id}');
+			$("#style").val('${inventoryDetail.style.id}');
 			
 		});
 		
@@ -57,7 +57,7 @@
 							托盘号
 						</td>
 						<td width="70%">
-							<input id="trayNo" name="trayNo" value="${inventory.checkWeight}" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
+							<input id="trayNo" name="trayNo" value="${inventoryDetail.trayNo}" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
 						</td>
 					</tr>
 					<tr>
@@ -70,37 +70,15 @@
 									<option value = "${style.id }">${style.name }</option>
 								</c:forEach>
 							</select>
-							<input type="hidden" id="styleName" name="style.name" value="${inventory.style.name}"/>
+							<input type="hidden" id="styleName" name="style.name" value="${inventoryDetail.style.name}"/>
 						</td>
 					</tr>
 					<tr>
 						<td width="30%">
-							检测方法:
+							盘存重量(g)
 						</td>
 						<td width="70%">
-							<select id="checkMethod" name="checkMethod">
-			            		<option value="Spectrum" selected="selected">光谱法</option>
-			            		<option value="Dissolve">溶金法</option>
-			            	</select>
-						</td>
-					</tr>
-					<tr>
-						<td width="30%">
-							检测重量
-						</td>
-						<td width="70%">
-							<input id="checkWeight" name="checkWeight" value="${inventory.checkWeight}" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
-						</td>
-					</tr>
-					<tr>
-						<td width="30%">
-							检测结果:
-						</td>
-						<td width="70%">
-							<select id="checkResult" name="checkResult">
-			            		<option value="Ok" selected="selected">合格</option>
-			            		<option value="Fail">不合格</option>
-			            	</select>
+							<input id="weight" name="weight" value="${inventoryDetail.weight}" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
 						</td>
 					</tr>
 					</table>

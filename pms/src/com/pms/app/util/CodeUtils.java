@@ -19,4 +19,8 @@ public class CodeUtils {
 	public synchronized static String getPledgeRecordCode(String supervisionCustomerCode){
 		return supervisionCustomerCode + "ZWQD" + new DateTime().toString("yyyyMMddHHmmss");
 	}
+	
+	public synchronized static String getExtendedCheckCode(String warehouseCode){
+		return warehouseCode + "CQJC" + new DateTime().toString("yyyyMMddHHmmss");
+	}
 }

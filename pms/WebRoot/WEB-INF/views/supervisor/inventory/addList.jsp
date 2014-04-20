@@ -60,9 +60,9 @@
 									${inventoryDetail.weight }&nbsp;
 								</td>
 								<td>
-									<a href="${ctx }/supervisor/inventoryDetail/edit/${status.index}">编辑</a>
+									<a href="${ctx }/supervisor/inventory/edit/${status.index}">编辑</a>
 									&nbsp;
-									<a href="${ctx }/supervisor/inventoryDetail/del/${status.count}">删除</a>
+									<a href="${ctx }/supervisor/inventory/del/${status.count}">删除</a>
 								</td>
 							</tr>
 						</c:forEach>
