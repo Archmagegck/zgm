@@ -334,8 +334,8 @@
 	          </tr>
 	        </table>
 	        <ul class="MM">
-	        	<li><a href="${ctx}/supervisor/realTimeStocks" target="right">超期检测</a></li>
-		        <li><a href="${ctx}/supervisor/pledgeRecord" target="right">超期检测记录</a></li>
+	        	<li><a href="${ctx}/supervisor/extendedCheck/inputWeight" target="right">超期检测</a></li>
+		        <li><a href="${ctx}/supervisor/extendedCheck" target="right">超期检测记录</a></li>
 	        </ul>
 	      </div>
 	      

@@ -14,7 +14,7 @@ public interface StockDao extends BaseDao<Stock, String> {
 	@Query("select s.style,s.pledgePurity,s.warehouse,sum(s.sumWeight) from Stock s GROUP BY s.style,s.pledgePurity,s.warehouse")
 	public List<Object[]> findTotalList();
 	
-	@Query("select sum(s.sumWeight) from Stock s where s.warehouse.id=?")
+	@Query("select sum(s.sumWeight) from Stock s where s.warehouse.id=?1")
 	public double findSumWeightByWarehouseId(String warehouseId);
 	
 }

@@ -69,6 +69,13 @@ public class ExtendedCheckDetail {
 	@Column(name = "ecd_checkResult")
 	private CheckResult checkResult;
 
+	
+	public void replace(ExtendedCheckDetail detail) {
+		this.checkMethod = detail.getCheckMethod();
+		this.checkResult = detail.getCheckResult();
+		this.checkWeight = detail.getCheckWeight();
+		this.style = detail.getStyle();
+	}
 
 	public String getId() {
 		return id;

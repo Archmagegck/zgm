@@ -102,7 +102,7 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 			outsRecordDetail.setSupervisionCustomer(supervisionCustomer);
 			outsRecordDetail.setStyle(stock.getStyle());
 			outsRecordDetail.setPledgePurity(stock.getPledgePurity());
-			outsRecordDetail.setWeight(remainWeight);
+			outsRecordDetail.setWeight(outWeight);
 			outsRecordDetail.setDate(now);
 			saveOutsRecordDetails.add(outsRecordDetail);
 			
