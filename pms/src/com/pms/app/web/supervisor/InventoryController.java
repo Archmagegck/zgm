@@ -2,7 +2,9 @@ package com.pms.app.web.supervisor;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -21,21 +23,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.pms.app.entity.Inventory;
-import com.pms.app.entity.SupervisionCustomer;
+import com.pms.app.entity.InventoryDetail;
 import com.pms.app.entity.Supervisor;
 import com.pms.app.entity.Warehouse;
 import com.pms.app.service.InventoryService;
-import com.pms.app.service.StockService;
-import com.pms.app.web.supervisor.form.InventoryForm;
+import com.pms.app.service.StyleService;
+import com.pms.app.service.WarehouseService;
+import com.pms.base.service.ServiceException;
 
 @Controller
 @RequestMapping(value = "/supervisor/inventory")
+@SuppressWarnings("unchecked")
 public class InventoryController {
 	
 	private Logger logger = LoggerFactory.getLogger(InventoryController.class);
 	
 	@Autowired private InventoryService inventoryService;
-	@Autowired private StockService stockService;
+	@Autowired private StyleService styleService;
+	@Autowired private WarehouseService warehouseService;
 	
 	@InitBinder  
 	public void initBinder(WebDataBinder binder) throws Exception {  
@@ -50,7 +55,7 @@ public class InventoryController {
 		DateTime dateTime = new DateTime();
 		if(date != null) dateTime = new DateTime(date);
 		model.addAttribute("date", dateTime.toString("yyyy-MM-dd"));
-		model.addAttribute("page", inventoryService.findPageByQuery(pageable, ((Warehouse)session.getAttribute("warehouse")).getId(), dateTime.toDate()));
+		model.addAttribute("page", inventoryService.findPageByQuery(pageable, (String)session.getAttribute("warehouse"), dateTime.toDate()));
 		return "supervisor/inventory/list";
 	}
 	
@@ -64,23 +69,72 @@ public class InventoryController {
 	}
 	
 	
-	@RequestMapping(value = "add")
-	public String add(Model model, HttpSession session){
+	@RequestMapping(value = "/addList")
+	public String addList(Model model, HttpSession session){
+		model.addAttribute("inventoryDetailList", (List<InventoryDetail>) session.getAttribute("inventoryDetailList"));
+		return "supervisor/inventory/addList";
+	}
+	
+	
+	@RequestMapping(value = "/add")
+	public String add(Model model){
+		model.addAttribute("styleList", styleService.findAll());
 		return "supervisor/inventory/add";
 	}
 	
 	
-	@RequestMapping(value = "save")
-	public String save(Model model, InventoryForm inventoryForm, HttpSession session, RedirectAttributes ra){
+	@RequestMapping(value = "/save")
+	public String save(InventoryDetail inventoryDetail, HttpSession session){
+		List<InventoryDetail> inventoryDetailList = new ArrayList<InventoryDetail>();
+		if(session.getAttribute("inventoryDetailList") != null) {
+			inventoryDetailList = (List<InventoryDetail>) session.getAttribute("inventoryDetailList");
+		}
+		inventoryDetailList.add(inventoryDetail);
+		session.setAttribute("inventoryDetailList", inventoryDetailList);
+		return "redirect:/supervisor/inventory/addList";
+	}
+	
+	@RequestMapping(value = "/edit/{index}")
+	public String edit(@PathVariable("index")Integer index, Model model, HttpSession session){
+		List<InventoryDetail> inventoryDetailList = (List<InventoryDetail>) session.getAttribute("inventoryDetailList");
+		model.addAttribute("inventoryDetail", inventoryDetailList.get(index));
+		model.addAttribute("index", index);
+		model.addAttribute("styleList", styleService.findAll());
+		return "supervisor/inventory/edit";
+	}
+	
+	@RequestMapping(value = "/update/{index}")
+	public String update(@PathVariable("index")Integer index, InventoryDetail inventoryDetail, HttpSession session){
+		List<InventoryDetail> inventoryDetailList = (List<InventoryDetail>) session.getAttribute("inventoryDetailList");
+		InventoryDetail invOld = inventoryDetailList.get(index);
+		invOld.update(inventoryDetail);
+		return "redirect:/supervisor/inventory/addList";
+	}
+	
+	
+	@RequestMapping(value = "/del/{index}")
+	public String del(@PathVariable("index")Integer index, HttpSession session){
+		System.out.println("inventoryController.del()" + index);
+		List<InventoryDetail> inventoryDetailList = (List<InventoryDetail>) session.getAttribute("inventoryDetailList");
+		inventoryDetailList.remove(index - 1);
+		session.setAttribute("inventoryDetailList", inventoryDetailList);
+		return "redirect:/supervisor/inventory/addList";
+	}
+	
+	
+	@RequestMapping(value = "/saveList")
+	public String saveList(HttpSession session, RedirectAttributes ra){
 		try {
-			Warehouse warehouse = (Warehouse)session.getAttribute("warehouse");
-			SupervisionCustomer supervisionCustomer = (SupervisionCustomer)session.getAttribute("supervisionCustomer");
-			String supName = ((Supervisor)session.getAttribute("user")).getName();
-			inventoryService.save(warehouse, supervisionCustomer, supName, inventoryForm.getInventoryDetails());
+			Warehouse warehouse = warehouseService.findById((String)session.getAttribute("warehouseId"));
+			List<InventoryDetail> inventoryDetailList = (List<InventoryDetail>) session.getAttribute("inventoryDetailList");
+			inventoryService.save(inventoryDetailList ,warehouse, (Supervisor) session.getAttribute("user"));
+			ra.addFlashAttribute("messageOK", "保存成功！");
+		} catch (ServiceException e) {
+			ra.addFlashAttribute("messageErr", "盘存不一致，无法保存！");
+			logger.error("保存异常", e);
 		} catch (Exception e) {
-			logger.error("保存失败", e);
 			ra.addFlashAttribute("messageErr", "保存失败！");
-			return "redirect:/supervisor/inventory/add";
+			logger.error("保存异常", e);
 		}
 		return "redirect:/supervisor/inventory/list";
 	}

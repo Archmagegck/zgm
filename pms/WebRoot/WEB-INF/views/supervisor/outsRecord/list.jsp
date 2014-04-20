@@ -89,13 +89,9 @@
 								<th width="8%">序号</th>
 								<th>出库单号</th>
 								<th>总重量（kg）</th>
-								<th>提货人姓名</th>
-								<th>提货人身份证</th>
-								<th>存储地点</th>
 								<th>出库时间</th>
-								<th>提货类型</th>
+								<th>备注</th>
 								<th>审核状态</th>
-								<th>扫描文件上传状态</th>
 								<th>&nbsp;</th>
 							</tr>
 						</thead>
@@ -111,29 +107,13 @@
 									${outsRecord.sumWeight }&nbsp;
 								</td>
 								<td>
-									${outsRecord.picker }&nbsp;
-								</td>
-								<td>
-									${outsRecord.pickerIdCard }&nbsp;
-								</td>
-								<td>
-									${outsRecord.storage }&nbsp;
-								</td>
-								<td>
 									${outsRecord.date }&nbsp;
 								</td>
 								<td>
-									${outsRecord.pickType.title }&nbsp;
+									${outsRecord.desc }&nbsp;
 								</td>
 								<td>
 									${outsRecord.auditState.title }&nbsp;
-								</td>
-								<td>
-									<c:if test="${outsRecord.attachState == 1}">已上传</c:if>
-									<c:if test="${outsRecord.attachState == 0}">
-									<a href="${ctx }/supervisor/outsRecord/${outsRecord.id }/toUpload3">未上传</a>
-									</c:if>
-									&nbsp;
 								</td>
 								<td>
 									<a href="${ctx }/supervisor/outsRecord/${outsRecord.id }/details">查看</a>

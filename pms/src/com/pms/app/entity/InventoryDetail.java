@@ -75,6 +75,12 @@ public class InventoryDetail {
 	public String getDateStr() {
 		return new DateTime(date).toString("yyyy-MM-dd");
 	}
+	
+	public void update(InventoryDetail inventoryDetail) {
+		this.trayNo = inventoryDetail.getTrayNo();
+		this.style = inventoryDetail.getStyle();
+		this.weight = inventoryDetail.getWeight();
+	}
 
 
 	public String getId() {

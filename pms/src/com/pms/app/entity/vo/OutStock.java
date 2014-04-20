@@ -4,7 +4,7 @@ public class OutStock {
 	
 	private String stockId;
 	
-	private Double outAmount;
+	private Double sumWeight;
 
 	public String getStockId() {
 		return stockId;
@@ -14,12 +14,12 @@ public class OutStock {
 		this.stockId = stockId;
 	}
 
-	public Double getOutAmount() {
-		return outAmount;
+	public Double getSumWeight() {
+		return sumWeight;
 	}
 
-	public void setOutAmount(Double outAmount) {
-		this.outAmount = outAmount;
+	public void setSumWeight(Double sumWeight) {
+		this.sumWeight = sumWeight;
 	}
 	
 }

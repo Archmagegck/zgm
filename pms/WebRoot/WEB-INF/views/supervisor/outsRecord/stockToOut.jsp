@@ -113,7 +113,7 @@
   </head>
   
   <body>
-    <form id="myForm" name="myForm" action="${ctx}/supervisor/outsRecord/saveDetail" method="post" class="myform">
+    <form id="myForm" name="myForm" action="${ctx}/supervisor/outsRecord/saveOutsRecord" method="post" class="myform" enctype="multipart/form-data">
     	<div id="content">
     		<div style="margin-bottom: 10px;padding: 5px 10px;" id="box">
     		<h3 id="adduser">货物信息表</h3>
@@ -131,34 +131,13 @@
 						&nbsp;&nbsp;${messageErr}
 					</div>
 				</c:if>
-    			<table  cellpadding="0" cellspacing="0" width="100%"  class="myTable">
-					<tr>
-						<td width="30%">"提货通知书"扫描文件上传：</td>
-						<td width="70%" colspan="3">
-							<input type="button" value="上传文件" onclick="upload();" />
-							<span id="showPic">
-							<c:if test="${not empty sessionScope.tempImg}">
-								<a href="${ctx}/images/${sessionScope.tempImg}" target=_blank>查看</a>
-							</c:if>
-							</span>
-						</td>
-					</tr>
-				</table>
-				<br/>
     				<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%" class="myTable">
 						<thead>
 							<tr>
 								<th width="6%">序号</th>
 								<th>款式大类</th>
 								<th>标明成色</th>
-								<th>标明规格重量（kg/件）</th>
-								<th>数量（件）</th>
-								<th>总重量（kg）</th>
-								<th>生产厂家</th>
-								<th>是否封闭运输</th>
-								<th>存储地点</th>
-								<th>标记/备注</th>
-								<th>出库数量（件）</th>
+								<th>重量（g）</th>
 							</tr>
 						</thead>
 						<c:forEach items="${stockList}" var="stock" varStatus="status">
@@ -173,29 +152,7 @@
 									${stock.pledgePurity.name }&nbsp;
 								</td>
 								<td>
-									${stock.specWeight}&nbsp;
-								</td>
-								<td>
-									${stock.amount}&nbsp;
-								</td>
-								<td>
-									${stock.sumWeight}&nbsp;
-								</td>
-								<td>
-									${stock.company}&nbsp;
-								</td>
-								<td>
-									<c:if test="${stock.closedTran == 0}">否</c:if>
-									<c:if test="${stock.closedTran == 1}">是</c:if>
-								</td>
-								<td>
-									${sessionScope.warehouse.address}&nbsp;
-								</td>
-								<td>
-									${stock.desc}&nbsp;
-								</td>
-								<td>
-									<input id="stocks[${status.index}].amount" name="outStocks[${status.index}].outAmount" class="{number:true,max:${stock.amount}}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
+									<input id="stocks[${status.index}].sumWeight" name="outStocks[${status.index}].sumWeight" class="{number:true,max:${stock.sumWeight}}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
 									<input type="hidden" name="outStocks[${status.index}].stockId" value="${stock.id }">
 									&nbsp;
 								</td>
@@ -203,10 +160,24 @@
 						</c:forEach>
 					</table>
     			<br/>
+    			<table  cellpadding="0" cellspacing="0" width="100%"  class="myTable">
+					<tr>
+						<td width="30%">出库单扫描件上传：</td>
+						<td width="70%" colspan="3">
+							<input type="file" name="picfile" id="picfile" value="浏览" class="required" />
+						</td>
+					</tr>
+					<tr>
+						<td width="30%">备注：</td>
+						<td width="70%" colspan="3">
+							<input id="desc" name="desc" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
+						</td>
+					</tr>
+				</table>
     		</fieldset>
     		<br/>
     		<div style="margin-bottom: 5px;padding: 3px;" align="center">
-    			<input id="button1" type="submit" value="下一步" style="cursor: pointer;font-weight: bold;margin-left: 8px;padding-right: 5px;width: 205px; background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
+    			<input id="button1" type="submit" value="出库" style="cursor: pointer;font-weight: bold;margin-left: 8px;padding-right: 5px;width: 205px; background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
     		</div>
     	</div>
     	</div>

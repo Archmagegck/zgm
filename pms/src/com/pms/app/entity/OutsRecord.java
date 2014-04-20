@@ -79,8 +79,8 @@ public class OutsRecord {
 	/**
 	 * 重量
 	 */
-	@Column(name = "out_weight")
-	private Double weight;
+	@Column(name = "out_sumWeight")
+	private Double sumWeight;
 	
 	
 	/**
@@ -199,16 +199,6 @@ public class OutsRecord {
 	}
 
 
-	public Double getWeight() {
-		return weight;
-	}
-
-
-	public void setWeight(Double weight) {
-		this.weight = weight;
-	}
-
-
 	public String getSupName() {
 		return supName;
 	}
@@ -276,6 +266,16 @@ public class OutsRecord {
 
 	public void setNotice(Integer notice) {
 		this.notice = notice;
+	}
+
+
+	public Double getSumWeight() {
+		return sumWeight;
+	}
+
+
+	public void setSumWeight(Double sumWeight) {
+		this.sumWeight = sumWeight;
 	}
 
 

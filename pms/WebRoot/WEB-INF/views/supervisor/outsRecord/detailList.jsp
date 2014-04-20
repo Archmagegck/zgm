@@ -6,7 +6,7 @@
 <html>
 	<head>
 
-		<title>出库单信息</title>
+		<title>出库单明细</title>
 
 		<meta http-equiv="pragma" content="no-cache">
 		<meta http-equiv="cache-control" content="no-cache">
@@ -38,44 +38,28 @@
 			<div align="center" id="content"">
 				<div id="box">
 					<h3 align="center">
-						出库单信息
+						出库单明细
 					</h3>
 					<div>
 						&nbsp;
 					</div>
 					<div align="left">
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						单号：${outsRecord.code}
+						出库单号：${outsRecord.code}
+						<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						出库单加密号：${outsRecord.secretCode}
+						<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						备注：${outsRecord.desc}
 					</div>
-					<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
-						<thead>
-							<tr>
-								<th>监管员姓名</th>
-								<th>出库时间</th>
-								<th>提货人姓名</th>
-								<th>提货人身份证</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>${outsRecord.supName}</td>
-								<td>${outsRecord.date}</td>
-								<td>${outsRecord.picker}</td>
-								<td>${outsRecord.pickerIdCard}</td>
-							</tr>
-						</tbody>
-					</table>
 					<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
 						<thead>
 							<tr>
 								<th width="8%">序号</th>
 								<th>款式大类</th>
 								<th>标明成色</th>
-								<th>标明规格重量（kg/件）</th>
-								<th>数量（件）</th>
-								<th>总重量（kg）</th>
-								<th>生产厂家</th>
-								<th>标记/备注</th>
+								<th>重量（g）</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -84,23 +68,15 @@
 								<td>${status.count}&nbsp;</td>
 								<td>${outsRecordDetail.style.name}&nbsp;</td>
 								<td>${outsRecordDetail.pledgePurity.name}&nbsp;</td>
-								<td>${outsRecordDetail.specWeight}&nbsp;</td>
-								<td>${outsRecordDetail.amount}&nbsp;</td>
-								<td>${outsRecordDetail.sumWeight}&nbsp;</td>
-								<td>${outsRecordDetail.company}&nbsp;</td>
-								<td>${outsRecordDetail.desc}&nbsp;</td>
+								<td>${outsRecordDetail.weight}&nbsp;</td>
 							</tr>
 						</c:forEach>
 						</tbody>
 					</table>
 					<div align="center" id="pager">
-						<c:if test="${outsRecord.auditState == 'Pass'}">
-							<input type="button" value="查看并打印出库单" class="button" onclick="javascript:window.open('${ctx }/supervisor/outsRecord/${outsRecord.id}/printOutsRecord')" />
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<input type="button" value="查看并打印提货通知书(回执)" class="button" onclick="javascript:window.open('${ctx }/supervisor/outsRecord/${outsRecord.id}/printPickRecord')" />
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<input type="button" value="查看并打印质物清单" class="button" onclick="javascript:window.open('${ctx }/supervisor/outsRecord/${outsRecord.id}/printPledgeRecord')" />
-						</c:if>
+						<a href="${ctx }/images/${outsRecord.attach}">出库单扫描文件查看</a>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="button" value="打印出库单加密号" class="button" onclick="javascript:window.open('${ctx }/supervisor/outsRecord/${outsRecord.id}/print')" />
 					</div>
 				</div>
 			</div>

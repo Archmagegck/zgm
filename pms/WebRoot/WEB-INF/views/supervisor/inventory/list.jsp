@@ -6,7 +6,7 @@
 <html>
 	<head>
 
-		<title>库存盘点及成色检测记录列表</title>
+		<title>库存盘点记录列表</title>
 
 		<meta http-equiv="pragma" content="no-cache">
 		<meta http-equiv="cache-control" content="no-cache">
@@ -46,7 +46,7 @@
 			<div align="center" id="content"">
 				<div id="box">
 					<h3 align="left">
-						库存盘点及成色检测记录列表
+						库存盘点记录列表
 					</h3>
 					<div>
 						&nbsp;
@@ -78,8 +78,8 @@
 					<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
 						<thead>
 							<tr>
-								<th>库存记录编号</th>
-								<th>是否相符</th>
+								<th>序号</th>
+								<th>盘存编号</th>
 								<th>监管员名称</th>
 								<th>时间</th>
 								<th>&nbsp;</th>
@@ -88,11 +88,10 @@
 						<c:forEach items="${page.content}" var="inventory" varStatus="status">
 							<tr>
 								<td>
-									${inventory.code }&nbsp;
+									${status.count}&nbsp;
 								</td>
 								<td>
-									<c:if test="${inventory.equation == 1}">盘存一致</c:if>
-									<c:if test="${inventory.equation == 0}">盘存不一致</c:if>
+									${inventory.code }&nbsp;
 								</td>
 								<td>
 									${inventory.supName }&nbsp;

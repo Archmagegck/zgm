@@ -139,10 +139,10 @@ public class InsRecordController {
 			ra.addFlashAttribute("messageOK", "保存成功！");
 		} catch (ServiceException e) {
 			ra.addFlashAttribute("messageErr", "保存失败：" + e.getMessage());
-			logger.error("监管员保存异常", e);
+			logger.error("入库保存异常", e);
 		} catch (Exception e) {
 			ra.addFlashAttribute("messageErr", "保存失败！");
-			logger.error("监管员保存异常", e);
+			logger.error("入库保存异常", e);
 		}
 		return "redirect:/supervisor/insRecord/list";
 	}

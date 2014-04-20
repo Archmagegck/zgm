@@ -7,7 +7,7 @@
 <html>
   <head>
     
-    <title>盘存登记</title>
+    <title>每日盘存</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -26,6 +26,9 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$("#myForm").validate();
+			
+			$("#style").val('${inventory.style.id}');
+			
 		});
 		
 		function changeStyle() {
@@ -38,14 +41,15 @@
   </head>
   
   <body>
-    <form id="myForm" name="myForm" action="${ctx}/supervisor/inventory/save" method="post">
+    <form id="myForm" name="myForm" action="${ctx}/supervisor/inventory/update/${index}" method="post">
     	<div id="content">
     		<div style="margin-bottom: 10px;padding: 5px 10px;" id="box">
-    		<h3 id="adduser">盘存登记</h3>
+    		<h3 id="adduser">每日盘存</h3>
     		<br/>
     		<fieldset style="padding: 5px 10px;" id="personal">
     			<legend><h3>请输入相关信息</h3></legend>
     			<br/>
+    				<input type="hidden" name="index" value = "${index}" >
     				<input type="hidden" name="warehouse.id" value = "${sessionScope.warehouseId }" >
     				<table  cellpadding="0" cellspacing="0" width="100%"  class="list1">
     				<tr>
@@ -53,7 +57,7 @@
 							托盘号
 						</td>
 						<td width="70%">
-							<input id="trayNo" name="trayNo" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
+							<input id="trayNo" name="trayNo" value="${inventory.checkWeight}" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
 						</td>
 					</tr>
 					<tr>
@@ -66,7 +70,18 @@
 									<option value = "${style.id }">${style.name }</option>
 								</c:forEach>
 							</select>
-							<input type="hidden" id="styleName" name="style.name" value="${styleList[0].name}"/>					
+							<input type="hidden" id="styleName" name="style.name" value="${inventory.style.name}"/>
+						</td>
+					</tr>
+					<tr>
+						<td width="30%">
+							检测方法:
+						</td>
+						<td width="70%">
+							<select id="checkMethod" name="checkMethod">
+			            		<option value="Spectrum" selected="selected">光谱法</option>
+			            		<option value="Dissolve">溶金法</option>
+			            	</select>
 						</td>
 					</tr>
 					<tr>
@@ -74,7 +89,18 @@
 							检测重量
 						</td>
 						<td width="70%">
-							<input id="weight" name="weight" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
+							<input id="checkWeight" name="checkWeight" value="${inventory.checkWeight}" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
+						</td>
+					</tr>
+					<tr>
+						<td width="30%">
+							检测结果:
+						</td>
+						<td width="70%">
+							<select id="checkResult" name="checkResult">
+			            		<option value="Ok" selected="selected">合格</option>
+			            		<option value="Fail">不合格</option>
+			            	</select>
 						</td>
 					</tr>
 					</table>
