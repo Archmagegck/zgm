@@ -108,23 +108,7 @@
 									</c:if>
 								</th>
 								<th>
-									总重量
-								</th>
-								<th>
-									<c:if test="${state==0}">
-										送货人姓名
-									</c:if>
-									<c:if test="${state==1}">
-										提货人姓名
-									</c:if>
-								</th>
-								<th>
-									<c:if test="${state==0}">
-										送货人身份证号
-									</c:if>
-									<c:if test="${state==1}">
-										提货人身份证号
-									</c:if>
+									总重量(g)
 								</th>
 								<th>
 									存储地点
@@ -135,11 +119,6 @@
 								<th>
 									操作类别
 								</th>
-								<c:if test="${state==0}">
-									<th>
-										是否封闭运输
-									</th>	
-								</c:if>
 								<th>
 									<c:if test="${state==0}">
 										入库时间
@@ -149,13 +128,13 @@
 									</c:if>
 								</th>
 								<th>
-									质物清单
+									<c:if test="${state==0}">
+										查看入库单
+									</c:if>
+									<c:if test="${state==1}">
+										查看出库单
+									</c:if>
 								</th>
-								<c:if test="${state==1}">
-									<th>
-										提货通知书(回执)
-									</th>
-								</c:if>
 							</tr>
 						</thead>
 						<c:if test="${state==0}">
@@ -169,12 +148,6 @@
 									</td>
 									<td>
 										${ins.sumWeight}&nbsp;
-									</td>
-									<td>
-										${ins.sender}&nbsp;
-									</td>
-									<td>
-										${ins.senderIdCard}&nbsp;
 									</td>
 									<td>
 										${sessionScope.warehouse.address}&nbsp;
@@ -191,25 +164,7 @@
 										</c:if>
 									</td>
 									<td>
-										<c:if test="${ins.closedTran==0}">
-											否
-										</c:if>
-										<c:if test="${ins.closedTran==1}">
-											是
-										</c:if>
-									</td>
-									<td>
 										${ins.date}
-									</td>
-									<td>								
-										<c:choose>	
-											<c:when test="${not empty ins.pledgeRecord.recordFile}">
-												<a href="${ctx}/images/${ins.pledgeRecord.recordFile }" target=_blank>${ins.pledgeRecord.code}</a>
-											</c:when>
-											<c:otherwise>
-												未上传
-											</c:otherwise>
-										</c:choose>									 
 									</td>
 									<td>
 										<a href="${ctx }/delegator/ins/${supervisionCustomer.id}/${ins.id}">查看</a>&nbsp;
@@ -230,12 +185,6 @@
 										${outs.sumWeight}&nbsp;
 									</td>
 									<td>
-										${outs.picker}&nbsp;
-									</td>
-									<td>
-										${outs.pickerIdCard}&nbsp;
-									</td>
-									<td>
 										${sessionScope.warehouse.address}&nbsp;
 									</td>
 									<td>
@@ -251,26 +200,6 @@
 									</td>
 									<td>
 										${outs.date}
-									</td>
-									<td> 									
-										<c:choose>	
-											<c:when test="${not empty outs.pledgeRecord.recordFile}">
-											<a href="${ctx}/images/${outs.pledgeRecord.recordFile}" target=_blank>${outs.pledgeRecord.code}</a>
-										</c:when>
-											<c:otherwise>
-												未上传
-											</c:otherwise>
-										</c:choose>
-									</td>
-									<td>
-										<c:choose>	 									
-											<c:when test="${not empty outs.pickFeedbackUrl}">
-												<a href="${ctx}/images/${outs.pickFeedbackUrl} target=_blank">回执的编号在哪儿？</a>
-											</c:when>
-											<c:otherwise>
-												未上传
-											</c:otherwise>
-										</c:choose>
 									</td>
 									<td>
 										<a href="${ctx }/delegator/outs/${supervisionCustomer.id}/${outs.id}">查看</a>&nbsp;

@@ -41,14 +41,8 @@
 							<tr>
 								<th width="6%">序号</th>
 								<th>款式大类</th>
-								<th>标明成色</th>
-								<th>标明规格重量（kg/件）</th>
-								<th>数量（件）</th>
-								<th>总重量（kg）</th>
-								<th>生产厂家</th>
-								<th>是否封闭运输</th>
+								<th>重量（g）</th>
 								<th>存储地点</th>
-								<th>标记/备注</th>
 							</tr>
 						</thead>
 						<c:forEach items="${page.content}" var="realTimeStocks" varStatus="status">
@@ -57,32 +51,10 @@
 									${status.count}&nbsp;
 								</td>
 								<td>
-									${realTimeStocks.style.name }&nbsp;
-								</td>
-								<td>
-									${realTimeStocks.pledgePurity.name }&nbsp;
-								</td>
-								<td>
-									${realTimeStocks.specWeight}&nbsp;
-								</td>
-								<td>
-									${realTimeStocks.amount}&nbsp;
-								</td>
-								<td>
 									${realTimeStocks.sumWeight}&nbsp;
 								</td>
 								<td>
-									${realTimeStocks.company}&nbsp;
-								</td>
-								<td>
-									<c:if test="${realTimeStocks.closedTran == 0}">否</c:if>
-									<c:if test="${realTimeStocks.closedTran == 1}">是</c:if>
-								</td>
-								<td>
 									${sessionScope.warehouse.address}&nbsp;
-								</td>
-								<td>
-									${realTimeStocks.desc}&nbsp;
 								</td>
 							</tr>
 						</c:forEach>

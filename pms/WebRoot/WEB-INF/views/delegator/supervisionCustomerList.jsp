@@ -105,9 +105,6 @@
 									监管客户
 								</th>
 								<th>
-									监管员
-								</th>
-								<th>
 									查看库存信息
 								</th>
 								<th>
@@ -122,9 +119,6 @@
 								</td>
 								<td>
 									${supervisionCustomer.name }&nbsp;
-								</td>
-								<td>
-									${supervisionCustomer.supervisor.name }&nbsp;
 								</td>
 								<td>
 									<a href="${ctx }/delegator/stock/${supervisionCustomer.id}">查看库存信息</a>&nbsp;
