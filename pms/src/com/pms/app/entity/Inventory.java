@@ -61,6 +61,12 @@ public class Inventory {
 	private Date date = new Date();
 	
 	/**
+	 * 盘存总重量
+	 */
+	@Column(name = "i_sumWeight")
+	private Double sumWeight;
+	
+	/**
 	 * 盘存明细
 	 */
 	@OneToMany(mappedBy = "inventory")
@@ -116,6 +122,14 @@ public class Inventory {
 
 	public void setInventoryDetails(List<InventoryDetail> inventoryDetails) {
 		this.inventoryDetails = inventoryDetails;
+	}
+
+	public Double getSumWeight() {
+		return sumWeight;
+	}
+
+	public void setSumWeight(Double sumWeight) {
+		this.sumWeight = sumWeight;
 	}
 	
 

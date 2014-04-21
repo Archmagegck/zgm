@@ -70,7 +70,7 @@ public class InventoryService extends BaseService<Inventory, String> {
 			inventoryDetail.setWarehouse(warehouse);
 		}
 		
-		
+		inventory.setSumWeight(invSumWeight);
 		double stockSumWeight = stockDao.findSumWeightByWarehouseId(warehouse.getId());
 		SupervisionCustomer supervisionCustomer = supervisionCustomerDao.findListByWarehouseId(warehouse.getId()).get(0);
 		PledgeConfig config = pledgeConfigDao.findBySupervisionCustomerId(supervisionCustomer.getId()).get(0);
