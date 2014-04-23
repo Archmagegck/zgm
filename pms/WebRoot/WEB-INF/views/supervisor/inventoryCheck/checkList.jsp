@@ -6,7 +6,7 @@
 <html>
 	<head>
 
-		<title>每日盘存</title>
+		<title>盘存检测单</title>
 
 		<meta http-equiv="pragma" content="no-cache">
 		<meta http-equiv="cache-control" content="no-cache">
@@ -33,10 +33,11 @@
 			<div align="center" id="content"">
 				<div id="box">
 					<h3 align="left">
-						每日盘存
+						盘存检测单
 					</h3>
 					<div>
 						&nbsp;
+						<input type="hidden" name="id" value = "${sessionScope.warehouseId }" >
 					</div>
 					<br/>
 					<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
@@ -44,34 +45,29 @@
 							<tr>
 								<th>托盘号</th>
 								<th>款式大类</th>
-								<th>盘存重量</th>
-								<th>操作</th>
+								<th>检测件数</th>
 							</tr>
 						</thead>
-						<c:forEach items="${inventoryDetailList}" var="inventoryDetail" varStatus="status">
+						<c:forEach items="${inventoryCheckDetailList}" var="inventoryCheckDetailList" varStatus="status">
 							<tr>
 								<td>
-									${inventoryDetail.trayNo }&nbsp;
+									${inventoryCheckDetailList.trayNo }&nbsp;
 								</td>
 								<td>
-									${inventoryDetail.style.name }&nbsp;
+									${inventoryCheckDetailList.style.name }&nbsp;
 								</td>
 								<td>
-									${inventoryDetail.weight }&nbsp;
-								</td>
-								<td>
-									<a href="${ctx }/supervisor/inventory/edit/${status.index}">编辑</a>
-									&nbsp;
-									<a href="${ctx }/supervisor/inventory/del/${status.count}">删除</a>
+									${inventoryCheckDetailList.amount }&nbsp;
 								</td>
 							</tr>
 						</c:forEach>
 					</table>
 				</div>
 			</div>
+			<br>
 			<div style="margin-bottom: 5px;padding: 3px;" align="center">
-				<input id="button1" type="button" value="添加记录" onclick="location.href='${ctx}/supervisor/inventory/add'" style="cursor: pointer;font-weight: bold;margin-left: 8px;padding-right: 5px;width: 205px; background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
-    			<input id="button1" type="submit" value="保存" style="cursor: pointer;font-weight: bold;margin-left: 8px;padding-right: 5px;width: 205px; background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
+				<input id="button1" type="button" value="增加检测件数" onclick="#" style="cursor: pointer;font-weight: bold;margin-left: 8px;padding-right: 5px;width: 205px; background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
+    			<input id="button1" type="submit" value="打印并生成检测单" style="cursor: pointer;font-weight: bold;margin-left: 8px;padding-right: 5px;width: 205px; background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
     		</div>
 		</form>
 	</body>

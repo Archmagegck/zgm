@@ -1,6 +1,7 @@
 package com.pms.app.web.supervisor;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -17,10 +18,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.pms.app.entity.InventoryCheck;
 import com.pms.app.entity.InventoryCheckTemplate;
+import com.pms.app.entity.Warehouse;
+import com.pms.app.service.InventoryCheckDetailService;
 import com.pms.app.service.InventoryCheckService;
 import com.pms.app.service.InventoryCheckTemplateService;
 import com.pms.app.service.StyleService;
-import com.pms.base.service.ServiceException;
+import com.pms.app.service.WarehouseService;
 
 @Controller
 @RequestMapping(value = "/supervisor/inventoryCheck")
@@ -29,8 +32,9 @@ public class InventoryCheckController {
 	private Logger logger = LoggerFactory.getLogger(InventoryCheckController.class);
 	
 	@Autowired private InventoryCheckService inventoryCheckService;
+	@Autowired private InventoryCheckDetailService inventoryCheckDetailService;
 	@Autowired private StyleService styleService;
-//	@Autowired private WarehouseService warehouseService;
+	@Autowired private WarehouseService warehouseService;
 	@Autowired private InventoryCheckTemplateService inventoryCheckTemplateService;
 	
 	@RequestMapping(value = { "/list", "" })
@@ -59,13 +63,14 @@ public class InventoryCheckController {
 	@RequestMapping(value = "/addTemp")
 	public String addTemp(Model model){
 		model.addAttribute("styleList", styleService.findAll());
-		return "supervisor/inventoryCheck/addTemp";
+		return "supervisor/inventoryCheck/addTempp";
 	}
 	
 	
 	@RequestMapping(value = "/saveTemp")
 	public String saveTemp(InventoryCheckTemplate inventoryCheckTemplate, RedirectAttributes ra){
 		try {
+			inventoryCheckTemplate.setUpdateDate(new Date());
 			inventoryCheckTemplateService.save(inventoryCheckTemplate);
 			ra.addFlashAttribute("messageOK", "保存成功！");
 		} catch (Exception e) {
@@ -78,6 +83,7 @@ public class InventoryCheckController {
 	
 	@RequestMapping(value = "/editTemp/{id}")
 	public String editTemp(@PathVariable("id")String id, Model model){
+		model.addAttribute("styleList", styleService.findAll());
 		model.addAttribute("inventoryCheckTemplate", inventoryCheckTemplateService.findById(id));
 		return "supervisor/inventoryCheck/editTemp";
 	}
@@ -96,23 +102,27 @@ public class InventoryCheckController {
 	}
 	
 	
-	@RequestMapping(value = "/saveList")
-	public String saveList(HttpSession session, RedirectAttributes ra){
+	@RequestMapping(value = "/saveCheck")
+	public String saveCheck(HttpSession session, RedirectAttributes ra){
 		try {
-//			Warehouse warehouse = warehouseService.findById((String)session.getAttribute("warehouseId"));
-//			List<InventoryCheckDetail> InventoryCheckDetailList = (List<InventoryCheckDetail>) session.getAttribute("InventoryCheckDetailList");
-//			inventoryCheckService.save(InventoryCheckDetailList ,warehouse, (Supervisor) session.getAttribute("user"));
-			ra.addFlashAttribute("messageOK", "保存成功！");
-		} catch (ServiceException e) {
-			ra.addFlashAttribute("messageErr", "盘存不一致，无法保存！");
-			logger.error("保存异常", e);
+			Warehouse warehouse = warehouseService.findById((String)session.getAttribute("warehouseId"));
+			List<InventoryCheckTemplate> inventoryCheckTemplateList = inventoryCheckTemplateService.findByWarehouseId((String)session.getAttribute("warehouseId"));
+			InventoryCheck inventoryCheck = inventoryCheckService.saveCheck(inventoryCheckTemplateList, warehouse);
+			return "redirect:/supervisor/inventoryCheck/checkList?id=" + inventoryCheck.getId();
 		} catch (Exception e) {
 			ra.addFlashAttribute("messageErr", "保存失败！");
 			logger.error("保存异常", e);
+			return "redirect:/supervisor/inventoryCheck/tempList";
 		}
-		return "redirect:/supervisor/inventoryCheck/list";
 	}
 	
+	
+	@RequestMapping(value = "/checkList")
+	public String checkList(Model model, String id){
+		model.addAttribute("id", id);
+		model.addAttribute("inventoryCheckDetailList", inventoryCheckDetailService.findAllEq("inventoryCheck.id", id));
+		return "supervisor/inventoryCheck/checkList";
+	}
 	
 	
 }

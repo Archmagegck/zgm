@@ -93,7 +93,7 @@ public class IniCheckController {
 	public String saveList(HttpSession session, RedirectAttributes ra){
 		try {
 			List<IniCheck> iniCheckList = (List<IniCheck>) session.getAttribute("iniCheckList");
-			iniCheckService.save(iniCheckList);
+			iniCheckService.save(iniCheckList, (String)session.getAttribute("warehouseId"));
 			ra.addFlashAttribute("messageOK", "保存成功！");
 		} catch (Exception e) {
 			ra.addFlashAttribute("messageErr", "保存失败！");

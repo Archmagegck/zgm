@@ -65,7 +65,7 @@ public class IniPledgeRecord {
 	/**
 	 * 质物清单加密号
 	 */
-	@Column(name = "pr_code")
+	@Column(name = "pr_passcode")
 	private String passcode;
 	
 	/**

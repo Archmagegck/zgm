@@ -17,5 +17,5 @@ public class InventoryCheckDetailService extends BaseService<InventoryCheckDetai
 	protected BaseDao<InventoryCheckDetail, String> getEntityDao() {
 		return inventoryCheckDetailDao;
 	}
-
+	
 }

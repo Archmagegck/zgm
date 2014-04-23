@@ -38,7 +38,7 @@
   </head>
   
   <body>
-    <form id="myForm" name="myForm" action="${ctx}/supervisor/inventoryCheck/save" method="post">
+    <form id="myForm" name="myForm" action="${ctx}/supervisor/inventoryCheck/saveTemp" method="post">
     	<div id="content">
     		<div style="margin-bottom: 10px;padding: 5px 10px;" id="box">
     		<h3 id="adduser">添加托盘</h3>

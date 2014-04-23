@@ -1,5 +1,7 @@
 package com.pms.app.entity;
 
+import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -48,6 +50,12 @@ public class InventoryCheckTemplate {
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "sty_id")
 	private Style style;
+	
+	/**
+	 * 更新时间
+	 */
+	@Column(name = "ict_updateDate")
+	private Date updateDate;
 
 	public String getId() {
 		return id;
@@ -79,6 +87,14 @@ public class InventoryCheckTemplate {
 
 	public void setStyle(Style style) {
 		this.style = style;
+	}
+
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
 	}
 	
 }

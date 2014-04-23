@@ -66,7 +66,7 @@ public class InventoryCheckDetail {
 	 * 检测件数
 	 */
 	@Column(name = "icd_amount")
-	private Double amount;
+	private Integer amount;
 	
 	
 	/**
@@ -168,11 +168,11 @@ public class InventoryCheckDetail {
 		this.inventoryCheck = inventoryCheck;
 	}
 
-	public Double getAmount() {
+	public Integer getAmount() {
 		return amount;
 	}
 
-	public void setAmount(Double amount) {
+	public void setAmount(Integer amount) {
 		this.amount = amount;
 	}
 

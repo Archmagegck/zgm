@@ -7,7 +7,7 @@
 <html>
   <head>
     
-    <title>每日盘存</title>
+    <title>编辑托盘</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -27,7 +27,7 @@
 		$(document).ready(function(){
 			$("#myForm").validate();
 			
-			$("#style").val('${inventoryDetail.style.id}');
+			$("#style").val('${inventoryCheckTemplate.style.id}');
 			
 		});
 		
@@ -41,15 +41,15 @@
   </head>
   
   <body>
-    <form id="myForm" name="myForm" action="${ctx}/supervisor/inventory/update/${index}" method="post">
+    <form id="myForm" name="myForm" action="${ctx}/supervisor/inventoryCheck/saveTemp" method="post">
     	<div id="content">
     		<div style="margin-bottom: 10px;padding: 5px 10px;" id="box">
-    		<h3 id="adduser">每日盘存</h3>
+    		<h3 id="adduser">编辑托盘</h3>
     		<br/>
     		<fieldset style="padding: 5px 10px;" id="personal">
     			<legend><h3>请输入相关信息</h3></legend>
     			<br/>
-    				<input type="hidden" name="index" value = "${index}" >
+    				<input type="hidden" name="id" value = "${inventoryCheckTemplate.id }" >
     				<input type="hidden" name="warehouse.id" value = "${sessionScope.warehouseId }" >
     				<table  cellpadding="0" cellspacing="0" width="100%"  class="list1">
     				<tr>
@@ -57,7 +57,7 @@
 							托盘号
 						</td>
 						<td width="70%">
-							<input id="trayNo" name="trayNo" value="${inventoryDetail.trayNo}" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
+							<input id="trayNo" name="trayNo" value="${inventoryCheckTemplate.trayNo}" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
 						</td>
 					</tr>
 					<tr>
@@ -70,15 +70,7 @@
 									<option value = "${style.id }">${style.name }</option>
 								</c:forEach>
 							</select>
-							<input type="hidden" id="styleName" name="style.name" value="${inventoryDetail.style.name}"/>
-						</td>
-					</tr>
-					<tr>
-						<td width="30%">
-							盘存重量(g)
-						</td>
-						<td width="70%">
-							<input id="weight" name="weight" value="${inventoryDetail.weight}" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
+							<input type="hidden" id="styleName" name="style.name" value="${inventoryCheckTemplate.style.name}"/>
 						</td>
 					</tr>
 					</table>

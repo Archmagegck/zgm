@@ -63,7 +63,7 @@ public class InventoryCheck {
 	 * 0:未登记
 	 */
 	@Column(name = "ic_state")
-	private Integer state;
+	private Integer state = 0;
 	
 	/**
 	 * 盘存明细
