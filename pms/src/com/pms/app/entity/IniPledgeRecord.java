@@ -25,10 +25,9 @@ import org.joda.time.DateTime;
  * @author wangzz
  */
 @Entity
-@Table(name = "t_pledgeRecord")
+@Table(name = "t_iniPledgeRecord")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class PledgeRecord {
-	
+public class IniPledgeRecord {
 	@Id
 	@GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
 	@GeneratedValue(generator = "uuid")
@@ -66,7 +65,7 @@ public class PledgeRecord {
 	/**
 	 * 质物清单加密号
 	 */
-	@Column(name = "pr_passcode")
+	@Column(name = "pr_code")
 	private String passcode;
 	
 	/**

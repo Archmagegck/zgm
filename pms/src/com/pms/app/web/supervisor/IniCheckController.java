@@ -82,7 +82,6 @@ public class IniCheckController {
 	
 	@RequestMapping(value = "/del/{index}")
 	public String del(@PathVariable("index")Integer index, HttpSession session){
-		System.out.println("IniCheckController.del()" + index);
 		List<IniCheck> iniCheckList = (List<IniCheck>) session.getAttribute("iniCheckList");
 		iniCheckList.remove(index - 1);
 		session.setAttribute("iniCheckList", iniCheckList);
