@@ -219,11 +219,11 @@
 	          </tr>
 	        </table>
 	        <ul class="MM">
-	        	<li><a href="${ctx}/manage/decompressionManager" target="right">解压管理</a></li>
-	        	<li><a href="${ctx}/manage/dailyPledge" target="right">每日质物清单</a></li>
-	        	<li><a href="${ctx}/manage/iniPledgePrint" target="right">初始质物清单打印</a></li>
-	        	<li><a href="${ctx}/manage/dailyInventoryRecord" target="right">每日盘点查询</a></li>
-	        	<li><a href="${ctx}/manage/inventoryStatistics" target="right">盘点统计</a></li>
+	        	<li><a href="${ctx}/manage/removePledge" target="right">解压管理</a></li>
+	        	<li><a href="${ctx}/manage/au9995Price" target="right">每日质物清单</a></li>
+	        	<li><a href="${ctx}/manage/au9995Price" target="right">初始质物清单打印</a></li>
+	        	<li><a href="${ctx}/manage/au9995Price" target="right">每日盘点查询</a></li>
+	        	<li><a href="${ctx}/manage/au9995Price" target="right">盘点统计</a></li>
 	        </ul>
 	      </div>
 	      
@@ -235,7 +235,7 @@
 	          </tr>
 	        </table>
 	        <ul class="MM">
-	        	<li><a href="${ctx}/manage/au9995Price/add" target="right">每日价格记录</a></li>
+	        	<li><a href="${ctx}/manage/au9995Price" target="right">每日价格记录</a></li>
 	        	<li><a href="${ctx}/manage/au9995Price" target="right">每日价格查询</a></li>
 	        </ul>
 	      </div>
@@ -248,8 +248,8 @@
 	          </tr>
 	        </table>
 	        <ul class="MM">
-	        	<li><a href="${ctx}/manage/au9995Price" target="right">封闭运输登记</a></li>
-	        	<li><a href="${ctx}/manage/au9995Price" target="right">封闭运输查询</a></li>
+	        	<li><a href="${ctx}/manage/enclosedConvey/add" target="right">封闭运输登记</a></li>
+	        	<li><a href="${ctx}/manage/enclosedConvey/list" target="right">封闭运输查询</a></li>
 	        </ul>
 	      </div>
 	      
@@ -309,8 +309,8 @@
 	        <ul class="MM">
 	        	<li><a href="${ctx}/supervisor/inventory/addList" target="right">库存盘点</a></li>
 		        <li><a href="${ctx}/supervisor/inventory" target="right">库存盘点列表</a></li>
-	        	<li><a href="${ctx}/supervisor/checkMinValue" target="right">盘点检测</a></li>
-	        	<li><a href="${ctx}/supervisor/pledgeRecord/add" target="right">盘点检测列表</a></li>
+	        	<li><a href="${ctx}/supervisor/inventoryCheck/tempList" target="right">盘点检测</a></li>
+	        	<li><a href="${ctx}/supervisor/inventoryCheck" target="right">盘点检测列表</a></li>
 	        </ul>
 	      </div>
 	      

@@ -19,10 +19,9 @@ import org.hibernate.annotations.GenericGenerator;
  * @author wangzz
  */
 @Entity
-@Table(name = "t_pledgeRecordDetail")
+@Table(name = "t_iniPledgeRecordDetail")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class PledgeRecordDetail {
-	
+public class IniPledgeRecordDetail {
 	@Id
 	@GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
 	@GeneratedValue(generator = "uuid")
@@ -105,7 +104,8 @@ public class PledgeRecordDetail {
 	 */
 	@Column(name = "prd_desc")
 	private String desc;
-
+	
+	
 
 	public String getId() {
 		return id;
@@ -210,6 +210,4 @@ public class PledgeRecordDetail {
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
-
-	
 }
