@@ -65,14 +65,14 @@
 							<tr>
 								<th width="8%">序号</th>
 								<th>出库单号</th>
-								<th>总重量（kg）</th>
-								<th>提货人姓名</th>
-								<th>提货人身份证</th>
+								<th>总重量（g）</th>
 								<th>存储地点</th>
 								<th>操作监管员姓名</th>
 								<th>监管客户</th>
 								<th>委托方</th>
 								<th>申请时间</th>
+								<th>实时重量比值（%）</th>
+								<th>实时价格比值（%）</th>
 								<th>状态</th>
 								<th>&nbsp;</th>
 							</tr>
@@ -89,13 +89,7 @@
 									${outsRecord.sumWeight }&nbsp;
 								</td>
 								<td>
-									${outsRecord.picker }&nbsp;
-								</td>
-								<td>
-									${outsRecord.pickerIdCard }&nbsp;
-								</td>
-								<td>
-									${outsRecord.storage }&nbsp;
+									${outsRecord.warehouse.address }&nbsp;
 								</td>
 								<td>
 									${outsRecord.supName}&nbsp;
@@ -105,6 +99,12 @@
 								</td>
 								<td>
 									${outsRecord.delegator.name }&nbsp;
+								</td>
+								<td>
+									${outsRecord.dateStr }&nbsp;
+								</td>
+								<td>
+									${outsRecord.dateStr }&nbsp;
 								</td>
 								<td>
 									${outsRecord.dateStr }&nbsp;

@@ -42,10 +42,7 @@
 								<th width="6%">序号</th>
 								<th>款式大类</th>
 								<th>标明成色</th>
-								<th>标明规格重量（kg/件）</th>
-								<th>存储地点</th>
-								<th>数量（件）</th>
-								<th>总重量（kg）</th>
+								<th>总重量（g）</th>
 								<th>总价值</th>
 							</tr>
 						</thead>
@@ -61,15 +58,6 @@
 									${totalStock.pledgePurityName }&nbsp;
 								</td>
 								<td>
-									${totalStock.specWeight}&nbsp;
-								</td>
-								<td>
-									${totalStock.storage}&nbsp;
-								</td>
-								<td>
-									${totalStock.amount}&nbsp;
-								</td>
-								<td>
 									${totalStock.sumWeight}&nbsp;
 								</td>
 								<td>
@@ -79,9 +67,6 @@
 						</c:forEach>
 							<tr>
 								<td>合计&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
 								<td>&nbsp;</td>
 								<td>&nbsp;</td>
 								<td>${sumWeight}&nbsp;</td>

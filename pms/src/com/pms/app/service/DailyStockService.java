@@ -21,9 +21,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.pms.app.dao.PurityPriceDao;
 import com.pms.app.dao.StockDao;
 import com.pms.app.dao.SupervisionCustomerDao;
 import com.pms.app.entity.Delegator;
+import com.pms.app.entity.PurityPrice;
 import com.pms.app.entity.Stock;
 import com.pms.app.entity.SupervisionCustomer;
 
@@ -32,6 +34,7 @@ public class DailyStockService {
 	
 	@Autowired SupervisionCustomerDao supervisionCustomerDao;
 	@Autowired StockDao stockDao;
+	@Autowired PurityPriceDao purityPriceDao;
 
 	public Map<SupervisionCustomer, List<Stock>>  queryByDelegatorAndDate(String delegatorId, String supervisionCustomerId) {
 		Map<SupervisionCustomer, List<Stock>> stockMap = new HashMap<SupervisionCustomer, List<Stock>>();
@@ -50,7 +53,7 @@ public class DailyStockService {
 			if(has == 1) {
 				SupervisionCustomer supervisionCustomer = supervisionCustomerDao.findOne(supervisionCustomerId);
 				String warehouseId = supervisionCustomer.getWarehouse().getId();
-				List<Stock> stockList = stockDao.findByWarehouseId(warehouseId);
+				List<Stock> stockList = stockDao.findInByWarehouseId(warehouseId);
 				if(!stockList.isEmpty())
 					stockMap.put(supervisionCustomer, stockList);
 			}
@@ -59,13 +62,24 @@ public class DailyStockService {
 			List<SupervisionCustomer> supervisionCustomerList = supervisionCustomerDao.findListByDelegatorId(delegatorId);
 			for (SupervisionCustomer supervisionCustomer : supervisionCustomerList) {
 				String warehouseId = supervisionCustomer.getWarehouse().getId();
-				List<Stock> stockList = stockDao.findByWarehouseId(warehouseId);
+				List<Stock> stockList = stockDao.findInByWarehouseId(warehouseId);
 				if(!stockList.isEmpty())
 					stockMap.put(supervisionCustomer, stockList);
 			}
 		}
 		return stockMap;
 	}
+	
+	
+	public double findNewestValue() {
+		double value = 0.0;
+		List<PurityPrice> purityPriceList = purityPriceDao.findNewestList();
+		if(!purityPriceList.isEmpty()){
+			value = purityPriceList.get(0).getPrice();
+		}
+		return value;
+	}
+	
 
 	public File generalRecordFile(Delegator delegator, String supervisionCustomerId) throws Exception {
 		Map<SupervisionCustomer, List<Stock>> map = queryByDelegatorAndDate(delegator.getId(), supervisionCustomerId);

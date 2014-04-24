@@ -77,10 +77,24 @@ public class OutsRecord {
 	
 	
 	/**
-	 * 重量
+	 * 总重量
 	 */
 	@Column(name = "out_sumWeight")
 	private Double sumWeight;
+	
+	
+	/**
+	 * 总价值
+	 */
+	@Column(name = "out_sumValue")
+	private Double sumValue = 0.0;
+	
+	
+	/**
+	 * 出货后库存总量
+	 */
+	@Column(name = "out_sumStock")
+	private Double sumStock = 0.0;
 	
 	
 	/**
@@ -276,6 +290,26 @@ public class OutsRecord {
 
 	public void setSumWeight(Double sumWeight) {
 		this.sumWeight = sumWeight;
+	}
+
+
+	public Double getSumValue() {
+		return sumValue;
+	}
+
+
+	public void setSumValue(Double sumValue) {
+		this.sumValue = sumValue;
+	}
+
+
+	public Double getSumStock() {
+		return sumStock;
+	}
+
+
+	public void setSumStock(Double sumStock) {
+		this.sumStock = sumStock;
 	}
 
 

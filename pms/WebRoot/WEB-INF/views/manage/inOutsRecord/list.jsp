@@ -202,10 +202,6 @@
 					</table>
 					
 					<br>
-					<div align="center" id="pager">
-						<input type="button" value="生成报表并打印" class="button" onclick="generalAndPrint();" />
-					</div>
-					<br>
 				</div>
 			</div>
 		</form>

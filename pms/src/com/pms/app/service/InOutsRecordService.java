@@ -37,6 +37,7 @@ import com.pms.app.dao.SupervisionCustomerDao;
 import com.pms.app.entity.Delegator;
 import com.pms.app.entity.InsRecordDetail;
 import com.pms.app.entity.OutsRecordDetail;
+import com.pms.app.entity.PledgePurity;
 import com.pms.app.entity.SupervisionCustomer;
 import com.pms.app.entity.vo.InOutsRecord;
 import com.pms.app.util.DateUtils;
@@ -55,11 +56,19 @@ public class InOutsRecordService {
 			List<InOutsRecord> inOutsRecordList = new ArrayList<InOutsRecord>();
 			List<InsRecordDetail> insRecordDetails = insRecordDetailDao.findAll(getInsSpec(delegatorId, supervisionCustomerId, beginDate, endDate));
 			for (InsRecordDetail insRecordDetail : insRecordDetails) {
-				inOutsRecordList.add(new InOutsRecord(insRecordDetail));
+				PledgePurity pledgePurity = insRecordDetail.getPledgePurity();
+				if(pledgePurity != null) {
+					if(pledgePurity.getType() == 1) 
+						inOutsRecordList.add(new InOutsRecord(insRecordDetail));
+				}
 			}
 			List<OutsRecordDetail> outsRecordDetails = outsRecordDetailDao.findAll(getOutsSpec(delegatorId, supervisionCustomerId, beginDate, endDate));
 			for (OutsRecordDetail outsRecordDetail : outsRecordDetails) {
-				inOutsRecordList.add(new InOutsRecord(outsRecordDetail));
+				PledgePurity pledgePurity = outsRecordDetail.getPledgePurity();
+				if(pledgePurity != null) {
+					if(pledgePurity.getType() == 1) 
+						inOutsRecordList.add(new InOutsRecord(outsRecordDetail));
+				}
 			}
 			Collections.sort(inOutsRecordList);
 			if(!inOutsRecordList.isEmpty())
@@ -71,11 +80,19 @@ public class InOutsRecordService {
 				String scId = supervisionCustomer.getId();
 				List<InsRecordDetail> insRecordDetails = insRecordDetailDao.findAll(getInsSpec(scId, beginDate, endDate));
 				for (InsRecordDetail insRecordDetail : insRecordDetails) {
-					inOutsRecordList.add(new InOutsRecord(insRecordDetail));
+					PledgePurity pledgePurity = insRecordDetail.getPledgePurity();
+					if(pledgePurity != null) {
+						if(pledgePurity.getType() == 1) 
+							inOutsRecordList.add(new InOutsRecord(insRecordDetail));
+					}
 				}
 				List<OutsRecordDetail> outsRecordDetails = outsRecordDetailDao.findAll(getOutsSpec(scId, beginDate, endDate));
 				for (OutsRecordDetail outsRecordDetail : outsRecordDetails) {
-					inOutsRecordList.add(new InOutsRecord(outsRecordDetail));
+					PledgePurity pledgePurity = outsRecordDetail.getPledgePurity();
+					if(pledgePurity != null) {
+						if(pledgePurity.getType() == 1) 
+							inOutsRecordList.add(new InOutsRecord(outsRecordDetail));
+					}
 				}
 				Collections.sort(inOutsRecordList);
 				if(!inOutsRecordList.isEmpty())

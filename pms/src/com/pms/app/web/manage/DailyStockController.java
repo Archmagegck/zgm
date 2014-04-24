@@ -53,6 +53,7 @@ public class DailyStockController {
 		model.addAttribute("supervisionCustomerList", supervisionCustomerService.findAll());
 		model.addAttribute("supervisionCustomerId", supervisionCustomerId);
 		model.addAttribute("stockMap", dailyStockService.queryByDelegatorAndDate(delegatorId, supervisionCustomerId));
+		model.addAttribute("value", dailyStockService.findNewestValue());
 		return "manage/dailyStock/list";
 	}
 	

@@ -94,8 +94,8 @@
 						<input type="hidden" name="page.page" id="pageNo" value="${page.number+1}"/>
 					</div>
 					<br/>
-					<c:set var="allSumAmount" value="0"></c:set>
 					<c:set var="allSumWeight" value="0"></c:set>
+					<c:set var="allSumValue" value="0"></c:set>
 					<c:forEach items="${stockMap}" var="item" >
 						<div align="left">
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -107,11 +107,10 @@
 						<thead>
 							<tr>
 								<th width="18%">款式大类</th>
-								<th width="18%">标明成色</th>
-								<th width="15%">标明规格重量</th>
 								<th width="25%">存储地点 </th>
-								<th width="12%">数量 </th>
-								<th width="12%">总重</th>
+								<th width="18%">标明成色</th>
+								<th width="15%">重量</th>
+								<th width="12%">总价值 </th>
 							</tr>
 						</thead>
 						<c:forEach items="${item.value}" var="stock" >
@@ -120,38 +119,29 @@
 									${stock.style.name }&nbsp;
 								</td>
 								<td>
+									${stock.warehouse.address}&nbsp;
+								</td>
+								<td>
 									${stock.pledgePurity.name }&nbsp;
-								</td>
-								<td>
-									${stock.specWeight }&nbsp;
-								</td>
-								<td>
-									<c:if test="${stock.inStock == 1}">
-										${stock.warehouse.address}&nbsp;
-									</c:if>
-									<c:if test="${stock.inStock == 0}">
-										在途&nbsp;
-									</c:if>
-								</td>
-								<td>
-									${stock.amount}&nbsp;
 								</td>
 								<td>
 									${stock.sumWeight }&nbsp;
 								</td>
+								<td>
+									${stock.sumWeight * value }&nbsp;
+								</td>
 							</tr>
-							<c:set var="sumAmount" value="${sumAmount + stock.amount}"></c:set>
+							<c:set var="sumValue" value="${sumAmount + stock.sumWeight * value}"></c:set>
 							<c:set var="sumWeight" value="${sumWeight + stock.sumWeight}"></c:set>
-							<c:set var="allSumAmount" value="${allSumAmount + stock.amount}"></c:set>
+							<c:set var="allSumValue" value="${allSumValue + stock.sumWeight * value}"></c:set>
 							<c:set var="allSumWeight" value="${allSumWeight + stock.sumWeight}"></c:set>
 						</c:forEach>
 						<tr>
 							<td>合计</td>
 							<td>&nbsp;</td>
 							<td>&nbsp;</td>
-							<td>&nbsp;</td>
-							<td>${sumAmount}&nbsp;</td>
 							<td>${sumWeight}&nbsp;</td>
+							<td>${sumValue}&nbsp;</td>
 						</tr>
 					</table>
 					<br><br>
@@ -162,15 +152,10 @@
 							<th width="18%">合计</th>
 							<th width="18%">&nbsp;</th>
 							<th width="15%">&nbsp;</th>
-							<th width="25%">&nbsp; </th>
-							<th width="12%">${allSumAmount} </th>
 							<th width="12%">${allSumWeight}</th>
+							<th width="12%">${allSumValue} </th>
 						</tr>
 					</table>
-					<br>
-					<div align="center" id="pager">
-						<input type="button" value="生成报表并打印" class="button" onclick="generalAndPrint();" />
-					</div>
 					<br>
 				</div>
 			</div>
