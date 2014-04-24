@@ -235,7 +235,7 @@
 	          </tr>
 	        </table>
 	        <ul class="MM">
-	        	<li><a href="${ctx}/manage/au9995Price" target="right">每日价格记录</a></li>
+	        	<li><a href="${ctx}/manage/au9995Price/add" target="right">每日价格记录</a></li>
 	        	<li><a href="${ctx}/manage/au9995Price" target="right">每日价格查询</a></li>
 	        </ul>
 	      </div>
