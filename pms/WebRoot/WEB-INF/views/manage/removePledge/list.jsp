@@ -6,7 +6,7 @@
 <html>
 	<head>
 
-		<title>监管客户列表</title>
+		<title>解压管理</title>
 
 		<meta http-equiv="pragma" content="no-cache">
 		<meta http-equiv="cache-control" content="no-cache">
@@ -18,9 +18,6 @@
 		<link rel="stylesheet" type="text/css" href="${ctx }/css/admin/theme1.css">
 		
 		<script language="javascript" type="text/javascript" src="${ctx }/js/jquery.js"></script>
-		<script type="text/javascript" src="${ctx }/js/date/WdatePicker.js"></script>
-		
-		
 		<script type="text/javascript">
     	$(document).ready(function(){
 			var query = "${queryName}";
@@ -40,17 +37,17 @@
 			$("#myForm").submit();
 		}
 			
-/* 		//删除
+		//删除
 		function del(){
 			if($("[name='idGroup']:checked").length <= 0){
 				alert("请选择一个您要删除的！");
 			} else{
 				if (confirm("确定要删除吗？")){
-					$("#myForm").attr("action","${ctx}/supervisor/checkDeny/delete");
+					$("#myForm").attr("action","${ctx}/manage/supervisionCustomer/delete");
 					$("#myForm").submit();
 				}
 			}
-		} */
+		}
 
     </script>
 	
@@ -64,21 +61,42 @@
 	</head>
 
 	<body>
-		<form action="${ctx }/delegator/supervisorandsupervisoncustomer/list" method="post" id="myForm" name="myForm">
+		<form action="${ctx }/manage/supervisionCustomer/list" method="post" id="myForm" name="myForm">
 			<div align="center" id="content"">
 				<div id="box">
 					<h3 align="left">
-						监管客户列表
+						解压管理
 					</h3>
 					<div>
 						&nbsp;
 					</div>
+					<div align="left">
+						<c:if test="${not empty messageOK}">
+							<div class="flash notice">
+								&nbsp;&nbsp;${messageOK}
+							</div>
+						</c:if>
+						<c:if test="${not empty messageErr}">
+							<div class="flash error">
+								&nbsp;&nbsp;${messageErr}
+							</div>
+						</c:if>
+					</div>
 					<div align="left" style="vertical-align: middle;">
-						&nbsp;&nbsp;&nbsp;根据监管客户:
-						<span id="values">
+						&nbsp;&nbsp;&nbsp;委托方
+						&nbsp;&nbsp;
+						<select name="delegators" id="queryName" varStatus="status">
+							<c:forEach items="${delegatorList}" var="delegators">
+								<option value="${delegatorList.id}" selected="selected">
+								${delegatorList.name}
+								</option>
+							</c:forEach>
+						</select>
+						&nbsp;&nbsp;&nbsp;监管客户
+						&nbsp;&nbsp;
 						<select name = "supervisionCustomerId" class="required">
 							<option selected="selected" value="">--请选择--</option>
-							<c:forEach items="${page.content }" var = "supervisionCustomer">
+							<c:forEach items="${supervisionCustomerList }" var = "supervisionCustomer">
 								<c:choose>
 									<c:when test="${supervisionCustomer.id == supervisionCustomerId }">
 										<option selected="selected" value = "${supervisionCustomer.id }">${supervisionCustomer.name }</option>
@@ -89,8 +107,6 @@
 								</c:choose>
 							</c:forEach>
 						</select>
-						&nbsp;&nbsp;
-						</span>
 						<input type="button" value="查询" class="button" onclick="gotoPage(1)" />
 						<input type="hidden" name="page.page" id="pageNo" value="${page.number+1}"/>
 					</div>
@@ -98,39 +114,63 @@
 					<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
 						<thead>
 							<tr>
-								<th width="20%">
+								<th>
 									序号
+								</th>
+								<th>
+									委托方
 								</th>
 								<th>
 									监管客户
 								</th>
 								<th>
-									查看库存信息
+									仓库名称
 								</th>
 								<th>
-									查看出入库信息
+									监管员
+								</th>
+								<th>
+									存储位置
+								</th>
+								<th>
+									扫描件上传
+								</th>
+								<th>
+									操作
 								</th>
 							</tr>
 						</thead>
 						<c:forEach items="${page.content}" var="supervisionCustomer" varStatus="status">
 							<tr>
 								<td>
-									${status.count}&nbsp;
+									${status.count}表中内容如何输出
+								</td>
+								<td>
+									${delegatorList.name }&nbsp;
 								</td>
 								<td>
 									${supervisionCustomer.name }&nbsp;
 								</td>
 								<td>
-									<a href="${ctx }/delegator/stock/${supervisionCustomer.id}">查看库存信息</a>&nbsp;
+									${supervisionCustomer.warehouse.name }&nbsp;
 								</td>
 								<td>
-									<a href="${ctx }/delegator/insAndOuts/${supervisionCustomer.id}">查看出入库信息</a>&nbsp;
-								</td>							
+									${supervisionCustomer.contact }&nbsp;
+								</td>
+								<td>
+									${supervisionCustomer.phone }&nbsp;
+								</td>
+								<td>
+									${supervisionCustomer.email }&nbsp;
+								</td>
+								<td>
+									<a href="${ctx }/manage/supervisionCustomer/edit/${supervisionCustomer.id }">解压</a>
+								</td>
 							</tr>
 						</c:forEach>
 					</table>
 					<div align="left" id="pager">
-						<jsp:include page="../common/page.jsp"></jsp:include>
+						<jsp:include page="../../common/page.jsp"></jsp:include>
 					</div>
 				</div>
 			</div>

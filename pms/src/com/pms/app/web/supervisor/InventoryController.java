@@ -114,7 +114,6 @@ public class InventoryController {
 	
 	@RequestMapping(value = "/del/{index}")
 	public String del(@PathVariable("index")Integer index, HttpSession session){
-		System.out.println("inventoryController.del()" + index);
 		List<InventoryDetail> inventoryDetailList = (List<InventoryDetail>) session.getAttribute("inventoryDetailList");
 		inventoryDetailList.remove(index - 1);
 		session.setAttribute("inventoryDetailList", inventoryDetailList);

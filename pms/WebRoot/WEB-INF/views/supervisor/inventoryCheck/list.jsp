@@ -6,7 +6,7 @@
 <html>
 	<head>
 
-		<title>监管客户列表</title>
+		<title>盘存检测单列表</title>
 
 		<meta http-equiv="pragma" content="no-cache">
 		<meta http-equiv="cache-control" content="no-cache">
@@ -20,37 +20,15 @@
 		<script language="javascript" type="text/javascript" src="${ctx }/js/jquery.js"></script>
 		<script type="text/javascript" src="${ctx }/js/date/WdatePicker.js"></script>
 		
-		
 		<script type="text/javascript">
     	$(document).ready(function(){
-			var query = "${queryName}";
-			if(query!=null && query.length > 0){
-				$("#queryName").val(query);
-			}
 		});
 
-		//全选
-		function selectAll(c){
-			$("[name='idGroup']").attr("checked", $(c).is(':checked'));
-		}
-		
 		//转向
 		function gotoPage(pageNo){
 			$("#pageNo").val(pageNo);
 			$("#myForm").submit();
 		}
-			
-/* 		//删除
-		function del(){
-			if($("[name='idGroup']:checked").length <= 0){
-				alert("请选择一个您要删除的！");
-			} else{
-				if (confirm("确定要删除吗？")){
-					$("#myForm").attr("action","${ctx}/supervisor/checkDeny/delete");
-					$("#myForm").submit();
-				}
-			}
-		} */
 
     </script>
 	
@@ -64,33 +42,35 @@
 	</head>
 
 	<body>
-		<form action="${ctx }/delegator/supervisorandsupervisoncustomer/list" method="post" id="myForm" name="myForm">
+		<form action="${ctx }/supervisor/inventoryCheck/list" method="get" id="myForm" name="myForm">
 			<div align="center" id="content"">
 				<div id="box">
 					<h3 align="left">
-						监管客户列表
+						盘存检测单列表
 					</h3>
 					<div>
 						&nbsp;
 					</div>
+					<div align="left">
+						<c:if test="${not empty messageOK}">
+							<div class="flash notice">
+								&nbsp;&nbsp;${messageOK}
+							</div>
+						</c:if>
+						<c:if test="${not empty messageErr}">
+							<div class="flash error">
+								&nbsp;&nbsp;${messageErr}
+							</div>
+						</c:if>
+					</div>
 					<div align="left" style="vertical-align: middle;">
-						&nbsp;&nbsp;&nbsp;根据监管客户:
+						&nbsp;&nbsp;&nbsp;根据盘存检测时间
+						&nbsp;&nbsp; 查询:
 						<span id="values">
-						<select name = "supervisionCustomerId" class="required">
-							<option selected="selected" value="">--请选择--</option>
-							<c:forEach items="${page.content }" var = "supervisionCustomer">
-								<c:choose>
-									<c:when test="${supervisionCustomer.id == supervisionCustomerId }">
-										<option selected="selected" value = "${supervisionCustomer.id }">${supervisionCustomer.name }</option>
-									</c:when>
-									<c:otherwise>
-										<option value = "${supervisionCustomer.id }">${supervisionCustomer.name }</option>
-									</c:otherwise>
-								</c:choose>
-							</c:forEach>
-						</select>
-						&nbsp;&nbsp;
+						<input name="date" value="${date}" onFocus="WdatePicker({isShowClear:false,isShowWeek:true,readOnly:true,skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"/>
+						&nbsp;
 						</span>
+						&nbsp;&nbsp;&nbsp;
 						<input type="button" value="查询" class="button" onclick="gotoPage(1)" />
 						<input type="hidden" name="page.page" id="pageNo" value="${page.number+1}"/>
 					</div>
@@ -98,39 +78,41 @@
 					<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
 						<thead>
 							<tr>
-								<th width="20%">
-									序号
-								</th>
-								<th>
-									监管客户
-								</th>
-								<th>
-									查看库存信息
-								</th>
-								<th>
-									查看出入库信息
-								</th>
+								<th>序号</th>
+								<th>检测单号</th>
+								<th>检测时间</th>
+								<th>状态</th>
+								<th>&nbsp;</th>
 							</tr>
 						</thead>
-						<c:forEach items="${page.content}" var="supervisionCustomer" varStatus="status">
+						<c:forEach items="${page.content}" var="inventoryCheck" varStatus="status">
 							<tr>
 								<td>
 									${status.count}&nbsp;
 								</td>
 								<td>
-									${supervisionCustomer.name }&nbsp;
+									${inventoryCheck.code }&nbsp;
 								</td>
 								<td>
-									<a href="${ctx }/delegator/stock/${supervisionCustomer.id}">查看库存信息</a>&nbsp;
+									${inventoryCheck.date }&nbsp;
 								</td>
 								<td>
-									<a href="${ctx }/delegator/insAndOuts/${supervisionCustomer.id}">查看出入库信息</a>&nbsp;
-								</td>							
+									<c:if test="${inventoryCheck.state==0}">
+										未登记检测结果
+									</c:if>
+									<c:if test="${inventoryCheck.state==1}">
+										已登记检测结果
+									</c:if>
+									&nbsp;
+								</td>
+								<td>
+									<a href="${ctx }/supervisor/inventoryCheck/${inventoryCheck.id }/details">查看</a>
+								</td>
 							</tr>
 						</c:forEach>
 					</table>
 					<div align="left" id="pager">
-						<jsp:include page="../common/page.jsp"></jsp:include>
+						<jsp:include page="../../common/page.jsp"></jsp:include>
 					</div>
 				</div>
 			</div>

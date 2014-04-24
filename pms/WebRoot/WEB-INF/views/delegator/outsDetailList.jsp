@@ -49,10 +49,7 @@
 								<th width="8%">序号</th>
 								<th>款式大类</th>
 								<th>标明成色</th>
-								<th>标明规格重量（kg/件）</th>
-								<th>数量（件）</th>
-								<th>总重量（kg）</th>
-								<th>生产厂家</th>
+								<th>重量（g）</th>
 								<th>备注</th>
 							</tr>
 						</thead>
@@ -62,11 +59,8 @@
 								<td>${status.count}&nbsp;</td>
 								<td>${outssRecordDetail.style.name}&nbsp;</td>
 								<td>${outssRecordDetail.pledgePurity.name}&nbsp;</td>
-								<td>${outssRecordDetail.specWeight}&nbsp;</td>
-								<td>${outssRecordDetail.amount}&nbsp;</td>
-								<td>${outssRecordDetail.sumWeight}&nbsp;</td>
-								<td>${outssRecordDetail.company}&nbsp;</td>
-								<td>${outssRecordDetail.desc}&nbsp;</td>
+								<td>${outssRecordDetail.weight}&nbsp;</td>
+								<td>${outssRecord.desc}&nbsp;</td>
 							</tr>
 						</c:forEach>
 						</tbody>

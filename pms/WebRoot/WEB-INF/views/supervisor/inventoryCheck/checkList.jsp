@@ -6,7 +6,7 @@
 <html>
 	<head>
 
-		<title>${supervisionCustomer.name}库存信息</title>
+		<title>盘存检测单</title>
 
 		<meta http-equiv="pragma" content="no-cache">
 		<meta http-equiv="cache-control" content="no-cache">
@@ -17,7 +17,8 @@
 		<link rel="stylesheet" type="text/css" href="${ctx }/css/admin/style.css">
 		<link rel="stylesheet" type="text/css" href="${ctx }/css/admin/theme1.css">
 		
-	
+		<script language="javascript" type="text/javascript" src="${ctx }/js/jquery.js"></script>
+		
 	<style type="text/css">
 		.button{
 			background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;
@@ -28,43 +29,47 @@
 	</head>
 
 	<body>
+		 <form id="myForm" name="myForm" action="${ctx}/supervisor/inventory/saveList" method="post" class="myform">
 			<div align="center" id="content"">
 				<div id="box">
 					<h3 align="left">
-						${supervisionCustomer.name}库存信息
+						盘存检测单
 					</h3>
 					<div>
 						&nbsp;
+						<input type="hidden" name="id" value = "${sessionScope.warehouseId }" >
 					</div>
+					<br/>
 					<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
 						<thead>
 							<tr>
-								<th width="6%">序号</th>
+								<th>托盘号</th>
 								<th>款式大类</th>
-								<th>重量（g）</th>
-								<th>存储地点</th>
+								<th>检测件数</th>
 							</tr>
 						</thead>
-						<c:forEach items="${page.content}" var="realTimeStocks" varStatus="status">
+						<c:forEach items="${inventoryCheckDetailList}" var="inventoryCheckDetailList" varStatus="status">
 							<tr>
 								<td>
-									${status.count}&nbsp;
+									${inventoryCheckDetailList.trayNo }&nbsp;
 								</td>
 								<td>
-									${realTimeStocks.sumWeight}&nbsp;
+									${inventoryCheckDetailList.style.name }&nbsp;
 								</td>
 								<td>
-									${sessionScope.warehouse.address}&nbsp;
+									${inventoryCheckDetailList.amount }&nbsp;
 								</td>
 							</tr>
 						</c:forEach>
 					</table>
-					<input id="button2" type="button" value="返回" onclick="javascript:history.back();" style="cursor: pointer;font-weight: bold;margin-left: 8px;padding-right: 5px;width: 205px;background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;">
-					<div align="left" id="pager">
-						<jsp:include page="../common/page.jsp"></jsp:include>
-					</div>
 				</div>
 			</div>
+			<br>
+			<div style="margin-bottom: 5px;padding: 3px;" align="center">
+				<input id="button1" type="button" value="增加检测件数" onclick="#" style="cursor: pointer;font-weight: bold;margin-left: 8px;padding-right: 5px;width: 205px; background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
+    			<input id="button1" type="submit" value="打印并生成检测单" style="cursor: pointer;font-weight: bold;margin-left: 8px;padding-right: 5px;width: 205px; background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
+    		</div>
+		</form>
 	</body>
 </html>
 

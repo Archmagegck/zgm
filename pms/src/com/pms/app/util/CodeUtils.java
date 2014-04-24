@@ -16,11 +16,15 @@ public class CodeUtils {
 		return supervisionCustomerCode + "KC" + new DateTime().toString("yyyyMMddHHmmss");
 	}
 	
-	public synchronized static String getPledgeRecordCode(String supervisionCustomerCode){
-		return supervisionCustomerCode + "ZWQD" + new DateTime().toString("yyyyMMddHHmmss");
+	public synchronized static String getPledgeRecordCode(String warehouseCode){
+		return warehouseCode + "ZWQD" + new DateTime().toString("yyyyMMddHHmmss");
 	}
 	
 	public synchronized static String getExtendedCheckCode(String warehouseCode){
 		return warehouseCode + "CQJC" + new DateTime().toString("yyyyMMddHHmmss");
+	}
+	
+	public synchronized static String getInventoryCheckCode(String warehouseCode){
+		return warehouseCode + "PCJC" + new DateTime().toString("yyyyMMddHHmmss");
 	}
 }

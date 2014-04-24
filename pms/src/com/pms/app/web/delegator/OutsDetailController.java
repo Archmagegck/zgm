@@ -29,6 +29,7 @@ public class OutsDetailController {
 		SupervisionCustomer supervisionCustomer = supervisionCustomerService.findById(SCId);
 		
 		model.addAttribute("detailList", outsRecord.getOutsRecordDetails());
+		model.addAttribute("outsRecord",outsRecord);
 		model.addAttribute("supervisionCustomer", supervisionCustomer);
 		
 		return "delegator/outsDetailList";

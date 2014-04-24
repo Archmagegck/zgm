@@ -6,7 +6,7 @@
 <html>
 	<head>
 
-		<title>${supervisionCustomer.name}库存信息</title>
+		<title>盘存检测单</title>
 
 		<meta http-equiv="pragma" content="no-cache">
 		<meta http-equiv="cache-control" content="no-cache">
@@ -17,6 +17,12 @@
 		<link rel="stylesheet" type="text/css" href="${ctx }/css/admin/style.css">
 		<link rel="stylesheet" type="text/css" href="${ctx }/css/admin/theme1.css">
 		
+		<script language="javascript" type="text/javascript" src="${ctx }/js/jquery.js"></script>
+		<script type="text/javascript" src="${ctx }/js/date/WdatePicker.js"></script>
+		
+		<script type="text/javascript">
+    		
+    	</script>
 	
 	<style type="text/css">
 		.button{
@@ -28,10 +34,11 @@
 	</head>
 
 	<body>
+		<form action="${ctx }/supervisor/inventory" method="post" id="myForm" name="myForm">
 			<div align="center" id="content"">
 				<div id="box">
-					<h3 align="left">
-						${supervisionCustomer.name}库存信息
+					<h3 align="center">
+						盘存检测单
 					</h3>
 					<div>
 						&nbsp;
@@ -39,32 +46,31 @@
 					<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
 						<thead>
 							<tr>
-								<th width="6%">序号</th>
+								<th>托盘号</th>
 								<th>款式大类</th>
-								<th>重量（g）</th>
-								<th>存储地点</th>
+								<th>检测件数</th>
+								<th>检测重量</th>
+								<th>检测结果</th>
 							</tr>
 						</thead>
-						<c:forEach items="${page.content}" var="realTimeStocks" varStatus="status">
+						<tbody>
+						<c:forEach items="${detailList}" var="inventoryCheckDetail" varStatus="status">
 							<tr>
-								<td>
-									${status.count}&nbsp;
-								</td>
-								<td>
-									${realTimeStocks.sumWeight}&nbsp;
-								</td>
-								<td>
-									${sessionScope.warehouse.address}&nbsp;
-								</td>
+								<td>${inventoryCheckDetail.trayNo}&nbsp;</td>
+								<td>${inventoryCheckDetail.style.name}&nbsp;</td>
+								<td>${inventoryCheckDetail.amount}&nbsp;</td>
+								<td>${inventoryCheckDetail.weight}&nbsp;</td>
+								<td>${inventoryCheckDetail.checkResult.title}&nbsp;</td>
 							</tr>
 						</c:forEach>
+						</tbody>
 					</table>
-					<input id="button2" type="button" value="返回" onclick="javascript:history.back();" style="cursor: pointer;font-weight: bold;margin-left: 8px;padding-right: 5px;width: 205px;background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;">
-					<div align="left" id="pager">
-						<jsp:include page="../common/page.jsp"></jsp:include>
+					<div align="center" id="pager">
+						<input id="button2" type="button" value="返回" onclick="javascript:history.back();" style="cursor: pointer;font-weight: bold;margin-left: 8px;padding-right: 5px;width: 205px;background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;">
 					</div>
 				</div>
 			</div>
+		</form>
 	</body>
 </html>
 
