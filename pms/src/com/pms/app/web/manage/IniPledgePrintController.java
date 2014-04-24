@@ -59,7 +59,7 @@ public class IniPledgePrintController {
 //			model.addAttribute("date", dateTime.toString("yyyy-MM-dd"));
 //		}
 		//获取所有初始状态登记的仓库
-		model.addAttribute("iniRecordList",iniRecordService.findTotalWarehouseList());		
+		//model.addAttribute("iniRecordList",iniRecordService.findTotalWarehouseList());		
 		//model.addAttribute("page", pledgeRecordService.findPageByQuery(pageable, ((Warehouse)session.getAttribute("warehouse")).getId(), date));
 		return "manage/iniPledgePrint/list";
 	}
