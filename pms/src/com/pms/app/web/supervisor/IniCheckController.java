@@ -82,7 +82,6 @@ public class IniCheckController {
 	
 	@RequestMapping(value = "/del/{index}")
 	public String del(@PathVariable("index")Integer index, HttpSession session){
-		System.out.println("IniCheckController.del()" + index);
 		List<IniCheck> iniCheckList = (List<IniCheck>) session.getAttribute("iniCheckList");
 		iniCheckList.remove(index - 1);
 		session.setAttribute("iniCheckList", iniCheckList);
@@ -94,7 +93,7 @@ public class IniCheckController {
 	public String saveList(HttpSession session, RedirectAttributes ra){
 		try {
 			List<IniCheck> iniCheckList = (List<IniCheck>) session.getAttribute("iniCheckList");
-			iniCheckService.save(iniCheckList);
+			iniCheckService.save(iniCheckList, (String)session.getAttribute("warehouseId"));
 			ra.addFlashAttribute("messageOK", "保存成功！");
 		} catch (Exception e) {
 			ra.addFlashAttribute("messageErr", "保存失败！");

@@ -298,14 +298,14 @@ public class UploadUtils {
 				File folder = new File(path + "images" + separator + toFilePath);
 				if(!folder.exists())
 					folder.mkdirs();
-				File file = new File(folder, pledgeRecord.getRecordName() + "." + ext);
-				try {
-					pledgeRecordFile.transferTo(file);
-				} catch (Exception e) {
-					throw new ServiceException("上传文件发生未知异常.", e);
-				}
-				String picUrl = toFilePath + separator + pledgeRecord.getRecordName() + "." + ext;
-				pledgeRecord.setRecordFile(picUrl);
+//				File file = new File(folder, pledgeRecord.getRecordName() + "." + ext);
+//				try {
+//					pledgeRecordFile.transferTo(file);
+//				} catch (Exception e) {
+//					throw new ServiceException("上传文件发生未知异常.", e);
+//				}
+//				String picUrl = toFilePath + separator + pledgeRecord.getRecordName() + "." + ext;
+//				pledgeRecord.setRecordFile(picUrl);
 			}
 		}
 		return pledgeRecord;

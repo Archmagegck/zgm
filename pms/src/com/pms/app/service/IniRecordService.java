@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pms.app.dao.IniRecordDao;
 import com.pms.app.dao.PledgePurityDao;
+import com.pms.app.entity.IniCheck;
 import com.pms.app.entity.IniRecord;
 import com.pms.app.entity.PledgePurity;
 import com.pms.app.entity.Stock;
@@ -22,12 +23,16 @@ public class IniRecordService extends BaseService<IniRecord, String> {
 	@Autowired private IniRecordDao iniRecordDao;
 	@Autowired private StockService stockService;
 	@Autowired private PledgePurityDao pledgePurityDao;
+	@Autowired private IniCheckService iniCheckService;
+	@Autowired private IniPledgeRecordService iniPledgeRecordService;
 
+	
 	@Override
 	protected BaseDao<IniRecord, String> getEntityDao() {
 		return iniRecordDao;
 	}
 
+	
 	@Transactional
 	public void save(List<IniRecord> iniRecordList, String warehouseId) {
 		PledgePurity pledgePurity = pledgePurityDao.findListByType(1).get(0);
@@ -50,6 +55,12 @@ public class IniRecordService extends BaseService<IniRecord, String> {
 		}
 		stockService.save(updateStocks);
 		super.save(iniRecordList);
+		
+		List<IniCheck> iniCheckList = iniCheckService.findAllEq("warehouse.id", warehouseId);
+		if(!iniCheckList.isEmpty()) {
+			iniPledgeRecordService.save(iniRecordList, iniCheckList, warehouseId);
+		}
+		
 	}
 	
 
