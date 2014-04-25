@@ -142,6 +142,18 @@ public class OutsRecord {
 	
 	
 	/**
+	 * 实时重量比
+	 */
+	private Double weightRate;
+	
+	
+	/**
+	 * 实时价格比
+	 */
+	private Double priceRate;
+	
+	
+	/**
 	 * 明细
 	 */
 	@OneToMany(mappedBy = "outsRecord")
@@ -310,6 +322,26 @@ public class OutsRecord {
 
 	public void setSumStock(Double sumStock) {
 		this.sumStock = sumStock;
+	}
+
+
+	public Double getWeightRate() {
+		return weightRate;
+	}
+
+
+	public void setWeightRate(Double weightRate) {
+		this.weightRate = weightRate;
+	}
+
+
+	public Double getPriceRate() {
+		return priceRate;
+	}
+
+
+	public void setPriceRate(Double priceRate) {
+		this.priceRate = priceRate;
 	}
 
 
