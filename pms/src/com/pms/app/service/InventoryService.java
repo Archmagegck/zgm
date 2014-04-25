@@ -13,7 +13,6 @@ import com.pms.app.dao.InventoryDetailDao;
 import com.pms.app.dao.PledgeConfigDao;
 import com.pms.app.dao.StockDao;
 import com.pms.app.dao.SupervisionCustomerDao;
-import com.pms.app.entity.Admin;
 import com.pms.app.entity.Inventory;
 import com.pms.app.entity.InventoryDetail;
 import com.pms.app.entity.PledgeConfig;
@@ -38,20 +37,6 @@ public class InventoryService extends BaseService<Inventory, String> {
 	protected BaseDao<Inventory, String> getEntityDao() {
 		return inventoryDao;
 	}
-	
-	public List<Inventory> findByWarehouseIdAndDateBetween(String warehouseId, Date dateBegin, Date dateEnd) {
-		
- 		return inventoryDao.findByWarehouseIdAndDateBetween(warehouseId, dateBegin, dateEnd);
-		
-	}
-	
-	
-	public List<Inventory> findByDateBetween(Date dateBegin, Date dateEnd) {
-		
- 		return inventoryDao.findByDateBetween(dateBegin, dateEnd);
-		
-	}
-	
 	
 	@Transactional
 	public void save(Warehouse warehouse, SupervisionCustomer supervisionCustomer, String supName, List<InventoryDetail> inventoryDetails) {
@@ -96,6 +81,20 @@ public class InventoryService extends BaseService<Inventory, String> {
 		
 		inventoryDao.save(inventory);
 		inventoryDetailDao.save(inventoryDetailList);
+		
+	}
+	
+	
+	public List<Inventory> findByWarehouseIdAndDateBetween(String warehouseId, Date dateBegin, Date dateEnd) {
+		
+ 		return inventoryDao.findByWarehouseIdAndDateBetween(warehouseId, dateBegin, dateEnd);
+		
+	}
+	
+	
+	public List<Inventory> findByDateBetween(Date dateBegin, Date dateEnd) {
+		
+ 		return inventoryDao.findByDateBetween(dateBegin, dateEnd);
 		
 	}
 
