@@ -219,7 +219,7 @@
 	          </tr>
 	        </table>
 	        <ul class="MM">
-	        	<li><a href="${ctx}/manage/decompressionManager" target="right">解压管理</a></li>
+	        	<li><a href="${ctx}/manage/removePledge" target="right">解压管理</a></li>
 	        	<li><a href="${ctx}/manage/dailyPledge" target="right">每日质物清单</a></li>
 	        	<li><a href="${ctx}/manage/iniPledgePrint" target="right">初始质物清单打印</a></li>
 	        	<li><a href="${ctx}/manage/dailyInventoryRecord" target="right">每日盘点查询</a></li>
