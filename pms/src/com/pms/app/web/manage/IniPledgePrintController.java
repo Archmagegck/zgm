@@ -35,12 +35,8 @@ import com.pms.app.service.StockService;
 @Controller
 @RequestMapping(value = "/manage/iniPledgePrint")
 public class IniPledgePrintController {
-	private Logger logger = LoggerFactory.getLogger(DailyPledgeController.class);
+	private Logger logger = LoggerFactory.getLogger(IniPledgePrintController.class);
 	
-	@Autowired private PledgeRecordService pledgeRecordService;
-	@Autowired private StockService stockService;
-	@Autowired private IniRecordService iniRecordService;
-	@Autowired private IniCheckService iniCheckService;
 	@Autowired private IniPledgeRecordService iniPledgeRecordService;
 	
 	@InitBinder  
@@ -52,24 +48,15 @@ public class IniPledgePrintController {
 	
 	@RequestMapping(value = { "/list", "" })
 	public String list(Model model) {
-//		public String list(Model model, Pageable pageable, Date date, HttpSession session) {
-//		DateTime dateTime = new DateTime();
-//		if(date != null) {
-//			dateTime = new DateTime(date);
-//			model.addAttribute("date", dateTime.toString("yyyy-MM-dd"));
-//		}
-		//获取所有初始状态登记的仓库
-		//model.addAttribute("iniRecordList",iniRecordService.findTotalWarehouseList());		
-		//model.addAttribute("page", pledgeRecordService.findPageByQuery(pageable, ((Warehouse)session.getAttribute("warehouse")).getId(), date));
+		model.addAttribute("iniPledgeRecordList",iniPledgeRecordService.findAll());
 		return "manage/iniPledgePrint/list";
 	}
-	
-	
+
 	@RequestMapping(value = "/{id}/printPledgeRecord")
 	public String printPledgeRecord(@PathVariable("id")String id, Model model) {
 		IniPledgeRecord iniPledgeRecord = iniPledgeRecordService.findById(id);
 		model.addAttribute("iniPledgeRecord", iniPledgeRecord);
 		model.addAttribute("detailList", iniPledgeRecord.getPledgeRecordDetails());
-		return "manage/pledgeRecord/printPledgeRecord";
+		return "manage/iniPledgePrint/printPledgeRecord";
 	}
 }
