@@ -83,5 +83,19 @@ public class InventoryService extends BaseService<Inventory, String> {
 		inventoryDetailDao.save(inventoryDetailList);
 		
 	}
+	
+	
+	public List<Inventory> findByWarehouseIdAndDateBetween(String warehouseId, Date dateBegin, Date dateEnd) {
+		
+ 		return inventoryDao.findByWarehouseIdAndDateBetween(warehouseId, dateBegin, dateEnd);
+		
+	}
+	
+	
+	public List<Inventory> findByDateBetween(Date dateBegin, Date dateEnd) {
+		
+ 		return inventoryDao.findByDateBetween(dateBegin, dateEnd);
+		
+	}
 
 }

@@ -29,7 +29,7 @@ public class IniPledgeRecordDetail {
 	private String id;
 	
 	/**
-	 * 所属质物清单
+	 * 所属初始质物清单
 	 */
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "pr_id")
@@ -115,13 +115,7 @@ public class IniPledgeRecordDetail {
 		this.id = id;
 	}
 
-	public PledgeRecord getPledgeRecord() {
-		return pledgeRecord;
-	}
-
-	public void setPledgeRecord(PledgeRecord pledgeRecord) {
-		this.pledgeRecord = pledgeRecord;
-	}
+	
 
 	public Style getStyle() {
 		return style;
@@ -209,5 +203,15 @@ public class IniPledgeRecordDetail {
 
 	public void setDesc(String desc) {
 		this.desc = desc;
+	}
+
+	
+
+	public PledgeRecord getPledgeRecord() {
+		return pledgeRecord;
+	}
+
+	public void setPledgeRecord(PledgeRecord pledgeRecord) {
+		this.pledgeRecord = pledgeRecord;
 	}
 }

@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,6 +44,19 @@ public class PurityPriceService extends BaseService<PurityPrice, String> {
 			priceMap.put(purityPrice.getPledgePurity().getId(), purityPrice.getPrice());
 		}
 		return priceMap;
+	}
+	
+	public boolean hasDatePrice(Date date) {
+		List<PurityPrice> list = purityPriceDao.findListByDate(date);
+		if(list.isEmpty()) return false;
+		else return true;
+	}
+	
+	public Page<PurityPrice> findByDate(Pageable pageable, Date date) {
+		if(date == null)
+			return purityPriceDao.findAll(pageable);
+		else
+			return purityPriceDao.findByDate(pageable, date);
 	}
 
 }

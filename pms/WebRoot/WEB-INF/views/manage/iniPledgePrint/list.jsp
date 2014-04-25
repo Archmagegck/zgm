@@ -6,7 +6,7 @@
 <html>
 	<head>
 
-		<title>每日价格记录</title>
+		<title>初始质物清单列表</title>
 
 		<meta http-equiv="pragma" content="no-cache">
 		<meta http-equiv="cache-control" content="no-cache">
@@ -22,30 +22,12 @@
 		
 		<script type="text/javascript">
     	$(document).ready(function(){
-    		
 		});
 
-		//全选
-		function selectAll(c){
-			$("[name='idGroup']").attr("checked", $(c).is(':checked'));
-		}
-		
 		//转向
 		function gotoPage(pageNo){
 			$("#pageNo").val(pageNo);
 			$("#myForm").submit();
-		}
-			
-		//删除
-		function del(){
-			if($("[name='idGroup']:checked").length <= 0){
-				alert("请选择一个您要删除的！");
-			} else{
-				if (confirm("确定要删除吗？")){
-					$("#myForm").attr("action","${ctx}/manage/style/delete");
-					$("#myForm").submit();
-				}
-			}
 		}
 
     </script>
@@ -60,11 +42,11 @@
 	</head>
 
 	<body>
-		<form action="${ctx }/manage/au9995Price/list" method="post" id="myForm" name="myForm">
+		<form action="${ctx }/supervisor/pledgeRecord/list" method="get" id="myForm" name="myForm">
 			<div align="center" id="content"">
 				<div id="box">
-					<h3 align="left">
-						每日价格记录
+					<h3 align="left"> 
+						初始质物清单 
 					</h3>
 					<div>
 						&nbsp;
@@ -82,54 +64,41 @@
 						</c:if>
 					</div>
 					<div align="left" style="vertical-align: middle;">
-						&nbsp;&nbsp;&nbsp;选择日期
-						&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;根据时间
+						&nbsp;&nbsp; 查询:
+						<span id="values">
 						<input name="date" value="${date}" onFocus="WdatePicker({isShowClear:false,isShowWeek:true,readOnly:true,skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"/>
+						&nbsp;
+						</span>
 						&nbsp;&nbsp;&nbsp;
 						<input type="button" value="查询" class="button" onclick="gotoPage(1)" />
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<span id="addTodayPrice">
-							<input type="button" value="添加今日价格" class="button" onclick="location.href='${ctx}/manage/au9995Price/add'" />
-						</span>
+						<input type="hidden" name="page.page" id="pageNo" value="${page.number+1}"/>
 					</div>
 					<br/>
 					<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
 						<thead>
 							<tr>
-								<th width="10%">
-									序号
-								</th>
-								<th width="30%">
-									日期
-								</th>
-								<th width="30%">
-									标明成色
-								</th>
-								<th width="30%">
-									价格
-								</th>
+								<th>序号</th>
+								<th>仓库名称</th>
+								<th>操作</th>
 							</tr>
 						</thead>
-						<c:forEach items="${page.content}" var="purityPrice" varStatus="status">
+						<c:forEach items="${iniPledgeRecordList}" var="iniPledgeRecord" varStatus="status">
 							<tr>
+								<td>${status.count}&nbsp;</td>
 								<td>
-									${status.count}&nbsp;
+									${iniPledgeRecord.warehouse.name }&nbsp;
 								</td>
 								<td>
-									${purityPrice.date }&nbsp;
+									<a href="${ctx }/manage/iniPledgePrint/${iniPledgeRecord.id }/printPledgeRecord">查看</a>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									
 								</td>
-								<td>
-									${purityPrice.pledgePurity.name }&nbsp;
-								</td>
-								<td>
-									${purityPrice.price }&nbsp;
-								</td>
+								
 							</tr>
 						</c:forEach>
 					</table>
-					<div align="left" id="pager">
-						<jsp:include page="../../common/page.jsp"></jsp:include>
-					</div>
+					
 				</div>
 			</div>
 		</form>
