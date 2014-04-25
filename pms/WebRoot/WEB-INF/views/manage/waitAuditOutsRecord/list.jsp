@@ -104,10 +104,10 @@
 									${outsRecord.dateStr }&nbsp;
 								</td>
 								<td>
-									${outsRecord.dateStr }&nbsp;
+									${outsRecord.weightRate }&nbsp;
 								</td>
 								<td>
-									${outsRecord.dateStr }&nbsp;
+									${outsRecord.priceRate }&nbsp;
 								</td>
 								<td>
 									${outsRecord.auditState.title }&nbsp;

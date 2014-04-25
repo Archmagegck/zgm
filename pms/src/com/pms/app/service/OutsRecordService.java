@@ -1,5 +1,6 @@
 package com.pms.app.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -119,7 +120,6 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 			if(stock.getPledgePurity().getType() == 1)
 				stockSumWeight += stock.getSumWeight();
 		}
-		outsRecord.setSumStock(stockSumWeight);
 		
 		//出库逻辑
 		PledgeConfig config = pledgeConfigDao.findBySupervisionCustomerId(supervisionCustomer.getId()).get(0);
@@ -136,7 +136,12 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 		double warnValue = (config.getMinValue() * maxcordon) / 100;//质押物最低价值的警戒线
 		double warnWeight = (config.getMinWeight() * maxcordon) / 100;//质押物最低重量的警戒线
 		
+		outsRecord.setSumStock(stockSumWeight);
 		outsRecord.setSumValue(stockValue);
+		double weightRate = new BigDecimal(stockSumWeight / config.getMinWeight()).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+		outsRecord.setWeightRate(weightRate);
+		double priceRate = new BigDecimal(stockValue / config.getMinValue()).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+		outsRecord.setPriceRate(priceRate);
 		
 		boolean ifOutStock = true;
 		int warnType = 0;
