@@ -37,15 +37,11 @@
 			$("#myForm").submit();
 		}
 			
-		//删除
+		//解压
 		function del(){
-			if($("[name='idGroup']:checked").length <= 0){
-				alert("请选择一个您要删除的！");
-			} else{
-				if (confirm("确定要删除吗？")){
-					$("#myForm").attr("action","${ctx}/manage/supervisionCustomer/delete");
+			if (confirm("确定要解压吗？")){
+					$("#myForm").attr("action","${ctx}//manage/removePledge/delete");
 					$("#myForm").submit();
-				}
 			}
 		}
 
@@ -61,8 +57,8 @@
 	</head>
 
 	<body>
-		<form action="${ctx }/manage/supervisionCustomer/list" method="post" id="myForm" name="myForm">
-			<div align="center" id="content"">
+		<form action="${ctx }/manage/removePledge/list" method="post" id="myForm" name="myForm">
+			<div align="center" id="content">
 				<div id="box">
 					<h3 align="left">
 						解压管理
@@ -86,15 +82,16 @@
 						&nbsp;&nbsp;&nbsp;委托方
 						&nbsp;&nbsp;
 						<select name="delegators" id="queryName" varStatus="status">
+							<option selected="selected" value="">--请选择--</option>
 							<c:forEach items="${delegatorList}" var="delegators">
-								<option value="${delegatorList.id}" selected="selected">
-								${delegatorList.name}
+								<option value="${delegators.id}">
+								${delegators.name}
 								</option>
 							</c:forEach>
 						</select>
 						&nbsp;&nbsp;&nbsp;监管客户
 						&nbsp;&nbsp;
-						<select name = "supervisionCustomerId" class="required">
+						<select name = "supervisionCustomerId" class="required" >
 							<option selected="selected" value="">--请选择--</option>
 							<c:forEach items="${supervisionCustomerList }" var = "supervisionCustomer">
 								<c:choose>
@@ -133,39 +130,31 @@
 									存储位置
 								</th>
 								<th>
-									扫描件上传
-								</th>
-								<th>
 									操作
 								</th>
 							</tr>
 						</thead>
-						<c:forEach items="${page.content}" var="supervisionCustomer" varStatus="status">
+						<c:forEach items="${removePledgeList}" var="removePledge" varStatus="status">
 							<tr>
 								<td>
-									${status.count}表中内容如何输出
+									${status.count}
 								</td>
 								<td>
-									${delegatorList.name }&nbsp;
+									${removePledge.delegator.name }&nbsp;
 								</td>
 								<td>
-									${supervisionCustomer.name }&nbsp;
+									${removePledge.supervisionCustomer.name }&nbsp;
 								</td>
 								<td>
-									${supervisionCustomer.warehouse.name }&nbsp;
+									${removePledge.warehouse.name }&nbsp;
 								</td>
 								<td>
-									${supervisionCustomer.contact }&nbsp;
+									${removePledge.supervisor.name }&nbsp;
 								</td>
 								<td>
-									${supervisionCustomer.phone }&nbsp;
+									${removePledge.warehouse.address }&nbsp;
 								</td>
-								<td>
-									${supervisionCustomer.email }&nbsp;
-								</td>
-								<td>
-									<a href="${ctx }/manage/supervisionCustomer/edit/${supervisionCustomer.id }">解压</a>
-								</td>
+								<td><input type="button" value="解压" class="button" onclick="del()"/></td>
 							</tr>
 						</c:forEach>
 					</table>

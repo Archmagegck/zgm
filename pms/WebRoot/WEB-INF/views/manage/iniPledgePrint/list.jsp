@@ -6,7 +6,7 @@
 <html>
 	<head>
 
-		<title>每日质物清单列表</title>
+		<title>初始质物清单列表</title>
 
 		<meta http-equiv="pragma" content="no-cache">
 		<meta http-equiv="cache-control" content="no-cache">
@@ -83,16 +83,16 @@
 								<th>操作</th>
 							</tr>
 						</thead>
-						<c:forEach items="${iniRecordList}" var="iniRecord" varStatus="status">
+						<c:forEach items="${iniPledgeRecordList}" var="iniPledgeRecord" varStatus="status">
 							<tr>
 								<td>${status.count}&nbsp;</td>
 								<td>
-									${iniRecord.warehouse.name }&nbsp;
+									${iniPledgeRecord.warehouse.name }&nbsp;
 								</td>
 								<td>
-									<a href="${ctx }/supervisor/iniPledgePrint/${iniRecord.warehouse.id }/printPledgeRecord">查看</a>
+									<a href="${ctx }/manage/iniPledgePrint/${iniPledgeRecord.id }/printPledgeRecord">查看</a>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<a href="${ctx }/supervisor/iniPledgePrint/${iniRecord.warehouse.id }/toUpload">生成并打印</a>
+									
 								</td>
 								
 							</tr>

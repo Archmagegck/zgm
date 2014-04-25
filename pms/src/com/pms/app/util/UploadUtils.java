@@ -44,6 +44,9 @@ public class UploadUtils {
 		case 2:
 			typeName = "出库";
 			break;
+		case 3:
+			typeName = "解压";
+			break;
 		}
 		String folderName = "attached" + separator + warehouseName + separator + typeName;
 		String path = request.getSession().getServletContext().getRealPath(separator);

@@ -35,6 +35,10 @@ public class SupervisionCustomerService extends BaseService<SupervisionCustomer,
 		return supervisionCustomerPage;
 	}
 	
+	public List<SupervisionCustomer> findListByDelegatorId(String delegatorId){
+		return supervisionCustomerDao.findListByDelegatorId(delegatorId);
+	}
+	
 	@Transactional
 	public void save(SupervisionCustomer supervisionCustomer){
 		PledgeConfig pledgeConfig = new PledgeConfig();

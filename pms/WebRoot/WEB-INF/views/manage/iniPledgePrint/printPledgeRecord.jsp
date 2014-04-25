@@ -27,12 +27,15 @@
 	</head>
 
 	<body>
+		<div style="line-height:200%" align="left">质物清单加密号：<u>${iniPledgeRecord.code }</u>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			</div>
 		<div style="width: 90%">
 			<div align="center" id="content" style="line-height:120%">
 			<h3>质物清单（代动产质押专用仓单）</h3>
 			<h3>（监管人签发）</h3>
 			</div>
-			<div style="line-height:200%" align="right">编号：<u>${pledgeRecord.code }</u>
+			<div style="line-height:200%" align="right">编号：<u>${iniPledgeRecord.code }</u>
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			</div>
 			<div style="line-height:200%;font-family:宋体;font-size:14px">
@@ -94,8 +97,8 @@
 							<c:if test="${pledgeRecordDetail.closedTran == 0}">否</c:if>
 						</td>
 						<td>${pledgeRecordDetail.storage}&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
+						<td>${pledgeRecordDetail.spectrumRate}&nbsp;</td>
+						<td>${pledgeRecordDetail.dissolveRate}&nbsp;</td>
 						<td>${pledgeRecordDetail.desc}&nbsp;</td>
 					</tr>
 					</c:forEach>
