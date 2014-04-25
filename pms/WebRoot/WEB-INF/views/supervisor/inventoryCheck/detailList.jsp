@@ -49,8 +49,6 @@
 								<th>托盘号</th>
 								<th>款式大类</th>
 								<th>检测件数</th>
-								<th>检测重量</th>
-								<th>检测结果</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -59,8 +57,6 @@
 								<td>${inventoryCheckDetail.trayNo}&nbsp;</td>
 								<td>${inventoryCheckDetail.style.name}&nbsp;</td>
 								<td>${inventoryCheckDetail.amount}&nbsp;</td>
-								<td>${inventoryCheckDetail.weight}&nbsp;</td>
-								<td>${inventoryCheckDetail.checkResult.title}&nbsp;</td>
 							</tr>
 						</c:forEach>
 						</tbody>

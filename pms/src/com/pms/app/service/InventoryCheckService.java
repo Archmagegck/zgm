@@ -28,6 +28,29 @@ public class InventoryCheckService extends BaseService<InventoryCheck, String> {
 	protected BaseDao<InventoryCheck, String> getEntityDao() {
 		return inventoryCheckDao;
 	}
+	
+	@Transactional
+	public InventoryCheck save(List<InventoryCheckDetail> inventoryCheckDetails, Warehouse warehouse) {
+		Date now = new Date();
+		
+		InventoryCheck inventoryCheck = new InventoryCheck();
+		inventoryCheck.setCode(CodeUtils.getInventoryCheckCode(warehouse.getId()));
+		inventoryCheck.setDate(now);
+		inventoryCheck.setWarehouse(warehouse);
+		
+		for (InventoryCheckDetail inventoryCheckDetail : inventoryCheckDetails) {
+			inventoryCheckDetail.setInventoryCheck(inventoryCheck);
+			inventoryCheckDetail.setDate(now);
+			inventoryCheckDetail.setWarehouse(warehouse);
+		}
+		inventoryCheck.setInventoryCheckDetails(inventoryCheckDetails);
+		
+		inventoryCheckDao.save(inventoryCheck);
+		inventoryCheckDetailDao.save(inventoryCheckDetails);
+		
+		return inventoryCheck;
+	}
+	
 
 	@Transactional
 	public InventoryCheck saveCheck(List<InventoryCheckTemplate> inventoryCheckTemplateList, Warehouse warehouse) {
