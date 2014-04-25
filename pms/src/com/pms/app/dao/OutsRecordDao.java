@@ -1,5 +1,7 @@
 package com.pms.app.dao;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -13,4 +15,5 @@ public interface OutsRecordDao extends BaseDao<OutsRecord, String> {
 	
 	public Page<OutsRecord> findPageByNotice(Pageable pageable, int notice);
 	
+	public List<OutsRecord> findBySupervisionCustomerId(String id);
 }

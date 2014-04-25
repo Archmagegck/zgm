@@ -155,6 +155,7 @@
 									${removePledge.warehouse.address }&nbsp;
 								</td>
 								<td><input type="button" value="解压" class="button" onclick="del()"/></td>
+								<td><input type="hidden" name="removeSupervisionCustomerId" value="${removePledge.supervisionCustomer.id}" /></td>
 							</tr>
 						</c:forEach>
 					</table>

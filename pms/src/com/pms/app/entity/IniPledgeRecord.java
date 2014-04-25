@@ -84,8 +84,8 @@ public class IniPledgeRecord {
 	/**
 	 * 质物清单明细
 	 */
-	@OneToMany(mappedBy = "pledgeRecord")
-	private List<PledgeRecordDetail> pledgeRecordDetails = new ArrayList<PledgeRecordDetail>();
+	@OneToMany(mappedBy = "iniPledgeRecord")
+	private List<IniPledgeRecordDetail> iniPledgeRecordDetails = new ArrayList<IniPledgeRecordDetail>();
 	
 	public String getDateStr(){
 		return new DateTime(date).toString("yyyy-MM-dd");
@@ -137,12 +137,12 @@ public class IniPledgeRecord {
 
 	
 
-	public List<PledgeRecordDetail> getPledgeRecordDetails() {
-		return pledgeRecordDetails;
+	public List<IniPledgeRecordDetail> getIniPledgeRecordDetails() {
+		return iniPledgeRecordDetails;
 	}
 
-	public void setPledgeRecordDetails(List<PledgeRecordDetail> pledgeRecordDetails) {
-		this.pledgeRecordDetails = pledgeRecordDetails;
+	public void setIniPledgeRecordDetails(List<IniPledgeRecordDetail> iniPledgeRecordDetail) {
+		this.iniPledgeRecordDetails = iniPledgeRecordDetail;
 	}
 
 

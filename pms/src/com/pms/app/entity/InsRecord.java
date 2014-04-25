@@ -92,7 +92,13 @@ public class InsRecord {
 	@OneToMany(mappedBy = "insRecord")
 	private List<InsRecordDetail> insRecordDetails = new ArrayList<InsRecordDetail>();
 
-
+	/**
+	 * 监管客户
+	 */
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "sc_id")
+	private SupervisionCustomer supervisionCustomer;
+	
 	public String getId() {
 		return id;
 	}
@@ -182,6 +188,15 @@ public class InsRecord {
 		this.insRecordDetails = insRecordDetails;
 	}
 
+
+	public SupervisionCustomer getSupervisionCustomer() {
+		return supervisionCustomer;
+	}
+
+
+	public void setSupervisionCustomer(SupervisionCustomer supervisionCustomer) {
+		this.supervisionCustomer = supervisionCustomer;
+	}
 
 	
 }

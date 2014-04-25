@@ -54,12 +54,13 @@ public class RemovePledgeController {
 		String attachPath = UploadUtils.uploadFile(request, 3, supervisionCustomer.getName());	//没有实体保存该路径
 		
 		//解除质押——删除监管客户，清空仓库
-		supervisionCustomerService.delete(supervisionCustomer);	
+		supervisionCustomerService.delete(removeSupervisionCustomerId);	
 		
 		model.addAttribute("removePledgeList", removePledgeService.findAll());
 		model.addAttribute("delegatorList", delegatorService.findAll());
 		model.addAttribute("supervisionCustomerList", supervisionCustomerService.findAll());
 		return "manage/removePledge/list";
 	}
+	
 	
 }
