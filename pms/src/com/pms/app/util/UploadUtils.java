@@ -28,6 +28,7 @@ public class UploadUtils {
 		fileTypes.add("bmp");
 		fileTypes.add("png");
 		fileTypes.add("gif");
+		fileTypes.add("pdf");
 	}
 	
 	

@@ -86,7 +86,7 @@
 						&nbsp;&nbsp;&nbsp;根据
 						&nbsp;&nbsp;
 						<select name="queryName" id="queryName">
-							<option value="purity" selected="selected">款式名称</option>
+							<option value="name" selected="selected">款式名称</option>
 						</select>
 						&nbsp;&nbsp; 查询:
 						<span id="values"><input type="text" name="queryValue" id="queryValue" value="${queryValue}" /> </span>

@@ -46,7 +46,7 @@
 	</head>
 
 	<body>
-		<form action="${ctx }/supervisor/insRecord/list" method="get" id="myForm" name="myForm">
+		<form action="${ctx }/supervisor/insCheck/list" method="get" id="myForm" name="myForm">
 			<div align="center" id="content"">
 				<div id="box">
 					<h3 align="left">
