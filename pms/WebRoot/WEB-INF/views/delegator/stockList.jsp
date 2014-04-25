@@ -51,10 +51,10 @@
 									${status.count}&nbsp;
 								</td>
 								<td>
-									${realTimeStocks.sumWeight}&nbsp;
+									${realTimeStocks.style.name}&nbsp;
 								</td>
 								<td>
-									${sessionScope.warehouse.address}&nbsp;
+									${realTimeStocks.sumWeight}&nbsp;
 								</td>
 							</tr>
 						</c:forEach>

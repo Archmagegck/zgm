@@ -55,7 +55,7 @@
 							用户名:
 						</td>
 						<td width="80%">
-							<input id="username" name="username" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
+							${delegator.username }&nbsp;
 						</td>
 					</tr>
 					<tr>
