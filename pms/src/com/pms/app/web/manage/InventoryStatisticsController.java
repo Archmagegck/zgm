@@ -35,10 +35,18 @@ public class InventoryStatisticsController {
 	
 	@RequestMapping(value = { "/list", "" })
 	public String list(Model model, Date beginDate, Date endDate) {
+		
 		model.addAttribute("beginDate", new DateTime(beginDate).toString("yyyy-MM-dd"));
 		model.addAttribute("endDate", new DateTime(endDate).toString("yyyy-MM-dd"));
 		//model.addAttribute("warehouseList", warehouseService.findAll());
-		model.addAttribute("inventoryShowList", inventoryStatisticsService.findDailySvgWeightAndPrice(beginDate, endDate));
+		if(beginDate!=null && endDate!=null){
+			model.addAttribute("inventoryShowList", inventoryStatisticsService.findDailySvgWeightAndPrice(beginDate, endDate));
+		}else{
+			beginDate = new Date();
+			endDate=new Date();
+			model.addAttribute("inventoryShowList", inventoryStatisticsService.findDailySvgWeightAndPrice(beginDate, endDate));
+		}
+		
 		//model.addAttribute("delegator", delegatorService.findById(delegatorId));
 		//model.addAttribute("delegatorId", delegatorId);
 		//model.addAttribute("inoutsMap", inOutsRecordService.queryByDelegatorAndDateBetween(delegatorId, supervisionCustomerId, beginDate, endDate));
