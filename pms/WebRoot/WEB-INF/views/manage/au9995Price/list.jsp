@@ -58,7 +58,6 @@
 	</style>
 	
 	</head>
-
 	<body>
 		<form action="${ctx }/manage/au9995Price/list" method="post" id="myForm" name="myForm">
 			<div align="center" id="content"">
