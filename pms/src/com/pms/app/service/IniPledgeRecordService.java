@@ -57,6 +57,7 @@ public class IniPledgeRecordService extends BaseService<IniPledgeRecord, String>
 			
 			for (IniRecord iniRecord : iniRecordList) {
 				IniPledgeRecordDetail iniPledgeRecordDetail = new IniPledgeRecordDetail();
+				iniPledgeRecordDetail.setIniPledgeRecord(iniPledgeRecord);
 				iniPledgeRecordDetail.setStyle(iniRecord.getStyle());
 				iniPledgeRecordDetail.setPledgePurity(pledgePurity);
 				iniPledgeRecordDetail.setSumWeight(iniRecord.getWeight());

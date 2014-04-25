@@ -62,9 +62,11 @@
 						</c:forEach>
 						</tbody>
 					</table>
+					<!-- 
 					<div align="center" id="pager">
 						审核密码：<input id="name" name="password" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
 					</div>
+					 -->
 					<div align="center" id="pager">
 						<input type="button" value="拒绝出库" class="button" onclick="javascript:location.href='${ctx }/manage/waitAuditOutsRecord/${outsRecord.id}/audit?state=0'" />
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

@@ -99,15 +99,15 @@
 								<th>出货后库存总重量（g）</th>
 							</tr>
 						</thead>
-						<c:forEach items="${dailyOutsRecordList}" var="outsRecordDetail" varStatus="status">
+						<c:forEach items="${dailyOutsRecordList}" var="outsRecord" varStatus="status">
 							<tr>
 								<td>${status.count}&nbsp;</td>
-								<td>${outsRecordDetail.delegator.name}&nbsp;</td>
-								<td>${outsRecordDetail.supervisionCustomer.name}&nbsp;</td>
-								<td>${outsRecordDetail.weight}&nbsp;</td>
-								<td>${outsRecordDetail.value}&nbsp;</td>
-								<td>${outsRecordDetail.dateStr}&nbsp;</td>
-								<td>${outsRecordDetail.sumStock}&nbsp;</td>
+								<td>${outsRecord.delegator.name}&nbsp;</td>
+								<td>${outsRecord.supervisionCustomer.name}&nbsp;</td>
+								<td>${outsRecord.sumWeight}&nbsp;</td>
+								<td>${outsRecord.sumValue}&nbsp;</td>
+								<td>${outsRecord.dateStr}&nbsp;</td>
+								<td>${outsRecord.sumStock}&nbsp;</td>
 							</tr>
 						</c:forEach>
 					</table>
