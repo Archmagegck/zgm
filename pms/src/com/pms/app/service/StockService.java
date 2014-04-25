@@ -8,11 +8,12 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pms.app.dao.PurityPriceDao;
 import com.pms.app.dao.StockDao;
 import com.pms.app.entity.PledgePurity;
+import com.pms.app.entity.PurityPrice;
 import com.pms.app.entity.Stock;
 import com.pms.app.entity.Style;
-import com.pms.app.entity.Warehouse;
 import com.pms.app.entity.vo.TotalStock;
 import com.pms.base.dao.BaseDao;
 import com.pms.base.service.BaseService;
@@ -21,6 +22,7 @@ import com.pms.base.service.BaseService;
 public class StockService extends BaseService<Stock, String> {
 
 	@Autowired private StockDao stockDao;
+	@Autowired private PurityPriceDao purityPriceDao;
 
 	@Override
 	protected BaseDao<Stock, String> getEntityDao() {
@@ -54,27 +56,22 @@ public class StockService extends BaseService<Stock, String> {
 	}
 	
 	public List<TotalStock> findTotalList() {
-//		double newestValue = au9995PriceService.findNewestPrice();
+		double newestValue = 0.0;
+		List<PurityPrice> purityPriceList = purityPriceDao.findNewestList();
+		if(!purityPriceList.isEmpty()) {
+			newestValue = purityPriceList.get(0).getPrice();
+		}
 		List<TotalStock> totalStocks = new ArrayList<TotalStock>();
-		List<Object[]> objList = stockDao.findTotalList();
+		List<Object[]> objList = stockDao.findInTotalList();
 		for(Object[] ob : objList) {
 			TotalStock totalStock = new TotalStock();
 			Style style = (Style) ob[0];
 			totalStock.setStyleName(style.getName());
 			PledgePurity pledgePurity = (PledgePurity) ob[1];
 			totalStock.setPledgePurityName(pledgePurity.getName());
-			totalStock.setSpecWeight((Double)ob[2]);
-			Warehouse warehouse = (Warehouse) ob[3];
-			totalStock.setAmount((Double)ob[4]);
-			totalStock.setSumWeight((Double)ob[5]);
-//			double sumValue = totalStock.getSumWeight().doubleValue() * newestValue;
-//			totalStock.setSumValue(sumValue);
-			int inStock = (Integer)ob[6];
-			if(inStock == 1) {
-				totalStock.setStorage(warehouse.getAddress());
-			} else {
-				totalStock.setStorage("在途");
-			}
+			totalStock.setSumWeight((Double)ob[2]);
+			double sumValue = totalStock.getSumWeight().doubleValue() * newestValue;
+			totalStock.setSumValue(sumValue);
 			totalStocks.add(totalStock);
 		}
 		return totalStocks;

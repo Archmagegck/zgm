@@ -3,6 +3,8 @@ package com.pms.app.dao;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 
 import com.pms.app.entity.PurityPrice;
@@ -14,5 +16,7 @@ public interface PurityPriceDao extends BaseDao<PurityPrice, String>{
 	
 	@Query("select p from PurityPrice p where p.date = (SELECT max(r.date) from PurityPrice r)")
 	public List<PurityPrice> findNewestList();
+	
+	public Page<PurityPrice> findByDate(Pageable pageable, Date date);
 	
 }

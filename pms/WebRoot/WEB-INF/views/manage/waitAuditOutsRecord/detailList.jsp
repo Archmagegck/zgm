@@ -42,39 +42,13 @@
 					<div>
 						&nbsp;
 					</div>
-					<div align="left">
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						单号：${outsRecord.code}
-					</div>
-					<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
-						<thead>
-							<tr>
-								<th>监管员姓名</th>
-								<th>出库时间</th>
-								<th>提货人姓名</th>
-								<th>提货人身份证</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>${outsRecord.supName}</td>
-								<td>${outsRecord.date}</td>
-								<td>${outsRecord.picker}</td>
-								<td>${outsRecord.pickerIdCard}</td>
-							</tr>
-						</tbody>
-					</table>
 					<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
 						<thead>
 							<tr>
 								<th width="8%">序号</th>
 								<th>款式大类</th>
 								<th>标明成色</th>
-								<th>标明规格重量（kg/件）</th>
-								<th>数量（件）</th>
-								<th>总重量（kg）</th>
-								<th>生产厂家</th>
-								<th>标记/备注</th>
+								<th>重量（g）</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -83,15 +57,16 @@
 								<td>${status.count}&nbsp;</td>
 								<td>${outsRecordDetail.style.name}&nbsp;</td>
 								<td>${outsRecordDetail.pledgePurity.name}&nbsp;</td>
-								<td>${outsRecordDetail.specWeight}&nbsp;</td>
-								<td>${outsRecordDetail.amount}&nbsp;</td>
-								<td>${outsRecordDetail.sumWeight}&nbsp;</td>
-								<td>${outsRecordDetail.company}&nbsp;</td>
-								<td>${outsRecordDetail.desc}&nbsp;</td>
+								<td>${outsRecordDetail.weight}&nbsp;</td>
 							</tr>
 						</c:forEach>
 						</tbody>
 					</table>
+					<!-- 
+					<div align="center" id="pager">
+						审核密码：<input id="name" name="password" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
+					</div>
+					 -->
 					<div align="center" id="pager">
 						<input type="button" value="拒绝出库" class="button" onclick="javascript:location.href='${ctx }/manage/waitAuditOutsRecord/${outsRecord.id}/audit?state=0'" />
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

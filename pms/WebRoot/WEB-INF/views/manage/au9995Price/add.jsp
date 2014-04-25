@@ -43,9 +43,24 @@
     				<table  cellpadding="0" cellspacing="0" width="100%"  class="list1">
 					<tr>
 						<td width="20%">
+							成色:
+						</td>
+						<td width="30%">
+						
+							<select id="selPledgePurity" name = "pledgePurityId" class="required">
+								<option selected="selected" value="">--请选择--</option>
+								<c:forEach items="${pledgePurityList}" var = "pledgePurity">
+									<option value = "${pledgePurity.id }">${pledgePurity.name }</option>
+								</c:forEach>
+							</select>
+							
+							&nbsp;&nbsp;&nbsp;
+						
+						</td>
+						<td width="20%">
 							价格:
 						</td>
-						<td width="80%">
+						<td width="30%">
 							<input id="price" name="price" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
 						</td>
 					</tr>

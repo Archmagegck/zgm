@@ -94,8 +94,8 @@
 							<c:if test="${pledgeRecordDetail.closedTran == 0}">否</c:if>
 						</td>
 						<td>${pledgeRecordDetail.storage}&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
+						<td>${pledgeRecordDetail.spectrumRate}&nbsp;</td>
+						<td>${pledgeRecordDetail.dissolveRate}&nbsp;</td>
 						<td>${pledgeRecordDetail.desc}&nbsp;</td>
 					</tr>
 					</c:forEach>
@@ -111,21 +111,15 @@
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;月&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			</div>
 			<div align="center">
-				<c:if test="${not empty pledgeRecord.recordFile}">
-					<a href="${ctx}/images/${pledgeRecord.recordFile}" target=_blank>下载</a>
-				</c:if>
-				<c:if test="${empty pledgeRecord.recordFile}">
-					质物清单未上传
-				</c:if>
+				<input id="btnPrint" type="button" value="  打  印  " onclick="printRecord()" />
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<br>
-				<br>
 			</div>
 		</div>
 		
 		<script type="text/javascript">
-    		function tdownload() {
-    			window.open('${ctx}/images/${pledgeRecord.recordFile}');
+    		function printRecord() {
+    			$("#btnPrint").hide();
+    			window.print();
     		}
     	</script>
 	</body>

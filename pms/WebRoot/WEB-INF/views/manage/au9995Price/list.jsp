@@ -58,7 +58,6 @@
 	</style>
 	
 	</head>
-
 	<body>
 		<form action="${ctx }/manage/au9995Price/list" method="post" id="myForm" name="myForm">
 			<div align="center" id="content"">
@@ -110,19 +109,19 @@
 								</th>
 							</tr>
 						</thead>
-						<c:forEach items="${page.content}" var="au9995Price" varStatus="status">
+						<c:forEach items="${page.content}" var="purityPrice" varStatus="status">
 							<tr>
 								<td>
 									${status.count}&nbsp;
 								</td>
 								<td>
-									${au9995Price.date }&nbsp;
+									${purityPrice.date }&nbsp;
 								</td>
 								<td>
-									99995&nbsp;
+									${purityPrice.pledgePurity.name }&nbsp;
 								</td>
 								<td>
-									${au9995Price.price }&nbsp;
+									${purityPrice.price }&nbsp;
 								</td>
 							</tr>
 						</c:forEach>

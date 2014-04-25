@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.pms.app.entity.OutsRecord;
 import com.pms.app.service.OutsRecordService;
+import com.pms.app.service.PledgeConfigService;
 
 @Controller
 @RequestMapping(value = "/manage/waitAuditOutsRecord")
@@ -22,6 +23,7 @@ public class WaitAuditOutsRecordController {
 	private Logger logger = LoggerFactory.getLogger(WaitAuditOutsRecordController.class);
 	
 	@Autowired OutsRecordService outsRecordService;
+	@Autowired PledgeConfigService pledgeConfigService;
 	
 	@RequestMapping(value = { "/list", "" })
 	public String list(Model model, @PageableDefaults(sort="date", sortDir=Direction.DESC)Pageable pageable) {

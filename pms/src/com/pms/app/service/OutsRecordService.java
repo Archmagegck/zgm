@@ -1,5 +1,6 @@
 package com.pms.app.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,11 +15,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.pms.app.dao.OutsRecordDao;
 import com.pms.app.dao.OutsRecordDetailDao;
 import com.pms.app.dao.PledgeConfigDao;
+import com.pms.app.dao.PurityPriceDao;
 import com.pms.app.dao.SupervisionCustomerDao;
 import com.pms.app.entity.Delegator;
 import com.pms.app.entity.OutsRecord;
 import com.pms.app.entity.OutsRecordDetail;
 import com.pms.app.entity.PledgeConfig;
+import com.pms.app.entity.PurityPrice;
 import com.pms.app.entity.Stock;
 import com.pms.app.entity.SupervisionCustomer;
 import com.pms.app.entity.Supervisor;
@@ -39,6 +42,7 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 	@Autowired private SupervisionCustomerDao supervisionCustomerDao;
 	@Autowired private StockService stockService;
 	@Autowired private PledgeConfigDao pledgeConfigDao;
+	@Autowired private PurityPriceDao purityPriceDao;
 
 	@Override
 	protected BaseDao<OutsRecord, String> getEntityDao() {
@@ -76,6 +80,7 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 		outsRecord.setSecretCode(Encodes.encodeHex(Digests.md5(code.getBytes())));
 		outsRecord.setWarehouse(warehouse);
 		outsRecord.setDelegator(delegator);
+		outsRecord.setSupervisionCustomer(supervisionCustomer);
 		outsRecord.setSupName(supervisor.getName());
 		outsRecord.setAttach(attachPath);
 		outsRecord.setDesc(desc);
@@ -119,11 +124,24 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 		//出库逻辑
 		PledgeConfig config = pledgeConfigDao.findBySupervisionCustomerId(supervisionCustomer.getId()).get(0);
 		
+		double price = 0.0;
+		List<PurityPrice> purityPriceList = purityPriceDao.findNewestList();
+		if(!purityPriceList.isEmpty()) {
+			price = purityPriceList.get(0).getPrice();
+		}
+		
 		double supOutWeight = config.getOutWeight();//监管员权限
 		double maxcordon = config.getMaxCordon();// 警戒线上限（%）
-		double stockValue = stockSumWeight * 0;//出库后仓库库存价值
+		double stockValue = stockSumWeight * price;//出库后仓库库存价值
 		double warnValue = (config.getMinValue() * maxcordon) / 100;//质押物最低价值的警戒线
 		double warnWeight = (config.getMinWeight() * maxcordon) / 100;//质押物最低重量的警戒线
+		
+		outsRecord.setSumStock(stockSumWeight);
+		outsRecord.setSumValue(stockValue);
+		double weightRate = new BigDecimal(stockSumWeight / config.getMinWeight()).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+		outsRecord.setWeightRate(weightRate);
+		double priceRate = new BigDecimal(stockValue / config.getMinValue()).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+		outsRecord.setPriceRate(priceRate);
 		
 		boolean ifOutStock = true;
 		int warnType = 0;

@@ -36,29 +36,54 @@
     <form id="myForm" name="myForm" action="${ctx}/manage/style/save" method="post">
     	<div id="content">
     		<div style="margin-bottom: 10px;padding: 5px 10px;" id="box">
-    		<h3 id="addstyle">修改款式</h3>
+    		<h3 id="addstyle">今日价格：${price}</h3><br/>
+    		<h3 id="addstyle">以下仓库低于最低价值的115%:</h3>
     		<br/>
     		<fieldset style="padding: 5px 10px;" id="personal">
-    			<legend><h3>请输入相关信息</h3></legend>
-    			<br/>
-    				<input type="hidden" name="id" value = "${style.id }" >
-    				<table  cellpadding="0" cellspacing="0" width="100%"  class="list1">
-					<tr>
-						<td width="20%">
-							成色:
-						</td>
-						<td width="80%">
-							<input id="name" name="name" value="${style.name }" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
-						</td>
-					</tr>
-				</table>
-    			<br/>
+    			<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
+						<thead>
+							<tr>
+								<th width="10%">
+									序号
+								</th>
+								<th width="20%">
+									委托方
+								</th>
+								<th width="20%">
+									监管客户
+								</th>
+								<th width="20%">
+									仓库名称
+								</th>
+								<th width="30%">
+									存储位置
+								</th>
+								
+							</tr>
+						</thead>
+						<c:forEach items="${lowerMinPriceListShowList}" var="lowerMinPriceListShow" varStatus="status">
+							<tr>
+								<td>
+									${status.count}&nbsp;
+								</td>
+								<td>
+									${lowerMinPriceListShow.delegator.name }&nbsp;
+								</td>
+								<td>
+									${lowerMinPriceListShow.supervisionCustomer.name }&nbsp;
+								</td>
+								<td>
+									${lowerMinPriceListShow.warehouse.name }&nbsp;
+								</td>
+								<td>
+									${lowerMinPriceListShow.warehouse.address }&nbsp;
+								</td>								
+							</tr>
+						</c:forEach>
+					</table>
     		</fieldset>
     		<br/>
-    		<div style="margin-bottom: 5px;padding: 3px;" align="center">
-    				<input id="button1" type="submit" value="提交" style="cursor: pointer;font-weight: bold;margin-left: 8px;padding-right: 5px;width: 205px; background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
-    				<input id="button2" type="button" value="返回" onclick="javascript:history.back();" style="cursor: pointer;font-weight: bold;margin-left: 8px;padding-right: 5px;width: 205px;background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;">
-    		</div>
+    		
     	</div>
     	</div>
     </form>

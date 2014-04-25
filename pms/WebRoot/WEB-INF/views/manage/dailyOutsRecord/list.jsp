@@ -93,38 +93,24 @@
 								<th>序号</th>
 								<th>委托方</th>
 								<th>监管客户</th>
-								<th>日期</th>
-								<th>款式大类</th>
-								<th>标明成色</th>
-								<th>标明规格重量（kg/件）</th>
-								<th>数量（件）</th>
-								<th>总重量（kg）</th>
-								<th>生产厂家</th>
+								<th>总重量（g）</th>
+								<th>总价值（元）</th>
 								<th>出货时间</th>
-								<th>出货后质物总量（kg）</th>
+								<th>出货后库存总重量（g）</th>
 							</tr>
 						</thead>
-						<c:forEach items="${dailyOutsRecordList}" var="outsRecordDetail" varStatus="status">
+						<c:forEach items="${dailyOutsRecordList}" var="outsRecord" varStatus="status">
 							<tr>
 								<td>${status.count}&nbsp;</td>
-								<td>${outsRecordDetail.delegator.name}&nbsp;</td>
-								<td>${outsRecordDetail.supervisionCustomer.name}&nbsp;</td>
-								<td>${outsRecordDetail.dateStr}&nbsp;</td>
-								<td>${outsRecordDetail.style.name}&nbsp;</td>
-								<td>${outsRecordDetail.pledgePurity.name}&nbsp;</td>
-								<td>${outsRecordDetail.specWeight}&nbsp;</td>
-								<td>${outsRecordDetail.amount}&nbsp;</td>
-								<td>${outsRecordDetail.sumWeight}&nbsp;</td>
-								<td>${outsRecordDetail.company}&nbsp;</td>
-								<td>${outsRecordDetail.timeStr}&nbsp;</td>
-								<td>${outsRecordDetail.remainWeight}&nbsp;</td>
+								<td>${outsRecord.delegator.name}&nbsp;</td>
+								<td>${outsRecord.supervisionCustomer.name}&nbsp;</td>
+								<td>${outsRecord.sumWeight}&nbsp;</td>
+								<td>${outsRecord.sumValue}&nbsp;</td>
+								<td>${outsRecord.dateStr}&nbsp;</td>
+								<td>${outsRecord.sumStock}&nbsp;</td>
 							</tr>
 						</c:forEach>
 					</table>
-					<br>
-					<div align="center" id="pager">
-						<input type="button" value="生成报表并打印" class="button" onclick="generalAndPrint();" />
-					</div>
 					<br>
 				</div>
 			</div>

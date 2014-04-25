@@ -94,12 +94,12 @@
 								<th>序号</th>
 								<th>委托方</th>
 								<th>监管客户</th>
-								<th>监管员</th>
-								<th>质物清单名称</th>
+								
+								<th>质物清单号</th>
 								<th>总重量</th>
 								<th>日期</th>
 								<th>&nbsp;</th>
-								<th>&nbsp;</th>
+								
 							</tr>
 						</thead>
 						<c:forEach items="${page.content}" var="pledgeRecord" varStatus="status">
@@ -107,18 +107,14 @@
 								<td>${status.count}&nbsp;</td>
 								<td>${pledgeRecord.delegator.name}&nbsp;</td>
 								<td>${pledgeRecord.supervisionCustomer.name}&nbsp;</td>
-								<td>${pledgeRecord.supervisionCustomer.supervisor.name}&nbsp;</td>
-								<td>${pledgeRecord.recordName}&nbsp;</td>
+								
+								<td>${pledgeRecord.code}&nbsp;</td>
 								<td>${pledgeRecord.sumWeight}&nbsp;</td>
 								<td>${pledgeRecord.dateStr}&nbsp;</td>
 								<td>
 									<a href="${ctx }/manage/pledgeRecord/${pledgeRecord.id }/detail">查看</a>
 								</td>
-								<td>
-									<c:if test="${not empty pledgeRecord.recordFile}">
-										<a href="${ctx}/images/${pledgeRecord.recordFile}" target=_blank>下载</a>
-									</c:if>
-								</td>
+								
 							</tr>
 						</c:forEach>
 					</table>
