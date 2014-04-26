@@ -1,5 +1,6 @@
 package com.pms.app.web.supervisor;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.pms.app.entity.InventoryCheck;
+import com.pms.app.entity.InventoryCheckDetail;
 import com.pms.app.entity.InventoryCheckTemplate;
 import com.pms.app.entity.Warehouse;
 import com.pms.app.service.InventoryCheckDetailService;
@@ -24,6 +26,8 @@ import com.pms.app.service.InventoryCheckService;
 import com.pms.app.service.InventoryCheckTemplateService;
 import com.pms.app.service.StyleService;
 import com.pms.app.service.WarehouseService;
+import com.pms.app.util.CodeUtils;
+import com.pms.app.web.supervisor.form.InventoryCheckDetailForm;
 
 @Controller
 @RequestMapping(value = "/supervisor/inventoryCheck")
@@ -53,6 +57,43 @@ public class InventoryCheckController {
 		model.addAttribute("detailList", inventoryCheck.getInventoryCheckDetails());
 		return "supervisor/inventoryCheck/detailList";
 	}
+	
+	@RequestMapping(value = "/inputNo")
+	public String inputNo(Model model, HttpSession session){
+		return "supervisor/inventoryCheck/inputCount";
+	}
+	
+	@RequestMapping(value = "/general")
+	public String general(Model model, Integer count, HttpSession session){
+		List<InventoryCheckDetail> details = new ArrayList<InventoryCheckDetail>();
+		int newCount = 0;
+		int[] trayNos = new int[15];
+		if(count > 15)  {
+			newCount = 15;
+			trayNos = CodeUtils.randomCommon(1, count, 15);
+		}
+		else newCount = count;
+		for (int i = 0; i < newCount; i++) {
+			InventoryCheckDetail inventoryCheckDetail = new InventoryCheckDetail();
+			if(count > 15) {
+				inventoryCheckDetail.setTrayNo(trayNos[i]);
+			} else {
+				inventoryCheckDetail.setTrayNo(i + 1);
+			}
+			details.add(inventoryCheckDetail);
+		}
+		model.addAttribute("styleList", styleService.findAll());
+		model.addAttribute("details", details);
+		return "supervisor/inventoryCheck/addCheck";
+	}
+	
+	@RequestMapping(value = "/save")
+	public String save(InventoryCheckDetailForm inventoryCheckDetailForm, HttpSession session, RedirectAttributes ra){
+		Warehouse warehouse = warehouseService.findById((String)session.getAttribute("warehouseId"));
+		InventoryCheck inventoryCheck = inventoryCheckService.save(inventoryCheckDetailForm.getInventoryCheckDetails(), warehouse);
+		return "redirect:/supervisor/inventoryCheck/" + inventoryCheck.getId() + "/details";
+	}
+	
 	
 	@RequestMapping(value = "/tempList")
 	public String tempList(Model model, HttpSession session){

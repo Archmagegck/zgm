@@ -31,7 +31,7 @@ public class IniPledgeRecord {
 	@Id
 	@GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
 	@GeneratedValue(generator = "uuid")
-	@Column(name = "pr_id")
+	@Column(name = "ipr_id")
 	private String id;
 	
 	/**
@@ -59,25 +59,25 @@ public class IniPledgeRecord {
 	/**
 	 * 质物清单号
 	 */
-	@Column(name = "pr_code")
+	@Column(name = "ipr_code")
 	private String code;
 	
 	/**
 	 * 质物清单加密号
 	 */
-	@Column(name = "pr_passcode")
+	@Column(name = "ipr_passcode")
 	private String passcode;
 	
 	/**
 	 * 总重量（g）
 	 */
-	@Column(name = "pr_sumWeight")
+	@Column(name = "ipr_sumWeight")
 	private Double sumWeight = 0.0;
 	
 	/**
 	 * 日期
 	 */
-	@Column(name = "pr_date")
+	@Column(name = "ipr_date")
 	private Date date = new Date();
 
 	
@@ -135,17 +135,6 @@ public class IniPledgeRecord {
 		this.date = date;
 	}
 
-	
-
-	public List<IniPledgeRecordDetail> getIniPledgeRecordDetails() {
-		return iniPledgeRecordDetails;
-	}
-
-	public void setIniPledgeRecordDetails(List<IniPledgeRecordDetail> iniPledgeRecordDetail) {
-		this.iniPledgeRecordDetails = iniPledgeRecordDetail;
-	}
-
-
 	public Delegator getDelegator() {
 		return delegator;
 	}
@@ -168,6 +157,14 @@ public class IniPledgeRecord {
 
 	public void setPasscode(String passcode) {
 		this.passcode = passcode;
+	}
+
+	public List<IniPledgeRecordDetail> getIniPledgeRecordDetails() {
+		return iniPledgeRecordDetails;
+	}
+
+	public void setIniPledgeRecordDetails(List<IniPledgeRecordDetail> iniPledgeRecordDetails) {
+		this.iniPledgeRecordDetails = iniPledgeRecordDetails;
 	}
 	
 	

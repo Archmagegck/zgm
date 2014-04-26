@@ -91,7 +91,7 @@ public class OutsRecordDetail {
 		StringBuffer sb = new StringBuffer("{");
 		sb.append("\"warehouse\":\"").append(outsRecord.getWarehouse().getId()).append("\",");
 		sb.append("\"style\":\"").append(style.getId()).append("\",");
-		sb.append("\"pledgePurity\":\"").append(pledgePurity.getId()).append("\",");
+		sb.append("\"pledgePurity\":\"").append(pledgePurity.getType()).append("\",");
 		sb.append("}");
 		return sb.toString();
 	}

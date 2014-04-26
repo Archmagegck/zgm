@@ -25,14 +25,14 @@ public class IniPledgeRecordDetail {
 	@Id
 	@GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
 	@GeneratedValue(generator = "uuid")
-	@Column(name = "prd_id")
+	@Column(name = "iprd_id")
 	private String id;
 	
 	/**
 	 * 所属质物清单
 	 */
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "pr_id")
+	@JoinColumn(name = "ipr_id")
 	private IniPledgeRecord iniPledgeRecord;
 	
 	/**
@@ -52,31 +52,31 @@ public class IniPledgeRecordDetail {
 	/**
 	 * 规格重量（g/件）
 	 */
-	@Column(name = "prd_specWeight")
+	@Column(name = "iprd_specWeight")
 	private Double specWeight;
 	
 	/**
 	 * 数量（件）
 	 */
-	@Column(name = "prd_amount")
+	@Column(name = "iprd_amount")
 	private Double amount;
 	
 	/**
 	 * 总重量（kg）
 	 */
-	@Column(name = "prd_sumWeight")
+	@Column(name = "iprd_sumWeight")
 	private Double sumWeight;
 	
 	/**
 	 * 生产厂家
 	 */
-	@Column(name = "prd_company")
+	@Column(name = "iprd_company")
 	private String company;
 	
 	/**
 	 * 存储地点
 	 */
-	@Column(name = "prd_storage")
+	@Column(name = "iprd_storage")
 	private String storage;
 	
 	/**
@@ -84,25 +84,25 @@ public class IniPledgeRecordDetail {
 	 * 0:否<br>
 	 * 1:是
 	 */
-	@Column(name = "prd_closedTran")
+	@Column(name = "iprd_closedTran")
 	private int closedTran;
 	
 	/**
 	 * 光谱法抽检重量占比
 	 */
-	@Column(name = "prd_spectrumRate")
+	@Column(name = "iprd_spectrumRate")
 	private Double spectrumRate;
 	
 	/**
 	 * 溶金法抽检重量占比
 	 */
-	@Column(name = "prd_dissolveRate")
+	@Column(name = "iprd_dissolveRate")
 	private Double dissolveRate;
 	
 	/**
 	 * 标记
 	 */
-	@Column(name = "prd_desc")
+	@Column(name = "iprd_desc")
 	private String desc;
 	
 	

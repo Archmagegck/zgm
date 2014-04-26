@@ -50,7 +50,7 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 	}
 
 	public Page<OutsRecord> findWaitOutsRecord(Pageable pageable) {
-		return outsRecordDao.findPageByAuditState(pageable, AuditState.Wait);
+		return outsRecordDao.findPageByAuditStateNot(pageable, AuditState.Pass);
 	}
 	
 	public Page<OutsRecord> findNoticeOutsRecord(Pageable pageable) {
@@ -183,7 +183,34 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 
 	
 	public void audit(OutsRecord outsRecord, Integer state) {
-		
+		switch (state) {
+		case 1:
+			outsRecord.setAuditState(AuditState.Pass);
+			List<Stock> updateStocks = new ArrayList<Stock>();
+			List<Stock> delStocks = new ArrayList<Stock>();
+			Map<String, Stock> stockMap = stockService.findStockKeyMapByWarehouseId(outsRecord.getWarehouse().getId());
+			List<OutsRecordDetail> outsRecordDetails = outsRecord.getOutsRecordDetails();
+			for (OutsRecordDetail outsRecordDetail : outsRecordDetails) {
+				String key = outsRecordDetail.getKey();
+				Stock stock = stockMap.get(key);
+				double outWeight = outsRecordDetail.getWeight();
+				double remainWeight = stock.getSumWeight() - outWeight;
+				if (remainWeight == 0)
+					delStocks.add(stock);
+				if (remainWeight > 0) {
+					stock.setSumWeight(remainWeight);
+					updateStocks.add(stock);
+				}
+			}
+
+			stockService.save(updateStocks);
+			stockService.delete(delStocks);
+			break;
+		case 0:
+			outsRecord.setAuditState(AuditState.Refuse);
+			break;
+		}
+		outsRecordDao.save(outsRecord);
 	}
 
 	
