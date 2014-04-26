@@ -56,7 +56,7 @@ public class IniPledgePrintController {
 	public String printPledgeRecord(@PathVariable("id")String id, Model model) {
 		IniPledgeRecord iniPledgeRecord = iniPledgeRecordService.findById(id);
 		model.addAttribute("iniPledgeRecord", iniPledgeRecord);
-		model.addAttribute("detailList", iniPledgeRecord.getPledgeRecordDetails());
+		model.addAttribute("detailList", iniPledgeRecord.getIniPledgeRecordDetails());
 		return "manage/iniPledgePrint/printPledgeRecord";
 	}
 }
