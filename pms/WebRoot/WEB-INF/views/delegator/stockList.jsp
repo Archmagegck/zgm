@@ -56,6 +56,9 @@
 								<td>
 									${realTimeStocks.sumWeight}&nbsp;
 								</td>
+								<td>
+									${realTimeStocks.warehouse.address}&nbsp;
+								</td>
 							</tr>
 						</c:forEach>
 					</table>

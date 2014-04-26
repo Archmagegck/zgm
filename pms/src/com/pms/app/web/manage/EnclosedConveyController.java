@@ -15,6 +15,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.pms.app.entity.EnclosedConvey;
 import com.pms.app.service.DelegatorService;
@@ -51,7 +52,7 @@ public class EnclosedConveyController {
 	}
 	
 	@RequestMapping(value = "/save")
-	public String save(Model model, Pageable pageable, EnclosedConvey enclosedConvey){
+	public String save(Model model, Pageable pageable, EnclosedConvey enclosedConvey, RedirectAttributes ra){
 		try{
 		enclosedConveyService.save(enclosedConvey);
 		}catch(Exception e){
@@ -59,7 +60,7 @@ public class EnclosedConveyController {
 		}
 		model.addAttribute("page",enclosedConveyService.findPage(pageable));
 		model.addAttribute("delegatorList",delegatorService.findAll());
-		return "manage/enclosedConvey/list";
+		return "redirect:/manage/enclosedConvey/list";
 	}
 	
 	@RequestMapping(value = "/list")
