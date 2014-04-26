@@ -26,6 +26,7 @@ import com.pms.app.entity.ExtendedCheckDetail;
 import com.pms.app.entity.Supervisor;
 import com.pms.app.service.ExtendedCheckService;
 import com.pms.app.service.StyleService;
+import com.pms.base.service.ServiceException;
 
 @Controller
 @RequestMapping(value = "/supervisor/extendedCheck")
@@ -130,8 +131,14 @@ public class ExtendedCheckController {
 			
 			List<ExtendedCheckDetail> extendedCheckDetailsList = (List<ExtendedCheckDetail>) session.getAttribute("extendedCheckDetailList");
 			extendedCheckService.save(sumWeight, gpWeight, rjWeight, extendedCheckDetailsList, (Supervisor) session.getAttribute("user"), (String)session.getAttribute("warehouseId"));
+			
+			session.removeAttribute("weight");
 			ra.addFlashAttribute("messageOK", "保存成功！");
-		} catch (Exception e) {
+		}  catch (ServiceException e) {
+			ra.addFlashAttribute("messageErr", e.getMessage());
+			logger.warn("保存异常", e.getMessage());
+			return "redirect:/supervisor/insCheck/showDetailList";
+		}  catch (Exception e) {
 			ra.addFlashAttribute("messageErr", "保存失败！");
 			logger.error("保存异常", e);
 		}

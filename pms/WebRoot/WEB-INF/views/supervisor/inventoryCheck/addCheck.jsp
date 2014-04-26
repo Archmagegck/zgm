@@ -46,6 +46,18 @@
 					<div>
 						&nbsp;
 					</div>
+					<div align="left">
+						<c:if test="${not empty messageOK}">
+							<div class="flash notice">
+								&nbsp;&nbsp;${messageOK}
+							</div>
+						</c:if>
+						<c:if test="${not empty messageErr}">
+							<div class="flash error">
+								&nbsp;&nbsp;${messageErr}
+							</div>
+						</c:if>
+					</div>
 					<br/>
 					<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="50%">
 						<thead>

@@ -62,6 +62,18 @@
 					<h3 align="left">
 						入库检测
 					</h3>
+					<div align="left">
+						<c:if test="${not empty messageOK}">
+							<div class="flash notice">
+								&nbsp;&nbsp;${messageOK}
+							</div>
+						</c:if>
+						<c:if test="${not empty messageErr}">
+							<div class="flash error">
+								&nbsp;&nbsp;${messageErr}
+							</div>
+						</c:if>
+					</div>
 					<div>
 						入库检测总重量（g）：${ sessionScope.weight[0]} 
 						<br>

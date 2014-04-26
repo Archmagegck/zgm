@@ -118,7 +118,6 @@
 								<th width="14%">操作类型</th>
 								<th width="14%">款式大类</th>
 								<th width="14%">标明成色</th>
-								<th width="14%">标明规格重量</th>
 								<th width="12%">数量 </th>
 								<th width="12%">总重</th>
 							</tr>
@@ -136,9 +135,6 @@
 								</td>
 								<td>
 									${inOutsRecord.pledgePurity }&nbsp;
-								</td>
-								<td>
-									${inOutsRecord.specWeight }&nbsp;
 								</td>
 								<td>
 									${inOutsRecord.amount}&nbsp;
@@ -165,13 +161,11 @@
 							<td width="14%">入库&nbsp;</td>
 							<td width="14%">&nbsp;</td>
 							<td width="14%">&nbsp;</td>
-							<td width="14%">&nbsp;</td>
 							<td width="12%">${inSumAmount}&nbsp;</td>
 							<td width="12%">${inSumweight}&nbsp;</td>
 						</tr>
 						<tr>
 							<td width="14%">出库&nbsp;</td>
-							<td width="14%">&nbsp;</td>
 							<td width="14%">&nbsp;</td>
 							<td width="14%">&nbsp;</td>
 							<td width="12%">${outSumAmount}&nbsp;</td>
@@ -187,13 +181,11 @@
 							<td width="14%">入库&nbsp;</td>
 							<td width="14%">&nbsp;</td>
 							<td width="14%">&nbsp;</td>
-							<td width="14%">&nbsp;</td>
 							<td width="12%">${inAllSumAmount}&nbsp;</td>
 							<td width="12%">${inAllSumweight}&nbsp;</td>
 						</tr>
 						<tr>
 							<td width="14%">出库&nbsp;</td>
-							<td width="14%">&nbsp;</td>
 							<td width="14%">&nbsp;</td>
 							<td width="14%">&nbsp;</td>
 							<td width="12%">${outAllSumAmount}&nbsp;</td>
