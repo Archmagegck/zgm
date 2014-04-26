@@ -90,6 +90,15 @@ public class Stock {
 		return sb.toString();
 	}
 	
+	public void copyTo(Stock stock) {
+		stock.id = this.id;
+		stock.pledgePurity = this.pledgePurity;
+		stock.style = this.style;
+		stock.sumWeight = this.sumWeight;
+		stock.warehouse = this.warehouse;
+	}
+	
+	
 	public String getId() {
 		return id;
 	}

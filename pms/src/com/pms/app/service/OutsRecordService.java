@@ -3,6 +3,7 @@ package com.pms.app.service;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -85,6 +86,14 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 		outsRecord.setAttach(attachPath);
 		outsRecord.setDesc(desc);
 		
+		Map<String, Stock> stockMapVo = new HashMap<String, Stock>();
+		for (Stock stock : stockMap.values()) {
+			Stock stockVO = new Stock();
+			stock.copyTo(stockVO);
+			stockMapVo.put(stockVO.getId(), stockVO);
+		}
+
+		
 		double outSumWeight = 0.0;
 		for (OutStock outStock : outStocks) {
 			Double outWeight = outStock.getSumWeight();
@@ -92,7 +101,7 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 				continue;
 			outSumWeight += outWeight;
 			
-			Stock stock = stockMap.get(outStock.getStockId());
+			Stock stock = stockMapVo.get(outStock.getStockId());
 			double remainWeight = stock.getSumWeight() - outWeight;
 			if (remainWeight == 0)
 				delStocks.add(stock);
@@ -116,7 +125,7 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 		outsRecord.setOutsRecordDetails(saveOutsRecordDetails);
 		
 		double stockSumWeight = 0;//出库后库存重量
-		for (Stock stock : stockMap.values()) {
+		for (Stock stock : stockMapVo.values()) {
 			if(stock.getPledgePurity().getType() == 1)
 				stockSumWeight += stock.getSumWeight();
 		}
