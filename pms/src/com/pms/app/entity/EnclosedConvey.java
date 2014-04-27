@@ -73,7 +73,7 @@ public class EnclosedConvey {
 	 * 重量
 	 */
 	@Column(name="ec_weight")
-	private String weight;
+	private Double weight;
 	
 	/**
 	 * 登记时间
@@ -137,11 +137,11 @@ public class EnclosedConvey {
 		this.endDate = endDate;
 	}
 
-	public String getWeight() {
+	public Double getWeight() {
 		return weight;
 	}
 
-	public void setWeight(String weight) {
+	public void setWeight(Double weight) {
 		this.weight = weight;
 	}
 

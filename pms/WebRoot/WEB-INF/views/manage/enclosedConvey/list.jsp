@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -112,10 +113,10 @@
 									${enclosedConvey.startPlace }&nbsp;
 								</td>
 								<td>
-									${enclosedConvey.startDate }&nbsp;
+									<fmt:formatDate value="${enclosedConvey.startDate }" pattern="yyyy-MM-dd"/>&nbsp;
 								</td>
 								<td>
-									${enclosedConvey.endDate }&nbsp;
+									<fmt:formatDate value="${enclosedConvey.endDate }" pattern="yyyy-MM-dd"/>&nbsp;
 								</td>
 								<td>
 									${enclosedConvey.weight }&nbsp;
