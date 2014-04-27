@@ -80,7 +80,7 @@
 					</tr>
 					<tr>
 						<td width="30%">
-							检测重量
+							检测重量(g)
 						</td>
 						<td width="70%">
 							<input id="checkWeight" name="checkWeight" value="${iniCheck.checkWeight}" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
