@@ -14,10 +14,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.pms.app.entity.Admin;
 import com.pms.app.entity.Delegator;
+import com.pms.app.entity.ManagerAssistant;
 import com.pms.app.entity.Supervisor;
 import com.pms.app.entity.Warehouse;
 import com.pms.app.service.AdminService;
 import com.pms.app.service.DelegatorService;
+import com.pms.app.service.ManagerAssistantService;
 import com.pms.app.service.SupervisionCustomerService;
 import com.pms.app.service.SupervisorService;
 
@@ -29,7 +31,8 @@ public class AdminController {
 	@Autowired private SupervisorService supervisorService;
 	@Autowired private DelegatorService delegatorService;
 	@Autowired private SupervisionCustomerService supervisionCustomerService;
-
+	@Autowired private ManagerAssistantService managerAssistantService;
+	
 	@RequestMapping(value = { "" })
 	public String admin() {
 		return "login/login";
@@ -99,6 +102,19 @@ public class AdminController {
 				}
 			}
 			break;
+		case 5: //监管经理助理
+			List<ManagerAssistant> managerAssistantList = managerAssistantService.findByUsernameAndPassword(username, password);
+			if (!managerAssistantList.isEmpty()) {
+				if (managerAssistantList.size() == 1) {
+					ManagerAssistant managerAssistant = managerAssistantList.get(0);
+					session.setAttribute("type", type);
+					session.setAttribute("user", managerAssistant);
+					return "main/main";
+				}
+			}
+			break;
+			
+			
 		default:
 			break;
 		}
