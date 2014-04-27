@@ -52,7 +52,7 @@
 							<tr>
 								<th width="8%">序号</th>
 								<th>款式大类</th>
-								<th>重量</th>
+								<th>重量(g)</th>
 							</tr>
 						</thead>
 						<c:forEach items="${styleList}" var="style" varStatus="status">
