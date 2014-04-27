@@ -16,4 +16,6 @@ public interface OutsRecordDao extends BaseDao<OutsRecord, String> {
 	public Page<OutsRecord> findPageByNotice(Pageable pageable, int notice);
 	
 	public List<OutsRecord> findBySupervisionCustomerId(String id);
+	
+	public List<OutsRecord> findByAuditStateNot(AuditState auditState);
 }

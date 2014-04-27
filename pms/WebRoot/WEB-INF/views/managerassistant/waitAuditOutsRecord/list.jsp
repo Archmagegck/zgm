@@ -38,7 +38,7 @@
 	</head>
 
 	<body>
-		<form action="${ctx }/manage/waitAuditOutsRecord" method="get" id="myForm" name="myForm">
+		<form action="${ctx }/managerassistant/waitAuditOutsRecord" method="get" id="myForm" name="myForm">
 			<div align="center" id="content"">
 				<div id="box">
 					<h3 align="left">
@@ -77,7 +77,7 @@
 								<th>&nbsp;</th>
 							</tr>
 						</thead>
-						<c:forEach items="${page.content}" var="outsRecord" varStatus="status">
+						<c:forEach items="${outsRecordList}" var="outsRecord" varStatus="status">
 							<tr>
 								<td>
 									${status.count}&nbsp;
@@ -113,14 +113,12 @@
 									${outsRecord.auditState.title }&nbsp;
 								</td>
 								<td>
-									<a href="${ctx }/manage/waitAuditOutsRecord/${outsRecord.id }/details">查看</a>
+									<a href="${ctx }/managerassistant/waitAuditOutsRecord/${outsRecord.id }/details">查看</a>
 								</td>
 							</tr>
 						</c:forEach>
 					</table>
-					<div align="left" id="pager">
-						<jsp:include page="../../common/page.jsp"></jsp:include>
-					</div>
+					
 				</div>
 			</div>
 		</form>

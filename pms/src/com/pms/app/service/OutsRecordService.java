@@ -45,6 +45,7 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 	@Autowired private PledgeConfigDao pledgeConfigDao;
 	@Autowired private PurityPriceDao purityPriceDao;
 
+
 	@Override
 	protected BaseDao<OutsRecord, String> getEntityDao() {
 		return outsRecordDao;
@@ -52,6 +53,31 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 
 	public Page<OutsRecord> findWaitOutsRecord(Pageable pageable) {
 		return outsRecordDao.findPageByAuditStateNot(pageable, AuditState.Pass);
+	}
+	
+	/**
+	 * 监管经理助理待审核出库单查询
+	 * @param pageable
+	 * @return
+	 */
+	public List<OutsRecord> findWaitOutsRecordForMA( ){
+		List<OutsRecord> outRecordsWait=new ArrayList<OutsRecord>();
+		PurityPrice purityPrice = purityPriceDao.findNewestList().get(0);
+		List<OutsRecord> outsRecords=outsRecordDao.findByAuditStateNot(AuditState.Pass);		
+		for(OutsRecord outsRecord:outsRecords){
+			PledgeConfig pledgeConfig=pledgeConfigDao.findBySupervisionCustomerId(outsRecord.getSupervisionCustomer().getId()).get(0);
+			double minValuePercent=outsRecord.getSumStock()*purityPrice.getPrice()/pledgeConfig.getMinValue()*100;
+			double minWeightPercent=outsRecord.getSumStock()/pledgeConfig.getMinWeight()*100;
+			double min;
+			if(minValuePercent<=minWeightPercent)
+				min = minValuePercent;
+			else
+				min = minWeightPercent;
+			if(min>=pledgeConfig.getMinCordon()){				
+				outRecordsWait.add(outsRecord);
+			}	
+		}
+		return outRecordsWait;
 	}
 	
 	public Page<OutsRecord> findNoticeOutsRecord(Pageable pageable) {
