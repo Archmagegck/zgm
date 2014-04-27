@@ -14,7 +14,9 @@ import com.pms.app.entity.PledgePurity;
 import com.pms.app.entity.PurityPrice;
 import com.pms.app.entity.Stock;
 import com.pms.app.entity.Style;
+import com.pms.app.entity.Warehouse;
 import com.pms.app.entity.vo.TotalStock;
+import com.pms.app.entity.vo.WarehouseStock;
 import com.pms.base.dao.BaseDao;
 import com.pms.base.service.BaseService;
 
@@ -23,6 +25,7 @@ public class StockService extends BaseService<Stock, String> {
 
 	@Autowired private StockDao stockDao;
 	@Autowired private PurityPriceDao purityPriceDao;
+	@Autowired private WarehouseService warehouseService;
 
 	@Override
 	protected BaseDao<Stock, String> getEntityDao() {
@@ -77,5 +80,21 @@ public class StockService extends BaseService<Stock, String> {
 		return totalStocks;
 	}
 
-
+	public List<WarehouseStock> findTotalStockByWarehouseId(String warehouseId){
+		List<WarehouseStock> warehouseStocks = new ArrayList<WarehouseStock>();
+		List<Object[]> objList = stockDao.findInTotalListByWarehouseId(warehouseId);
+		
+		Warehouse warehouse = warehouseService.findById(warehouseId);
+		for(Object[] ob : objList) {
+			WarehouseStock warehouseStock = new WarehouseStock();
+			Style style = (Style) ob[0];
+			warehouseStock.setStyleName(style.getName());
+			PledgePurity pledgePurity = (PledgePurity) ob[1];
+			warehouseStock.setPledgePurityName(pledgePurity.getName());
+			warehouseStock.setSumWeight((Double)ob[2]);
+			warehouseStock.setStorage(warehouse.getName());
+			warehouseStocks.add(warehouseStock);
+		}
+		return warehouseStocks;
+	}
 }

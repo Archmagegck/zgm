@@ -77,6 +77,7 @@ public class EnclosedConveyController {
 	public String delete(Model model, Pageable pageable, @PathVariable("id")String id){
 		enclosedConveyService.delete(enclosedConveyService.findById(id));
 		model.addAttribute("delegatorList",delegatorService.findAll());
+		model.addAttribute("page",enclosedConveyService.findPage(pageable));
 		return "manage/enclosedConvey/list";
 	}
 }

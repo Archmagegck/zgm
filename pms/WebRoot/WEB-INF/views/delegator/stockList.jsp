@@ -41,31 +41,32 @@
 							<tr>
 								<th width="6%">序号</th>
 								<th>款式大类</th>
+								<th>表明成色</th>
 								<th>重量（g）</th>
 								<th>存储地点</th>
 							</tr>
 						</thead>
-						<c:forEach items="${page.content}" var="realTimeStocks" varStatus="status">
+						<c:forEach items="${stocksList}" var="stock" varStatus="status">
 							<tr>
 								<td>
 									${status.count}&nbsp;
 								</td>
 								<td>
-									${realTimeStocks.style.name}&nbsp;
+									${stock.styleName}&nbsp;
 								</td>
 								<td>
-									${realTimeStocks.sumWeight}&nbsp;
+									${stock.pledgePurityName }&nbsp;
 								</td>
 								<td>
-									${realTimeStocks.warehouse.address}&nbsp;
+									${stock.sumWeight}&nbsp;
+								</td>
+								<td>
+									${stock.storage}&nbsp;
 								</td>
 							</tr>
 						</c:forEach>
 					</table>
 					<input id="button2" type="button" value="返回" onclick="javascript:history.back();" style="cursor: pointer;font-weight: bold;margin-left: 8px;padding-right: 5px;width: 205px;background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;">
-					<div align="left" id="pager">
-						<jsp:include page="../common/page.jsp"></jsp:include>
-					</div>
 				</div>
 			</div>
 	</body>

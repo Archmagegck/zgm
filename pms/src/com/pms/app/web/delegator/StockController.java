@@ -26,7 +26,8 @@ public class StockController {
 		SupervisionCustomer supervisionCustomer = supervisionCustomerService.findById(id);
 		Warehouse warehouse = supervisionCustomer.getWarehouse();
 		
-		model.addAttribute("page", stockService.findAllEq(pageable, "warehouse.id", warehouse.getId()));
+		
+		model.addAttribute("stocksList", stockService.findTotalStockByWarehouseId(warehouse.getId()));
 		model.addAttribute("supervisionCustomer",supervisionCustomer);
 	
 		session.setAttribute("warehouse", warehouse);
