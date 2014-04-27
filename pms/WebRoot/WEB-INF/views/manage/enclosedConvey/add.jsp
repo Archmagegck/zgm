@@ -22,7 +22,7 @@
 	<script type="text/javascript" src="${ctx }/js/jquery-1.6.1.js"></script>
 	<script type="text/javascript" src="${ctx }/js/validate/jquery.metadata.js"></script>
 	<script type="text/javascript" src="${ctx }/js/validate/jquery.validate.js"></script>
-	<script language="javascript" type="text/javascript" src="${ctx }/js/jquery.js"></script>
+
 	<script type="text/javascript" src="${ctx }/js/date/WdatePicker.js"></script>
 	
 	<script type="text/javascript">
