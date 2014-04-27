@@ -117,9 +117,11 @@ body {
                             <td width="13%" height="38" class="top_hui_text"><span class="login_txt">用户类别：&nbsp;&nbsp; </span></td>
                             <td height="38" colspan="2" class="top_hui_text">
                             	<select name="type" id="type">
-									<option value="1">监管经理</option>
+									<option value="1">超级管理员</option>
 									<option value="2">监管员</option>
 									<option value="3">委托方</option>
+									<option value="4">监管经理</option>
+									<option value="5">监管经理助理</option>
 								</select>
                             </td>
                           </tr>
