@@ -26,6 +26,7 @@ import com.pms.app.entity.InsCheckDetail;
 import com.pms.app.entity.Supervisor;
 import com.pms.app.service.InsCheckService;
 import com.pms.app.service.StyleService;
+import com.pms.base.service.ServiceException;
 
 @Controller
 @RequestMapping(value = "/supervisor/insCheck")
@@ -130,10 +131,17 @@ public class InsCheckController {
 			
 			List<InsCheckDetail> insCheckDetailsList = (List<InsCheckDetail>) session.getAttribute("insCheckDetailList");
 			insCheckService.save(sumWeight, gpWeight, rjWeight, insCheckDetailsList, (Supervisor) session.getAttribute("user"), (String)session.getAttribute("warehouseId"));
+			
+			session.removeAttribute("weight");
 			ra.addFlashAttribute("messageOK", "保存成功！");
+		} catch (ServiceException e) {
+			ra.addFlashAttribute("messageErr", e.getMessage());
+			logger.warn("保存异常", e.getMessage());
+			return "redirect:/supervisor/insCheck/showDetailList";
 		} catch (Exception e) {
 			ra.addFlashAttribute("messageErr", "保存失败！");
 			logger.error("保存异常", e);
+			return "redirect:/supervisor/insCheck/showDetailList";
 		}
 		return "redirect:/supervisor/insCheck/list";
 	}

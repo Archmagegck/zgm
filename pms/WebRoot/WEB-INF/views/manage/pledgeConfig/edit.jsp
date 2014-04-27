@@ -72,7 +72,7 @@
 					</tr>
 					<tr>
 						<td width="20%">
-							监管员出库重量(kg):
+							监管员出库重量(g):
 						</td>
 						<td width="80%">
 							<input id="outWeight" name="outWeight" value="${pledgeConfig.outWeight }" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
@@ -80,7 +80,7 @@
 					</tr>
 					<tr>
 						<td width="20%">
-							质押物的最低重量(kg):
+							质押物的最低重量(g):
 						</td>
 						<td width="80%">
 							<input id="minWeight" name="minWeight" value="${pledgeConfig.minWeight }" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>

@@ -28,6 +28,7 @@ import com.pms.app.service.StyleService;
 import com.pms.app.service.WarehouseService;
 import com.pms.app.util.CodeUtils;
 import com.pms.app.web.supervisor.form.InventoryCheckDetailForm;
+import com.pms.base.service.ServiceException;
 
 @Controller
 @RequestMapping(value = "/supervisor/inventoryCheck")
@@ -89,9 +90,20 @@ public class InventoryCheckController {
 	
 	@RequestMapping(value = "/save")
 	public String save(InventoryCheckDetailForm inventoryCheckDetailForm, HttpSession session, RedirectAttributes ra){
-		Warehouse warehouse = warehouseService.findById((String)session.getAttribute("warehouseId"));
-		InventoryCheck inventoryCheck = inventoryCheckService.save(inventoryCheckDetailForm.getInventoryCheckDetails(), warehouse);
-		return "redirect:/supervisor/inventoryCheck/" + inventoryCheck.getId() + "/details";
+		List<InventoryCheckDetail> details = inventoryCheckDetailForm.getInventoryCheckDetails();
+		try {
+			Warehouse warehouse = warehouseService.findById((String)session.getAttribute("warehouseId"));
+			InventoryCheck inventoryCheck = inventoryCheckService.save(details, warehouse);
+			return "redirect:/supervisor/inventoryCheck/" + inventoryCheck.getId() + "/details";
+		} catch (ServiceException e) {
+			ra.addFlashAttribute("messageErr", e.getMessage());
+			logger.warn("保存异常", e.getMessage());
+			return "redirect:/supervisor/inventoryCheck/general?count=" + details.size();
+		} catch (Exception e) {
+			ra.addFlashAttribute("messageErr", "保存失败！");
+			logger.error("保存异常", e);
+			return "redirect:/supervisor/inventoryCheck/general?count=" + details.size();
+		}
 	}
 	
 	
