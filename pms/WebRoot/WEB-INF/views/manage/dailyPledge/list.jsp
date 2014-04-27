@@ -6,7 +6,7 @@
 <html>
 	<head>
 
-		<title>每日质物清单列表</title>
+		<title>每日质物清单</title>
 
 		<meta http-equiv="pragma" content="no-cache">
 		<meta http-equiv="cache-control" content="no-cache">
@@ -18,7 +18,7 @@
 		<link rel="stylesheet" type="text/css" href="${ctx }/css/admin/theme1.css">
 		
 		<script language="javascript" type="text/javascript" src="${ctx }/js/jquery.js"></script>
-		<script type="text/javascript" src="${ctx }/js/date/WdatePicker.js"></script>
+		<script type="text/javascript" src="/pms/js/date/WdatePicker.js"></script>
 		
 		<script type="text/javascript">
     	$(document).ready(function(){
@@ -29,7 +29,7 @@
 			$("#pageNo").val(pageNo);
 			$("#myForm").submit();
 		}
-
+			
     </script>
 	
 	<style type="text/css">
@@ -42,61 +42,46 @@
 	</head>
 
 	<body>
-		<form action="${ctx }/supervisor/pledgeRecord/list" method="get" id="myForm" name="myForm">
+		<form action="${ctx }/manage/dailyPledge/list" method="post" id="myForm" name="myForm">
 			<div align="center" id="content"">
 				<div id="box">
-					<h3 align="left"> 
-						每日质物清单列表 
+					<h3 align="left">
+						每日质物清单
 					</h3>
 					<div>
 						&nbsp;
 					</div>
-					<div align="left">
-						<c:if test="${not empty messageOK}">
-							<div class="flash notice">
-								&nbsp;&nbsp;${messageOK}
-							</div>
-						</c:if>
-						<c:if test="${not empty messageErr}">
-							<div class="flash error">
-								&nbsp;&nbsp;${messageErr}
-							</div>
-						</c:if>
-					</div>
 					<div align="left" style="vertical-align: middle;">
-						&nbsp;&nbsp;&nbsp;委托方
-						<select id="selWarehouse" name = "warehouseId" class="required">
+						&nbsp;&nbsp;&nbsp;委托方：
+						<select id="selDelegator" name = "delegatorId" class="required">
 							<option selected="selected" value="">--请选择--</option>
-							<c:forEach items="${warehouseList }" var = "warehouse">
+							<c:forEach items="${delegatorList }" var = "delegator">
 								<c:choose>
-									<c:when test="${warehouse.id == warehouseId }">
-										<option selected="selected" value = "${warehouse.id }">${warehouse.name }</option>
+									<c:when test="${delegator.id == delegatorId }">
+										<option selected="selected" value = "${delegator.id }">${delegator.name }</option>
 									</c:when>
 									<c:otherwise>
-										<option value = "${warehouse.id }">${warehouse.name }</option>
+										<option value = "${delegator.id }">${delegator.name }</option>
 									</c:otherwise>
 								</c:choose>
 							</c:forEach>
 						</select>
-						
-						
-						&nbsp;&nbsp;&nbsp;监管客户
-						<select id="selWarehouse" name = "warehouseId" class="required">
+						&nbsp;&nbsp; 监管客户：
+						<select name = "supervisionCustomerId" class="required">
 							<option selected="selected" value="">--请选择--</option>
-							<c:forEach items="${warehouseList }" var = "warehouse">
+							<c:forEach items="${supervisionCustomerList }" var = "supervisionCustomer">
 								<c:choose>
-									<c:when test="${warehouse.id == warehouseId }">
-										<option selected="selected" value = "${warehouse.id }">${warehouse.name }</option>
+									<c:when test="${supervisionCustomer.id == supervisionCustomerId }">
+										<option selected="selected" value = "${supervisionCustomer.id }">${supervisionCustomer.name }</option>
 									</c:when>
 									<c:otherwise>
-										<option value = "${warehouse.id }">${warehouse.name }</option>
+										<option value = "${supervisionCustomer.id }">${supervisionCustomer.name }</option>
 									</c:otherwise>
 								</c:choose>
 							</c:forEach>
 						</select>
-						&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;
 						<input type="button" value="查询" class="button" onclick="gotoPage(1)" />
-						<input type="hidden" name="page.page" id="pageNo" value="${page.number+1}"/>
 					</div>
 					<br/>
 					<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
@@ -105,27 +90,31 @@
 								<th>序号</th>
 								<th>委托方</th>
 								<th>监管客户</th>
-								<th>监管员</th>
-								<th>是否盘存</th>
 								<th>操作</th>
 							</tr>
 						</thead>
+						<c:forEach items="${pledgeRecordList}" var="pledgeRecord" varStatus="status">
 							<tr>
-								<th>序号</th>
-								<th>委托方</th>
-								<th>监管客户</th>
-								<th>监管员</th>
-								<th>是否盘存</th>
-								<th><input type="button" value="生成每日质物清单" class="button" onclick="gotoPage(1)" /></th>
+								<td>${status.count}&nbsp;</td>
+								<td>${pledgeRecord.delegator.name}&nbsp;</td>
+								<td>${pledgeRecord.supervisionCustomer.name}&nbsp;</td>
+								<td><a href="${ctx }/manage/dailyPledge/${pledgeRecord.id}/details">打印质物清单</a>&nbsp;</td>
 							</tr>
-						
+						</c:forEach>
 					</table>
-					<div align="left" id="pager">
-						<jsp:include page="../../common/page.jsp"></jsp:include>
-					</div>
+					<br>
 				</div>
 			</div>
 		</form>
+		<script type="text/javascript">
+			function generalAndPrint() {
+				if('${delegatorId}' == '') {
+					alert('请先选择委托方查询！');
+					return;
+				}
+				window.open('${ctx }/manage/dailyOutsRecord/list/toPrint?delegatorId=${delegatorId}&supervisionCustomerId=${supervisionCustomerId}&date=${date}');
+			}
+		</script>
 	</body>
 </html>
 
