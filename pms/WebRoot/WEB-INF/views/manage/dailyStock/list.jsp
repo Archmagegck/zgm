@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -101,8 +102,11 @@
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						监管客户：${item.key.name }
 						</div>
-						<c:set var="sumAmount" value="0"></c:set>
 						<c:set var="sumWeight" value="0"></c:set>
+						<c:set var="sumValue" value="0"></c:set>
+						<c:set var="minWeight" value="100000000"></c:set>
+						<c:set var="minValue" value="100000000"></c:set>
+						<c:set var="warehouseId" value="0"></c:set>
 						<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
 						<thead>
 							<tr>
@@ -117,6 +121,7 @@
 							<tr>
 								<td>
 									${stock.style.name }&nbsp;
+									<c:set var="warehouseId" value="${stock.warehouse.id }"></c:set>
 								</td>
 								<td>
 									${stock.warehouse.address}&nbsp;
@@ -128,20 +133,43 @@
 									${stock.sumWeight }&nbsp;
 								</td>
 								<td>
-									${stock.sumWeight * value }&nbsp;
+									<fmt:formatNumber value="${stock.sumWeight * value }" pattern="#,#00.00#"/>&nbsp;
 								</td>
 							</tr>
-							<c:set var="sumValue" value="${sumAmount + stock.sumWeight * value}"></c:set>
+							<c:set var="sumValue" value="${sumValue + stock.sumWeight * value}"></c:set>
 							<c:set var="sumWeight" value="${sumWeight + stock.sumWeight}"></c:set>
 							<c:set var="allSumValue" value="${allSumValue + stock.sumWeight * value}"></c:set>
 							<c:set var="allSumWeight" value="${allSumWeight + stock.sumWeight}"></c:set>
+							<c:if test="${stock.sumWeight < minWeight }">
+								<c:set var="minWeight" value="${stock.sumWeight}"></c:set>
+							</c:if>
+							<c:if test="${stock.sumWeight * value < minValue }">
+								<c:set var="minValue" value="${stock.sumWeight * value}"></c:set>
+							</c:if>
 						</c:forEach>
 						<tr>
 							<td>合计</td>
 							<td>&nbsp;</td>
 							<td>&nbsp;</td>
 							<td>${sumWeight}&nbsp;</td>
-							<td>${sumValue}&nbsp;</td>
+							<td><fmt:formatNumber value="${sumValue}" pattern="#,#00.00#"/>&nbsp;</td>
+						</tr>
+						<tr>
+							<td>比对值</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td><fmt:formatNumber value="${minWeight / sumWeight}" pattern="##.##" minFractionDigits="2" ></fmt:formatNumber>&nbsp;</td>
+							<td><fmt:formatNumber value="${minValue / sumValue}" pattern="##.##" minFractionDigits="2" ></fmt:formatNumber>&nbsp;</td>
+						</tr>
+						<tr>
+							<td colspan="5">&nbsp;</td>
+						</tr>
+						<tr>
+							<td>在途物质</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>${(weightValueMap[warehouseId])[0]}&nbsp;</td>
+							<td><fmt:formatNumber value="${(weightValueMap[warehouseId])[1]}" pattern="#,#00.00#"/>&nbsp;</td>
 						</tr>
 					</table>
 					<br><br>
@@ -150,10 +178,10 @@
 					<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
 						<tr>
 							<th width="18%">合计</th>
+							<th width="25%">&nbsp;</th>
 							<th width="18%">&nbsp;</th>
-							<th width="15%">&nbsp;</th>
-							<th width="12%">${allSumWeight}</th>
-							<th width="12%">${allSumValue} </th>
+							<th width="15%">${allSumWeight}</th>
+							<th width="12%"><fmt:formatNumber value="${allSumValue}" pattern="#,#00.00#"/> </th>
 						</tr>
 					</table>
 					<br>

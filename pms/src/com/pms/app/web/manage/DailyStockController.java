@@ -53,7 +53,9 @@ public class DailyStockController {
 		model.addAttribute("supervisionCustomerList", supervisionCustomerService.findAll());
 		model.addAttribute("supervisionCustomerId", supervisionCustomerId);
 		model.addAttribute("stockMap", dailyStockService.queryByDelegatorAndDate(delegatorId, supervisionCustomerId));
-		model.addAttribute("value", dailyStockService.findNewestValue());
+		double newestValue = dailyStockService.findNewestValue();
+		model.addAttribute("weightValueMap", dailyStockService.getEnclosedConveyWeightValueMap(newestValue));
+		model.addAttribute("value", newestValue);
 		return "manage/dailyStock/list";
 	}
 	

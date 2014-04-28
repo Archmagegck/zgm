@@ -21,10 +21,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.pms.app.dao.EnclosedConveyDao;
 import com.pms.app.dao.PurityPriceDao;
 import com.pms.app.dao.StockDao;
 import com.pms.app.dao.SupervisionCustomerDao;
 import com.pms.app.entity.Delegator;
+import com.pms.app.entity.EnclosedConvey;
 import com.pms.app.entity.PurityPrice;
 import com.pms.app.entity.Stock;
 import com.pms.app.entity.SupervisionCustomer;
@@ -35,6 +37,7 @@ public class DailyStockService {
 	@Autowired SupervisionCustomerDao supervisionCustomerDao;
 	@Autowired StockDao stockDao;
 	@Autowired PurityPriceDao purityPriceDao;
+	@Autowired EnclosedConveyDao enclosedConveyDao;
 
 	public Map<SupervisionCustomer, List<Stock>>  queryByDelegatorAndDate(String delegatorId, String supervisionCustomerId) {
 		Map<SupervisionCustomer, List<Stock>> stockMap = new HashMap<SupervisionCustomer, List<Stock>>();
@@ -80,6 +83,26 @@ public class DailyStockService {
 		return value;
 	}
 	
+	public Map<String, Double[]> getEnclosedConveyWeightValueMap(double newestValue) {
+		Map<String, Double[]> enclosedConveyWeightValueMap = new HashMap<String, Double[]>();
+		Iterable<EnclosedConvey> enclosedConveys = enclosedConveyDao.findAll();
+		for (EnclosedConvey enclosedConvey : enclosedConveys) {
+			String warehouseId = enclosedConvey.getWarehouse().getId();
+			Double[] weightValue = enclosedConveyWeightValueMap.get(warehouseId);
+			if(weightValue == null) {
+				double weight = enclosedConvey.getWeight();
+				double value = weight * newestValue;
+				enclosedConveyWeightValueMap.put(warehouseId, new Double[]{ weight, value });
+			} else {
+				double weight = enclosedConvey.getWeight();
+				double value = weight * newestValue;
+				weightValue[0] += weight;
+				weightValue[1] += value;
+				enclosedConveyWeightValueMap.put(warehouseId, weightValue);
+			}
+		}
+		return enclosedConveyWeightValueMap;
+	}
 
 	public File generalRecordFile(Delegator delegator, String supervisionCustomerId) throws Exception {
 		Map<SupervisionCustomer, List<Stock>> map = queryByDelegatorAndDate(delegator.getId(), supervisionCustomerId);

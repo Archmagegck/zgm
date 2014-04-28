@@ -88,7 +88,7 @@
 							<tr>
 								<th width="8%">序号</th>
 								<th>出库单号</th>
-								<th>总重量（kg）</th>
+								<th>总重量（g）</th>
 								<th>出库时间</th>
 								<th>备注</th>
 								<th>审核状态</th>

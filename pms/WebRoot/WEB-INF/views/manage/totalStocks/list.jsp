@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -43,7 +44,7 @@
 								<th>款式大类</th>
 								<th>标明成色</th>
 								<th>总重量（g）</th>
-								<th>总价值</th>
+								<th>总价值（元）</th>
 							</tr>
 						</thead>
 						<c:forEach items="${stockList}" var="totalStock" varStatus="status">
@@ -61,7 +62,7 @@
 									${totalStock.sumWeight}&nbsp;
 								</td>
 								<td>
-									${totalStock.sumValue}&nbsp;
+									<fmt:formatNumber value="${totalStock.sumValue}" pattern="#,#00.00#"/>&nbsp;
 								</td>
 							</tr>
 						</c:forEach>
@@ -70,7 +71,7 @@
 								<td>&nbsp;</td>
 								<td>&nbsp;</td>
 								<td>${sumWeight}&nbsp;</td>
-								<td>${sumValue}&nbsp;</td>
+								<td><fmt:formatNumber value="${sumValue}" pattern="#,#00.00#"/>&nbsp;&nbsp;</td>
 							</tr>
 					</table>
 				</div>
