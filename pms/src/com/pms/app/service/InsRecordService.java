@@ -57,6 +57,7 @@ public class InsRecordService extends BaseService<InsRecord, String> {
 		insRecord.setWarehouse(warehouse);
 		insRecord.setSupervisor(supervisor);
 		insRecord.setAttach(attachPath);
+		insRecord.setSupervisionCustomer(supervisionCustomer);
 		
 		double sumWeight = 0;
 		for (InsRecordDetail insRecordDetail : insRecordDetailList) {
