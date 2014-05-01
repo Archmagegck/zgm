@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -88,7 +89,7 @@
 							<tr>
 								<th width="8%">序号</th>
 								<th>入库单号</th>
-								<th>总重量（kg）</th>
+								<th>总重量（g）</th>
 								<th>存储地点</th>
 								<th>入库时间</th>
 								<th>&nbsp;</th>
@@ -103,8 +104,9 @@
 									${insRecord.code }&nbsp;
 								</td>
 								<td>
-									${insRecord.sumWeight }&nbsp;
-								</td>
+									<fmt:formatNumber value="${insRecord.sumWeight }" pattern="#,#00.00#"/>&nbsp;
+							
+								</td>								
 								<td>
 									${insRecord.warehouse.address}&nbsp;
 								</td>

@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -142,14 +143,15 @@
 									${pledgeConfig.supervisor.name }&nbsp;
 								</td>
 								<td>
-									${pledgeConfig.outWeight }&nbsp;
+									<fmt:formatNumber value="${pledgeConfig.outWeight }" pattern="#,#00.00#"/>&nbsp;								
 								</td>
 								<td>
-									${pledgeConfig.minWeight }&nbsp;
+									<fmt:formatNumber value="${pledgeConfig.minWeight }" pattern="#,#00.00#"/>&nbsp;								
 								</td>
 								<td>
-									${pledgeConfig.minValue }&nbsp;
+									<fmt:formatNumber value="${pledgeConfig.minValue }" pattern="#,#00.00#"/>&nbsp;								
 								</td>
+								
 								<td>
 									${pledgeConfig.maxCordon }&nbsp;
 								</td>

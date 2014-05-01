@@ -59,7 +59,8 @@
 									${totalStock.pledgePurityName }&nbsp;
 								</td>
 								<td>
-									${totalStock.sumWeight}&nbsp;
+									<fmt:formatNumber value="${totalStock.sumWeight}" pattern="#,#00.00#"/>&nbsp;
+							
 								</td>
 								<td>
 									<fmt:formatNumber value="${totalStock.sumValue}" pattern="#,#00.00#"/>&nbsp;
@@ -70,7 +71,8 @@
 								<td>合计&nbsp;</td>
 								<td>&nbsp;</td>
 								<td>&nbsp;</td>
-								<td>${sumWeight}&nbsp;</td>
+								
+								<td><fmt:formatNumber value="${sumWeight}" pattern="#,#00.00#"/>&nbsp;&nbsp;</td>
 								<td><fmt:formatNumber value="${sumValue}" pattern="#,#00.00#"/>&nbsp;&nbsp;</td>
 							</tr>
 					</table>
