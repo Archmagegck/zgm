@@ -8,12 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.pms.app.entity.SupervisionCustomer;
 import com.pms.app.service.DelegatorService;
 import com.pms.app.service.RemovePledgeService;
 import com.pms.app.service.SupervisionCustomerService;
 import com.pms.app.service.WarehouseService;
-import com.pms.app.util.UploadUtils;
 
 @Controller
 @RequestMapping(value = "/manage/removePledge")
@@ -50,8 +48,8 @@ public class RemovePledgeController {
 	@RequestMapping(value="/remove")
 	public String removePledge(Model model, HttpServletRequest request, String removeSupervisionCustomerId){
 		
-		SupervisionCustomer supervisionCustomer = supervisionCustomerService.findById(removeSupervisionCustomerId);
-		String attachPath = UploadUtils.uploadFile(request, 3, supervisionCustomer.getName());	//没有实体保存该路径
+//		SupervisionCustomer supervisionCustomer = supervisionCustomerService.findById(removeSupervisionCustomerId);
+//		String attachPath = UploadUtils.uploadFile(request, 3, supervisionCustomer.getName());	//没有实体保存该路径
 		
 		//解除质押——删除监管客户，清空仓库
 		supervisionCustomerService.delete(removeSupervisionCustomerId);	

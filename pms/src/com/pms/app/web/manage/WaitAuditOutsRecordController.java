@@ -1,5 +1,7 @@
 package com.pms.app.web.manage;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +28,17 @@ public class WaitAuditOutsRecordController {
 	@Autowired PledgeConfigService pledgeConfigService;
 	
 	@RequestMapping(value = { "/list", "" })
-	public String list(Model model, @PageableDefaults(sort="date", sortDir=Direction.DESC)Pageable pageable) {
-		model.addAttribute("page", outsRecordService.findWaitOutsRecord(pageable));
+	public String list(Model model, @PageableDefaults(sort="date", sortDir=Direction.DESC)Pageable pageable, HttpSession session) {
+		Integer type = (Integer)session.getAttribute("type");
+		if(type == 1) {//超级管理员
+			model.addAttribute("page", outsRecordService.findWaitOutsRecord(pageable));
+		}
+		if(type == 4) {//监管经理
+			model.addAttribute("page", outsRecordService.findWaitOutsRecordByNotice(pageable, 2));
+		}
+		if(type == 5) {//监管经理助理
+			model.addAttribute("page", outsRecordService.findWaitOutsRecordByNotice(pageable, 1));
+		}
 		return "manage/waitAuditOutsRecord/list";
 	}
 	

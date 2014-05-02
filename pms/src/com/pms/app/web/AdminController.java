@@ -14,13 +14,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.pms.app.entity.Admin;
 import com.pms.app.entity.Delegator;
+import com.pms.app.entity.Manager;
 import com.pms.app.entity.ManagerAssistant;
 import com.pms.app.entity.Supervisor;
 import com.pms.app.entity.Warehouse;
 import com.pms.app.service.AdminService;
 import com.pms.app.service.DelegatorService;
 import com.pms.app.service.ManagerAssistantService;
-import com.pms.app.service.SupervisionCustomerService;
+import com.pms.app.service.ManagerService;
 import com.pms.app.service.SupervisorService;
 
 @Controller
@@ -30,7 +31,7 @@ public class AdminController {
 	@Autowired private AdminService adminService;
 	@Autowired private SupervisorService supervisorService;
 	@Autowired private DelegatorService delegatorService;
-	@Autowired private SupervisionCustomerService supervisionCustomerService;
+	@Autowired private ManagerService managerService;
 	@Autowired private ManagerAssistantService managerAssistantService;
 	
 	@RequestMapping(value = { "" })
@@ -58,7 +59,7 @@ public class AdminController {
 		if(type == null)
 			return "redirect:/admin";
 		switch (type) {
-		case 1: // 监管经理
+		case 1: // 管理员
 			List<Admin> adminList = adminService.findByUsernameAndPassword(username, password);
 			if (!adminList.isEmpty()) {
 				if (adminList.size() == 1) {
@@ -78,10 +79,7 @@ public class AdminController {
 					if(warehouse != null) {
 						session.setAttribute("type", type);
 						session.setAttribute("user", supervisor);
-//						session.setAttribute("supervisionCustomer", supervisionCustomerService.findBySupervisorId(supervisor.getId()));
-//						session.setAttribute("supervisionCustomerCode", supervisionCustomerService.findBySupervisorId(supervisor.getId()).getCode());
 						warehouse.getAddress();
-//						session.setAttribute("warehouse", warehouse);
 						session.setAttribute("warehouseId", warehouse.getId());
 						return "main/main";
 					}
@@ -98,6 +96,17 @@ public class AdminController {
 					Delegator delegator = delegatorList.get(0);
 					session.setAttribute("type", type);
 					session.setAttribute("user", delegator);
+					return "main/main";
+				}
+			}
+			break;
+		case 4: // 监管经理
+			List<Manager> managerList = managerService.findByUsernameAndPassword(username, password);
+			if (!managerList.isEmpty()) {
+				if (managerList.size() == 1) {
+					Manager manager = managerList.get(0);
+					session.setAttribute("type", type);
+					session.setAttribute("user", manager);
 					return "main/main";
 				}
 			}

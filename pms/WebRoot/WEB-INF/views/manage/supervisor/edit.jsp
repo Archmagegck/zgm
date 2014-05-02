@@ -116,7 +116,7 @@
 							邮箱:
 						</td>
 						<td width="80%">
-							<input id="email" name="email" value="${supervisor.email }" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
+							<input id="email" name="email" value="${supervisor.email }" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
 						</td>
 					</tr>
 					<tr>
@@ -124,7 +124,7 @@
 							所属辖区:
 						</td>
 						<td width="80%">
-							<input id="area" name="area" value="${supervisor.area }" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
+							<input id="area" name="area" value="${supervisor.area }" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
 						</td>
 					</tr>
 					<tr>
@@ -151,7 +151,7 @@
 							备注:
 						</td>
 						<td width="80%">
-							<input id="desc" name="desc" value="${supervisor.desc }" class="required" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
+							<input id="desc" name="desc" value="${supervisor.desc }" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
 						</td>
 					</tr>
 				</table>

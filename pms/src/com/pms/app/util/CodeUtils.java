@@ -1,6 +1,7 @@
 package com.pms.app.util;
 
 import java.util.Arrays;
+import java.util.Random;
 
 import org.joda.time.DateTime;
 
@@ -58,14 +59,32 @@ public class CodeUtils {
 				count++;
 			}
 		}
-		Arrays.sort(result); 
+		Arrays.sort(result);
 		return result;
 	}
-	
+
+	public static int[] randoms(int[] send, int returnCount) {
+		Random r = new Random();
+		int temp1, temp2;
+		int len = send.length;
+		int returnValue[] = new int[returnCount];
+		for (int i = 0; i < returnCount; i++) {
+			temp1 = Math.abs(r.nextInt()) % len;
+			returnValue[i] = send[temp1];
+			temp2 = send[temp1];
+			send[temp1] = send[len - 1];
+			send[len - 1] = temp2;
+			len--;
+		}
+		Arrays.sort(returnValue);
+		return returnValue;
+	}
+
 	public static void main(String[] args) {
-		int[] reult1 = randomCommon(1,50,15);  
-	    for (int i : reult1) {  
-	        System.out.println(i);  
-	    }  
+		int send[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21 };
+		int[] reult1 = randoms(send, 3);
+		for (int i : reult1) {
+			System.out.println(i);
+		}
 	}
 }

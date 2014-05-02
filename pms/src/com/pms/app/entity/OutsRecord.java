@@ -133,9 +133,8 @@ public class OutsRecord {
 	
 	
 	/**
-	 * 通知状态<br>
-	 * 1:全部<br>
-	 * 0:部分
+	 * 通知状态
+	 * //1:监管经理助理,  2:监管经理
 	 */
 	@Column(name = "out_notice")
 	private Integer notice = 0;

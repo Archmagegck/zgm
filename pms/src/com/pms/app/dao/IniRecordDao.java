@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
 
-import com.pms.app.entity.IniCheck;
 import com.pms.app.entity.IniRecord;
 import com.pms.base.dao.BaseDao;
 

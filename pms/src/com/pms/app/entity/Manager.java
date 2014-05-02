@@ -11,13 +11,13 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
- * 管理员
+ * 监管经理
  * @author wangzz
  */
 @Entity
-@Table(name = "t_admin")
+@Table(name = "t_manager")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Admin {
+public class Manager {
 	
 	@Id
 	@GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")

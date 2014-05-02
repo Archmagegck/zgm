@@ -159,7 +159,7 @@
   <tr>
     <td width="182" valign="top">
     
-		<c:if test="${(sessionScope.user != null) && (sessionScope.type == 1)}">
+		<c:if test="${(sessionScope.user != null) && (sessionScope.type == 1 || sessionScope.type == 4 || sessionScope.type == 5)}">
 			<h1 class="type"><a href="javascript:void(0)">用户管理</a></h1>
 	      <div class="content">
 	        <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -168,7 +168,12 @@
 	          </tr>
 	        </table>
 	        <ul class="MM">
+	        	<c:if test="${(sessionScope.user != null) && (sessionScope.type == 1)}">
+	       	 		<li><a href="${ctx}/manage/manager" target="right">监管经理管理</a></li>
+	       	 	</c:if>
+	       	 	<c:if test="${(sessionScope.user != null) && (sessionScope.type == 1 || sessionScope.type == 4)}">
 	        	<li><a href="${ctx}/manage/managerAssistant" target="right">监管经理助理</a></li>
+	        	</c:if>
 	        	<li><a href="${ctx}/manage/supervisor" target="right">监管员管理</a></li>
 	          	<li><a href="${ctx}/manage/supervisionCustomer" target="right">监管客户管理</a></li>
 	          	<li><a href="${ctx}/manage/delegator" target="right">委托方管理</a></li>
@@ -366,101 +371,6 @@
 		          	<li><a href="${ctx}/delegator/personalInfo/edit" target="right">修改密码</a></li>
 		        </ul>
 		      </div>
-		</c:if>
-      	
-      	<c:if test="${(sessionScope.user != null) && (sessionScope.type == 5)}">
-			<h1 class="type"><a href="javascript:void(0)">用户管理</a></h1>
-	      <div class="content">
-	        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-	          <tr>
-	            <td><img src="${ctx}/images/admin/images/menu_topline.gif" width="182" height="5" /></td>
-	          </tr>
-	        </table>
-	        <ul class="MM">
-	        	<li><a href="${ctx}/manage/supervisor" target="right">监管员管理</a></li>
-	          	<li><a href="${ctx}/manage/supervisionCustomer" target="right">监管客户管理</a></li>
-	          	<li><a href="${ctx}/manage/delegator" target="right">委托方管理</a></li>
-	          	<li><a href="${ctx}/manage/personalInfo/edit" target="right">个人信息修改</a></li>
-	        </ul>
-	      </div>
-	      
-	      <h1 class="type"><a href="javascript:void(0)">系统设置</a></h1>
-	      <div class="content">
-	        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-	          <tr>
-	            <td><img src="${ctx}/images/admin/images/menu_topline.gif" width="182" height="5" /></td>
-	          </tr>
-	        </table>
-	        <ul class="MM">
-	        	<li><a href="${ctx}/manage/pledgePurity" target="right">质押物成色管理</a></li>
-	        	<li><a href="${ctx}/manage/style" target="right">款式管理</a></li>
-	        	<li><a href="${ctx}/manage/warehouse" target="right">仓库管理</a></li>
-	        	<li><a href="${ctx}/manage/pledgeConfig" target="right">质押物要求及警戒线设置</a></li>
-	        </ul>
-	      </div>
-	      
-	      <h1 class="type"><a href="javascript:void(0)">库存管理</a></h1>
-	      <div class="content">
-	        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-	          <tr>
-	            <td><img src="${ctx}/images/admin/images/menu_topline.gif" width="182" height="5" /></td>
-	          </tr>
-	        </table>
-	        <ul class="MM">
-	        	<li><a href="${ctx}/manage/dailyOutsRecord" target="right">日常出货统计</a></li>
-	        	<li><a href="${ctx}/manage/inOutsRecord" target="right">当日进出库查询</a></li>
-	        	<li><a href="${ctx}/manage/dailyStock" target="right">当日库存查询</a></li>
-	        	<li><a href="${ctx}/managerassistant/waitAuditOutsRecord" target="right">待审核出库单</a></li>
-	        	<li><a href="${ctx}/manage/totalStocks" target="right">总库存</a></li>
-		        <li><a href="${ctx}/manage/pledgeRecord" target="right">质物清单记录</a></li>
-	        	<!-- 
-	        	<li><a href="${ctx}/manage/noticeOutsRecord" target="right">出库通知</a></li>
-	        	<li><a href="${ctx}/manage/inventory" target="right">盘存记录</a></li>
-	        	 -->
-	        </ul>
-	      </div>
-	      
-	      <h1 class="type"><a href="javascript:void(0)">日常操作</a></h1>
-	      <div class="content">
-	        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-	          <tr>
-	            <td><img src="${ctx}/images/admin/images/menu_topline.gif" width="182" height="5" /></td>
-	          </tr>
-	        </table>
-	        <ul class="MM">
-	        	<li><a href="${ctx}/manage/dailyPledge" target="right">每日质物清单</a></li>
-	        	<li><a href="${ctx}/manage/iniPledgePrint" target="right">初始质物清单打印</a></li>
-	        	<li><a href="${ctx}/manage/dailyInventoryRecord" target="right">每日盘点查询</a></li>
-	        	<li><a href="${ctx}/manage/inventoryStatistics" target="right">盘点统计</a></li>
-	        </ul>
-	      </div>
-	      
-	      <h1 class="type"><a href="javascript:void(0)">每日价格设置</a></h1>
-	      <div class="content">
-	        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-	          <tr>
-	            <td><img src="${ctx}/images/admin/images/menu_topline.gif" width="182" height="5" /></td>
-	          </tr>
-	        </table>
-	        <ul class="MM">
-	        	<li><a href="${ctx}/manage/au9995Price/add" target="right">每日价格记录</a></li>
-	        	<li><a href="${ctx}/manage/au9995Price" target="right">每日价格查询</a></li>
-	        </ul>
-	      </div>
-	      
-	      <h1 class="type"><a href="javascript:void(0)">封闭运输管理</a></h1>
-	      <div class="content">
-	        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-	          <tr>
-	            <td><img src="${ctx}/images/admin/images/menu_topline.gif" width="182" height="5" /></td>
-	          </tr>
-	        </table>
-	        <ul class="MM">
-	        	<li><a href="${ctx}/manage/enclosedConvey/add" target="right">封闭运输登记</a></li>
-	        	<li><a href="${ctx}/manage/enclosedConvey/list" target="right">封闭运输查询</a></li>
-	        </ul>
-	      </div>
-	      
 		</c:if>
 		
         <script type="text/javascript">

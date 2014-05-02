@@ -5,8 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.joda.time.DateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -22,7 +20,7 @@ import com.pms.app.service.WarehouseService;
 @RequestMapping(value = "/manage/inventoryStatistics")
 
 public class InventoryStatisticsController {
-	private Logger logger = LoggerFactory.getLogger(InOutsRecordController.class);
+	
 	@Autowired WarehouseService warehouseService;
 	@Autowired InventoryStatisticsService inventoryStatisticsService;
 	

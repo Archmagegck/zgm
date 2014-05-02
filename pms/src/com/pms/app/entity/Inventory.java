@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cache;
@@ -70,6 +71,7 @@ public class Inventory {
 	 * 盘存明细
 	 */
 	@OneToMany(mappedBy = "inventory")
+	@OrderBy("trayNo")
 	private List<InventoryDetail> inventoryDetails = new ArrayList<InventoryDetail>();
 	
 	public String getDateStr() {

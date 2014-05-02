@@ -22,16 +22,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.pms.app.dao.PledgeConfigDao;
 import com.pms.app.dao.StockDao;
-import com.pms.app.dao.SupervisionCustomerDao;
-import com.pms.app.entity.PledgePurity;
 import com.pms.app.entity.PurityPrice;
 import com.pms.app.entity.SupervisionCustomer;
-import com.pms.app.entity.Warehouse;
 import com.pms.app.entity.vo.LowerMinPriceListShow;
 import com.pms.app.service.PledgePurityService;
 import com.pms.app.service.PurityPriceService;
 import com.pms.app.service.SupervisionCustomerService;
-import com.pms.app.service.WarehouseService;
 
 
 @Controller
@@ -42,8 +38,6 @@ public class Au9995PriceController {
 	
 	@Autowired private PurityPriceService au9995PriceService;
 	@Autowired private PledgePurityService pledgePurityService;
-	@Autowired private WarehouseService warehouseService; 
-	@Autowired private SupervisionCustomerDao supervisionCustomerDao;
 	@Autowired private SupervisionCustomerService supervisionCustomerService;
 	@Autowired private PledgeConfigDao pledgeConfigDao;
 	@Autowired private StockDao stockDao;

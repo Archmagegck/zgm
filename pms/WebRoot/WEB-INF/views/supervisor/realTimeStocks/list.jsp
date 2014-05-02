@@ -47,6 +47,7 @@
 								<th>存储地点</th>
 							</tr>
 						</thead>
+						<c:set var="sumWeight" value="0"></c:set>
 						<c:forEach items="${realTimeStocksList}" var="realTimeStocks" varStatus="status">
 							<tr>
 								<td>
@@ -59,6 +60,7 @@
 									${realTimeStocks.pledgePurity.name }&nbsp;
 								</td>
 								<td>
+									<c:set var="sumWeight" value="${sumWeight + realTimeStocks.sumWeight}"></c:set>
 									<fmt:formatNumber value="${realTimeStocks.sumWeight}" pattern="#,#00.00#"/>&nbsp;							
 								</td>	
 								
@@ -67,6 +69,24 @@
 								</td>
 							</tr>
 						</c:forEach>
+							<tr>
+								<td>
+									合计&nbsp;
+								</td>
+								<td>
+									&nbsp;
+								</td>
+								<td>
+									&nbsp;
+								</td>
+								<td>
+									<fmt:formatNumber value="${sumWeight}" pattern="#,#00.00#"/>&nbsp;							
+								</td>	
+								
+								<td>
+									&nbsp;
+								</td>
+							</tr>
 					</table>
 				</div>
 			</div>

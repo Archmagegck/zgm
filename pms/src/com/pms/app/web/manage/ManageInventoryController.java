@@ -5,8 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.joda.time.DateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Pageable;
@@ -23,8 +21,6 @@ import com.pms.app.service.SupervisionCustomerService;
 @Controller
 @RequestMapping(value = "/manage/inventory")
 public class ManageInventoryController {
-	
-	private Logger logger = LoggerFactory.getLogger(ManageInventoryController.class);
 	
 	@Autowired DelegatorService delegatorService;
 	@Autowired SupervisionCustomerService supervisionCustomerService;

@@ -51,6 +51,10 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 		return outsRecordDao;
 	}
 
+	public Page<OutsRecord> findWaitOutsRecordByNotice(Pageable pageable, int notice) {
+		return outsRecordDao.findPageByNoticeAndAuditStateNot(pageable, notice, AuditState.Pass);
+	}
+	
 	public Page<OutsRecord> findWaitOutsRecord(Pageable pageable) {
 		return outsRecordDao.findPageByAuditStateNot(pageable, AuditState.Pass);
 	}
@@ -167,9 +171,12 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 		
 		double supOutWeight = config.getOutWeight();//监管员权限
 		double maxcordon = config.getMaxCordon();// 警戒线上限（%）
+		double mincordon = config.getMinCordon();// 警戒线下限（%）
 		double stockValue = stockSumWeight * price;//出库后仓库库存价值
-		double warnValue = (config.getMinValue() * maxcordon) / 100;//质押物最低价值的警戒线
-		double warnWeight = (config.getMinWeight() * maxcordon) / 100;//质押物最低重量的警戒线
+		double minWeight = config.getMinWeight();//质押物最低重量
+		double minValue = config.getMinValue();//质押物最低价值
+		double warnValue = (minValue * maxcordon) / 100;//质押物最低价值的警戒线
+		double warnWeight = (minWeight * maxcordon) / 100;//质押物最低重量的警戒线
 		
 		outsRecord.setSumStock(stockSumWeight);
 		outsRecord.setSumValue(stockValue);
@@ -179,27 +186,59 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 		outsRecord.setPriceRate(priceRate);
 		
 		boolean ifOutStock = true;
-		int warnType = 0;
+		int warnType = 0;//1:监管经理助理,  2:监管经理
 		
-		//判断1：出库重量是否超过监管员权限
-		//判断2：出库后仓库库存是否低于质押物最低价值的警戒线(115%)
-		//判断3：是否低于最低重量的警戒线（115%）
-		if(outSumWeight > supOutWeight) {
-			warnType += 4;
-			ifOutStock = false;
-			message += "出库重量超过监管员权限.";
+		int weightWarnType = 0;
+		int valueWarnType = 0;
+		//出库重量超过监管员权限或出库后仓库库存低于质押物最低价值的警戒线或出库后仓库重量低于最低重量的警戒线
+		//这个情况下需要审核
+		//出库后重量 x ,  最低重量y
+		// (y*105%)  < x  <  (y*115%)  监管经理助理审核
+		//y < x <  (y*115%)  监管经理审核
+		//x < (y*115%) 超级管理员审核
+		if((outSumWeight > supOutWeight) || (stockSumWeight < warnWeight) || (stockValue < warnValue)) {
+			message += "出库超过权限.";
+			ifOutStock = false;//暂时不出库,审核后出库
+			
+			if(stockSumWeight < warnWeight) {//判断重量
+				if(stockSumWeight > (minWeight * mincordon)) {
+					weightWarnType = 1;
+				} else if (stockSumWeight > minWeight) {
+					weightWarnType = 2;
+				}
+			}
+			
+			if(stockValue < warnValue) {//判断价值
+				if(stockValue > (minValue * mincordon)) {
+					valueWarnType = 1;
+				} else if (stockValue > minValue) {
+					valueWarnType = 2;
+				}
+			}
+			
+			warnType = (weightWarnType > valueWarnType) ? weightWarnType : valueWarnType;
+			outsRecord.setNotice(warnType);
 		}
-		if(stockValue < warnValue) {
-			warnType += 2;
-			ifOutStock = false;
-			message += "出库后仓库库存低于质押物最低价值的警戒线.";
-		}
-		if(stockSumWeight < warnWeight) {
-			warnType += 1;
-			ifOutStock = false;
-			message += "出库后仓库重量低于最低重量的警戒线.";
-		}
-		outsRecord.setNotice(warnType);
+		
+//		//判断1：出库重量是否超过监管员权限
+//		//判断2：出库后仓库库存是否低于质押物最低价值的警戒线(115%)
+//		//判断3：是否低于最低重量的警戒线（115%）
+//		if(outSumWeight > supOutWeight) {
+//			warnType += 4;
+//			ifOutStock = false;
+//			message += "出库重量超过监管员权限.";
+//		}
+//		if(stockValue < warnValue) {
+//			warnType += 2;
+//			ifOutStock = false;
+//			message += "出库后仓库库存低于质押物最低价值的警戒线.";
+//		}
+//		if(stockSumWeight < warnWeight) {
+//			warnType += 1;
+//			ifOutStock = false;
+//			message += "出库后仓库重量低于最低重量的警戒线.";
+//		}
+//		outsRecord.setNotice(warnType);
 		
 		if(ifOutStock) { //可以出库
 			outsRecord.setAuditState(AuditState.Pass);

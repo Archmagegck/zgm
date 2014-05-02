@@ -113,7 +113,7 @@
 							重量（g）:
 						</td>
 						<td width="70%">
-							<input id="specWeight" name="specWeight" value="${insRecordDetail.weight}" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
+							<input id="weight" name="weight" value="${insRecordDetail.weight}" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
 						</td>
 					</tr>
 					<tr>

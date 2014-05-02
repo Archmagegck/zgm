@@ -28,12 +28,17 @@
 		$(document).ready(function(){
 			$("#myForm").validate();
 		});
+		
+		function replaceValue() {
+			$("#minValue").val($("minValue").val().replace(",", ""));
+		}
+		
 	</script>
 
   </head>
   
   <body>
-    <form id="myForm" name="myForm" action="${ctx}/manage/pledgeConfig/update" method="post">
+    <form id="myForm" name="myForm" action="${ctx}/manage/pledgeConfig/update" method="post" onsubmit="replaceValue()">
     	<div id="content">
     		<div style="margin-bottom: 10px;padding: 5px 10px;" id="box">
     		<h3 id="addpledgeConfig">设置质押物要求</h3>
@@ -42,7 +47,7 @@
     			<legend><h3>请输入相关信息</h3></legend>
     			<br/>
     				<input type="hidden" name="id" value = "${pledgeConfig.id }" >
-    				<table  cellpadding="0" cellspacing="0" width="100%"  class="list1">
+    				<table cellpadding="0" cellspacing="0" width="100%"  class="list1">
     				<tr>
 						<td width="20%">
 							委托方:
@@ -91,7 +96,7 @@
 							质押物的最低价值（元）:
 						</td>
 						<td width="80%">
-							<input id="minValue" name="minValue" value="${pledgeConfig.minValue }" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
+							<input id="minValue" name="minValue" value="<fmt:formatNumber value="${pledgeConfig.minValue }" pattern="#,#00.00#"/>" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
 						</td>
 					</tr>
 					<tr>

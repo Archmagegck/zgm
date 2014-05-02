@@ -27,6 +27,7 @@ import com.pms.app.entity.SupervisionCustomer;
 import com.pms.app.entity.Supervisor;
 import com.pms.app.entity.Warehouse;
 import com.pms.app.util.CodeUtils;
+import com.pms.app.util.DateUtils;
 import com.pms.app.util.Digests;
 import com.pms.app.util.Encodes;
 import com.pms.base.dao.BaseDao;
@@ -137,6 +138,12 @@ public class InventoryService extends BaseService<Inventory, String> {
 		
  		return inventoryDao.findByDateBetween(dateBegin, dateEnd);
 		
+	}
+	
+	public Inventory findByDateDay(Date date) {
+		List<Inventory> inventories = inventoryDao.findByDateBetween(DateUtils.dateToDayBegin(date), DateUtils.dateToDayEnd(date));
+		if(inventories.isEmpty()) return null;
+		return inventories.get(0);
 	}
 
 }

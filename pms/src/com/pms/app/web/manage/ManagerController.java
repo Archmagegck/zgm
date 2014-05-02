@@ -10,62 +10,62 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.pms.app.entity.Delegator;
-import com.pms.app.service.DelegatorService;
+import com.pms.app.entity.Manager;
+import com.pms.app.service.ManagerService;
 
 @Controller
-@RequestMapping(value = "/manage/delegator")
-public class DelegatorController {
+@RequestMapping(value = "/manage/manager")
+public class ManagerController {
 	
-	private Logger logger = LoggerFactory.getLogger(DelegatorController.class);
+	private Logger logger = LoggerFactory.getLogger(ManagerController.class);
 	
-	@Autowired private DelegatorService delegatorService;
+	@Autowired private ManagerService managerService;
 	
 	@RequestMapping(value = { "/list", "" })
 	public String list(Model model, Pageable pageable, String queryName, String queryValue) {
 		model.addAttribute("queryName", queryName);
 		model.addAttribute("queryValue", queryValue);
-		model.addAttribute("page", delegatorService.findAllLike(pageable, queryName, queryValue));
-		return "manage/delegator/list";
+		model.addAttribute("page", managerService.findAllLike(pageable, queryName, queryValue));
+		return "manage/manager/list";
 	}
 	
 	
 	@RequestMapping(value = "/add")
 	public String add(Model model){
-		return "manage/delegator/add";
+		return "manage/manager/add";
 	}
 	
 	
 	@RequestMapping(value = "/save")
-	public String save(Delegator delegator, RedirectAttributes ra){
+	public String save(Manager manager, RedirectAttributes ra){
 		try {
-			delegatorService.save(delegator);
+			managerService.save(manager);
 			ra.addFlashAttribute("messageOK", "保存成功！");
 		} catch (Exception e) {
 			ra.addFlashAttribute("messageErr", "保存失败！");
 			logger.error("保存异常", e);
 		}
-		return "redirect:/manage/delegator/list";
+		return "redirect:/manage/manager/list";
 	}
 	
 	
 	@RequestMapping(value = "/edit/{id}")
 	public String edit(@PathVariable("id")String id, Model model){
-		model.addAttribute("delegator", delegatorService.findById(id));
-		return "manage/delegator/edit";
+		model.addAttribute("manager", managerService.findById(id));
+		return "manage/manager/edit";
 	}
 	
 
 	@RequestMapping(value = "/delete")
 	public String delete(String[] idGroup, RedirectAttributes ra){
 		try {
-			delegatorService.delete(idGroup);
+			managerService.delete(idGroup);
 			ra.addFlashAttribute("messageOK", "删除成功！");
 		} catch (Exception e) {
 			ra.addFlashAttribute("messageErr", "删除失败！");
 			logger.error("删除异常", e);
 		}
-		return "redirect:/manage/delegator/list";
+		return "redirect:/manage/manager/list";
 	}
 	
 	

@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 
 import com.pms.app.entity.IniCheck;
-import com.pms.app.entity.Stock;
 import com.pms.base.dao.BaseDao;
 
 public interface IniCheckDao extends BaseDao<IniCheck, String> {

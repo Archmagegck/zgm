@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.pms.app.entity.Inventory;
 import com.pms.app.entity.InventoryCheck;
 import com.pms.app.entity.InventoryCheckDetail;
 import com.pms.app.entity.InventoryCheckTemplate;
@@ -24,6 +25,7 @@ import com.pms.app.entity.Warehouse;
 import com.pms.app.service.InventoryCheckDetailService;
 import com.pms.app.service.InventoryCheckService;
 import com.pms.app.service.InventoryCheckTemplateService;
+import com.pms.app.service.InventoryService;
 import com.pms.app.service.StyleService;
 import com.pms.app.service.WarehouseService;
 import com.pms.app.util.CodeUtils;
@@ -38,6 +40,7 @@ public class InventoryCheckController {
 	
 	@Autowired private InventoryCheckService inventoryCheckService;
 	@Autowired private InventoryCheckDetailService inventoryCheckDetailService;
+	@Autowired private InventoryService inventoryService;
 	@Autowired private StyleService styleService;
 	@Autowired private WarehouseService warehouseService;
 	@Autowired private InventoryCheckTemplateService inventoryCheckTemplateService;
@@ -61,11 +64,54 @@ public class InventoryCheckController {
 	
 	@RequestMapping(value = "/inputNo")
 	public String inputNo(Model model, HttpSession session){
+		Inventory inventory = inventoryService.findByDateDay(new Date());
+		if(inventory == null) {
+			model.addAttribute("messageErr", "当日没有进行盘存，请先盘存之后再进行盘存检测！");
+		} else {
+			model.addAttribute("inventory", inventory);
+		}
 		return "supervisor/inventoryCheck/inputCount";
 	}
 	
 	@RequestMapping(value = "/general")
 	public String general(Model model, Integer count, HttpSession session){
+//		Inventory inventory = inventoryService.findByDateDay(new Date());
+//		List<InventoryDetail> inventoryDetails = inventory.getInventoryDetails();
+//		int inventoryDetailCount = inventoryDetails.size();
+//		
+//		List<InventoryCheckDetail> details = new ArrayList<InventoryCheckDetail>();
+//		if(count > 15)  {
+//			int[] generals15 = new int[15];
+//			if(inventoryDetailCount <= 15) {
+//				int overCount = 15 - inventoryDetailCount;
+//				for(int i=0; i<inventoryDetailCount; i++) {
+//					int trayNo = inventoryDetails.get(i).getTrayNo();
+//					generals15[i] = trayNo;
+//				}
+//				if(overCount > 0) {
+//					int[] overTrayNos = CodeUtils.randomCommon(inventoryDetailCount + 1, count, overCount);
+//					for(int i=0; i<overTrayNos.length; i++) {
+//						generals15[15 - i] = overTrayNos[i];
+//					}
+//				}
+//				Arrays.sort(generals15);
+//			} else {
+//				int[] inputs = new int[inventoryDetailCount];
+//				generals15 = CodeUtils.randoms(inputs, 15);
+//			}
+//			for (int i = 0; i < generals15.length; i++) {
+//				InventoryCheckDetail inventoryCheckDetail = new InventoryCheckDetail();
+//				inventoryCheckDetail.setTrayNo(generals15[i]);
+//				details.add(inventoryCheckDetail);
+//			}
+//		} else {
+//			if(inventoryDetailCount <= count) {
+//				
+//			} else {
+//				
+//			}
+//		}
+		
 		List<InventoryCheckDetail> details = new ArrayList<InventoryCheckDetail>();
 		int newCount = 0;
 		int[] trayNos = new int[15];
