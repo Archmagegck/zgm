@@ -81,6 +81,7 @@ public class AdminController {
 						session.setAttribute("user", supervisor);
 						warehouse.getAddress();
 						session.setAttribute("warehouseId", warehouse.getId());
+						session.setAttribute("warehouseName",warehouse.getName());
 						return "main/main";
 					}
 					session.invalidate();
