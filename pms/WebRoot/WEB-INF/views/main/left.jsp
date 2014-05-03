@@ -225,7 +225,9 @@
 	          </tr>
 	        </table>
 	        <ul class="MM">
-	        	<li><a href="${ctx}/manage/removePledge" target="right">解压管理</a></li>
+	        	<c:if test="${(sessionScope.user != null) && (sessionScope.type == 1 || sessionScope.type == 4)}">
+	        		<li><a href="${ctx}/manage/removePledge" target="right">解压管理</a></li>
+	        	</c:if>	        	
 	        	<li><a href="${ctx}/manage/dailyPledge" target="right">每日质物清单</a></li>
 	        	<li><a href="${ctx}/manage/iniPledgePrint" target="right">初始质物清单打印</a></li>
 	        	<li><a href="${ctx}/manage/dailyInventoryRecord" target="right">每日盘点查询</a></li>

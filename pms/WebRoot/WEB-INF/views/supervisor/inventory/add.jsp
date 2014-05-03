@@ -50,7 +50,7 @@
     				<table  cellpadding="0" cellspacing="0" width="100%"  class="list1">
     				<tr>
 						<td width="30%">
-							托盘号
+							托盘号:
 						</td>
 						<td width="70%">
 							<input id="trayNo" name="trayNo" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
@@ -71,7 +71,7 @@
 					</tr>
 					<tr>
 						<td width="30%">
-							检测重量
+							检测重量(g):
 						</td>
 						<td width="70%">
 							<input id="weight" name="weight" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>

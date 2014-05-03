@@ -45,7 +45,7 @@
 							<tr>
 								<th>托盘号</th>
 								<th>款式大类</th>
-								<th>盘存重量</th>
+								<th>盘存重量(g)</th>
 								<th>操作</th>
 							</tr>
 						</thead>

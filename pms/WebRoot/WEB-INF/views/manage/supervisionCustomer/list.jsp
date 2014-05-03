@@ -132,9 +132,7 @@
 								<th>
 									备注
 								</th>
-								<th>
-									融资方式
-								</th>
+								
 								<th>
 									操作
 								</th>
@@ -172,9 +170,7 @@
 								<td>
 									${supervisionCustomer.desc }&nbsp;
 								</td>
-								<td>
-									${supervisionCustomer.loans.title }&nbsp;
-								</td>
+								
 								<td>
 									<a href="${ctx }/manage/supervisionCustomer/edit/${supervisionCustomer.id }">编辑</a>
 								</td>
