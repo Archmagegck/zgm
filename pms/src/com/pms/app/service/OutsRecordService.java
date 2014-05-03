@@ -34,6 +34,7 @@ import com.pms.app.util.Digests;
 import com.pms.app.util.Encodes;
 import com.pms.base.dao.BaseDao;
 import com.pms.base.service.BaseService;
+import com.pms.base.service.ServiceException;
 
 @Service
 public class OutsRecordService extends BaseService<OutsRecord, String> {
@@ -255,7 +256,7 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 		return message;
 	}
 
-	
+	@Transactional
 	public void audit(OutsRecord outsRecord, Integer state) {
 		switch (state) {
 		case 1:
@@ -269,6 +270,9 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 				Stock stock = stockMap.get(key);
 				double outWeight = outsRecordDetail.getWeight();
 				double remainWeight = stock.getSumWeight() - outWeight;
+				if(remainWeight < 0) {
+					throw new ServiceException(outsRecordDetail.getStyle().getName() + "出库后库存为负,出库失败!");
+				}
 				if (remainWeight == 0)
 					delStocks.add(stock);
 				if (remainWeight > 0) {

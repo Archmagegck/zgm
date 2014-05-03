@@ -1,5 +1,6 @@
 package com.pms.app.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,17 +43,6 @@ public class IniPledgeRecordService extends BaseService<IniPledgeRecord, String>
 			Warehouse warehouse = warehouseDao.findOne(warehouseId);
 			iniPledgeRecord.setWarehouse(warehouse);
 			
-			double gpWeight = 0.0;
-			double rjWeight = 0.0;
-			for (IniCheck iniCheck : iniCheckList) {
-				if(iniCheck.getCheckMethod() == CheckMethod.Spectrum) {
-					gpWeight += iniCheck.getCheckWeight();
-				}
-				if(iniCheck.getCheckMethod() == CheckMethod.Dissolve) {
-					rjWeight += iniCheck.getCheckWeight();
-				}
-			}
-			
 			PledgePurity pledgePurity = pledgePurityService.findOK();
 			
 			for (IniRecord iniRecord : iniRecordList) {
@@ -62,8 +52,22 @@ public class IniPledgeRecordService extends BaseService<IniPledgeRecord, String>
 				iniPledgeRecordDetail.setPledgePurity(pledgePurity);
 				iniPledgeRecordDetail.setSumWeight(iniRecord.getWeight());
 				iniPledgeRecordDetail.setStorage(warehouse.getAddress());
-				iniPledgeRecordDetail.setSpectrumRate(gpWeight / iniRecord.getWeight());
-				iniPledgeRecordDetail.setDissolveRate(rjWeight / iniRecord.getWeight());
+				
+				double gpWeight = 0.0;
+				double rjWeight = 0.0;
+				for (IniCheck iniCheck : iniCheckList) {
+					if(iniCheck.getStyle().getId().equals(iniRecord.getStyle().getId())) {
+						if(iniCheck.getCheckMethod() == CheckMethod.Spectrum) {
+							gpWeight += iniCheck.getCheckWeight();
+						}
+						if(iniCheck.getCheckMethod() == CheckMethod.Dissolve) {
+							rjWeight += iniCheck.getCheckWeight();
+						}
+					}
+				}
+				
+				iniPledgeRecordDetail.setSpectrumRate(new BigDecimal(gpWeight / iniRecord.getWeight()).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+				iniPledgeRecordDetail.setDissolveRate(new BigDecimal(rjWeight / iniRecord.getWeight()).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 				
 				iniPledgeRecordDetailList.add(iniPledgeRecordDetail);
 			}

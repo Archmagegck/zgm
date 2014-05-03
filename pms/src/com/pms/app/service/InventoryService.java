@@ -113,7 +113,7 @@ public class InventoryService extends BaseService<Inventory, String> {
 		
 		PledgeConfig config = pledgeConfigDao.findBySupervisionCustomerId(supervisionCustomer.getId()).get(0);
 		double range = config.getIeRange();
-		if(Math.abs(stockSumWeight - invSumWeight) > range){
+		if(Math.abs(stockSumWeight - invSumWeight) / stockSumWeight > range){
 			throw new ServiceException("盘存不一致，已超出盘存误差范围!");
 		}
 		
@@ -142,6 +142,12 @@ public class InventoryService extends BaseService<Inventory, String> {
 	
 	public Inventory findByDateDay(Date date) {
 		List<Inventory> inventories = inventoryDao.findByDateBetween(DateUtils.dateToDayBegin(date), DateUtils.dateToDayEnd(date));
+		if(inventories.isEmpty()) return null;
+		return inventories.get(0);
+	}
+	
+	public Inventory findByWarehouseDateDay(String warehouseId, Date date) {
+		List<Inventory> inventories = inventoryDao.findByWarehouseIdAndDateBetween(warehouseId, DateUtils.dateToDayBegin(date), DateUtils.dateToDayEnd(date));
 		if(inventories.isEmpty()) return null;
 		return inventories.get(0);
 	}

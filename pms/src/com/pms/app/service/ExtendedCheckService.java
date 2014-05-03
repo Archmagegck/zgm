@@ -15,6 +15,7 @@ import com.pms.app.entity.Supervisor;
 import com.pms.app.entity.Warehouse;
 import com.pms.app.entity.reference.CheckMethod;
 import com.pms.app.util.CodeUtils;
+import com.pms.app.util.DateUtils;
 import com.pms.base.dao.BaseDao;
 import com.pms.base.service.BaseService;
 import com.pms.base.service.ServiceException;
@@ -69,6 +70,24 @@ public class ExtendedCheckService extends BaseService<ExtendedCheck, String> {
 		
 	}
 	
+	public List<ExtendedCheck> findByWarehouseIdAndDateBetween(String warehouseId, Date dateBegin, Date dateEnd) {
+ 		return extendedCheckDao.findByWarehouseIdAndDateBetween(warehouseId, dateBegin, dateEnd);
+	}
 	
+	public List<ExtendedCheck> findByDateBetween(Date dateBegin, Date dateEnd) {
+ 		return extendedCheckDao.findByDateBetween(dateBegin, dateEnd);
+	}
+	
+	public ExtendedCheck findByDateDay(Date date) {
+		List<ExtendedCheck> extendedChecks = extendedCheckDao.findByDateBetween(DateUtils.dateToDayBegin(date), DateUtils.dateToDayEnd(date));
+		if(extendedChecks.isEmpty()) return null;
+		return extendedChecks.get(0);
+	}
+
+	public ExtendedCheck findByWarehouseDateDay(String warehouseId, Date date) {
+		List<ExtendedCheck> extendedChecks = extendedCheckDao.findByWarehouseIdAndDateBetween(warehouseId, DateUtils.dateToDayBegin(date), DateUtils.dateToDayEnd(date));
+		if(extendedChecks.isEmpty()) return null;
+		return extendedChecks.get(0);
+	}
 
 }

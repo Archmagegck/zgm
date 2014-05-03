@@ -15,6 +15,7 @@ import com.pms.app.entity.Supervisor;
 import com.pms.app.entity.Warehouse;
 import com.pms.app.entity.reference.CheckMethod;
 import com.pms.app.util.CodeUtils;
+import com.pms.app.util.DateUtils;
 import com.pms.base.dao.BaseDao;
 import com.pms.base.service.BaseService;
 import com.pms.base.service.ServiceException;
@@ -67,6 +68,27 @@ public class InsCheckService extends BaseService<InsCheck, String> {
 		insCheckDetailDao.save(insCheckDetailsList);
 		
 		
+	}
+	
+	public List<InsCheck> findByWarehouseIdAndDateBetween(String warehouseId, Date dateBegin, Date dateEnd) {
+ 		return insCheckDao.findByWarehouseIdAndDateBetween(warehouseId, dateBegin, dateEnd);
+	}
+	
+	
+	public List<InsCheck> findByDateBetween(Date dateBegin, Date dateEnd) {
+ 		return insCheckDao.findByDateBetween(dateBegin, dateEnd);
+	}
+	
+	public InsCheck findByDateDay(Date date) {
+		List<InsCheck> insChecks = insCheckDao.findByDateBetween(DateUtils.dateToDayBegin(date), DateUtils.dateToDayEnd(date));
+		if(insChecks.isEmpty()) return null;
+		return insChecks.get(0);
+	}
+	
+	public InsCheck findByWarehouseDateDay(String warehouseId, Date date) {
+		List<InsCheck> inventories = insCheckDao.findByWarehouseIdAndDateBetween(warehouseId, DateUtils.dateToDayBegin(date), DateUtils.dateToDayEnd(date));
+		if(inventories.isEmpty()) return null;
+		return inventories.get(0);
 	}
 	
 	

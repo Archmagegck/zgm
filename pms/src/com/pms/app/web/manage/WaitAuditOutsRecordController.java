@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.pms.app.entity.OutsRecord;
 import com.pms.app.service.OutsRecordService;
 import com.pms.app.service.PledgeConfigService;
+import com.pms.base.service.ServiceException;
 
 @Controller
 @RequestMapping(value = "/manage/waitAuditOutsRecord")
@@ -57,9 +58,12 @@ public class WaitAuditOutsRecordController {
 		try {
 			outsRecordService.audit(outsRecordService.findById(id), state);
 			ra.addFlashAttribute("messageOK", "审核结果操作成功！");
-		}  catch (Exception e) {
+		} catch (ServiceException e) {
+			ra.addFlashAttribute("messageErr", e.getMessage());
+			logger.error("保存异常", e);
+		} catch (Exception e) {
 			ra.addFlashAttribute("messageErr", "保存失败！");
-			logger.error("监管员保存异常", e);
+			logger.error("保存异常", e);
 		}
 		return "redirect:/manage/waitAuditOutsRecord/list";
 	}
