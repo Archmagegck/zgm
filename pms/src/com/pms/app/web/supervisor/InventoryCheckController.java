@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.pms.app.dao.InventoryDao;
 import com.pms.app.entity.Inventory;
 import com.pms.app.entity.InventoryCheck;
 import com.pms.app.entity.InventoryCheckDetail;
 import com.pms.app.entity.InventoryCheckTemplate;
+import com.pms.app.entity.InventoryDetail;
 import com.pms.app.entity.Warehouse;
 import com.pms.app.service.InventoryCheckDetailService;
 import com.pms.app.service.InventoryCheckService;
@@ -44,6 +46,7 @@ public class InventoryCheckController {
 	@Autowired private StyleService styleService;
 	@Autowired private WarehouseService warehouseService;
 	@Autowired private InventoryCheckTemplateService inventoryCheckTemplateService;
+	@Autowired private InventoryDao inventoryDao;
 	
 	@RequestMapping(value = { "/list", "" })
 	public String list(Model model, Pageable pageable, Date date, HttpSession session) {
@@ -57,20 +60,66 @@ public class InventoryCheckController {
 	@RequestMapping(value = "/{id}/details")
 	public String detailList(Model model, @PathVariable("id")String id){
 		InventoryCheck inventoryCheck = inventoryCheckService.findById(id);
-		model.addAttribute("inventoryCheck", inventoryCheck);
-		model.addAttribute("detailList", inventoryCheck.getInventoryCheckDetails());
-		return "supervisor/inventoryCheck/detailList";
+		if(inventoryCheck.getState()==0){
+			model.addAttribute("inventoryCheck", inventoryCheck);
+			model.addAttribute("detailList", inventoryCheck.getInventoryCheckDetails());
+			model.addAttribute("styleList", styleService.findAll());
+		
+			return "supervisor/inventoryCheck/detailList";
+		}else{
+			model.addAttribute("inventoryCheck", inventoryCheck);
+			model.addAttribute("detailList", inventoryCheck.getInventoryCheckDetails());
+			return "supervisor/inventoryCheck/detailListShow";
+		}
 	}
 	
 	@RequestMapping(value = "/inputNo")
 	public String inputNo(Model model, HttpSession session){
-		Inventory inventory = inventoryService.findByDateDay(new Date());
-		if(inventory == null) {
-			model.addAttribute("messageErr", "当日没有进行盘存，请先盘存之后再进行盘存检测！");
-		} else {
-			model.addAttribute("inventory", inventory);
+		//Inventory inventory = inventoryService.findByDateDay(new Date());
+		//获取最近一次盘存的盘点记录
+		List<Inventory> inventorys = inventoryDao.findNewestInventoryList();
+		if(inventorys.get(0)!=null){
+			//获取最近一次盘点明细
+			List<InventoryDetail> inventoryDetails = inventorys.get(0).getInventoryDetails();
+			int inventoryDetailCount = inventoryDetails.size();
+			//创建用于生成的检测单
+			List<InventoryCheckDetail> details = new ArrayList<InventoryCheckDetail>();
+			
+			if(inventoryDetailCount<16){
+				for (int i = 0; i < inventoryDetailCount; i++) {
+					InventoryCheckDetail inventoryCheckDetail = new InventoryCheckDetail();					
+					inventoryCheckDetail.setTrayNo(inventoryDetails.get(i).getTrayNo());
+					details.add(inventoryCheckDetail);
+				}
+				model.addAttribute("trayList", details);
+				
+			}else{
+				int[] inputs = new int[inventoryDetailCount];
+				int[] generals15 = CodeUtils.randoms(inputs, 15);
+				for (int i = 0; i < generals15.length; i++) {
+					InventoryCheckDetail inventoryCheckDetail = new InventoryCheckDetail();
+					inventoryCheckDetail.setTrayNo(inventoryDetails.get(generals15[i]).getTrayNo());
+					details.add(inventoryCheckDetail);
+				}
+				model.addAttribute("trayList", details);
+			}
+			
+		}else{
+			//提示：请进行第一次每日盘点			
+			model.addAttribute("messageErr", "没有进行过第一次盘存，请先进行第一次盘存之后再进行盘存检测！");
 		}
-		return "supervisor/inventoryCheck/inputCount";
+		return "supervisor/inventoryCheck/addCheck";
+		
+		
+		
+		
+		
+//		if(inventory == null) {
+//			model.addAttribute("messageErr", "当日没有进行盘存，请先盘存之后再进行盘存检测！");
+//		} else {
+//			model.addAttribute("inventory", inventory);
+//		}
+//		return "supervisor/inventoryCheck/inputCount";
 	}
 	
 	@RequestMapping(value = "/general")
@@ -135,12 +184,14 @@ public class InventoryCheckController {
 	}
 	
 	@RequestMapping(value = "/save")
-	public String save(InventoryCheckDetailForm inventoryCheckDetailForm, HttpSession session, RedirectAttributes ra){
+	public String save(Model model,InventoryCheckDetailForm inventoryCheckDetailForm, HttpSession session, RedirectAttributes ra){
 		List<InventoryCheckDetail> details = inventoryCheckDetailForm.getInventoryCheckDetails();
 		try {
 			Warehouse warehouse = warehouseService.findById((String)session.getAttribute("warehouseId"));
 			InventoryCheck inventoryCheck = inventoryCheckService.save(details, warehouse);
-			return "redirect:/supervisor/inventoryCheck/" + inventoryCheck.getId() + "/details";
+			model.addAttribute("inventoryCheck", inventoryCheck);
+			model.addAttribute("inventoryCheckDetailList", inventoryCheck.getInventoryCheckDetails());
+			return "supervisor/inventoryCheck/print";
 		} catch (ServiceException e) {
 			ra.addFlashAttribute("messageErr", e.getMessage());
 			logger.warn("保存异常", e.getMessage());
@@ -221,6 +272,27 @@ public class InventoryCheckController {
 		model.addAttribute("id", id);
 		model.addAttribute("inventoryCheckDetailList", inventoryCheckDetailService.findAllEq("inventoryCheck.id", id));
 		return "supervisor/inventoryCheck/checkList";
+	}
+	//登记检测结果:更新结果
+	
+	@RequestMapping(value = "/saveCheckResult")
+	public String saveCheckResult(Model model,String inventoryCheckId,InventoryCheckDetailForm inventoryCheckDetailForm, HttpSession session, RedirectAttributes ra){
+		List<InventoryCheckDetail> details = inventoryCheckDetailForm.getInventoryCheckDetails();
+		try{
+			InventoryCheck inventoryCheck=inventoryCheckService.findById(inventoryCheckId);
+			inventoryCheckService.saveCheckResults(details, inventoryCheck);
+			return "redirect:/supervisor/inventoryCheck/list";
+		} catch (ServiceException e){
+			ra.addFlashAttribute("messageErr", e.getMessage());
+			logger.warn("保存异常", e.getMessage());
+			return "redirect:/supervisor/inventoryCheck/list";
+		}catch (Exception e) {
+			ra.addFlashAttribute("messageErr", "保存失败！");
+			logger.error("保存异常", e);
+			return "redirect:/supervisor/inventoryCheck/list";
+		}		
+		
+
 	}
 	
 	

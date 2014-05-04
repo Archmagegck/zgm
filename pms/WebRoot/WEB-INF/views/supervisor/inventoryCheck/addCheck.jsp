@@ -67,22 +67,17 @@
 								<th>检测件数</th>
 							</tr>
 						</thead>
-						<c:forEach items="${details}" var="detail" varStatus="status">
+						<c:forEach items="${trayList}" var="detail" varStatus="status">
 							<tr>
 								<td>
 									${detail.trayNo}&nbsp;
 									<input type="hidden" name="inventoryCheckDetails[${status.index}].trayNo" value="${detail.trayNo}">
 								</td>
 								<td>
-									<select id="inventoryCheckDetailsStyle[${status.index}]" name="inventoryCheckDetails[${status.index}].style.id" class="required">
-										<c:forEach items="${styleList}" var="style">
-											<option value = "${style.id }">${style.name }</option>
-										</c:forEach>
-									</select>
+									
 								</td>
 								<td>
-									<input id="inventoryCheckDetailsAmount[${status.index}]" name="inventoryCheckDetails[${status.index}].amount" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
-									&nbsp;
+									
 								</td>
 							</tr>
 						</c:forEach>
@@ -90,8 +85,9 @@
 				</div>
 			</div>
 			<div style="margin-bottom: 5px;padding: 3px;" align="center">
-    			<input id="button1" type="submit" value="录入" style="cursor: pointer;font-weight: bold;margin-left: 8px;padding-right: 5px;width: 205px; background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
+    			<input id="button1" type="submit"  value="生成并打印检测单" style="cursor: pointer;font-weight: bold;margin-left: 8px;padding-right: 5px;width: 205px; background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
     		</div>
+    	
 		</form>
 	</body>
 </html>

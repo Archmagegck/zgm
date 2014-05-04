@@ -45,8 +45,36 @@ public class InventoryCheckService extends BaseService<InventoryCheck, String> {
 			inventoryCheckDetail.setInventoryCheck(inventoryCheck);
 			inventoryCheckDetail.setDate(now);
 			inventoryCheckDetail.setWarehouse(warehouse);
-			
+			if(inventoryCheckDetail.getAmount() != null){
 			checkCount += inventoryCheckDetail.getAmount();
+			}
+		}
+		inventoryCheck.setInventoryCheckDetails(inventoryCheckDetails);
+		
+		
+		inventoryCheckDao.save(inventoryCheck);
+		inventoryCheckDetailDao.save(inventoryCheckDetails);
+		
+		return inventoryCheck;
+	}
+	
+	@Transactional
+	public InventoryCheck saveCheckResults(List<InventoryCheckDetail> inventoryCheckDetails, InventoryCheck inventoryCheck) {
+		Date now = new Date();
+		
+//		InventoryCheck inventoryCheck = new InventoryCheck();
+//		inventoryCheck.setCode(CodeUtils.getInventoryCheckCode(warehouse.getId()));
+//		inventoryCheck.setDate(now);
+//		inventoryCheck.setWarehouse(warehouse);
+		
+		Integer checkCount = 0;
+		
+		for (InventoryCheckDetail inventoryCheckDetail : inventoryCheckDetails) {
+			inventoryCheckDetail.setInventoryCheck(inventoryCheck);
+			inventoryCheckDetail.setDate(now);			
+			if(inventoryCheckDetail.getAmount() != null){
+			checkCount += inventoryCheckDetail.getAmount();
+			}
 		}
 		inventoryCheck.setInventoryCheckDetails(inventoryCheckDetails);
 		
@@ -55,11 +83,12 @@ public class InventoryCheckService extends BaseService<InventoryCheck, String> {
 		}
 		
 		inventoryCheck.setState(1);
-		inventoryCheckDao.save(inventoryCheck);
+		//inventoryCheckDao.save(inventoryCheck);
 		inventoryCheckDetailDao.save(inventoryCheckDetails);
 		
 		return inventoryCheck;
 	}
+	
 	
 
 	@Transactional
