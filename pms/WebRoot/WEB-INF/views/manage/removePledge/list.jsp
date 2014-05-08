@@ -38,9 +38,9 @@
 		}
 			
 		//解压
-		function del(){
+		function del(supervisionCustomerId){
 			if (confirm("确定要解压吗？")){
-					$("#myForm").attr("action","${ctx}//manage/removePledge/delete");
+					$("#myForm").attr("action","${ctx}/manage/removePledge/delete/"+supervisionCustomerId);
 					$("#myForm").submit();
 			}
 		}
@@ -154,8 +154,7 @@
 								<td>
 									${removePledge.warehouse.address }&nbsp;
 								</td>
-								<td><input type="button" value="解压" class="button" onclick="del()"/></td>
-								<td><input type="hidden" name="removeSupervisionCustomerId" value="${removePledge.supervisionCustomer.id}" /></td>
+								<td><input type="button" value="解压" class="button" onclick="del('${removePledge.supervisionCustomer.id}')"/></td>
 							</tr>
 						</c:forEach>
 					</table>

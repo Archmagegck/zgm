@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.pms.app.service.DelegatorService;
@@ -39,8 +40,8 @@ public class RemovePledgeController {
 		return "manage/removePledge/list";
 	}
 	
-	@RequestMapping(value="/delete")
-	public String delete(Model model, String removeSupervisionCustomerId ){
+	@RequestMapping(value="/delete/{supervisionCustomerId}")
+	public String delete(Model model, @PathVariable("supervisionCustomerId")String removeSupervisionCustomerId ){
 		model.addAttribute("removeSupervisionCustomerId",removeSupervisionCustomerId);
 		return "manage/removePledge/delete";
 	}
