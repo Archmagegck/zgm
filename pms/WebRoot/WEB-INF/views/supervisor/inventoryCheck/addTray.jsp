@@ -28,53 +28,26 @@
 			$("#myForm").validate();
 		});
 		
-		function changeStyle() {
-			var selStyle = $("#style").find("option:selected").text();
-			$("#styleName").val(selStyle);
-		}
-		
 	</script>
 	
   </head>
   
   <body>
-    <form id="myForm" name="myForm" action="${ctx}/supervisor/inventory/save" method="post">
+    <form id="myForm" name="myForm" action="${ctx}/supervisor/inventoryCheck/saveTray" method="post">
     	<div id="content">
     		<div style="margin-bottom: 10px;padding: 5px 10px;" id="box">
-    		<h3 id="adduser">盘存登记</h3>
+    		<h3 id="adduser">盘点检测</h3>
     		<br/>
     		<fieldset style="padding: 5px 10px;" id="personal">
-    			<legend><h3>请输入相关信息</h3></legend>
+    			<legend><h3>请添加托盘</h3></legend>
     			<br/>
-    				<input type="hidden" name="warehouse.id" value = "${sessionScope.warehouseId }" >
-    				<table  cellpadding="0" cellspacing="0" width="100%"  class="list1">
+    				<table cellpadding="0" cellspacing="0" width="100%" class="list1">
     				<tr>
 						<td width="30%">
 							托盘号:
 						</td>
 						<td width="70%">
 							<input id="trayNo" name="trayNo" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
-						</td>
-					</tr>
-					<tr>
-						<td width="30%">
-							款式大类:
-						</td>
-						<td width="70%">
-							<select id="style" name="style.id" class="required" onchange="changeStyle();">
-								<c:forEach items="${styleList}" var="style">
-									<option value = "${style.id }">${style.name }</option>
-								</c:forEach>
-							</select>
-							<input type="hidden" id="styleName" name="style.name" value="${styleList[0].name}"/>					
-						</td>
-					</tr>
-					<tr>
-						<td width="30%">
-							检测重量(g):
-						</td>
-						<td width="70%">
-							<input id="weight" name="weight" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>
 						</td>
 					</tr>
 					</table>

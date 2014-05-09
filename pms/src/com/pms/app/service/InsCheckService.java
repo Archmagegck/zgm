@@ -47,20 +47,24 @@ public class InsCheckService extends BaseService<InsCheck, String> {
 		insCheck.setWarehouse(warehouse);
 		
 		double gpCheck = 0.0;
-		double rjCheck = 0.0;
+//		double rjCheck = 0.0;
 		
 		for (InsCheckDetail insCheckDetail : insCheckDetailsList) {
 			if(insCheckDetail.getCheckMethod() == CheckMethod.Spectrum) {
 				gpCheck += insCheckDetail.getCheckWeight();
 			}
-			if(insCheckDetail.getCheckMethod() == CheckMethod.Dissolve) {
-				rjCheck += insCheckDetail.getCheckWeight();
-			}
+//			if(insCheckDetail.getCheckMethod() == CheckMethod.Dissolve) {
+//				rjCheck += insCheckDetail.getCheckWeight();
+//			}
 			insCheckDetail.setInsCheck(insCheck);
 		}
 		insCheck.setInsCheckDetails(insCheckDetailsList);
 		
-		if(gpCheck < gpWeight || rjCheck < rjWeight) {
+//		if(gpCheck < gpWeight || rjCheck < rjWeight) {
+//			throw new ServiceException("检测重量低于系统设定值!");
+//		}
+		
+		if(gpCheck < gpWeight) {
 			throw new ServiceException("检测重量低于系统设定值!");
 		}
 		

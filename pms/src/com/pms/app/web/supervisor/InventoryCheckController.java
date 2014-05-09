@@ -91,9 +91,7 @@ public class InventoryCheckController {
 					inventoryCheckDetail.setTrayNo(inventoryDetails.get(i).getTrayNo());
 					details.add(inventoryCheckDetail);
 				}
-				model.addAttribute("trayList", details);
-				
-			}else{
+			} else {
 				int[] inputs = new int[inventoryDetailCount];
 				int[] generals15 = CodeUtils.randoms(inputs, 15);
 				for (int i = 0; i < generals15.length; i++) {
@@ -101,9 +99,17 @@ public class InventoryCheckController {
 					inventoryCheckDetail.setTrayNo(inventoryDetails.get(generals15[i]).getTrayNo());
 					details.add(inventoryCheckDetail);
 				}
-				model.addAttribute("trayList", details);
 			}
 			
+			@SuppressWarnings("unchecked")
+			List<InventoryCheckDetail> addDetails = (List<InventoryCheckDetail>) session.getAttribute("addTrayDetails");
+			if(addDetails != null) {
+				for(InventoryCheckDetail addCheckDetail : addDetails) {
+					details.add(addCheckDetail);
+				}
+			}
+			
+			model.addAttribute("trayList", details);
 		}else{
 			//提示：请进行第一次每日盘点			
 			model.addAttribute("messageErr", "没有进行过第一次盘存，请先进行第一次盘存之后再进行盘存检测！");
@@ -183,6 +189,29 @@ public class InventoryCheckController {
 		return "supervisor/inventoryCheck/addCheck";
 	}
 	
+	@RequestMapping(value = "/addTray")
+	public String addTray() {
+		return "supervisor/inventoryCheck/addTray";
+	}
+	
+	@RequestMapping(value = "/saveTray")
+	public String saveTray(Integer trayNo, HttpSession session) {
+		if(trayNo != null) {
+			InventoryCheckDetail inventoryCheckDetail = new InventoryCheckDetail();
+			inventoryCheckDetail.setTrayNo(trayNo);
+			
+			@SuppressWarnings("unchecked")
+			List<InventoryCheckDetail> addDetails = (List<InventoryCheckDetail>) session.getAttribute("addTrayDetails");
+			if(addDetails == null) {
+				addDetails = new ArrayList<InventoryCheckDetail>();
+			}
+			addDetails.add(inventoryCheckDetail);
+			
+			session.setAttribute("addTrayDetails", addDetails);
+		}
+		return "redirect:/supervisor/inventoryCheck/inputNo";
+	}
+	
 	@RequestMapping(value = "/save")
 	public String save(Model model,InventoryCheckDetailForm inventoryCheckDetailForm, HttpSession session, RedirectAttributes ra){
 		List<InventoryCheckDetail> details = inventoryCheckDetailForm.getInventoryCheckDetails();
@@ -191,6 +220,7 @@ public class InventoryCheckController {
 			InventoryCheck inventoryCheck = inventoryCheckService.save(details, warehouse);
 			model.addAttribute("inventoryCheck", inventoryCheck);
 			model.addAttribute("inventoryCheckDetailList", inventoryCheck.getInventoryCheckDetails());
+			session.removeAttribute("addTrayDetails");
 			return "supervisor/inventoryCheck/print";
 		} catch (ServiceException e) {
 			ra.addFlashAttribute("messageErr", e.getMessage());
