@@ -18,7 +18,7 @@
 	</head>
 
 	<body>
-		<div align="right">${outsRecord.secretCode}</div>
+		<div align="left">${outsRecord.secretCode}</div>
 		<div align="center" id="pager" >
 			<input id="btnPrint" type="button" value="  打  印  " class="button" onclick="printRecord()" />
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
