@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -105,9 +106,15 @@
 						<c:forEach items="${inventoryShows}" var="inventoryShowlist" varStatus="status">
 							<tr>
 								<td>${status.count}&nbsp;</td>
-								<td>${inventoryShowlist.warehouse.name}&nbsp;</td>
-								<td>${inventoryShowlist.inventoryWeight}&nbsp;</td>
-								<td>${inventoryShowlist.inventoryPrice}&nbsp;</td>
+								<td>${inventoryShowlist.warehouse.name}&nbsp;
+								
+								</td>
+								<td>
+									<fmt:formatNumber value="${inventoryShowlist.inventoryWeight}" pattern="#,#00.00#"/>&nbsp;
+								</td>
+								<td>
+									<fmt:formatNumber value="${inventoryShowlist.inventoryPrice}" pattern="#,#00.00#"/>&nbsp;
+								</td>
 								
 							</tr>
 						</c:forEach>

@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -140,7 +141,8 @@
 									${inOutsRecord.amount}&nbsp;
 								</td>
 								<td>
-									${inOutsRecord.sumWeight }&nbsp;
+									<fmt:formatNumber value="${inOutsRecord.sumWeight }" pattern="#,#00.00#"/>&nbsp;	
+									
 								</td>
 							</tr>
 							<c:if test="${inOutsRecord.method eq '入库'}">
@@ -162,14 +164,19 @@
 							<td width="14%">&nbsp;</td>
 							<td width="14%">&nbsp;</td>
 							<td width="12%">${inSumAmount}&nbsp;</td>
-							<td width="12%">${inSumweight}&nbsp;</td>
+							<td width="12%">
+								<fmt:formatNumber value="${inSumweight}" pattern="#,#00.00#"/>&nbsp;	
+							
+							</td>
 						</tr>
 						<tr>
 							<td width="14%">出库&nbsp;</td>
 							<td width="14%">&nbsp;</td>
 							<td width="14%">&nbsp;</td>
 							<td width="12%">${outSumAmount}&nbsp;</td>
-							<td width="12%">${outSumweight}&nbsp;</td>
+							<td width="12%">
+								<fmt:formatNumber value="${outSumweight}" pattern="#,#00.00#"/>&nbsp;
+							</td>
 						</tr>
 					</table>
 					</c:forEach>
@@ -182,14 +189,18 @@
 							<td width="14%">&nbsp;</td>
 							<td width="14%">&nbsp;</td>
 							<td width="12%">${inAllSumAmount}&nbsp;</td>
-							<td width="12%">${inAllSumweight}&nbsp;</td>
+							<td width="12%">
+								<fmt:formatNumber value="${inAllSumweight}" pattern="#,#00.00#"/>&nbsp;
+							</td>
 						</tr>
 						<tr>
 							<td width="14%">出库&nbsp;</td>
 							<td width="14%">&nbsp;</td>
 							<td width="14%">&nbsp;</td>
 							<td width="12%">${outAllSumAmount}&nbsp;</td>
-							<td width="12%">${outAllSumweight}&nbsp;</td>
+							<td width="12%">
+								<fmt:formatNumber value="${outAllSumweight}" pattern="#,#00.00#"/>&nbsp;
+							</td>
 						</tr>
 					</table>
 					

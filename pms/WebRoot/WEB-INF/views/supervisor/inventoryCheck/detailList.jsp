@@ -38,7 +38,7 @@
 			<div align="center" id="content"">
 				<div id="box">
 					<h3 align="center">
-						盘存检测单ddddddddddd
+						盘存检测单
 					</h3>
 					<div align="left">
 						<c:if test="${not empty messageOK}">

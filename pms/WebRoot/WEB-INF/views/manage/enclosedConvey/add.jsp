@@ -96,7 +96,7 @@
 							起运时间
 						</td>
 						<td width="70%">
- 							<input id="startDate" name="startDate" class="{required:true,number:true}" onFocus="WdatePicker({isShowClear:false,isShowWeek:true,readOnly:true,skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"/>
+ 							<input id="startDate" name="startDate" class="{required:true}" onFocus="WdatePicker({isShowClear:false,isShowWeek:true,readOnly:true,skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"/>
 						</td>
 					</tr>
 					<tr>
@@ -104,7 +104,7 @@
 							预计到达时间
 						</td>
 						<td width="70%">
-							<input id="endDate" name="endDate" class="{required:true,number:true}" onFocus="WdatePicker({isShowClear:false,isShowWeek:true,readOnly:true,skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"/>
+							<input id="endDate" name="endDate" class="{required:true}" onFocus="WdatePicker({isShowClear:false,isShowWeek:true,readOnly:true,skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"/>
 						</td>
 					</tr>
 					<tr>

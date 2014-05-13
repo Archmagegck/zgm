@@ -130,7 +130,8 @@
 									${stock.pledgePurity.name }&nbsp;
 								</td>
 								<td>
-									${stock.sumWeight }&nbsp;
+									<fmt:formatNumber value="${stock.sumWeight}" pattern="#,#00.00#"/>&nbsp;
+									
 								</td>
 								<td>
 									<fmt:formatNumber value="${stock.sumWeight * value }" pattern="#,#00.00#"/>&nbsp;
@@ -151,7 +152,7 @@
 							<td>合计</td>
 							<td>&nbsp;</td>
 							<td>&nbsp;</td>
-							<td>${sumWeight}&nbsp;</td>
+							<td><fmt:formatNumber value="${sumWeight}" pattern="#,#00.00#"/>&nbsp;</td>
 							<td><fmt:formatNumber value="${sumValue}" pattern="#,#00.00#"/>&nbsp;</td>
 						</tr>
 						<tr>
@@ -168,7 +169,7 @@
 							<td>在途物质</td>
 							<td>&nbsp;</td>
 							<td>&nbsp;</td>
-							<td>${(weightValueMap[warehouseId])[0]}&nbsp;</td>
+							<td><fmt:formatNumber value="${(weightValueMap[warehouseId])[0]}" pattern="#,#00.00#"/>&nbsp;</td>
 							<td><fmt:formatNumber value="${(weightValueMap[warehouseId])[1]}" pattern="#,#00.00#"/>&nbsp;</td>
 						</tr>
 					</table>
@@ -180,7 +181,7 @@
 							<th width="18%">合计</th>
 							<th width="25%">&nbsp;</th>
 							<th width="18%">&nbsp;</th>
-							<th width="15%">${allSumWeight}</th>
+							<th width="15%"><fmt:formatNumber value="${allSumWeight}" pattern="#,#00.00#"/>&nbsp;</th>
 							<th width="12%"><fmt:formatNumber value="${allSumValue}" pattern="#,#00.00#"/> </th>
 						</tr>
 					</table>

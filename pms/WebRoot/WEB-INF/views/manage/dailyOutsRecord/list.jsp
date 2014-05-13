@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -104,10 +105,18 @@
 								<td>${status.count}&nbsp;</td>
 								<td>${outsRecord.delegator.name}&nbsp;</td>
 								<td>${outsRecord.supervisionCustomer.name}&nbsp;</td>
-								<td>${outsRecord.sumWeight}&nbsp;</td>
-								<td>${outsRecord.sumValue}&nbsp;</td>
+								<td>
+									<fmt:formatNumber value="${outsRecord.sumWeight}" pattern="#,#00.00#"/>&nbsp;
+								</td>
+								<td>
+									<fmt:formatNumber value="${outsRecord.sumValue}" pattern="#,#00.00#"/>&nbsp;
+								</td>
+								
 								<td>${outsRecord.dateStr}&nbsp;</td>
-								<td>${outsRecord.sumStock}&nbsp;</td>
+								<td>
+									<fmt:formatNumber value="${outsRecord.sumStock}" pattern="#,#00.00#"/>&nbsp;
+								</td>
+								
 							</tr>
 						</c:forEach>
 					</table>

@@ -63,17 +63,7 @@
 							</div>
 						</c:if>
 					</div>
-					<div align="left" style="vertical-align: middle;">
-						&nbsp;&nbsp;&nbsp;根据时间
-						&nbsp;&nbsp; 查询:
-						<span id="values">
-						<input name="date" value="${date}" onFocus="WdatePicker({isShowClear:false,isShowWeek:true,readOnly:true,skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"/>
-						&nbsp;
-						</span>
-						&nbsp;&nbsp;&nbsp;
-						<input type="button" value="查询" class="button" onclick="gotoPage(1)" />
-						<input type="hidden" name="page.page" id="pageNo" value="${page.number+1}"/>
-					</div>
+					
 					<br/>
 					<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
 						<thead>
