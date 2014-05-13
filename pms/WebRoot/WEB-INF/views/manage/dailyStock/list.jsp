@@ -159,8 +159,8 @@
 							<td>比对值</td>
 							<td>&nbsp;</td>
 							<td>&nbsp;</td>
-							<td><fmt:formatNumber value="${minWeight / sumWeight}" pattern="##.##" minFractionDigits="2" ></fmt:formatNumber>&nbsp;</td>
-							<td><fmt:formatNumber value="${minValue / sumValue}" pattern="##.##" minFractionDigits="2" ></fmt:formatNumber>&nbsp;</td>
+							<td><fmt:formatNumber value="${sumWeight / minWeight}" pattern="##.##" minFractionDigits="2" ></fmt:formatNumber>&nbsp;</td>
+							<td><fmt:formatNumber value="${sumValue / minValue}" pattern="##.##" minFractionDigits="2" ></fmt:formatNumber>&nbsp;</td>
 						</tr>
 						<tr>
 							<td colspan="5">&nbsp;</td>

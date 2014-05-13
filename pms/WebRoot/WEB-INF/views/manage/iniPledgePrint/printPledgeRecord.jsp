@@ -1,6 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -97,8 +98,8 @@
 							<c:if test="${pledgeRecordDetail.closedTran == 0}">否</c:if>
 						</td>
 						<td>${pledgeRecordDetail.storage}&nbsp;</td>
-						<td>${pledgeRecordDetail.spectrumRate}&nbsp;</td>
-						<td>${pledgeRecordDetail.dissolveRate}&nbsp;</td>
+						<td><fmt:formatNumber value="${pledgeRecordDetail.spectrumRate}" pattern="0.0000"/>&nbsp;</td>
+						<td><fmt:formatNumber value="${pledgeRecordDetail.dissolveRate}" pattern="0.0000"/>&nbsp;</td>
 						<td>${pledgeRecordDetail.desc}&nbsp;</td>
 					</tr>
 					</c:forEach>

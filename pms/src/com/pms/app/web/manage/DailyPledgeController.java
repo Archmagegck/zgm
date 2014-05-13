@@ -22,8 +22,8 @@ import com.pms.app.entity.ExtendedCheck;
 import com.pms.app.entity.ExtendedCheckDetail;
 import com.pms.app.entity.InsCheck;
 import com.pms.app.entity.InsCheckDetail;
-import com.pms.app.entity.Inventory;
-import com.pms.app.entity.InventoryDetail;
+import com.pms.app.entity.InventoryCheck;
+import com.pms.app.entity.InventoryCheckDetail;
 import com.pms.app.entity.PledgeRecord;
 import com.pms.app.entity.PledgeRecordDetail;
 import com.pms.app.entity.Stock;
@@ -31,7 +31,7 @@ import com.pms.app.entity.reference.CheckMethod;
 import com.pms.app.service.DelegatorService;
 import com.pms.app.service.ExtendedCheckService;
 import com.pms.app.service.InsCheckService;
-import com.pms.app.service.InventoryService;
+import com.pms.app.service.InventoryCheckService;
 import com.pms.app.service.PledgeRecordService;
 import com.pms.app.service.StockService;
 import com.pms.app.service.SupervisionCustomerService;
@@ -44,7 +44,7 @@ public class DailyPledgeController {
 	@Autowired PledgeRecordService pledgeRecordService;
 	@Autowired SupervisionCustomerService supervisionCustomerService;
 	
-	@Autowired InventoryService inventoryService;
+	@Autowired InventoryCheckService inventoryCheckService;
 	@Autowired InsCheckService insCheckService;
 	@Autowired ExtendedCheckService extendedCheckService;
 	@Autowired StockService stockService;
@@ -73,9 +73,9 @@ public class DailyPledgeController {
 		String warehouseId = pledgeRecord.getWarehouse().getId();
 		Date date = pledgeRecord.getDate();
 		
-		List<InventoryDetail> inventoryDetails = new ArrayList<InventoryDetail>();
-		Inventory inventory = inventoryService.findByWarehouseDateDay(warehouseId, date);
-		if(inventory != null) inventoryDetails = inventory.getInventoryDetails();
+		List<InventoryCheckDetail> inventoryDetails = new ArrayList<InventoryCheckDetail>();
+		InventoryCheck inventoryCheck = inventoryCheckService.findByWarehouseDateDay(warehouseId, date);
+		if(inventoryCheck != null) inventoryDetails = inventoryCheck.getInventoryCheckDetails();
 		
 		List<InsCheckDetail> insCheckDetails = new ArrayList<InsCheckDetail>();
 		InsCheck insCheck = insCheckService.findByWarehouseDateDay(warehouseId, date);
@@ -91,7 +91,7 @@ public class DailyPledgeController {
 		for (PledgeRecordDetail pledgeRecordDetail : pledgeRecordDetails) {
 			double gpWeight = 0.0;
 			double rjWeight = 0.0;
-			for (InventoryDetail inv : inventoryDetails) {
+			for (InventoryCheckDetail inv : inventoryDetails) {
 				if(inv.getStyle().getId().equals(pledgeRecordDetail.getStyle().getId())) {
 					gpWeight += inv.getWeight();
 				}
@@ -123,8 +123,8 @@ public class DailyPledgeController {
 				}
 			}
 			
-			pledgeRecordDetail.setSpectrumRate(new BigDecimal(gpWeight / stockWeight).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
-			pledgeRecordDetail.setDissolveRate(new BigDecimal(rjWeight / stockWeight).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+			pledgeRecordDetail.setSpectrumRate(new BigDecimal(gpWeight / stockWeight).setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue());
+			pledgeRecordDetail.setDissolveRate(new BigDecimal(rjWeight / stockWeight).setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue());
 		}
 		
 		model.addAttribute("detailList", pledgeRecordDetails);

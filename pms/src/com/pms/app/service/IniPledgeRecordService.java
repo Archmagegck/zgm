@@ -66,8 +66,8 @@ public class IniPledgeRecordService extends BaseService<IniPledgeRecord, String>
 					}
 				}
 				
-				iniPledgeRecordDetail.setSpectrumRate(new BigDecimal(gpWeight / iniRecord.getWeight()).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
-				iniPledgeRecordDetail.setDissolveRate(new BigDecimal(rjWeight / iniRecord.getWeight()).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+				iniPledgeRecordDetail.setSpectrumRate(new BigDecimal(gpWeight / iniRecord.getWeight()).setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue());
+				iniPledgeRecordDetail.setDissolveRate(new BigDecimal(rjWeight / iniRecord.getWeight()).setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue());
 				
 				iniPledgeRecordDetailList.add(iniPledgeRecordDetail);
 			}

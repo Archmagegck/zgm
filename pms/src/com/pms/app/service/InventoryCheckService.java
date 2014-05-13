@@ -15,6 +15,7 @@ import com.pms.app.entity.InventoryCheckDetail;
 import com.pms.app.entity.InventoryCheckTemplate;
 import com.pms.app.entity.Warehouse;
 import com.pms.app.util.CodeUtils;
+import com.pms.app.util.DateUtils;
 import com.pms.base.dao.BaseDao;
 import com.pms.base.service.BaseService;
 import com.pms.base.service.ServiceException;
@@ -117,6 +118,13 @@ public class InventoryCheckService extends BaseService<InventoryCheck, String> {
 		inventoryCheckDetailDao.save(inventoryCheckDetails);
 		
 		return inventoryCheck;
+	}
+	
+	
+	public InventoryCheck findByWarehouseDateDay(String warehouseId, Date date) {
+		List<InventoryCheck> inventories = inventoryCheckDao.findByWarehouseIdAndDateBetween(warehouseId, DateUtils.dateToDayBegin(date), DateUtils.dateToDayEnd(date));
+		if(inventories.isEmpty()) return null;
+		return inventories.get(0);
 	}
 	
 
