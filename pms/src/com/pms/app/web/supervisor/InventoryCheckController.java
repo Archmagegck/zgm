@@ -77,8 +77,8 @@ public class InventoryCheckController {
 	public String inputNo(Model model, HttpSession session){
 		//Inventory inventory = inventoryService.findByDateDay(new Date());
 		//获取最近一次盘存的盘点记录
-		List<Inventory> inventorys = inventoryDao.findNewestInventoryList();
-		if(inventorys.get(0)!=null){
+		List<Inventory> inventorys = inventoryDao.findNewestInventoryList((String)session.getAttribute("warehouseId"));
+		if(!inventorys.isEmpty() && inventorys.size()!=0) {
 			//获取最近一次盘点明细
 			List<InventoryDetail> inventoryDetails = inventorys.get(0).getInventoryDetails();
 			int inventoryDetailCount = inventoryDetails.size();

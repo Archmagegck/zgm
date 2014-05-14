@@ -3,6 +3,7 @@ package com.pms.app.web.manage;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.pms.app.entity.vo.InventoryShow;
 import com.pms.app.service.InventoryStatisticsService;
 import com.pms.app.service.WarehouseService;
 
@@ -42,7 +44,12 @@ public class InventoryStatisticsController {
 		}else{
 			beginDate = new Date();
 			endDate=new Date();
-			model.addAttribute("inventoryShowList", inventoryStatisticsService.findDailySvgWeightAndPrice(beginDate, endDate));
+			List<InventoryShow> inventoryShowlist=inventoryStatisticsService.findDailySvgWeightAndPrice(beginDate, endDate);
+			if(inventoryShowlist.isEmpty()&& inventoryShowlist.size()==0){
+				model.addAttribute("messageErr", "录入价格，请先录入价格！");
+			}else{
+				model.addAttribute("inventoryShowList", inventoryShowlist);
+			}
 		}
 		
 		//model.addAttribute("delegator", delegatorService.findById(delegatorId));

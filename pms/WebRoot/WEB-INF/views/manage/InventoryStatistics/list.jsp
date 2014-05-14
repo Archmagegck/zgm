@@ -49,6 +49,18 @@
 					<h3 align="left">
 						盘点统计
 					</h3>
+					<div align="left">
+						<c:if test="${not empty messageOK}">
+							<div class="flash notice">
+								&nbsp;&nbsp;${messageOK}
+							</div>
+						</c:if>
+						<c:if test="${not empty messageErr}">
+							<div class="flash error">
+								&nbsp;&nbsp;${messageErr}
+							</div>
+						</c:if>
+					</div>
 					<div>
 						&nbsp;
 					</div>

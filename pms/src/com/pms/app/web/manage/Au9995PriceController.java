@@ -64,7 +64,7 @@ public class Au9995PriceController {
 			ra.addFlashAttribute("messageOK", "今日价格已添加！");
 			return "redirect:/manage/au9995Price/list";
 		}
-		model.addAttribute("pledgePurityList",pledgePurityService.findAll());
+		model.addAttribute("pledgePurityList",pledgePurityService.findAllEq("type", "1"));
 		System.out.printf("这是查询的信息"+pledgePurityService.findAll().toString());
 		model.addAttribute("date", new DateTime().toString("yyyy-MM-dd"));
 		return "manage/au9995Price/add";

@@ -76,9 +76,10 @@
 						<c:forEach items="${detailList}" var="inventoryCheckDetail" varStatus="status">
 							<tr>								
 								<td>
-									<lable id="inventoryCheckDetailsTrayNo[${status.index}]" name="inventoryCheckDetails[${status.index}].trayNo" class="required">${inventoryCheckDetail.trayNo}&nbsp;
-									</lable>	
+									<input type="hidden" id="inventoryCheckDetailsTrayNo[${status.index}]" name="inventoryCheckDetails[${status.index}].trayNo" class="required" value="${inventoryCheckDetail.trayNo}" >  </input> 
+									
 									<input type="hidden" id="inventoryCheckDetailsId[${status.index}]" name="inventoryCheckDetails[${status.index}].id" value="${inventoryCheckDetail.id}" class="required" />&nbsp;
+									<label>${inventoryCheckDetail.trayNo}</label>
 								</td>
 								<td>
 									<select id="inventoryCheckDetailsStyle[${status.index}]" name="inventoryCheckDetails[${status.index}].style.id" class="required">

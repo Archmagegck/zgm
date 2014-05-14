@@ -48,7 +48,7 @@
 						<td width="30%">
 						
 							<select id="selPledgePurity" name = "pledgePurityId" class="required">
-								<option selected="selected" value="">--请选择--</option>
+								
 								<c:forEach items="${pledgePurityList}" var = "pledgePurity">
 									<option value = "${pledgePurity.id }">${pledgePurity.name }</option>
 								</c:forEach>
