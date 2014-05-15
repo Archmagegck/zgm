@@ -35,10 +35,10 @@ public class WaitAuditOutsRecordController {
 			model.addAttribute("page", outsRecordService.findWaitOutsRecord(pageable));
 		}
 		if(type == 4) {//监管经理
-			model.addAttribute("page", outsRecordService.findWaitOutsRecordByNotice(pageable, 2));
+			model.addAttribute("page", outsRecordService.findWaitOutsRecordByNotice(pageable, 2,3));
 		}
 		if(type == 5) {//监管经理助理
-			model.addAttribute("page", outsRecordService.findWaitOutsRecordByNotice(pageable, 1));
+			model.addAttribute("page", outsRecordService.findWaitOutsRecordByNotice(pageable, 1,3));
 		}
 		return "manage/waitAuditOutsRecord/list";
 	}

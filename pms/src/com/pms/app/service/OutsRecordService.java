@@ -52,8 +52,8 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 		return outsRecordDao;
 	}
 
-	public Page<OutsRecord> findWaitOutsRecordByNotice(Pageable pageable, int notice) {
-		return outsRecordDao.findPageByNoticeAndAuditStateNot(pageable, notice, AuditState.Pass);
+	public Page<OutsRecord> findWaitOutsRecordByNotice(Pageable pageable, int notice1 ,int notice2) {
+		return outsRecordDao.findPageByNoticeOrNoticeAndAuditStateNot(pageable, notice1,notice2, AuditState.Pass);
 	}
 	
 	public Page<OutsRecord> findWaitOutsRecord(Pageable pageable) {
@@ -203,7 +203,7 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 			
 			if(stockSumWeight < warnWeight) {//判断重量
 				if(stockSumWeight > (minWeight * mincordon)) {
-					weightWarnType = 1;
+					weightWarnType = 1;		
 				} else if (stockSumWeight > minWeight) {
 					weightWarnType = 2;
 				}
@@ -216,8 +216,11 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 					valueWarnType = 2;
 				}
 			}
-			
 			warnType = (weightWarnType > valueWarnType) ? weightWarnType : valueWarnType;
+			
+			if((outSumWeight > supOutWeight)&&(stockSumWeight >= warnWeight) && (stockValue >= warnValue)){
+				warnType=3;
+			}
 			outsRecord.setNotice(warnType);
 		}
 		
