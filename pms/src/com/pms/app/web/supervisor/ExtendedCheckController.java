@@ -137,7 +137,7 @@ public class ExtendedCheckController {
 		}  catch (ServiceException e) {
 			ra.addFlashAttribute("messageErr", e.getMessage());
 			logger.warn("保存异常", e.getMessage());
-			return "redirect:/supervisor/insCheck/showDetailList";
+			return "redirect:/supervisor/extendedCheck/showDetailList";
 		}  catch (Exception e) {
 			ra.addFlashAttribute("messageErr", "保存失败！");
 			logger.error("保存异常", e);
