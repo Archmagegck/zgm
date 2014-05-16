@@ -1,9 +1,18 @@
 package com.pms.app.service;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +24,7 @@ import com.pms.app.dao.PledgePurityDao;
 import com.pms.app.dao.PledgeRecordDao;
 import com.pms.app.dao.PledgeRecordDetailDao;
 import com.pms.app.dao.StockDao;
+import com.pms.app.dao.StyleDao;
 import com.pms.app.dao.SupervisionCustomerDao;
 import com.pms.app.entity.Delegator;
 import com.pms.app.entity.Inventory;
@@ -23,6 +33,7 @@ import com.pms.app.entity.PledgeConfig;
 import com.pms.app.entity.PledgePurity;
 import com.pms.app.entity.PledgeRecord;
 import com.pms.app.entity.PledgeRecordDetail;
+import com.pms.app.entity.Style;
 import com.pms.app.entity.SupervisionCustomer;
 import com.pms.app.entity.Supervisor;
 import com.pms.app.entity.Warehouse;
@@ -40,6 +51,7 @@ public class InventoryService extends BaseService<Inventory, String> {
 	@Autowired private InventoryDao inventoryDao;
 	@Autowired private InventoryDetailDao inventoryDetailDao;
 	@Autowired private StockDao stockDao;
+	@Autowired private StyleDao styleDao;
 	@Autowired private PledgeConfigDao pledgeConfigDao;
 	@Autowired private SupervisionCustomerDao supervisionCustomerDao;
 	@Autowired private PledgePurityDao pledgePurityDao;
@@ -109,11 +121,17 @@ public class InventoryService extends BaseService<Inventory, String> {
 		pledgeRecord.setPledgeRecordDetails(pledgeRecordDetails);
 		
 		inventory.setSumWeight(invSumWeight);
-		double stockSumWeight = stockDao.findSumWeightByWarehouseId(warehouse.getId());
+		double stockSumWeight = stockDao.findSumWeightByWarehouseId(warehouse.getId());//实时库存总量
 		
 		PledgeConfig config = pledgeConfigDao.findBySupervisionCustomerId(supervisionCustomer.getId()).get(0);
 		double range = config.getIeRange();
-		if(Math.abs(stockSumWeight - invSumWeight) / stockSumWeight > range){
+//		if(Math.abs(stockSumWeight - invSumWeight) / stockSumWeight > range){
+//			throw new ServiceException("盘存不一致，已超出盘存误差范围!");
+//		}
+		
+		//（盘存总重量为a,实时库存重量为b,盘存误差为c%）
+		// 判断if((1-c/100)*b <a<(1+c/100) ) 盘存通过
+		if(invSumWeight <= ((1-range/100)*stockSumWeight) || (invSumWeight >= (1+range/100))) {
 			throw new ServiceException("盘存不一致，已超出盘存误差范围!");
 		}
 		
@@ -150,6 +168,76 @@ public class InventoryService extends BaseService<Inventory, String> {
 		List<Inventory> inventories = inventoryDao.findByWarehouseIdAndDateBetween(warehouseId, DateUtils.dateToDayBegin(date), DateUtils.dateToDayEnd(date));
 		if(inventories.isEmpty()) return null;
 		return inventories.get(0);
+	}
+	
+	public List<InventoryDetail> paresExcel(InputStream inputStream) {
+		List<InventoryDetail> inventoryDetails = new ArrayList<InventoryDetail>();
+		Workbook workbook = null;
+        try {
+        	workbook = (Workbook) new XSSFWorkbook(inputStream);
+        } catch (Exception ex) {
+        	try {
+				workbook = new HSSFWorkbook(inputStream);
+			} catch (IOException e) {
+				throw new ServiceException("错误文件格式!", e);
+			}
+        }
+		try {
+			Sheet sheet = workbook.getSheetAt(0);
+			int maxRow = sheet.getLastRowNum();
+			for (int i = 1; i <= maxRow; i++) {
+				InventoryDetail inventoryDetail = new InventoryDetail();
+				
+				Row row = sheet.getRow(i);
+				Cell cellTray = row.getCell(0);
+				if(cellTray == null)
+					continue;
+				int trayNo = Integer.parseInt(getCellStr(cellTray));
+				inventoryDetail.setTrayNo(trayNo);
+				
+				Cell cellStyle = row.getCell(1);
+				if(cellStyle == null)
+					continue;
+				String styleName = getCellStr(cellStyle);
+				List<Style> styles = styleDao.findListByName(styleName);
+				if(styles.isEmpty()) {
+					throw new ServiceException("第" + (i + 1) + "行不存在款式 '" + styleName + "'");
+				} else {
+					inventoryDetail.setStyle(styles.get(0));
+				}
+				
+				Cell cellWeight = row.getCell(2);
+				if(cellWeight == null)
+					continue;
+				double weight = Double.parseDouble(getCellStr(cellWeight));
+				inventoryDetail.setWeight(weight);
+				
+				inventoryDetails.add(inventoryDetail);
+			}
+		} catch (Exception e) {
+			throw new ServiceException(e.getMessage(), e);
+		}
+		return inventoryDetails;
+	}
+	
+	public String getCellStr(Cell cell) {
+		String str = "";
+		if(cell != null) {
+			switch (cell.getCellType()) {
+			case Cell.CELL_TYPE_NUMERIC:
+				double strNumer = cell.getNumericCellValue();
+				DecimalFormat df = new DecimalFormat("0");
+				str = df.format(strNumer);
+				break;
+			case Cell.CELL_TYPE_STRING:
+				str = cell.getStringCellValue();
+				break;
+			default:
+				str = cell.toString();
+				break;
+			}
+		}
+		return str;
 	}
 
 }

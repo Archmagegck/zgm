@@ -6,8 +6,6 @@ import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 
 import com.pms.app.entity.Inventory;
-import com.pms.app.entity.PurityPrice;
-import com.pms.app.entity.Warehouse;
 import com.pms.base.dao.BaseDao;
 
 public interface InventoryDao extends BaseDao<Inventory, String> {

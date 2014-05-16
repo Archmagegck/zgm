@@ -39,6 +39,18 @@
 					<div>
 						&nbsp;
 					</div>
+					<div align="left">
+						<c:if test="${not empty messageOK}">
+							<div class="flash notice">
+								&nbsp;&nbsp;${messageOK}
+							</div>
+						</c:if>
+						<c:if test="${not empty messageErr}">
+							<div class="flash error">
+								&nbsp;&nbsp;${messageErr}
+							</div>
+						</c:if>
+					</div>
 					<br/>
 					<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
 						<thead>
@@ -72,7 +84,7 @@
 				</div>
 			</div>
 			<div style="margin-bottom: 5px;padding: 3px;" align="center">
-				<input id="button1" type="button" value="添加记录" onclick="location.href='${ctx}/supervisor/inventory/add'" style="cursor: pointer;font-weight: bold;margin-left: 8px;padding-right: 5px;width: 205px; background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
+				<input id="button1" type="button" value="导入Excel" onclick="location.href='${ctx}/supervisor/inventory/excelAdd'" style="cursor: pointer;font-weight: bold;margin-left: 8px;padding-right: 5px;width: 205px; background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
     			<input id="button1" type="submit" value="保存" style="cursor: pointer;font-weight: bold;margin-left: 8px;padding-right: 5px;width: 205px; background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;"/>
     		</div>
 		</form>

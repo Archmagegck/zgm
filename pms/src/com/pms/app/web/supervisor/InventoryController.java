@@ -1,11 +1,13 @@
 package com.pms.app.web.supervisor;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.joda.time.DateTime;
@@ -20,6 +22,8 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.pms.app.entity.Inventory;
@@ -117,6 +121,30 @@ public class InventoryController {
 		List<InventoryDetail> inventoryDetailList = (List<InventoryDetail>) session.getAttribute("inventoryDetailList");
 		inventoryDetailList.remove(index - 1);
 		session.setAttribute("inventoryDetailList", inventoryDetailList);
+		return "redirect:/supervisor/inventory/addList";
+	}
+	
+	
+	@RequestMapping(value = "/excelAdd")
+	public String importExcelAdd(){
+		return "supervisor/inventory/excelAdd";
+	}
+	
+	
+	@RequestMapping(value = "/importExcel")
+	public String importExcel(HttpServletRequest request, HttpSession session, RedirectAttributes ra){
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;     
+        MultipartFile file = multipartRequest.getFile("excelFile");
+        try {
+			List<InventoryDetail> inventoryDetailList = inventoryService.paresExcel(file.getInputStream());
+			session.setAttribute("inventoryDetailList", inventoryDetailList);
+		} catch (IOException e) {
+			logger.error("MultipartFile get InputStream error", e);
+			ra.addFlashAttribute("messageErr", "上传文件失败，请检查文件格式！");
+		} catch (ServiceException e) {
+			logger.error("上传文件检查失败!", e);
+			ra.addFlashAttribute("messageErr", e.getMessage());
+		}
 		return "redirect:/supervisor/inventory/addList";
 	}
 	

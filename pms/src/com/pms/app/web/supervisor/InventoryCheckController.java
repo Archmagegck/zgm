@@ -27,7 +27,6 @@ import com.pms.app.entity.Warehouse;
 import com.pms.app.service.InventoryCheckDetailService;
 import com.pms.app.service.InventoryCheckService;
 import com.pms.app.service.InventoryCheckTemplateService;
-import com.pms.app.service.InventoryService;
 import com.pms.app.service.StyleService;
 import com.pms.app.service.WarehouseService;
 import com.pms.app.util.CodeUtils;
@@ -42,7 +41,6 @@ public class InventoryCheckController {
 	
 	@Autowired private InventoryCheckService inventoryCheckService;
 	@Autowired private InventoryCheckDetailService inventoryCheckDetailService;
-	@Autowired private InventoryService inventoryService;
 	@Autowired private StyleService styleService;
 	@Autowired private WarehouseService warehouseService;
 	@Autowired private InventoryCheckTemplateService inventoryCheckTemplateService;
