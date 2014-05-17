@@ -89,6 +89,7 @@
 								<th>&nbsp;</th>
 							</tr>
 						</thead>
+						<c:set var="allSumWeight" value="0"></c:set>
 						<c:forEach items="${insRecordList}" var="insRecord" varStatus="status">
 							<tr>
 								<td>
@@ -99,6 +100,7 @@
 								</td>
 								<td>
 									<fmt:formatNumber value="${insRecord.sumWeight }" pattern="#,#00.00#"/>&nbsp;
+									<c:set var="allSumWeight" value="${allSumWeight + insRecord.sumWeight}"></c:set>
 								</td>								
 								<td>
 									${insRecord.warehouse.address}&nbsp;
@@ -112,6 +114,7 @@
 								</td>
 							</tr>
 						</c:forEach>
+						<c:if test="${not empty insRecordList}">
 							<tr>
 								<td>
 									合计&nbsp;
@@ -120,7 +123,7 @@
 									&nbsp;
 								</td>
 								<td>
-									999&nbsp;
+									${allSumWeight }&nbsp;
 								</td>								
 								<td>
 									&nbsp;
@@ -132,6 +135,7 @@
 									&nbsp;
 								</td>
 							</tr>
+						</c:if>
 					</table>
 				</div>
 			</div>

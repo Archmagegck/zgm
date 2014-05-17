@@ -122,6 +122,18 @@ public class PledgeRecord {
 	public String getDateYmdhmsStr(){
 		return new DateTime(date).toString("yyyy-MM-dd HH:mm:ss");
 	}
+	
+	public int getRecYear() {
+		return new DateTime(recDate).getYear();
+	}
+	
+	public int getRecMonth() {
+		return new DateTime(recDate).getMonthOfYear();
+	}
+	
+	public int getRecDay() {
+		return new DateTime(recDate).getDayOfMonth();
+	}
 
 	public String getId() {
 		return id;

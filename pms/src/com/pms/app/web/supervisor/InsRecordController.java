@@ -59,6 +59,7 @@ public class InsRecordController {
 			DateTime now = new DateTime(date);
 			model.addAttribute("date", now.toString("yyyy-MM-dd"));
 		} else {
+			date = new Date();
 			DateTime now = new DateTime();
 			model.addAttribute("date", now.toString("yyyy-MM-dd"));
 		}

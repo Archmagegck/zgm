@@ -7,8 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -24,6 +23,7 @@ import com.pms.app.entity.InsCheck;
 import com.pms.app.entity.InsCheckDetail;
 import com.pms.app.entity.InventoryCheck;
 import com.pms.app.entity.InventoryCheckDetail;
+import com.pms.app.entity.PledgeConfig;
 import com.pms.app.entity.PledgeRecord;
 import com.pms.app.entity.PledgeRecordDetail;
 import com.pms.app.entity.Stock;
@@ -32,6 +32,8 @@ import com.pms.app.service.DelegatorService;
 import com.pms.app.service.ExtendedCheckService;
 import com.pms.app.service.InsCheckService;
 import com.pms.app.service.InventoryCheckService;
+import com.pms.app.service.PledgeConfigService;
+import com.pms.app.service.PledgePurityService;
 import com.pms.app.service.PledgeRecordService;
 import com.pms.app.service.StockService;
 import com.pms.app.service.SupervisionCustomerService;
@@ -48,6 +50,8 @@ public class DailyPledgeController {
 	@Autowired InsCheckService insCheckService;
 	@Autowired ExtendedCheckService extendedCheckService;
 	@Autowired StockService stockService;
+	@Autowired PledgeConfigService pledgeConfigService;
+	@Autowired PledgePurityService pledgePurityService;
 	
 	@InitBinder  
 	public void initBinder(WebDataBinder binder) throws Exception {  
@@ -128,16 +132,41 @@ public class DailyPledgeController {
 		}
 		
 		model.addAttribute("detailList", pledgeRecordDetails);
+		
+		PledgeConfig config = pledgeConfigService.findBySupervisionCustomerId(pledgeRecord.getSupervisionCustomer().getId());
+		model.addAttribute("config", config);
+		
+		model.addAttribute("pledgePurityName", pledgePurityService.findOK().getName());
+		
+		DateTime now = new DateTime();
+		model.addAttribute("year", now.getYear());
+		model.addAttribute("month", now.getMonthOfYear());
+		model.addAttribute("day", now.getDayOfMonth());
+		
 		return "manage/dailyPledge/detailList";
 	}
 	
 	
 	@RequestMapping(value = "/{id}/print")
-	public String print(@PathVariable("id")String id, Model model, HttpSession session) {
+	public String print(@PathVariable("id")String id, Model model) {
 		PledgeRecord pledgeRecord = pledgeRecordService.findById(id);
 		model.addAttribute("pledgeRecord", pledgeRecord);
 		return "manage/dailyPledge/print";
 	}
+	
+	@RequestMapping(value = "/{id}/updateInput")
+	public String updateInput(@PathVariable("id")String id, Integer iyear, Integer imonth, Integer iday, String preCode, String proCode) {
+		PledgeRecord pledgeRecord = pledgeRecordService.findById(id);
+		DateTime dateTime = new DateTime(iyear, imonth, iday, 1 , 0);
+		pledgeRecord.setRecDate(dateTime.toDate());
+		pledgeRecord.setPreCode(preCode);
+		pledgeRecord.setProCode(proCode);
+		pledgeRecord.setWriteIn(1);
+		pledgeRecordService.save(pledgeRecord);
+		return "redirect:/manage/dailyPledge/" + id + "/details";
+	}
+	
+	
 	
 	
 }

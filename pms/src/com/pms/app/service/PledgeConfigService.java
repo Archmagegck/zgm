@@ -65,5 +65,9 @@ public class PledgeConfigService extends BaseService<PledgeConfig, String> {
 			};
 		}
 	}
+	
+	public PledgeConfig findBySupervisionCustomerId(String supervisionCustomerId) {
+		return pledgeConfigDao.findBySupervisionCustomerId(supervisionCustomerId).get(0);
+	}
 
 }

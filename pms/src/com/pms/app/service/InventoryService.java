@@ -193,6 +193,7 @@ public class InventoryService extends BaseService<Inventory, String> {
 				if(cellStyle == null)
 					continue;
 				String styleName = getCellStr(cellStyle).trim();
+				styleName = styleName.trim().replace("?", "").replace(" ", "");
 				List<Style> styles = styleDao.findListByName(styleName);
 				if(styles.isEmpty()) {
 					throw new ServiceException("第" + (i + 1) + "行不存在款式 '" + styleName + "'");

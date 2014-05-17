@@ -49,16 +49,16 @@ public class OutsRecordController {
 	}  
 	
 	@RequestMapping(value = { "/list", "" })
-	public String list(Model model, Pageable pageable, Date beginDate, Date endDate, HttpSession session) {
-		if(beginDate != null) {
-			DateTime beginTime = new DateTime(beginDate);
-			model.addAttribute("beginDate", beginTime.toString("yyyy-MM-dd"));
+	public String list(Model model, Date date, HttpSession session) {
+		if(date != null) {
+			DateTime now = new DateTime(date);
+			model.addAttribute("date", now.toString("yyyy-MM-dd"));
+		} else {
+			date = new Date();
+			DateTime now = new DateTime();
+			model.addAttribute("date", now.toString("yyyy-MM-dd"));
 		}
-		if(endDate != null) {
-			DateTime endTime = new DateTime(endDate);
-			model.addAttribute("endDate", endTime.toString("yyyy-MM-dd"));
-		}
-		model.addAttribute("page", outsRecordService.findPageByQuery(pageable, (String)session.getAttribute("warehouseId"), beginDate, endDate));
+		model.addAttribute("outsRecordList", outsRecordService.findListByQuery((String)session.getAttribute("warehouseId"), date));
 		return "supervisor/outsRecord/list";
 	}
 	

@@ -34,6 +34,11 @@
 			$("#pageNo").val(pageNo);
 			$("#myForm").submit();
 		}
+		
+		//转向
+		function selectlist(){
+			$("#myForm").submit();
+		}
 
     </script>
 	
@@ -69,19 +74,14 @@
 						</c:if>
 					</div>
 					<div align="left" style="vertical-align: middle;">
-						&nbsp;&nbsp;&nbsp;根据入库时间
+						&nbsp;&nbsp;&nbsp;根据出库时间
 						&nbsp;&nbsp; 查询:
 						<span id="values">
-						从
-						<input name="beginDate" value="${beginDate}" onFocus="WdatePicker({isShowClear:false,isShowWeek:true,readOnly:true,skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"/>
-						&nbsp; 
-						到
-						<input name="endDate" value="${endDate}" onFocus="WdatePicker({isShowClear:false,isShowWeek:true,readOnly:true,skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"/>
+						<input name="date" value="${date}" onFocus="WdatePicker({isShowClear:false,isShowWeek:true,readOnly:true,skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"/>
 						&nbsp;&nbsp;
 						</span>
 						&nbsp;&nbsp;&nbsp;
-						<input type="button" value="查询" class="button" onclick="gotoPage(1)" />
-						<input type="hidden" name="page.page" id="pageNo" value="${page.number+1}"/>
+						<input type="button" value="查询" class="button" onclick="selectlist()" />
 					</div>
 					<br/>
 					<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
@@ -96,7 +96,8 @@
 								<th>&nbsp;</th>
 							</tr>
 						</thead>
-						<c:forEach items="${page.content}" var="outsRecord" varStatus="status">
+						<c:set var="allSumWeight" value="0"></c:set>
+						<c:forEach items="${outsRecordList}" var="outsRecord" varStatus="status">
 							<tr>
 								<td>
 									${status.count}&nbsp;
@@ -105,9 +106,9 @@
 									${outsRecord.code }&nbsp;
 								</td>
 								<td>
-									<fmt:formatNumber value="${outsRecord.sumWeight }" pattern="#,#00.00#"/>&nbsp;							
+									<fmt:formatNumber value="${outsRecord.sumWeight }" pattern="#,#00.00#"/>&nbsp;	
+									<c:set var="allSumWeight" value="${allSumWeight + outsRecord.sumWeight}"></c:set>		
 								</td>	
-								
 								<td>
 									${outsRecord.date }&nbsp;
 								</td>
@@ -122,10 +123,32 @@
 								</td>
 							</tr>
 						</c:forEach>
+						<c:if test="${not empty outsRecordList}">
+							<tr>
+								<td>
+									合计&nbsp;
+								</td>
+								<td>
+									&nbsp;
+								</td>
+								<td>
+									${allSumWeight }&nbsp;	
+								</td>	
+								<td>
+									&nbsp;
+								</td>
+								<td>
+									&nbsp;
+								</td>
+								<td>
+									&nbsp;
+								</td>
+								<td>
+									&nbsp;
+								</td>
+							</tr>
+						</c:if>
 					</table>
-					<div align="left" id="pager">
-						<jsp:include page="../../common/page.jsp"></jsp:include>
-					</div>
 				</div>
 			</div>
 		</form>
