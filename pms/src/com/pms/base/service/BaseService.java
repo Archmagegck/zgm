@@ -314,6 +314,32 @@ public abstract class BaseService<T, PK extends Serializable> {
 	}
 	
 	
+	public List<T> findListByQuery(final String warehouseId, final Date date) {
+		Specification<T> specification = new Specification<T>() {
+			@SuppressWarnings({ "rawtypes", "unchecked" })
+			@Override
+			public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+				List<Predicate> predicates = new ArrayList<Predicate>();
+				if(StringUtils.hasText(warehouseId)) {
+					Path expression = root.get("warehouse");
+					expression = expression.get("id");
+					predicates.add(cb.equal(expression, warehouseId));
+				}
+				if(!StringUtils.isEmpty(date)) {
+					Path expression = root.get("date");
+					predicates.add(cb.between(expression, DateUtils.dateToDayBegin(date), DateUtils.dateToDayEnd(date)));
+				}
+				query.orderBy(cb.desc(root.get("date")));
+				if (predicates.size() > 0) {
+					return cb.and(predicates.toArray(new Predicate[predicates.size()]));
+				}
+				return cb.conjunction();
+			}
+		};
+		return getEntityDao().findAll(specification);
+	}
+	
+	
 	public Page<T> findPageByQuery(Pageable pageable, final String delegatorId, final String supervisionCustomerId, final Date date) {
 		Specification<T> specification = new Specification<T>() {
 			@SuppressWarnings({ "rawtypes", "unchecked" })

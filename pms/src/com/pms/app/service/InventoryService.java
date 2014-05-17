@@ -1,18 +1,16 @@
 package com.pms.app.service;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -173,17 +171,13 @@ public class InventoryService extends BaseService<Inventory, String> {
 	public List<InventoryDetail> paresExcel(InputStream inputStream) {
 		List<InventoryDetail> inventoryDetails = new ArrayList<InventoryDetail>();
 		Workbook workbook = null;
-        try {
-        	workbook = (Workbook) new XSSFWorkbook(inputStream);
-        } catch (Exception ex) {
-        	try {
-				workbook = new HSSFWorkbook(inputStream);
-			} catch (IOException e) {
-				throw new ServiceException("错误文件格式!", e);
-			}
-        }
 		try {
-			Sheet sheet = workbook.getSheetAt(0);
+			workbook = WorkbookFactory.create(inputStream);
+		} catch (Exception e) {
+			throw new ServiceException("错误的文件格式!", e);
+		}
+		try {
+			Sheet sheet =  workbook.getSheetAt(0);
 			int maxRow = sheet.getLastRowNum();
 			for (int i = 1; i <= maxRow; i++) {
 				InventoryDetail inventoryDetail = new InventoryDetail();
@@ -198,7 +192,7 @@ public class InventoryService extends BaseService<Inventory, String> {
 				Cell cellStyle = row.getCell(1);
 				if(cellStyle == null)
 					continue;
-				String styleName = getCellStr(cellStyle);
+				String styleName = getCellStr(cellStyle).trim();
 				List<Style> styles = styleDao.findListByName(styleName);
 				if(styles.isEmpty()) {
 					throw new ServiceException("第" + (i + 1) + "行不存在款式 '" + styleName + "'");

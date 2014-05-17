@@ -79,7 +79,34 @@ public class IniPledgeRecord {
 	 */
 	@Column(name = "ipr_date")
 	private Date date = new Date();
-
+	
+	
+	/**
+	 * 接收日期
+	 */
+	@Column(name = "rec_date")
+	private Date recDate = new Date();
+	
+	
+	/**
+	 * 协议编号
+	 */
+	private String proCode;
+	
+	
+	/**
+	 * 出质通知书编号
+	 */
+	private String preCode;
+	
+	
+	/**
+	 * 是否已填写
+	 * 0: 未填写
+	 * 1：已填写
+	 */
+	private Integer writeIn = 0;
+	
 	
 	/**
 	 * 质物清单明细
@@ -165,6 +192,38 @@ public class IniPledgeRecord {
 
 	public void setIniPledgeRecordDetails(List<IniPledgeRecordDetail> iniPledgeRecordDetails) {
 		this.iniPledgeRecordDetails = iniPledgeRecordDetails;
+	}
+
+	public Date getRecDate() {
+		return recDate;
+	}
+
+	public void setRecDate(Date recDate) {
+		this.recDate = recDate;
+	}
+
+	public String getProCode() {
+		return proCode;
+	}
+
+	public void setProCode(String proCode) {
+		this.proCode = proCode;
+	}
+
+	public String getPreCode() {
+		return preCode;
+	}
+
+	public void setPreCode(String preCode) {
+		this.preCode = preCode;
+	}
+
+	public Integer getWriteIn() {
+		return writeIn;
+	}
+
+	public void setWriteIn(Integer writeIn) {
+		this.writeIn = writeIn;
 	}
 	
 	

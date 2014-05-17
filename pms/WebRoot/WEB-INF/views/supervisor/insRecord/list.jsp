@@ -30,8 +30,7 @@
 		});
 
 		//转向
-		function gotoPage(pageNo){
-			$("#pageNo").val(pageNo);
+		function selectlist(){
 			$("#myForm").submit();
 		}
 
@@ -72,16 +71,11 @@
 						&nbsp;&nbsp;&nbsp;根据入库时间
 						&nbsp;&nbsp; 查询:
 						<span id="values">
-						从
-						<input name="beginDate" value="${beginDate}" onFocus="WdatePicker({isShowClear:false,isShowWeek:true,readOnly:true,skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"/>
-						&nbsp; 
-						到
-						<input name="endDate" value="${endDate}" onFocus="WdatePicker({isShowClear:false,isShowWeek:true,readOnly:true,skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"/>
+						<input name="date" value="${date}" onFocus="WdatePicker({isShowClear:false,isShowWeek:true,readOnly:true,skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"/>
 						&nbsp;&nbsp;
 						</span>
 						&nbsp;&nbsp;&nbsp;
-						<input type="button" value="查询" class="button" onclick="gotoPage(1)" />
-						<input type="hidden" name="page.page" id="pageNo" value="${page.number+1}"/>
+						<input type="button" value="查询" class="button" onclick="selectlist()" />
 					</div>
 					<br/>
 					<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
@@ -95,7 +89,7 @@
 								<th>&nbsp;</th>
 							</tr>
 						</thead>
-						<c:forEach items="${page.content}" var="insRecord" varStatus="status">
+						<c:forEach items="${insRecordList}" var="insRecord" varStatus="status">
 							<tr>
 								<td>
 									${status.count}&nbsp;
@@ -105,7 +99,6 @@
 								</td>
 								<td>
 									<fmt:formatNumber value="${insRecord.sumWeight }" pattern="#,#00.00#"/>&nbsp;
-							
 								</td>								
 								<td>
 									${insRecord.warehouse.address}&nbsp;
@@ -119,10 +112,27 @@
 								</td>
 							</tr>
 						</c:forEach>
+							<tr>
+								<td>
+									合计&nbsp;
+								</td>
+								<td>
+									&nbsp;
+								</td>
+								<td>
+									999&nbsp;
+								</td>								
+								<td>
+									&nbsp;
+								</td>
+								<td>
+									&nbsp;
+								</td>
+								<td>
+									&nbsp;
+								</td>
+							</tr>
 					</table>
-					<div align="left" id="pager">
-						<jsp:include page="../../common/page.jsp"></jsp:include>
-					</div>
 				</div>
 			</div>
 		</form>
