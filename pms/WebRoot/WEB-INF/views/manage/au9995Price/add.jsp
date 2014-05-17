@@ -58,7 +58,7 @@
 						
 						</td>
 						<td width="20%">
-							价格:
+							价格（元）:
 						</td>
 						<td width="30%">
 							<input id="price" name="price" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>

@@ -11,15 +11,18 @@ import com.pms.base.dao.BaseDao;
 
 public interface OutsRecordDao extends BaseDao<OutsRecord, String> {
 	
-	public Page<OutsRecord> findPageByAuditStateNot(Pageable pageable, AuditState auditState);
+	public Page<OutsRecord> findPageByAuditState(Pageable pageable, AuditState auditState);
 	
 	public Page<OutsRecord> findPageByNoticeAndAuditStateNot(Pageable pageable, Integer notice, AuditState auditState);
 	
-	public Page<OutsRecord> findPageByNoticeOrNoticeAndAuditStateNot(Pageable pageable, Integer notice1,Integer notice2, AuditState auditState);
+	public Page<OutsRecord> findPageByNoticeOrNoticeAndAuditState(Pageable pageable, Integer notice1,Integer notice2, AuditState auditState);
 	
 	public Page<OutsRecord> findPageByNotice(Pageable pageable, int notice);
 	
 	public List<OutsRecord> findBySupervisionCustomerId(String id);
 	
 	public List<OutsRecord> findByAuditStateNot(AuditState auditState);
+	
+	//查询检测拒绝记录
+	
 }

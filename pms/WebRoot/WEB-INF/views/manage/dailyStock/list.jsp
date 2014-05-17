@@ -113,8 +113,8 @@
 								<th width="18%">款式大类</th>
 								<th width="25%">存储地点 </th>
 								<th width="18%">标明成色</th>
-								<th width="15%">重量</th>
-								<th width="12%">总价值 </th>
+								<th width="15%">重量（g）</th>
+								<th width="12%">总价值 （元）</th>
 							</tr>
 						</thead>
 						<c:forEach items="${item.value}" var="stock" >

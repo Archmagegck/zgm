@@ -53,12 +53,19 @@ public class OutsRecordService extends BaseService<OutsRecord, String> {
 	}
 
 	public Page<OutsRecord> findWaitOutsRecordByNotice(Pageable pageable, int notice1 ,int notice2) {
-		return outsRecordDao.findPageByNoticeOrNoticeAndAuditStateNot(pageable, notice1,notice2, AuditState.Pass);
+		return outsRecordDao.findPageByNoticeOrNoticeAndAuditState(pageable, notice1,notice2, AuditState.Wait);
 	}
 	
 	public Page<OutsRecord> findWaitOutsRecord(Pageable pageable) {
-		return outsRecordDao.findPageByAuditStateNot(pageable, AuditState.Pass);
+		return outsRecordDao.findPageByAuditState(pageable, AuditState.Wait);
 	}
+	
+	
+	public Page<OutsRecord> findRefuseOutsRecord(Pageable pageable) {
+		return outsRecordDao.findPageByAuditState(pageable, AuditState.Refuse);
+	}
+	
+	
 	
 	/**
 	 * 监管经理助理待审核出库单查询

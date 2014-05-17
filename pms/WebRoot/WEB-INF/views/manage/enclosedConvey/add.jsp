@@ -109,7 +109,7 @@
 					</tr>
 					<tr>
 						<td width="30%">
-							重量
+							重量（g）
 						</td>
 						<td width="70%">
 							<input id="weight" name="weight" class="{required:true,number:true}" style="background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;"/>

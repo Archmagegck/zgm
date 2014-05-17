@@ -90,7 +90,7 @@
 								<th width="5%">序号</th>
 								<th>款式大类</th>
 								<th>检测方法</th>
-								<th>检测重量</th>
+								<th>检测重量（g）</th>
 								<th>检测结果</th>
 								<th>&nbsp;</th>
 							</tr>
