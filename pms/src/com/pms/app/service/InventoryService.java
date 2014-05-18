@@ -123,15 +123,15 @@ public class InventoryService extends BaseService<Inventory, String> {
 		
 		PledgeConfig config = pledgeConfigDao.findBySupervisionCustomerId(supervisionCustomer.getId()).get(0);
 		double range = config.getIeRange();
-//		if(Math.abs(stockSumWeight - invSumWeight) / stockSumWeight > range){
-//			throw new ServiceException("盘存不一致，已超出盘存误差范围!");
-//		}
+		if(Math.abs(stockSumWeight - invSumWeight) / stockSumWeight > (range/100)){
+			throw new ServiceException("盘存不一致，已超出盘存误差范围!");
+		}
 		
 		//（盘存总重量为a,实时库存重量为b,盘存误差为c%）
 		// 判断if((1-c/100)*b <a<(1+c/100) ) 盘存通过
-		if(invSumWeight <= ((1-range/100)*stockSumWeight) || (invSumWeight >= (1+range/100))) {
-			throw new ServiceException("盘存不一致，已超出盘存误差范围!");
-		}
+//		if(invSumWeight <= ((1-range/100)*stockSumWeight) || (invSumWeight >= (1+range/100))) {
+//			throw new ServiceException("盘存不一致，已超出盘存误差范围!");
+//		}
 		
 		inventoryDao.save(inventory);
 		inventoryDetailDao.save(inventoryDetailList);

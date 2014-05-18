@@ -3,6 +3,7 @@ package com.pms.app.web.supervisor;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
@@ -90,8 +91,9 @@ public class InventoryCheckController {
 					details.add(inventoryCheckDetail);
 				}
 			} else {
-				int[] inputs = new int[inventoryDetailCount];
-				int[] generals15 = CodeUtils.randoms(inputs, 15);
+				
+				int[] generals15=CodeUtils.randomCommon(0, inventoryDetailCount, 15);			
+				
 				for (int i = 0; i < generals15.length; i++) {
 					InventoryCheckDetail inventoryCheckDetail = new InventoryCheckDetail();
 					inventoryCheckDetail.setTrayNo(inventoryDetails.get(generals15[i]).getTrayNo());

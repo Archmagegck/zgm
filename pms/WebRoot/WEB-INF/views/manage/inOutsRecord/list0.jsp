@@ -116,10 +116,11 @@
 						<thead>
 							<tr>
 								<th width="20%">日期</th>
-								<th width="14%">操作类型</th>														
-								
-								<th width="14%">总重(g)</th>
-								<th width="12%">&nbsp;&nbsp;</th>
+								<th width="14%">操作类型</th>
+								<th width="14%">款式大类</th>
+								<th width="14%">标明成色</th>
+								<th width="12%">数量 </th>
+								<th width="12%">总重</th>
 							</tr>
 						</thead>
 						<c:forEach items="${item.value}" var="inOutsRecord" >
@@ -129,16 +130,19 @@
 								</td>
 								<td>
 									${inOutsRecord.method }&nbsp;
-								</td>								
-					
-								
-								
-								<td>
-									<fmt:formatNumber value="${inOutsRecord.sumWeight }" pattern="#,#00.00#"/>&nbsp;										
 								</td>
 								<td>
-									<a href="${ctx }/manage/inOutsRecord/${inOutsRecord.specWeight }/details?method=${inOutsRecord.method }">查看</a>
-									&nbsp;
+									${inOutsRecord.style }&nbsp;
+								</td>
+								<td>
+									${inOutsRecord.pledgePurity }&nbsp;
+								</td>
+								<td>
+									${inOutsRecord.amount}&nbsp;
+								</td>
+								<td>
+									<fmt:formatNumber value="${inOutsRecord.sumWeight }" pattern="#,#00.00#"/>&nbsp;	
+									
 								</td>
 							</tr>
 							<c:if test="${inOutsRecord.method eq '入库'}">
@@ -156,18 +160,23 @@
 						</c:forEach>
 						<tr>
 							<td rowspan="2" width="20%">合计</td>
-							<td width="14%">入库&nbsp;</td>													
-							<td width="14%">
-								<fmt:formatNumber value="${inSumweight}" pattern="#,#00.00#"/>&nbsp;							
+							<td width="14%">入库&nbsp;</td>
+							<td width="14%">&nbsp;</td>
+							<td width="14%">&nbsp;</td>
+							<td width="12%">${inSumAmount}&nbsp;</td>
+							<td width="12%">
+								<fmt:formatNumber value="${inSumweight}" pattern="#,#00.00#"/>&nbsp;	
+							
 							</td>
-							<td width="12%">&nbsp;&nbsp;</td>
 						</tr>
 						<tr>
-							<td width="14%">出库&nbsp;</td>							
-							<td width="14%">
+							<td width="14%">出库&nbsp;</td>
+							<td width="14%">&nbsp;</td>
+							<td width="14%">&nbsp;</td>
+							<td width="12%">${outSumAmount}&nbsp;</td>
+							<td width="12%">
 								<fmt:formatNumber value="${outSumweight}" pattern="#,#00.00#"/>&nbsp;
 							</td>
-							<td width="12%">&nbsp;&nbsp;</td>
 						</tr>
 					</table>
 					</c:forEach>
@@ -176,19 +185,22 @@
 					<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">
 						<tr>
 							<td rowspan="2" width="20%">合计</td>
-							<td width="14%">入库&nbsp;</td>							
-							<td width="14%">
+							<td width="14%">入库&nbsp;</td>
+							<td width="14%">&nbsp;</td>
+							<td width="14%">&nbsp;</td>
+							<td width="12%">${inAllSumAmount}&nbsp;</td>
+							<td width="12%">
 								<fmt:formatNumber value="${inAllSumweight}" pattern="#,#00.00#"/>&nbsp;
 							</td>
-							<td width="12%">&nbsp;</td>
 						</tr>
 						<tr>
 							<td width="14%">出库&nbsp;</td>
-							
-							<td width="14%">
+							<td width="14%">&nbsp;</td>
+							<td width="14%">&nbsp;</td>
+							<td width="12%">${outAllSumAmount}&nbsp;</td>
+							<td width="12%">
 								<fmt:formatNumber value="${outAllSumweight}" pattern="#,#00.00#"/>&nbsp;
 							</td>
-							<td width="12%">&nbsp;</td>
 						</tr>
 					</table>
 					

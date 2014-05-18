@@ -31,11 +31,15 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.pms.app.dao.InsRecordDao;
 import com.pms.app.dao.InsRecordDetailDao;
+import com.pms.app.dao.OutsRecordDao;
 import com.pms.app.dao.OutsRecordDetailDao;
 import com.pms.app.dao.SupervisionCustomerDao;
 import com.pms.app.entity.Delegator;
+import com.pms.app.entity.InsRecord;
 import com.pms.app.entity.InsRecordDetail;
+import com.pms.app.entity.OutsRecord;
 import com.pms.app.entity.OutsRecordDetail;
 import com.pms.app.entity.PledgePurity;
 import com.pms.app.entity.SupervisionCustomer;
@@ -46,9 +50,214 @@ import com.pms.app.util.DateUtils;
 public class InOutsRecordService {
 
 	@Autowired InsRecordDetailDao insRecordDetailDao;
+	@Autowired InsRecordDao insRecordDao;
 	@Autowired OutsRecordDetailDao outsRecordDetailDao;
+	@Autowired OutsRecordDao outsRecordDao;
 	@Autowired SupervisionCustomerDao supervisionCustomerDao;
+//查询所有出库入库单，并根据监管客户进行合并汇总。	（by：cyy）
+	public Map<SupervisionCustomer, List<InOutsRecord>> queryByDelegatorAndSuperCustomerAndDateBetween(String delegatorId, String supervisionCustomerId, Date beginDate, Date endDate){
+		Map<SupervisionCustomer, List<InOutsRecord>> inoutsRecordMap = new HashMap<SupervisionCustomer, List<InOutsRecord>>();
+		//根据监管客户id查询
+		if(StringUtils.hasText(supervisionCustomerId)) {
+			SupervisionCustomer supervisionCustomer = supervisionCustomerDao.findOne(supervisionCustomerId);
+			List<InOutsRecord> inOutsRecordList = new ArrayList<InOutsRecord>();
+			//查询入库记录
+			//List<InsRecordDetail> insRecordDetails = insRecordDetailDao.findAll(getInsSpec(delegatorId, supervisionCustomerId, beginDate, endDate));
+			List<InsRecord> insRecords = insRecordDao.findAll(getInssSpec(delegatorId, supervisionCustomerId, beginDate, endDate));
+			for (InsRecord insRecord : insRecords) {
+				InOutsRecord inOutsRecord =new InOutsRecord();
+				inOutsRecord.setMethod("入库");
+				inOutsRecord.setDate(insRecord.getDate());
+				inOutsRecord.setSumWeight(insRecord.getSumWeight());
+				inOutsRecord.setSpecWeight(insRecord.getId());//存储入库记录id
+				inOutsRecord.setPledgePurity(insRecord.getAttach());//存储入库记录扫描文件路径
+				
+				inOutsRecordList.add(inOutsRecord);			
+			}
+			//查询出库记录
+			//List<OutsRecordDetail> outsRecordDetails = outsRecordDetailDao.findAll(getOutsSpec(delegatorId, supervisionCustomerId, beginDate, endDate));
+			List<OutsRecord> outsRecords = outsRecordDao.findAll(getOutssSpec(delegatorId, supervisionCustomerId, beginDate, endDate));
+			
+			for (OutsRecord outsRecord : outsRecords) {
+				InOutsRecord inOutsRecord =new InOutsRecord();
+				inOutsRecord.setMethod("出库");
+				inOutsRecord.setDate(outsRecord.getDate());
+				inOutsRecord.setSumWeight(outsRecord.getSumWeight());
+				inOutsRecord.setSpecWeight(outsRecord.getId());//存储入库记录id
+				inOutsRecord.setPledgePurity(outsRecord.getAttach());//存储入库记录扫描文件路径
+				
+				inOutsRecordList.add(inOutsRecord);	
+			}
+			Collections.sort(inOutsRecordList);
+			if(!inOutsRecordList.isEmpty())
+				inoutsRecordMap.put(supervisionCustomer, inOutsRecordList);
+			
+		}else{
+			List<SupervisionCustomer> supervisionCustomerList = supervisionCustomerDao.findListByDelegatorId(delegatorId);
+			for (SupervisionCustomer supervisionCustomer : supervisionCustomerList) {
+				
+				List<InOutsRecord> inOutsRecordList = new ArrayList<InOutsRecord>();				
+				String scId = supervisionCustomer.getId();
+				//入库查询
+				List<InsRecord> insRecords = insRecordDao.findAll(getInssSpec(scId, beginDate, endDate));				
+				for (InsRecord insRecord : insRecords) {
+					InOutsRecord inOutsRecord =new InOutsRecord();
+					inOutsRecord.setMethod("入库");
+					inOutsRecord.setDate(insRecord.getDate());
+					inOutsRecord.setSumWeight(insRecord.getSumWeight());
+					inOutsRecord.setSpecWeight(insRecord.getId());//存储入库记录id
+					inOutsRecord.setPledgePurity(insRecord.getAttach());//存储入库记录扫描文件路径
+					
+					inOutsRecordList.add(inOutsRecord);							
+				}
+				//出库查询
+				List<OutsRecord> outsRecords = outsRecordDao.findAll(getOutssSpec(scId, beginDate, endDate));
+				for (OutsRecord outsRecord : outsRecords) {
+					InOutsRecord inOutsRecord =new InOutsRecord();
+					inOutsRecord.setMethod("出库");
+					inOutsRecord.setDate(outsRecord.getDate());
+					inOutsRecord.setSumWeight(outsRecord.getSumWeight());
+					inOutsRecord.setSpecWeight(outsRecord.getId());//存储入库记录id
+					inOutsRecord.setPledgePurity(outsRecord.getAttach());//存储入库记录扫描文件路径
+					
+					inOutsRecordList.add(inOutsRecord);	
+				}
+				Collections.sort(inOutsRecordList);
+				if(!inOutsRecordList.isEmpty())
+					inoutsRecordMap.put(supervisionCustomer, inOutsRecordList);
+			}
+			
+		}
+		return inoutsRecordMap;
+	}
+	//查询器构造：入库——根据监管客户id不为空
+	public Specification<InsRecord> getInssSpec(final String delegatorId, final String supervisionCustomerId, final Date beginDate, final Date endDate) {
+		Specification<InsRecord> specificationIns = new Specification<InsRecord>() {
+			@SuppressWarnings({ "rawtypes", "unchecked" })
+			@Override
+			public Predicate toPredicate(Root<InsRecord> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+				List<Predicate> predicates = new ArrayList<Predicate>();
+				if (StringUtils.hasText(delegatorId)) {
+					Path expression = root.get("delegator");
+					expression = expression.get("id");
+					predicates.add(cb.equal(expression, delegatorId));
+				}
+				if (StringUtils.hasText(supervisionCustomerId)) {
+					Path expression = root.get("supervisionCustomer");
+					expression = expression.get("id");
+					predicates.add(cb.equal(expression, supervisionCustomerId));
+				}
+				if (!StringUtils.isEmpty(beginDate)) {
+					Path expression = root.get("date");
+					predicates.add(cb.greaterThanOrEqualTo(expression, DateUtils.dateToDayBegin(beginDate)));
+				}
+				if (!StringUtils.isEmpty(endDate)) {
+					Path expression = root.get("date");
+					predicates.add(cb.lessThanOrEqualTo(expression, DateUtils.dateToDayEnd(endDate)));
+				}
+				query.orderBy(cb.desc(root.get("date")));
+				if (predicates.size() > 0) {
+					return cb.and(predicates.toArray(new Predicate[predicates.size()]));
+				}
+				return cb.conjunction();
+			}
+		};
+		return specificationIns;
+	}	
+	//查询器构造： 出库——根据监管客户id不为空
+	public Specification<OutsRecord> getOutssSpec(final String delegatorId, final String supervisionCustomerId, final Date beginDate, final Date endDate) {
+		Specification<OutsRecord> specificationIns = new Specification<OutsRecord>() {
+			@SuppressWarnings({ "rawtypes", "unchecked" })
+			@Override
+			public Predicate toPredicate(Root<OutsRecord> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+				List<Predicate> predicates = new ArrayList<Predicate>();
+				if (StringUtils.hasText(delegatorId)) {
+					Path expression = root.get("delegator");
+					expression = expression.get("id");
+					predicates.add(cb.equal(expression, delegatorId));
+				}
+				if (StringUtils.hasText(supervisionCustomerId)) {
+					Path expression = root.get("supervisionCustomer");
+					expression = expression.get("id");
+					predicates.add(cb.equal(expression, supervisionCustomerId));
+				}
+				if (!StringUtils.isEmpty(beginDate)) {
+					Path expression = root.get("date");
+					predicates.add(cb.greaterThanOrEqualTo(expression, DateUtils.dateToDayBegin(beginDate)));
+				}
+				if (!StringUtils.isEmpty(endDate)) {
+					Path expression = root.get("date");
+					predicates.add(cb.lessThanOrEqualTo(expression, DateUtils.dateToDayEnd(endDate)));
+				}
+				query.orderBy(cb.desc(root.get("date")));
+				if (predicates.size() > 0) {
+					return cb.and(predicates.toArray(new Predicate[predicates.size()]));
+				}
+				return cb.conjunction();
+			}
+		};
+		return specificationIns;
+	}
+	//查询器：入库——没有选择监管客户
+	public Specification<InsRecord> getInssSpec(final String supervisionCustomerId, final Date beginDate, final Date endDate) {
+		Specification<InsRecord> specificationIns = new Specification<InsRecord>() {
+			@SuppressWarnings({ "rawtypes", "unchecked" })
+			@Override
+			public Predicate toPredicate(Root<InsRecord> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+				List<Predicate> predicates = new ArrayList<Predicate>();
+				if (StringUtils.hasText(supervisionCustomerId)) {
+					Path expression = root.get("supervisionCustomer");
+					expression = expression.get("id");
+					predicates.add(cb.equal(expression, supervisionCustomerId));
+				}
+				if (!StringUtils.isEmpty(beginDate)) {
+					Path expression = root.get("date");
+					predicates.add(cb.greaterThanOrEqualTo(expression, DateUtils.dateToDayBegin(beginDate)));
+				}
+				if (!StringUtils.isEmpty(endDate)) {
+					Path expression = root.get("date");
+					predicates.add(cb.lessThanOrEqualTo(expression, DateUtils.dateToDayEnd(endDate)));
+				}
+				query.orderBy(cb.desc(root.get("date")));
+				if (predicates.size() > 0) {
+					return cb.and(predicates.toArray(new Predicate[predicates.size()]));
+				}
+				return cb.conjunction();
+			}
+		};
+		return specificationIns;
+	}
+	//查询器：出库——没有选择监管客户
+	public Specification<OutsRecord> getOutssSpec(final String supervisionCustomerId, final Date beginDate, final Date endDate) {
+		Specification<OutsRecord> specificationIns = new Specification<OutsRecord>() {
+			@SuppressWarnings({ "rawtypes", "unchecked" })
+			@Override
+			public Predicate toPredicate(Root<OutsRecord> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+				List<Predicate> predicates = new ArrayList<Predicate>();
+				if (StringUtils.hasText(supervisionCustomerId)) {
+					Path expression = root.get("supervisionCustomer");
+					expression = expression.get("id");
+					predicates.add(cb.equal(expression, supervisionCustomerId));
+				}
+				if (!StringUtils.isEmpty(beginDate)) {
+					Path expression = root.get("date");
+					predicates.add(cb.greaterThanOrEqualTo(expression, DateUtils.dateToDayBegin(beginDate)));
+				}
+				if (!StringUtils.isEmpty(endDate)) {
+					Path expression = root.get("date");
+					predicates.add(cb.lessThanOrEqualTo(expression, DateUtils.dateToDayEnd(endDate)));
+				}
+				query.orderBy(cb.desc(root.get("date")));
+				if (predicates.size() > 0) {
+					return cb.and(predicates.toArray(new Predicate[predicates.size()]));
+				}
+				return cb.conjunction();
+			}
+		};
+		return specificationIns;
+	}
 
+//查询出所有成为类型为“type=1”的出入库明细，并根据监管客户进行合并汇总，按照款式分条显示。 （by:wzz）
 	public Map<SupervisionCustomer, List<InOutsRecord>> queryByDelegatorAndDateBetween(String delegatorId, String supervisionCustomerId, Date beginDate, Date endDate) {
 		Map<SupervisionCustomer, List<InOutsRecord>> inoutsRecordMap = new HashMap<SupervisionCustomer, List<InOutsRecord>>();
 		if(StringUtils.hasText(supervisionCustomerId)) {

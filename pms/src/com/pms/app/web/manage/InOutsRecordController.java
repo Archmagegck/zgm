@@ -7,6 +7,7 @@ import java.util.Date;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpSession;
 
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -19,12 +20,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pms.app.entity.Delegator;
+import com.pms.app.entity.InsRecord;
+import com.pms.app.entity.OutsRecord;
 import com.pms.app.service.DelegatorService;
 import com.pms.app.service.InOutsRecordService;
+import com.pms.app.service.InsRecordService;
+import com.pms.app.service.OutsRecordService;
 import com.pms.app.service.SupervisionCustomerService;
 
 @Controller
@@ -37,6 +43,8 @@ public class InOutsRecordController {
 	@Autowired SupervisionCustomerService supervisionCustomerService;
 	@Autowired InOutsRecordService inOutsRecordService;
 	@Autowired JavaMailSender javaMailSender;
+	@Autowired InsRecordService insRecordService;
+	@Autowired OutsRecordService outsRecordService;
 	
 	@InitBinder  
 	public void initBinder(WebDataBinder binder) throws Exception {  
@@ -54,9 +62,25 @@ public class InOutsRecordController {
 		model.addAttribute("supervisionCustomerId", supervisionCustomerId);
 //		model.addAttribute("delegator", delegatorService.findById(delegatorId));
 		model.addAttribute("delegatorId", delegatorId);
-		model.addAttribute("inoutsMap", inOutsRecordService.queryByDelegatorAndDateBetween(delegatorId, supervisionCustomerId, beginDate, endDate));
+		model.addAttribute("inoutsMap", inOutsRecordService.queryByDelegatorAndSuperCustomerAndDateBetween(delegatorId, supervisionCustomerId, beginDate, endDate));
 		return "manage/inOutsRecord/list";
 	}
+	
+	@RequestMapping(value = "/{id}/print")
+	public String print(@PathVariable("id")String id, Model model, HttpSession session,int classType) {
+		if(classType==1){
+			//入库
+			InsRecord insRecord = insRecordService.findById(id);
+			model.addAttribute("record", insRecord);
+		}else{
+			//出库
+			OutsRecord outsRecord=outsRecordService.findById(id);
+			model.addAttribute("record", outsRecord);
+		}
+		
+		return "manage/inOutsRecord/print";
+	}
+	
 	
 	
 	@RequestMapping(value = "/list/toPrint")
@@ -70,6 +94,21 @@ public class InOutsRecordController {
 		return "manage/inOutsRecord/toPrint";
 	}
 	
+	@RequestMapping(value = "/{id}/details")
+	public String detailList(Model model, @PathVariable("id")String id, String method){
+		if(method.equals("入库")){
+			InsRecord insRecord = insRecordService.findById(id);			
+			model.addAttribute("record", insRecord);
+			model.addAttribute("detailList", insRecord.getInsRecordDetails());
+			model.addAttribute("classType", 1);
+		}else{
+			OutsRecord outsRecord = outsRecordService.findById(id);
+			model.addAttribute("record", outsRecord);
+			model.addAttribute("detailList", outsRecord.getOutsRecordDetails());
+			model.addAttribute("classType", 2);
+		}		
+		return "manage/inOutsRecord/detailList";
+	}
 	
 	@RequestMapping(value = "/list/print")
 	@ResponseBody
