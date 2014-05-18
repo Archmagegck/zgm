@@ -28,6 +28,7 @@ public class InsDetailController {
 		InsRecord insRecord = insRecordService.findById(insId);
 		SupervisionCustomer supervisionCustomer = supervisionCustomerService.findById(SCId);
 		
+		model.addAttribute("insRecord", insRecord);
 		model.addAttribute("detailList", insRecord.getInsRecordDetails());
 		model.addAttribute("supervisionCustomer", supervisionCustomer);
 		

@@ -59,11 +59,14 @@
 								<td>${status.count}&nbsp;</td>
 								<td>${insRecordDetail.style.name}&nbsp;</td>
 								<td>${insRecordDetail.pledgePurity.name}&nbsp;</td>
+								<td>${insRecordDetail.weight}&nbsp;</td>
 								<td>${insRecordDetail.desc}&nbsp;</td>
 							</tr>
 						</c:forEach>
 						</tbody>
 					</table>
+					<a href="${ctx }/images/${insRecord.attach}">入库单扫描文件查看</a>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<input id="button2" type="button" value="返回" onclick="javascript:history.back();" style="cursor: pointer;font-weight: bold;margin-left: 8px;padding-right: 5px;width: 205px;background: url('${ctx}/images/admin/images/form_blue.gif') repeat-x scroll left top #FFFFFF;border: 1px solid #D9E6F0;">
 					<div align="left" id="pager">
 						<jsp:include page="../common/page.jsp"></jsp:include>

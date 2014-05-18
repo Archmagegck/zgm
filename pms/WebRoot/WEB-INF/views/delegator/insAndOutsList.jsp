@@ -129,10 +129,10 @@
 								</th>
 								<th>
 									<c:if test="${state==0}">
-										查看入库单
+										查看入库单明细
 									</c:if>
 									<c:if test="${state==1}">
-										查看出库单
+										查看出库单明细
 									</c:if>
 								</th>
 							</tr>
@@ -168,7 +168,7 @@
 									</td>
 									<td>
 										<a href="${ctx }/delegator/ins/${supervisionCustomer.id}/${ins.id}">查看</a>&nbsp;
-									</td>						
+									</td>					
 								</tr>
 							</c:forEach>
 						</c:if>

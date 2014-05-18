@@ -110,6 +110,12 @@
 								<th>
 									查看出入库信息
 								</th>
+								<th>
+									查看初始质物清单
+								</th>
+								<th>
+									查看每日质物清单
+								</th>
 							</tr>
 						</thead>
 						<c:forEach items="${page.content}" var="supervisionCustomer" varStatus="status">
@@ -125,7 +131,13 @@
 								</td>
 								<td>
 									<a href="${ctx }/delegator/insAndOuts/${supervisionCustomer.id}">查看出入库信息</a>&nbsp;
-								</td>							
+								</td>
+								<td>
+									<a href="${ctx }/delegator/inirecord/${supervisionCustomer.id}">查看初始质物清单</a>&nbsp;
+								</td>	
+								<td>
+									<a href="${ctx }/delegator/pledgeRecord/${supervisionCustomer.id}">查看每日质物清单</a>&nbsp;
+								</td>						
 							</tr>
 						</c:forEach>
 					</table>
