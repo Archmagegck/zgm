@@ -86,7 +86,7 @@ public class PledgeRecordDetail {
 	 * 1:是
 	 */
 	@Column(name = "prd_closedTran")
-	private int closedTran;
+	private int closedTran = 0;
 	
 	/**
 	 * 光谱法抽检重量占比
@@ -105,6 +105,29 @@ public class PledgeRecordDetail {
 	 */
 	@Column(name = "prd_desc")
 	private String desc;
+	
+	public PledgeRecordDetail() {}
+	
+	public PledgeRecordDetail(PledgeRecord pledgeRecord, Style style, Double sumWeight, String storage) {
+		this.pledgeRecord = pledgeRecord;
+		this.style = style;
+		this.sumWeight = sumWeight;
+		this.storage = storage;
+	}
+	
+	
+	public String getKey() {
+		StringBuffer sb = new StringBuffer("{");
+		sb.append("\"style\":\"").append(style.getId()).append("\",");
+		sb.append("\"pledgePurity\":\"").append("1").append("\",");
+		sb.append("}");
+		return sb.toString();
+	}
+	
+	public void addWeight(Double weight2) {
+		if(weight2 != null)
+			this.sumWeight += weight2;
+	}
 
 
 	public String getId() {

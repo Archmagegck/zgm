@@ -4,7 +4,9 @@ import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -138,7 +140,21 @@ public class InventoryService extends BaseService<Inventory, String> {
 		
 		
 		pledgeRecordDao.save(pledgeRecord);
-		pledgeRecordDetailDao.save(pledgeRecordDetails);
+		
+		
+		Map<String, PledgeRecordDetail> pledgeRecordDetailMap = new HashMap<String, PledgeRecordDetail>();
+		for (PledgeRecordDetail details : pledgeRecordDetails) {
+			String key = details.getKey();
+			PledgeRecordDetail pd = pledgeRecordDetailMap.get(key);
+			if(pd == null) {
+				pd = new PledgeRecordDetail(pledgeRecord, details.getStyle(), details.getSumWeight(), details.getStorage());
+			} else {
+				pd.addWeight(details.getSumWeight());
+			}
+			pledgeRecordDetailMap.put(key, pd);
+		}
+		
+		pledgeRecordDetailDao.save(pledgeRecordDetailMap.values());
 		
 	}
 	
