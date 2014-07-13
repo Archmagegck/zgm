@@ -4,7 +4,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.pms.app.entity.InsRecord;
@@ -32,6 +35,7 @@ import com.pms.app.service.PledgePurityService;
 import com.pms.app.service.StyleService;
 import com.pms.app.service.WarehouseService;
 import com.pms.app.util.UploadUtils;
+import com.pms.app.web.supervisor.view.InsRecordViewExcel;
 import com.pms.base.service.ServiceException;
 
 @Controller
@@ -153,6 +157,18 @@ public class InsRecordController {
 		InsRecord insRecord = insRecordService.findById(id);
 		model.addAttribute("insRecord", insRecord);
 		return "supervisor/insRecord/print";
+	}
+	
+	@RequestMapping(value = "/export")
+	public ModelAndView export(Date date, HttpSession session) {
+		if(date == null) {
+			date = new Date();
+		} 
+		Map<String, Object> model = new HashMap<String, Object>();
+		List<InsRecord> insRecordList = insRecordService.findListByQuery((String)session.getAttribute("warehouseId"), date);
+		model.put("insRecordList", insRecordList);
+		model.put("date", date);
+		return new ModelAndView(new InsRecordViewExcel(), model);
 	}
 	
 	

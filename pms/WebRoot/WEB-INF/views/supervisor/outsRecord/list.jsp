@@ -39,6 +39,12 @@
 		function selectlist(){
 			$("#myForm").submit();
 		}
+		
+		//导出excel
+		function exportExcel(){
+			$("#myForm").attr("action","${ctx}/supervisor/outsRecord/export");
+			$("#myForm").submit();
+		}
 
     </script>
 	
@@ -82,6 +88,8 @@
 						</span>
 						&nbsp;&nbsp;&nbsp;
 						<input type="button" value="查询" class="button" onclick="selectlist()" />
+						&nbsp;&nbsp;&nbsp;
+						<input type="button" value="导出" class="button" onclick="exportExcel()" />
 					</div>
 					<br/>
 					<table style="text-align: center; font: 12px/ 1.5 tahoma, arial, 宋体;" width="100%">

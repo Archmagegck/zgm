@@ -3,6 +3,9 @@ package com.pms.app.web.supervisor;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.pms.app.entity.OutsRecord;
@@ -29,6 +33,7 @@ import com.pms.app.service.StockService;
 import com.pms.app.service.WarehouseService;
 import com.pms.app.util.UploadUtils;
 import com.pms.app.web.supervisor.form.StockForm;
+import com.pms.app.web.supervisor.view.OutsRecordViewExcel;
 import com.pms.base.service.ServiceException;
 
 @Controller
@@ -103,6 +108,18 @@ public class OutsRecordController {
 		OutsRecord outsRecord = outsRecordService.findById(id);
 		model.addAttribute("outsRecord", outsRecord);
 		return "supervisor/outsRecord/print";
+	}
+	
+	@RequestMapping(value = "/export")
+	public ModelAndView export(Date date, HttpSession session) {
+		if(date == null) {
+			date = new Date();
+		} 
+		Map<String, Object> model = new HashMap<String, Object>();
+		List<OutsRecord> outsRecordList = outsRecordService.findListByQuery((String)session.getAttribute("warehouseId"), date);
+		model.put("outsRecordList", outsRecordList);
+		model.put("date", date);
+		return new ModelAndView(new OutsRecordViewExcel(), model);
 	}
 	
 	
